@@ -1,5 +1,13 @@
 import { enemyCards, potionCards, weaponCards, heroCard } from "./constants";
 import {BattleCardType, PrimaryBattleCardType} from "./types";
+import {
+    getBottomCardIndex,
+    getLeftCardIndex,
+    getRightCardIndex,
+    getTopCardIndex, hideSelectedCard,
+    moveBattleCard,
+    resetBattleCard
+} from "./moveItems";
 
 export const getBattleCardsWithHero = (gridLength: number): BattleCardType[] => {
     const battleCards = generateBattleCards();
@@ -21,6 +29,7 @@ const generateBattleCards = (): BattleCardType[] => {
         ...battleCard,
         id: Math.random().toString(16).slice(2),
         health: getRandomHealth(battleCard),
+        isVisible: true,
     }));
 
     battleCards.sort(() => .5 - Math.random());
@@ -58,38 +67,28 @@ export const cardHandler = (
     ];
 
     if (allowedIndexes.includes(selectedCardIndex)) {
-        resetBattleCards(heroCard, selectedCardIndex, clonedBattleCards, setBattleCards);
+        resetBattleCards(heroCard, selectedCardIndex, clonedBattleCards, gridLength, setBattleCards);
     }
 };
 
-const resetBattleCards = (
+const resetBattleCards = async (
     heroCard: BattleCardType,
     selectedCardIndex: number,
     battleCards: BattleCardType[],
+    gridLength: number,
     setBattleCards: (item: BattleCardType[]) => void
 ) => {
     const newBattleCards = generateBattleCards();
     recalculateHeroHealth(heroCard, selectedCardIndex, battleCards);
 
-    moveBattleCard(heroCard.index, selectedCardIndex);
-
-    battleCards[heroCard.index] = newBattleCards[heroCard.index];
-    battleCards[selectedCardIndex] = heroCard;
-    heroCard.index = selectedCardIndex;
+    hideSelectedCard(selectedCardIndex)
+    // await moveBattleCard(heroCard.index, selectedCardIndex);
+    const calcLastCardIndex = await resetBattleCard(heroCard.index, selectedCardIndex, battleCards, gridLength);
+    battleCards[calcLastCardIndex] = newBattleCards[calcLastCardIndex];
+    // battleCards[selectedCardIndex] = heroCard;
+    // heroCard.index = selectedCardIndex;
 
     setBattleCards(battleCards);
-};
-
-const moveBattleCard = async (heroCardIndex: number, selectedCardIndex: number) => {
-
-    // @ts-ignore
-    document.querySelector(`.battle-card-${selectedCardIndex}`).style.display = 'none';
-    await new Promise(() => setTimeout(() => {
-        // @ts-ignore
-        document.querySelector(`.battle-card-${heroCardIndex}`).classList.add('active');
-        // @ts-ignore
-        // document.querySelector(`.battle-card-${heroCardIndex}`).style.animationDuration = '8s';
-    }, 100));
 };
 
 const recalculateHeroHealth = (
@@ -106,57 +105,6 @@ const recalculateHeroHealth = (
     }
 };
 
-const getTopCardIndex = (currentCardIndex: number, gridLength: number) => {
-    const newCardIndex = currentCardIndex - gridLength;
-
-    return (newCardIndex >= 0) ? newCardIndex : null;
-};
-
-const getBottomCardIndex = (currentCardIndex: number, gridLength: number) => {
-    const cardLength = gridLength * gridLength;
-    const newCardIndex = currentCardIndex + gridLength;
-
-    return (newCardIndex < cardLength) ? newCardIndex : null;
-};
-
-const getRightCardIndex = (currentCardIndex: number, gridLength: number) => {
-    const newCardIndex = currentCardIndex + 1;
-
-    return (!currentCardIndex || (currentCardIndex + 1) % gridLength) ? newCardIndex : null;
-};
-
-const getLeftCardIndex = (currentCardIndex: number, gridLength: number) => {
-    const newCardIndex = currentCardIndex - 1;
-
-    return (!newCardIndex || currentCardIndex % gridLength) ? newCardIndex : null;
-};
-
 export const getCardSizeInPercent = (gridLength: number): string => {
     return `${100/gridLength - 2}%`;
-};
-
-export const keyDownHandler = (
-    key: string,
-    battleCards: BattleCardType[],
-    setBattleCards: (item: BattleCardType[]) => void,
-    gridLength: number
-) => {
-    const allowedKeys = ['ArrowRight', 'ArrowLeft', 'ArrowUp', 'ArrowDown'];
-    if (!allowedKeys.includes(key)) return;
-
-    const heroCardIndex: any = battleCards.find((card: BattleCardType) => card.type === 'hero')?.index;
-
-    const keyMap: any = {
-        ArrowRight: () => heroCardIndex + 1,
-        ArrowLeft: () => heroCardIndex - 1,
-        ArrowUp: () => heroCardIndex - gridLength,
-        ArrowDown: () => heroCardIndex + gridLength,
-    };
-
-    const selectedCardIndex = keyMap[key]();
-    const cardLength = gridLength * gridLength;
-
-    if (selectedCardIndex >= 0 && selectedCardIndex < cardLength) {
-        cardHandler(selectedCardIndex, battleCards, setBattleCards, gridLength);
-    }
 };

@@ -36,6 +36,7 @@ export const heroCard: BattleCardType = {
     name: 'hero',
     image: 'hero.png',
     type: 'hero',
+    isVisible: true,
     active: true,
     health: 20,
     topCardIndex: null,

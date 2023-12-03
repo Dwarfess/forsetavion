@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import {cardHandler, getBattleCardsWithHero, keyDownHandler} from "./utils";
-import { BattleCardField} from "./BattleCardField";
+import {cardHandler, getBattleCardsWithHero} from "./utils";
+import { keyDownHandler} from "./moveItems";
+import BattleCardField from "./BattleCardField";
 import {useEffect, useState} from "react";
 import {GridLengthSwitcher} from "./GridLengthSwitcher";
 
@@ -53,11 +54,16 @@ const BattlePage = () => {
 
 const BattleField = styled.div`
     // border: 2px solid #dda786;
-    width: 1000px;
-    height: 1000px;
+    width: 700px;
+    //height: 700px;
     display: flex;
     flex-wrap: wrap;
+    //display: flex;
+    //flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
     margin: 30px;
+    //border: 2px solid red;
 `;
 
 export { BattlePage };
