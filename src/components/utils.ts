@@ -1,13 +1,14 @@
-import { enemyCards, potionCards, weaponCards, heroCard } from "./constants";
+import { enemyCards, potionCards, weaponCards, heroCard, newEnemyCards, newPotionCards, equipmentCards } from "./constants";
 import {BattleCardType, PrimaryBattleCardType} from "./types";
 import {
     getBottomCardIndex,
     getLeftCardIndex,
     getRightCardIndex,
     getTopCardIndex, hideSelectedCard,
-    moveBattleCard,
-    resetBattleCard
+    moveBattleCard, moveBattleCards,
+    // resetBattleCard
 } from "./moveItems";
+import {addClassWhenContactCard} from "./contactItems";
 
 export const getBattleCardsWithHero = (gridLength: number): BattleCardType[] => {
     const battleCards = generateBattleCards();
@@ -17,14 +18,14 @@ export const getBattleCardsWithHero = (gridLength: number): BattleCardType[] => 
     return battleCards.splice(0, gridLength * gridLength);
 };
 
-const generateBattleCards = (): BattleCardType[] => {
+export const generateBattleCards = (): BattleCardType[] => {
     const battleCards: BattleCardType[] | any = [
-        ...enemyCards,
-        ...potionCards,
-        ...weaponCards,
-        ...enemyCards,
-        ...potionCards,
-        ...weaponCards
+        ...newEnemyCards,
+        ...newPotionCards,
+        ...equipmentCards,
+        ...newEnemyCards,
+        ...newPotionCards,
+        ...equipmentCards,
     ].map((battleCard: PrimaryBattleCardType) => ({
         ...battleCard,
         id: Math.random().toString(16).slice(2),
@@ -48,7 +49,8 @@ export const cardHandler = (
     selectedCardIndex: number,
     battleCards: BattleCardType[],
     setBattleCards: any,
-    gridLength: number
+    gridLength: number,
+    setIsMoving: (val: boolean) => void,
 ) => {
     const clonedBattleCards = structuredClone(battleCards);
 
@@ -68,6 +70,8 @@ export const cardHandler = (
 
     if (allowedIndexes.includes(selectedCardIndex)) {
         resetBattleCards(heroCard, selectedCardIndex, clonedBattleCards, gridLength, setBattleCards);
+    } else {
+        setIsMoving(false);
     }
 };
 
@@ -79,30 +83,38 @@ const resetBattleCards = async (
     setBattleCards: (item: BattleCardType[]) => void
 ) => {
     const newBattleCards = generateBattleCards();
-    recalculateHeroHealth(heroCard, selectedCardIndex, battleCards);
-
-    hideSelectedCard(selectedCardIndex)
+    await recalculateHeroHealth(heroCard, selectedCardIndex, battleCards);
+    setBattleCards(battleCards);
+    // hideSelectedCard(selectedCardIndex)
     // await moveBattleCard(heroCard.index, selectedCardIndex);
-    const calcLastCardIndex = await resetBattleCard(heroCard.index, selectedCardIndex, battleCards, gridLength);
-    battleCards[calcLastCardIndex] = newBattleCards[calcLastCardIndex];
+    // const calcLastCardIndex = await moveBattleCards(heroCard.index, selectedCardIndex, battleCards, gridLength);
+    battleCards = structuredClone(battleCards);
+    await moveBattleCards(heroCard.index, selectedCardIndex, battleCards, gridLength);
+    // battleCards[calcLastCardIndex] = newBattleCards[calcLastCardIndex];
     // battleCards[selectedCardIndex] = heroCard;
     // heroCard.index = selectedCardIndex;
 
     setBattleCards(battleCards);
 };
 
-const recalculateHeroHealth = (
+const recalculateHeroHealth = async (
     heroCard: BattleCardType,
     selectedCardIndex: number,
     battleCards: BattleCardType[]
 ) => {
     const selectedCard = battleCards[selectedCardIndex];
+    let audioName;
 
     if (selectedCard.type === 'enemy') {
+        audioName = 'punch';
         heroCard.health = heroCard.health - selectedCard.health;
     } else {
+        audioName = 'blob';
         heroCard.health = heroCard.health + selectedCard.health;
     }
+
+    new Audio(`sounds/${audioName}.mp3`).play();
+    await addClassWhenContactCard(selectedCard);
 };
 
 export const getCardSizeInPercent = (gridLength: number): string => {

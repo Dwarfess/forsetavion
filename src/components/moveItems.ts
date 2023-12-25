@@ -1,29 +1,48 @@
 import {BattleCardType, Direction} from "./types";
-import {cardHandler} from "./utils";
+import {cardHandler, generateBattleCards} from "./utils";
 
-export const moveBattleCard = async (previousCardIndex: number, nextCardIndex: number, className: string) => {
-    const heroCardEl = document.querySelector(`.battle-card-${previousCardIndex}`);
+export const addClassForMovingCard = async (battleCard: BattleCardType, className: string) => {
+    const transformDuration = 300;
+    const transformHeroDuration = 600;
+    const cardEl = document.querySelector(`.battle-card-${battleCard.index}`);
     // @ts-ignore
-    heroCardEl.classList.add(className, 'moving');
+    cardEl.classList.remove('newCard');
+    // @ts-ignore
+    cardEl.classList.add(className, `${battleCard.name === 'hero' ? 'movingHero' : 'moving'}`);
 
     await new Promise<void>((resolve) => setTimeout(() => {
         resolve();
-    }, 2000));
+    }, battleCard.name === 'hero' ? transformHeroDuration : transformDuration));
 
     return true;
 };
 
-export const resetBattleCard = async (
+export const moveBattleCards = async(
+    heroCardIndex: number,
+    selectedCardIndex: number,
+    battleCards: BattleCardType[],
+    gridLength: number
+):Promise<boolean> => {
+    const newBattleCards = generateBattleCards();
+    hideSelectedCard(selectedCardIndex);
+    const calcLastCardIndex = await moveBattleCard(heroCardIndex, selectedCardIndex, battleCards, gridLength);
+    newBattleCards[calcLastCardIndex].isNew = true;
+    battleCards[calcLastCardIndex] = newBattleCards[calcLastCardIndex];
+    return true;
+}
+
+export const moveBattleCard = async (
     previousCardIndex: number,
     nextCardIndex: number,
     battleCards: BattleCardType[],
-    gridLength: number
+    gridLength: number,
 ): Promise<number> => {
     // previousCard is a hero card and next
     // nextCard is a selected card and next
     const direction = getDirection(previousCardIndex, nextCardIndex);
 
-    await moveBattleCard(previousCardIndex, nextCardIndex, direction.className);
+    battleCards[previousCardIndex].isNew = false;
+    await addClassForMovingCard(battleCards[previousCardIndex], direction.className);
 
     battleCards[nextCardIndex] = battleCards[previousCardIndex];
     battleCards[nextCardIndex].index = nextCardIndex;
@@ -31,7 +50,7 @@ export const resetBattleCard = async (
     const calcNewPreviousCardIndex = direction.getOppositeIndex(previousCardIndex, gridLength);
 
     if (calcNewPreviousCardIndex !== null) {
-        return resetBattleCard(calcNewPreviousCardIndex, previousCardIndex, battleCards, gridLength);
+        return moveBattleCard(calcNewPreviousCardIndex, previousCardIndex, battleCards, gridLength);
     } else {
         return previousCardIndex;
     }
@@ -39,6 +58,8 @@ export const resetBattleCard = async (
 
 export const hideSelectedCard = (selectedCardIndex: number) => {
     const selectedCardEl = document.querySelector(`.battle-card-${selectedCardIndex}`);
+    // @ts-ignore
+    selectedCardEl.classList.remove('newCard');
     // @ts-ignore
     selectedCardEl.classList.add('hidden');
 };
@@ -123,7 +144,8 @@ export const keyDownHandler = (
     key: string,
     battleCards: BattleCardType[],
     setBattleCards: (item: BattleCardType[]) => void,
-    gridLength: number
+    gridLength: number,
+    setIsMoving: (val: boolean) => void,
 ) => {
     const allowedKeys = ['ArrowRight', 'ArrowLeft', 'ArrowUp', 'ArrowDown'];
     if (!allowedKeys.includes(key)) return;
@@ -141,6 +163,6 @@ export const keyDownHandler = (
     const cardLength = gridLength * gridLength;
 
     if (selectedCardIndex >= 0 && selectedCardIndex < cardLength) {
-        cardHandler(selectedCardIndex, battleCards, setBattleCards, gridLength);
+        cardHandler(selectedCardIndex, battleCards, setBattleCards, gridLength, setIsMoving);
     }
 };

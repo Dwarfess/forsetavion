@@ -1,13 +1,14 @@
+import {useEffect, useState} from "react";
 import styled from "styled-components";
 import {cardHandler, getBattleCardsWithHero} from "./utils";
 import { keyDownHandler} from "./moveItems";
 import BattleCardField from "./BattleCardField";
-import {useEffect, useState} from "react";
 import {GridLengthSwitcher} from "./GridLengthSwitcher";
 
 const BattlePage = () => {
     const [battleCards, setBattleCards] = useState<any[]>([]);
     const [gridLength, setGridLength] = useState(0);
+    const [isMoving, setIsMoving] = useState(false); // block/unblock extra click
 
     useEffect(() => {
         gridLength && setBattleCards(getBattleCardsWithHero(gridLength));
@@ -23,15 +24,25 @@ const BattlePage = () => {
                 document.removeEventListener('keydown', onKeyDown);
             }
         }
-    }, [battleCards]);
+    }, [battleCards, isMoving]);
+
+    useEffect(() => {
+        setIsMoving(false);
+    }, [battleCards])
 
     const onCardClick = (selectedCardIndex: number) => {
-        cardHandler(selectedCardIndex, battleCards, setBattleCards, gridLength);
+        if (isMoving) return;
+
+        setIsMoving(true);
+        cardHandler(selectedCardIndex, battleCards, setBattleCards, gridLength, setIsMoving);
     };
 
     const onKeyDown = (e: any): void => {
+        if (isMoving) return;
+
+        setIsMoving(true);
         e.stopPropagation();
-        keyDownHandler(e.key, battleCards, setBattleCards, gridLength);
+        keyDownHandler(e.key, battleCards, setBattleCards, gridLength, setIsMoving);
     };
 
     console.log(battleCards)

@@ -13,6 +13,7 @@ export interface BattleCardType extends PrimaryBattleCardType {
     topBottomIndex?: number | null;
     topRightIndex?: number | null;
     topLeftIndex?: number | null;
+    isNew?: boolean;
     active: boolean;
 }
 

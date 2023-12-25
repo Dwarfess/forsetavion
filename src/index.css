@@ -14,3 +14,38 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {
+  font-family: 'Vanderick';
+  src: local('Vanderick'), url("../public/fonts/Vanderick.ttf") format('truetype');
+  /* other formats include: 'woff2', 'truetype, 'opentype',
+                            'embedded-opentype', and 'svg' */
+}
+
+@font-face {
+  font-family: 'Noatun';
+  src: local('Noatun'), url("../public/fonts/Noatun v1.otf") format('truetype');
+  /* other formats include: 'woff2', 'truetype, 'opentype',
+                            'embedded-opentype', and 'svg' */
+}
+
+@font-face {
+  font-family: 'TheBlowar';
+  src: local('TheBlowar'), url("../public/fonts/TheBlowar.ttf") format('truetype');
+  /* other formats include: 'woff2', 'truetype, 'opentype',
+                            'embedded-opentype', and 'svg' */
+}
+
+@font-face {
+  font-family: 'MagicalWorld';
+  src: local('MagicalWorld'), url("../public/fonts/MagicalWorld.ttf") format('truetype');
+  /* other formats include: 'woff2', 'truetype, 'opentype',
+                            'embedded-opentype', and 'svg' */
+}
+
+@font-face {
+  font-family: 'Enchant';
+  src: local('Enchant'), url("../public/fonts/Enchant.ttf") format('truetype');
+  /* other formats include: 'woff2', 'truetype, 'opentype',
+                            'embedded-opentype', and 'svg' */
+}
