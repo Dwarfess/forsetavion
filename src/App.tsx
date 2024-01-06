@@ -1,29 +1,10 @@
 import React from 'react';
-import 'semantic-ui-css/semantic.min.css'
-// import logo from './logo.svg';
+import 'semantic-ui-css/semantic.min.css';
 import './App.css';
-import { BattlePage } from "./components/BattlePage";
+import { BattlePage } from './components/BattlePage';
 
 function App() {
-  return (
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <p>
-    //       Edit <code>src/App.tsx</code> and save to reload.
-    //     </p>
-    //     <a
-    //       className="App-link"
-    //       href="https://reactjs.org"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       Learn React
-    //     </a>
-    //   </header>
-    // </div>
-      <BattlePage />
-  );
+  return (<BattlePage />);
 }
 
 export default App;

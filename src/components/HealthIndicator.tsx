@@ -1,25 +1,31 @@
 import styled from "styled-components";
 
-import {BattleCardType} from "./types";
+import {BattleCardType, HeroBattleCardType} from "./types";
 
 
-const HealthIndicator = ({battleCard}: { battleCard: BattleCardType }) => {
-    return <HealthIndicatorWrapper data-health={battleCard.health}>
-        {(battleCard.type === 'hero' || battleCard.type === 'potion') && (
+const HealthIndicator = ({battleCard, gridLength}: { battleCard: BattleCardType | any, gridLength: number }) => {
+    return <HealthIndicatorWrapper
+        data-health={battleCard.health}
+        data-max-health={battleCard.maxHealth}
+        data-length={gridLength}
+    >
+        {battleCard.type === 'hero' && (
             <>
-                {/*<img src="heart-indicator.png" className="heart"/>*/}
-                {/*<span className="healthAmount">{battleCard.health}</span>*/}
-
                 <div className="indicatorBottle"/>
                 <img src="hp-indicator60.png" className="health"/>
                 <span className="healthAmount">{battleCard.health}</span>
-
+            </>
+        )}
+        {battleCard.type === 'potion' && (
+            <>
+                <img src="hp-indicator60.png" className="health"/>
+                <span className="healthAmount">{battleCard.value}</span>
             </>
         )}
         {battleCard.type === 'enemy' && (
             <>
                 <img src="might-indicator.png" className="might"/>
-                <span className="mightAmount">{battleCard.health}</span>
+                <span className="mightAmount">{battleCard.value}</span>
             </>
         )}
 
@@ -34,13 +40,12 @@ const HealthIndicatorWrapper = styled.span`
     height: 25%;
     overflow: hidden;
     border-radius: 50px;
-
     animation: pulse 5s ease infinite;
 
     .indicatorBottle {
         position: absolute;
         bottom: 0;
-        height: ${(props: any) => 100 / 20 * props['data-health']}%;
+        height: ${(props: any) => 100 / props['data-max-health'] * props['data-health']}%;
         width: 100%;
         background-color: red;
     }
@@ -48,13 +53,12 @@ const HealthIndicatorWrapper = styled.span`
     .health {
         position: relative;
         width: 100%;
-        //animation: pulse 2s ease infinite;
     }
 
     .might {
         position: relative;
         width: 100%;
-        animation: lds-dual-ring 45s linear infinite;
+        //animation: lds-dual-ring 45s linear infinite;
     }
 
     span {
@@ -62,20 +66,17 @@ const HealthIndicatorWrapper = styled.span`
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        font-size: 20px;
-        font-width: 600;
+        font-size: ${(props: any) => 100 / props['data-length']}px;
         font-family: 'MagicalWorld';
         font-weight: bold;
 
         &.healthAmount {
             color: #871812;
-            //color: #505044;
             text-shadow: 0px 0px 3px #E6E6E6, 0px 0px 3px #1A1A1A, 0px 0px 3px #E3E3E3;
         }
 
         &.mightAmount {
-            color: #871812;
-            //color: #505044;
+            color: black;
             text-shadow: 0px 0px 3px #E6E6E6, 0px 0px 3px #1A1A1A, 0px 0px 3px #E3E3E3;
         }
     }
@@ -100,7 +101,6 @@ const HealthIndicatorWrapper = styled.span`
             transform: rotate(360deg)
         }
     }
-
 `;
 
 export {HealthIndicator};

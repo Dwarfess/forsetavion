@@ -1,4 +1,4 @@
-import {BattleCardType, PrimaryBattleCardType} from "./types";
+import {BattleCardType, HeroBattleCardType, PrimaryBattleCardType} from "./types";
 
 export const images = [
     '1.png',
@@ -30,7 +30,9 @@ export const images = [
     '10.png',
 ];
 
-export const heroCard: BattleCardType = {
+// const DEFAULT_HEALTH = 10;
+
+export const heroCard: HeroBattleCardType = {
     id: Math.random().toString(16).slice(2),
     index: 0,
     name: 'hero',
@@ -38,7 +40,13 @@ export const heroCard: BattleCardType = {
     type: 'hero',
     isVisible: true,
     active: true,
-    health: 20,
+    health: 10,
+    maxHealth: 10,
+    healthBoost: 1,
+    exp: 0,
+    level: 1,
+    coins: 0,
+    crystals: 0,
     topCardIndex: null,
     topBottomIndex: null,
     topRightIndex: null,
@@ -225,11 +233,12 @@ export const newPotionCards = [
         image: 'potion-2',
         type: 'potion',
     },
-    {
-        name: 'potion3',
-        image: 'potion-3',
-        type: 'potion',
-    },
+    // {
+    //     name: 'potion3',
+    //     image: 'portal-3',
+    //     type: 'potion',
+    //     types: 'portal'
+    // },
     {
         name: 'potion4',
         image: 'potion-4',
@@ -242,12 +251,21 @@ export const newPotionCards = [
     },
 ];
 
-export const equipmentCards = [
+export const secretCards = [
     {
-        name: 'equipment1',
-        image: 'equipment-1',
-        type: 'equipment',
+        name: 'portal',
+        image: 'portal-3',
+        secondImage: 'portal-4',
+        type: 'secret',
     },
+];
+
+export const equipmentCards = [
+    // {
+    //     name: 'equipment1',
+    //     image: 'equipment-1',
+    //     type: 'equipment',
+    // },
     {
         name: 'equipment2',
         image: 'equipment-2',
@@ -276,4 +294,27 @@ export const weaponCards = [
         image: 'weapon1.png',
         type: 'weapon',
     },
+];
+
+export const coinsCards = [
+    {
+        name: 'coins-1',
+        image: 'coins-1',
+        type: 'coins',
+    },
+    {
+        name: 'coins-2',
+        image: 'coins-2',
+        type: 'coins',
+    },
+    {
+        name: 'coins-3',
+        image: 'coins-3',
+        type: 'coins',
+    },
+    {
+        name: 'coins-4',
+        image: 'coins-4',
+        type: 'coins',
+    }
 ];

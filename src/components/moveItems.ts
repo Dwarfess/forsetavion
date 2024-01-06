@@ -1,4 +1,4 @@
-import {BattleCardType, Direction} from "./types";
+import {BattleCardType, Direction, HeroBattleCardType} from "./types";
 import {cardHandler, generateBattleCards} from "./utils";
 
 export const addClassForMovingCard = async (battleCard: BattleCardType, className: string) => {
@@ -18,14 +18,14 @@ export const addClassForMovingCard = async (battleCard: BattleCardType, classNam
 };
 
 export const moveBattleCards = async(
-    heroCardIndex: number,
+    heroCard: HeroBattleCardType,
     selectedCardIndex: number,
     battleCards: BattleCardType[],
     gridLength: number
 ):Promise<boolean> => {
-    const newBattleCards = generateBattleCards();
+    const newBattleCards = generateBattleCards(heroCard.level);
     hideSelectedCard(selectedCardIndex);
-    const calcLastCardIndex = await moveBattleCard(heroCardIndex, selectedCardIndex, battleCards, gridLength);
+    const calcLastCardIndex = await moveBattleCard(heroCard.index, selectedCardIndex, battleCards, gridLength);
     newBattleCards[calcLastCardIndex].isNew = true;
     battleCards[calcLastCardIndex] = newBattleCards[calcLastCardIndex];
     return true;
@@ -146,6 +146,7 @@ export const keyDownHandler = (
     setBattleCards: (item: BattleCardType[]) => void,
     gridLength: number,
     setIsMoving: (val: boolean) => void,
+    setIsOpenBattleOverModal: (val: boolean) => void,
 ) => {
     const allowedKeys = ['ArrowRight', 'ArrowLeft', 'ArrowUp', 'ArrowDown'];
     if (!allowedKeys.includes(key)) return;
@@ -163,6 +164,6 @@ export const keyDownHandler = (
     const cardLength = gridLength * gridLength;
 
     if (selectedCardIndex >= 0 && selectedCardIndex < cardLength) {
-        cardHandler(selectedCardIndex, battleCards, setBattleCards, gridLength, setIsMoving);
+        cardHandler(selectedCardIndex, battleCards, setBattleCards, gridLength, setIsMoving, setIsOpenBattleOverModal);
     }
 };
