@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useMemo, useState} from 'react'
 import {
     ModalHeader,
     ModalContent,
@@ -6,18 +6,29 @@ import {
     Modal,
 } from 'semantic-ui-react'
 import styled from "styled-components";
-import {getHeroScore} from "./utils";
+import {getEquation, getHeroScore, updateAnswer} from "./utils";
 
-const BattleOverModal = ({
-    heroCard,
-    isOpen,
-    setIsOpen,
-    setGridLength
-}: any) => {
+const SecretModal = ({
+     heroCard,
+     battleCards,
+     setBattleCards,
+     isOpen,
+     setIsOpen
+ }: any) => {
+    const [answer, setAnswer] = useState('');
+    const symbols = ['1','2','3','4','5','6','7','8','9','0', '.', '←'];
     const onButtonClick = () => {
         setIsOpen(false);
-        setGridLength(0);
     }
+
+    const onSymbolClick = (symbol: string) => {
+        console.log(symbol);
+        setAnswer(updateAnswer(answer, symbol));
+    }
+
+    const equation = useMemo(() => {
+        return getEquation(battleCards);
+    }, [battleCards]);
 
     return (
         <ModalWrapper
@@ -29,12 +40,21 @@ const BattleOverModal = ({
             // onClose={() => setIsOpen(false)}
             // trigger={<Button>Show Modal</Button>}
         >
-            <ModalHeader>The battle is over</ModalHeader>
+            <ModalHeader>Secret</ModalHeader>
             <ModalContent>
-                <p className="level">Level - {heroCard.level} (100 points)</p>
-                <p className="coins">Coins - {heroCard.coins} (5 points)</p>
-                <p className="crystal">Crystals - {heroCard.crystals} (20 points)</p>
-                <p className="score">Score - {getHeroScore(heroCard)} points</p>
+                <p className="level">Write correct answer and get the gift</p>
+                <p className="equation">{equation}{answer}</p>
+
+                <NumberContainer>
+                    {symbols.map((symbol: string, index: number) => {
+                        return (
+                            <button className="btn symbol-btn"
+                                   onClick={() => onSymbolClick(symbol)}
+                                   key={index}
+                            >{symbol}</button>
+                        );
+                    })}
+                </NumberContainer>
             </ModalContent>
             <ModalActions>
                 <button className="btn" onClick={onButtonClick}>Again</button>
@@ -42,6 +62,16 @@ const BattleOverModal = ({
         </ModalWrapper>
     )
 }
+
+const NumberContainer = styled.div`
+    width: 50%;
+    height: max-content;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+`;
 
 const ModalWrapper = styled(Modal)`
     &&& {
@@ -51,7 +81,7 @@ const ModalWrapper = styled(Modal)`
         background-color: transparent;
         background-image: url("battle-over-modal.png");
         background-size: cover;
-        padding: 100px;
+        padding: 60px 100px;
         
         .header, .content, .actions {
             color: #8b0000;
@@ -66,9 +96,8 @@ const ModalWrapper = styled(Modal)`
             text-align: center;
         }
         
-        .score {
-            padding-top: 50px;
-            text-align: right;
+        .equation {
+            font-size: 40px;
         }
         
         .btn {
@@ -90,6 +119,10 @@ const ModalWrapper = styled(Modal)`
             border-bottom: 4px groove #ffb000;
             box-shadow: inset 0px 0px 5px 3px rgba(1,1,1,0.3);
         }
+        
+        .symbol-btn {
+            width: 30%;
+        }
 
         .btn:hover{
             background: radial-gradient(circle, #e52b2b, #8b0000);
@@ -103,4 +136,4 @@ const ModalWrapper = styled(Modal)`
     }
 `;
 
-export { BattleOverModal };
+export { SecretModal };

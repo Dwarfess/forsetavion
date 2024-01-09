@@ -1,14 +1,15 @@
 import {BattleCardType, HeroBattleCardType} from "./types";
 import {addClassWhenContactCard} from "./contactItems";
 
-export const recalculateHeroStatsAfterContact = async (
+export const recalculateHeroStatsAfterContact = (
     heroCard: HeroBattleCardType,
     selectedCard: BattleCardType,
 ) => {
     const audioMap: any = {
-        enemy: 'punch',
+        enemy: 'punch-2',
         potion: 'blob',
-        coins: 'coins'
+        coins: 'coins',
+        equipment: 'punch-2'
     };
 
     const recalculateHeroStatsMap: any = {
@@ -22,7 +23,6 @@ export const recalculateHeroStatsAfterContact = async (
 
     const audioName = audioMap[selectedCard.type];
     audioName && new Audio(`sounds/${audioMap[selectedCard.type]}.mp3`).play();
-    await addClassWhenContactCard(selectedCard);
 };
 
 const recalculateHeroHealthAfterEnemy = (heroCard: HeroBattleCardType, selectedCard: BattleCardType) => {

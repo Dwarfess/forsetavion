@@ -6,6 +6,7 @@ import { BattleCardField } from "./BattleCardField";
 import {GridLengthSwitcher} from "./GridLengthSwitcher";
 import {TopPanel} from "./top-panel/TopPanel";
 import {BattleOverModal} from "./BattleOverModal";
+import {SecretModal} from "./SecretModal";
 
 const BattlePage = () => {
     const [battleCards, setBattleCards] = useState<any[]>([]);
@@ -13,6 +14,7 @@ const BattlePage = () => {
     const [isMoving, setIsMoving] = useState(false); // block/unblock extra click
 
     const [isOpenBattleOverModal, setIsOpenBattleOverModal] = useState(false);
+    const [isOpenSecretModal, setIsOpenSecretModal] = useState(false);
 
     useEffect(() => {
         gridLength && setBattleCards(getBattleCardsWithHero(gridLength));
@@ -31,15 +33,19 @@ const BattlePage = () => {
         }
     }, [battleCards, isMoving]);
 
-    // useEffect(() => {
-    //     if (getHeroCard(battleCards).health === 0)
-    // }, [battleCards])
-
     const onCardClick = (selectedCardIndex: number) => {
         if (isMoving) return;
 
         setIsMoving(true);
-        cardHandler(selectedCardIndex, battleCards, setBattleCards, gridLength, setIsMoving, setIsOpenBattleOverModal);
+        cardHandler(
+            selectedCardIndex,
+            battleCards,
+            setBattleCards,
+            gridLength,
+            setIsMoving,
+            setIsOpenBattleOverModal,
+            setIsOpenSecretModal
+        );
     };
 
     const onKeyDown = (e: any): void => {
@@ -47,7 +53,15 @@ const BattlePage = () => {
 
         setIsMoving(true);
         e.stopPropagation();
-        keyDownHandler(e.key, battleCards, setBattleCards, gridLength, setIsMoving, setIsOpenBattleOverModal);
+        keyDownHandler(
+            e.key,
+            battleCards,
+            setBattleCards,
+            gridLength,
+            setIsMoving,
+            setIsOpenBattleOverModal,
+            setIsOpenSecretModal
+        );
     };
 
     // console.log(battleCards)
@@ -73,24 +87,28 @@ const BattlePage = () => {
                 heroCard={getHeroCard(battleCards)}
                 isOpen={isOpenBattleOverModal}
                 setIsOpen={setIsOpenBattleOverModal}
-            >
-                <GridLengthSwitcher gridLength={gridLength} setGridLength={setGridLength} />
-            </BattleOverModal>
+                setGridLength={setGridLength}
+            />
+
+            <SecretModal
+                heroCard={getHeroCard(battleCards)}
+                battleCards={battleCards}
+                setBattleCards={setBattleCards}
+                isOpen={isOpenSecretModal}
+                setIsOpen={setIsOpenSecretModal}
+            />
         </>)}
     </>
 };
 
 const BattleField = styled.div`
-    // border: 2px solid #dda786;
-    width: 700px;
+    width: 100%;
     //height: 700px;
     display: flex;
     flex-wrap: wrap;
-    //display: flex;
-    //flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start;
-    margin: 30px;
+    padding: 30px;
     //border: 2px solid red;
 `;
 

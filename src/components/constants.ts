@@ -1,5 +1,8 @@
 import {BattleCardType, HeroBattleCardType, PrimaryBattleCardType} from "./types";
 
+export const defaultFontSize = 20;
+export const defaultWidth = 450;
+
 export const images = [
     '1.png',
     '2.png',
@@ -276,24 +279,16 @@ export const equipmentCards = [
         image: 'equipment-3',
         type: 'equipment',
     },
-    {
-        name: 'equipment4',
-        image: 'equipment-4',
-        type: 'equipment',
-    },
+    // {
+    //     name: 'equipment4',
+    //     image: 'equipment-4',
+    //     type: 'equipment',
+    // },
     {
         name: 'equipment5',
         image: 'equipment-5',
         type: 'equipment',
     }
-];
-
-export const weaponCards = [
-    {
-        name: 'weapon1',
-        image: 'weapon1.png',
-        type: 'weapon',
-    },
 ];
 
 export const coinsCards = [
@@ -312,9 +307,9 @@ export const coinsCards = [
         image: 'coins-3',
         type: 'coins',
     },
-    {
-        name: 'coins-4',
-        image: 'coins-4',
-        type: 'coins',
-    }
+    // {
+    //     name: 'coins-4',
+    //     image: 'coins-4',
+    //     type: 'coins',
+    // }
 ];

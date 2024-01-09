@@ -1,7 +1,4 @@
 import {
-    enemyCards,
-    potionCards,
-    weaponCards,
     heroCard,
     newEnemyCards,
     newPotionCards,
@@ -22,27 +19,32 @@ import {recalculateHeroStatsAfterContact} from "./recalculateHeroStats";
 
 export const getBattleCardsWithHero = (gridLength: number): (BattleCardType | HeroBattleCardType)[] => {
 
-    const battleCards: (BattleCardType | HeroBattleCardType)[] = generateBattleCards(heroCard.level);
+    const battleCards: (BattleCardType | HeroBattleCardType)[] = generateBattleCards(heroCard.level, gridLength);
 
     battleCards[0] = heroCard;
 
     return battleCards.splice(0, gridLength * gridLength);
 };
 
-export const generateBattleCards = (heroLevel: number): BattleCardType[] => {
+export const generateBattleCards = (heroLevel: number, gridLength: number): BattleCardType[] => {
     const battleCards: any[] = [
         ...secretCards,
         ...newEnemyCards,
         ...newPotionCards,
-        ...equipmentCards,
+        // ...newPotionCards,
+        ...coinsCards,
+        // ...equipmentCards,
+        ...secretCards,
         ...newEnemyCards,
         ...newPotionCards,
-        ...equipmentCards,
+        // ...newPotionCards,
         ...coinsCards,
+        // ...equipmentCards,
     ].map((battleCard: PrimaryBattleCardType) => ({
         ...battleCard,
         id: Math.random().toString(16).slice(2),
-        value: getRandomValue(battleCard, heroLevel),
+        value: getRandomValue(battleCard, heroLevel, gridLength),
+        level: heroLevel,
         isVisible: true,
     }));
 
@@ -53,13 +55,14 @@ export const generateBattleCards = (heroLevel: number): BattleCardType[] => {
     return battleCards;
 };
 
-const getRandomValue = (battleCard: PrimaryBattleCardType, heroLevel: number) => {
-    const enemyDefaultValue = 5 * (1 + ((heroLevel - 1) / 5));
+const getRandomValue = (battleCard: PrimaryBattleCardType, heroLevel: number, gridLength: number) => {
+    const defaultValue = gridLength;
+    const enemyDefaultValue = defaultValue * (1 + ((heroLevel - 1) / 5));
 
     const healthMap: any = {
         enemy: randomHealth(enemyDefaultValue),
-        potion: randomHealth(10),
-        coins: randomHealth(10),
+        potion: randomHealth(defaultValue * 3),
+        coins: randomHealth(defaultValue * 3),
         // boss:
     };
 
@@ -80,6 +83,7 @@ export const cardHandler = (
     gridLength: number,
     setIsMoving: (val: boolean) => void,
     setIsOpenBattleOverModal: (val: boolean) => void,
+    setIsOpenSecretModal: (val: boolean) => void,
 ) => {
     const clonedBattleCards = structuredClone(battleCards);
 
@@ -105,7 +109,8 @@ export const cardHandler = (
             gridLength,
             setBattleCards,
             setIsMoving,
-            setIsOpenBattleOverModal
+            setIsOpenBattleOverModal,
+            setIsOpenSecretModal
         );
     } else {
         setIsMoving(false);
@@ -120,27 +125,33 @@ const resetBattleCards = async (
     setBattleCards: (item: BattleCardType[]) => void,
     setIsMoving: (val: boolean) => void,
     setIsOpenBattleOverModal: (val: boolean) => void,
+    setIsOpenSecretModal: (val: boolean) => void,
 ) => {
-    // const newBattleCards = generateBattleCards();
     const selectedCard = battleCards[selectedCardIndex];
 
-    await recalculateHeroStatsAfterContact(heroCard, selectedCard);
+    if (selectedCard.type === 'secret') {
+        selectedCard.active = true;
+
+        setIsMoving(false);
+        setBattleCards(battleCards);
+        setIsOpenSecretModal(true);
+
+        return;
+    }
+
+    recalculateHeroStatsAfterContact(heroCard, selectedCard);
+    await addClassWhenContactCard(selectedCard);
     setBattleCards(battleCards);
 
     if (heroCard.health === 0) {
         setIsMoving(false);
         setIsOpenBattleOverModal(true);
+
         return;
     }
-    console.log('You lose!')
-    // hideSelectedCard(selectedCardIndex)
-    // await moveBattleCard(heroCard.index, selectedCardIndex);
-    // const calcLastCardIndex = await moveBattleCards(heroCard.index, selectedCardIndex, battleCards, gridLength);
+
     battleCards = structuredClone(battleCards);
     await moveBattleCards(heroCard, selectedCardIndex, battleCards, gridLength);
-    // battleCards[calcLastCardIndex] = newBattleCards[calcLastCardIndex];
-    // battleCards[selectedCardIndex] = heroCard;
-    // heroCard.index = selectedCardIndex;
 
     setBattleCards(battleCards);
     setIsMoving(false);
@@ -148,4 +159,53 @@ const resetBattleCards = async (
 
 export const getCardSizeInPercent = (gridLength: number): string => {
     return `${100/gridLength - 2}%`;
+};
+
+export const getHeroScore = (heroCard: HeroBattleCardType) => {
+    const levelPoints = heroCard.level * 100;
+    const coinPoints = heroCard.coins * 5;
+    const crystalPoints = heroCard.crystals * 20;
+
+    return levelPoints + coinPoints + crystalPoints;
+};
+
+export const updateAnswer = (answer: string, symbol: string): string => {
+    if (symbol === '←') {
+        answer = answer.slice(0, -1);
+    } else {
+        answer += symbol;
+    }
+
+    return answer;
+};
+
+export const getEquation = (battleCards: BattleCardType[]) => {
+    const secretCard = battleCards.find((battleCard: BattleCardType) => battleCard.type === 'secret' && battleCard.active);
+    const signs = ['+', '-', '*', '/'];
+    // const randomSignsIndex = randomNumberRange(0, signs.length);
+    // const randomSign = signs[randomSignsIndex];
+
+    console.log(secretCard?.level, 'secretCardLevel *************' )
+    return `${buildTree(secretCard?.level, signs)} = `;
+};
+
+const randomNumberRange = (min: number, max: number): number => {
+    return Math.floor(Math.random() * (max - min) + min);
+};
+
+const buildTree = (numNodes: number = 1, signs: string[]): any => {
+    if (numNodes === 1) return randomNumberRange(1, 10);
+
+    const numLeft = Math.floor(numNodes / 2);
+    const leftSubTree = buildTree(numLeft, signs);
+    const numRight = Math.ceil(numNodes / 2);
+    const rightSubTree = buildTree(numRight, signs);
+
+    const m = randomNumberRange(0, signs.length);
+    const operator = signs[m];
+    return treeNode(leftSubTree, rightSubTree, operator);
+};
+
+const treeNode = (left: number, right: number, operator: string) => {
+    return '(' + left + ' ' + operator + ' ' + right + ')';
 };

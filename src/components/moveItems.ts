@@ -23,7 +23,7 @@ export const moveBattleCards = async(
     battleCards: BattleCardType[],
     gridLength: number
 ):Promise<boolean> => {
-    const newBattleCards = generateBattleCards(heroCard.level);
+    const newBattleCards = generateBattleCards(heroCard.level, gridLength);
     hideSelectedCard(selectedCardIndex);
     const calcLastCardIndex = await moveBattleCard(heroCard.index, selectedCardIndex, battleCards, gridLength);
     newBattleCards[calcLastCardIndex].isNew = true;
@@ -147,6 +147,7 @@ export const keyDownHandler = (
     gridLength: number,
     setIsMoving: (val: boolean) => void,
     setIsOpenBattleOverModal: (val: boolean) => void,
+    setIsOpenSecretModal: (val: boolean) => void,
 ) => {
     const allowedKeys = ['ArrowRight', 'ArrowLeft', 'ArrowUp', 'ArrowDown'];
     if (!allowedKeys.includes(key)) return;
@@ -164,6 +165,14 @@ export const keyDownHandler = (
     const cardLength = gridLength * gridLength;
 
     if (selectedCardIndex >= 0 && selectedCardIndex < cardLength) {
-        cardHandler(selectedCardIndex, battleCards, setBattleCards, gridLength, setIsMoving, setIsOpenBattleOverModal);
+        cardHandler(
+            selectedCardIndex,
+            battleCards,
+            setBattleCards,
+            gridLength,
+            setIsMoving,
+            setIsOpenBattleOverModal,
+            setIsOpenSecretModal
+        );
     }
 };

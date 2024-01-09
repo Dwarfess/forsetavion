@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import {BattleCardType, HeroBattleCardType} from "./types";
+import {defaultFontSize} from "./constants";
 
 
 const HealthIndicator = ({battleCard, gridLength}: { battleCard: BattleCardType | any, gridLength: number }) => {
@@ -66,7 +67,7 @@ const HealthIndicatorWrapper = styled.span`
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        font-size: ${(props: any) => 100 / props['data-length']}px;
+        font-size: ${(props: any) => (defaultFontSize * 5) / props['data-length']}px;
         font-family: 'MagicalWorld';
         font-weight: bold;
 

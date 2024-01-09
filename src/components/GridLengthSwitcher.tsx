@@ -17,8 +17,9 @@ const GridLengthSwitcher = ({gridLength, setGridLength}: any) => {
 };
 
 const ButtonGroupWrapper = styled.div`
+    width: 100%;
     text-align: center;
-    margin: 10px 0;
+    padding: 10px 0;
   
     .active-grid-length-3 .grid-length-3,
     .active-grid-length-4 .grid-length-4,

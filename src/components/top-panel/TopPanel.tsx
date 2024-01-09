@@ -18,14 +18,14 @@ const TopPanel = ({heroCard}: { heroCard: HeroBattleCardType }) => {
                 <div className="coins-value">{heroCard.coins}</div>
                 {/*<div className="coins-value2">{heroCard.coins}</div>*/}
             </CoinsBar>
-            <CoinsBar>
-                <img src="icon-crystals.png" className="coins-icon"/>
-                <div className="coins-value">{heroCard.coins}</div>
-                {/*<div className="coins-value2">{heroCard.coins}</div>*/}
-            </CoinsBar>
+            {/*<CoinsBar>*/}
+            {/*    <img src="icon-crystals.png" className="coins-icon"/>*/}
+            {/*    <div className="coins-value">{heroCard.crystals}</div>*/}
+            {/*    /!*<div className="coins-value2">{heroCard.coins}</div>*!/*/}
+            {/*</CoinsBar>*/}
             <CoinsBar>
                 <img src="icon-spheres.png" className="coins-icon"/>
-                <div className="coins-value">{heroCard.coins}</div>
+                <div className="coins-value">{heroCard.crystals}</div>
                 {/*<div className="coins-value2">{heroCard.coins}</div>*/}
             </CoinsBar>
         </TopPanelWrapper>
@@ -35,7 +35,7 @@ const TopPanel = ({heroCard}: { heroCard: HeroBattleCardType }) => {
 const TopPanelWrapper = styled.div`
     margin: 10px 30px;
     display: flex;
-    width: 700px;
+    width: 100%;
     font-family: 'MagicalWorld';
 `;
 

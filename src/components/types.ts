@@ -8,11 +8,13 @@ export interface PrimaryBattleCardType {
 export interface CommonBattleCardType extends PrimaryBattleCardType {
     id: string;
     index: number;
+    level: number;
     isVisible: boolean;
 }
 
 export interface BattleCardType extends CommonBattleCardType {
     value: number;
+    active?: boolean;
     isNew?: boolean;
 }
 
@@ -25,7 +27,6 @@ export interface HeroBattleCardType extends CommonBattleCardType {
     topRightIndex: number | null;
     topLeftIndex: number | null;
     exp: number | any;
-    level: number;
     coins: any;
     crystals: number;
     active: boolean;
