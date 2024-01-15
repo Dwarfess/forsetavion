@@ -1,15 +1,18 @@
 import {useEffect, useState} from "react";
 import styled from "styled-components";
-import {cardHandler, getBattleCardsWithHero, getHeroCard} from "./utils";
-import { keyDownHandler} from "./moveItems";
+import {cardHandler, getBattleCardsWithHero, getHeroCard} from "./utils/utils";
+import { keyDownHandler} from "./utils/moveItems";
 import { BattleCardField } from "./BattleCardField";
 import {GridLengthSwitcher} from "./GridLengthSwitcher";
 import {TopPanel} from "./top-panel/TopPanel";
-import {BattleOverModal} from "./BattleOverModal";
-import {SecretModal} from "./SecretModal";
+import {ModalBattleOver} from "./ModalBattleOver";
+import {ModalSecretCard} from "./ModalSecretCard";
+import {ModalBattleCardInfo} from "./card-info/ModalBattleCardInfo";
 
 const BattlePage = () => {
     const [battleCards, setBattleCards] = useState<any[]>([]);
+    const [heroCard, setHeroCard] = useState<any>(null);
+    const [selectedBattleCardForInfo, setSelectedBattleCardForInfo] = useState<any>(null);
     const [gridLength, setGridLength] = useState(0);
     const [isMoving, setIsMoving] = useState(false); // block/unblock extra click
 
@@ -20,6 +23,12 @@ const BattlePage = () => {
         gridLength && setBattleCards(getBattleCardsWithHero(gridLength));
         setIsOpenBattleOverModal(false);
     }, [gridLength]);
+
+    useEffect(() => {
+        if (battleCards.length) {
+            setHeroCard(getHeroCard(battleCards));
+        }
+    }, [battleCards]);
 
     useEffect(() => {
         // @ts-ignore
@@ -46,6 +55,11 @@ const BattlePage = () => {
             setIsOpenBattleOverModal,
             setIsOpenSecretModal
         );
+    };
+
+    const onCardDoubleClick = (selectedCardIndex: number) => {
+        if (isMoving) return;
+        setSelectedBattleCardForInfo(battleCards[selectedCardIndex]);
     };
 
     const onKeyDown = (e: any): void => {
@@ -75,6 +89,7 @@ const BattlePage = () => {
                     battleCards.map((battleCard: any, index: number) => {
                         return <BattleCardField
                             onCardClick={onCardClick}
+                            onCardDoubleClick={onCardDoubleClick}
                             battleCard={battleCard}
                             gridLength={gridLength}
                             key={index}
@@ -83,20 +98,25 @@ const BattlePage = () => {
                 }
             </BattleField>
 
-            <BattleOverModal
+            <ModalBattleOver
                 heroCard={getHeroCard(battleCards)}
                 isOpen={isOpenBattleOverModal}
                 setIsOpen={setIsOpenBattleOverModal}
                 setGridLength={setGridLength}
             />
 
-            <SecretModal
-                heroCard={getHeroCard(battleCards)}
+            {isOpenSecretModal && <ModalSecretCard
                 battleCards={battleCards}
                 setBattleCards={setBattleCards}
                 isOpen={isOpenSecretModal}
                 setIsOpen={setIsOpenSecretModal}
-            />
+            />}
+
+            {selectedBattleCardForInfo && <ModalBattleCardInfo
+                heroCard={heroCard}
+                selectedBattleCard={selectedBattleCardForInfo}
+                setSelectedBattleCard={setSelectedBattleCardForInfo}
+            />}
         </>)}
     </>
 };
@@ -109,7 +129,6 @@ const BattleField = styled.div`
     justify-content: center;
     align-items: flex-start;
     padding: 30px;
-    //border: 2px solid red;
 `;
 
 export { BattlePage };

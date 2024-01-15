@@ -1,8 +1,9 @@
 export interface PrimaryBattleCardType {
     name: string;
     image: string;
-    secondImage?: string;
+    subImage?: string;
     type: string;
+    subType?: string;
 }
 
 export interface CommonBattleCardType extends PrimaryBattleCardType {
@@ -10,18 +11,34 @@ export interface CommonBattleCardType extends PrimaryBattleCardType {
     index: number;
     level: number;
     isVisible: boolean;
+    active?: boolean;
 }
 
-export interface BattleCardType extends CommonBattleCardType {
+export interface SimpleBattleCardType extends CommonBattleCardType {
     value: number;
-    active?: boolean;
+    expReward: number;
+    // active?: boolean;
     isNew?: boolean;
+}
+
+export interface BattleCardType extends SimpleBattleCardType, ArtifactCardType, HeroBattleCardType {};
+
+export interface ArtifactCardType extends CommonBattleCardType {
+    count: number;
+    stats: Stat[];
+    // active?: boolean;
+    isNew?: boolean;
+}
+
+export interface Stat {
+    name: string;
+    title: string;
+    value: number;
 }
 
 export interface HeroBattleCardType extends CommonBattleCardType {
     health: number;
-    maxHealth: number;
-    healthBoost: number;
+    // healthBoost: number;
     topCardIndex: number | null;
     topBottomIndex: number | null;
     topRightIndex: number | null;
@@ -29,7 +46,11 @@ export interface HeroBattleCardType extends CommonBattleCardType {
     exp: number | any;
     coins: any;
     crystals: number;
-    active: boolean;
+    spheres: number;
+    bossParts: number;
+    // active: boolean;
+    stats: Stat[];
+    artifacts: ArtifactCardType[]
 }
 
 export interface Direction {

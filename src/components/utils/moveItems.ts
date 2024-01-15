@@ -1,4 +1,4 @@
-import {BattleCardType, Direction, HeroBattleCardType} from "./types";
+import {BattleCardType, Direction, HeroBattleCardType} from "../types";
 import {cardHandler, generateBattleCards} from "./utils";
 
 export const addClassForMovingCard = async (battleCard: BattleCardType, className: string) => {

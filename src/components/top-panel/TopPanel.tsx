@@ -2,41 +2,97 @@ import React from 'react'
 import { Progress } from 'semantic-ui-react'
 import styled from "styled-components";
 import {BattleCardType, HeroBattleCardType} from "../types";
-import {getMaxExpForCurrentLever} from "../recalculateHeroStats";
+import {getBossPartProgress, getMaxExpForCurrentLever} from "../utils/recalculateHeroStats";
 
 
 const TopPanel = ({heroCard}: { heroCard: HeroBattleCardType }) => {
     return (
         <TopPanelWrapper>
-            <LevelBar>
-                <img src="icon-level.png" className="level-icon"/>
-                <div className="level-value">{heroCard.level}</div>
-                <Progress value={heroCard.exp} total={getMaxExpForCurrentLever(heroCard)} progress='ratio' indicating />
-            </LevelBar>
-            <CoinsBar>
-                <img src="icon-coins.png" className="coins-icon"/>
-                <div className="coins-value">{heroCard.coins}</div>
-                {/*<div className="coins-value2">{heroCard.coins}</div>*/}
-            </CoinsBar>
-            {/*<CoinsBar>*/}
-            {/*    <img src="icon-crystals.png" className="coins-icon"/>*/}
-            {/*    <div className="coins-value">{heroCard.crystals}</div>*/}
-            {/*    /!*<div className="coins-value2">{heroCard.coins}</div>*!/*/}
-            {/*</CoinsBar>*/}
-            <CoinsBar>
-                <img src="icon-spheres.png" className="coins-icon"/>
-                <div className="coins-value">{heroCard.crystals}</div>
-                {/*<div className="coins-value2">{heroCard.coins}</div>*/}
-            </CoinsBar>
+            <div className="top-side">
+                <LevelBar>
+                    <img src="icon-level.png" className="level-icon"/>
+                    <div className="level-value">{heroCard.level}</div>
+                    <Progress value={heroCard.exp} total={getMaxExpForCurrentLever(heroCard)} progress='ratio' indicating />
+                </LevelBar>
+                <CoinsBar>
+                    <img src="icon-coins.png" className="coins-icon"/>
+                    <div className="coins-value">{heroCard.coins}</div>
+                    {/*<div className="coins-value2">{heroCard.coins}</div>*/}
+                </CoinsBar>
+                {/*<CoinsBar>*/}
+                {/*    <img src="icon-crystals.png" className="coins-icon"/>*/}
+                {/*    <div className="coins-value">{heroCard.crystals}</div>*/}
+                {/*    /!*<div className="coins-value2">{heroCard.coins}</div>*!/*/}
+                {/*</CoinsBar>*/}
+                <CoinsBar>
+                    <img src="icon-spheres.png" className="coins-icon"/>
+                    <div className="coins-value">{heroCard.spheres}</div>
+                </CoinsBar>
+            </div>
+
+            <div className="bottom-side">
+                <BossBar>
+                    <div className="boss-icon-background"></div>
+                    <img src="icon-boss.png" className="boss-icon"/>
+                    <div className="boss-parts">
+                        {/*<div className={getBossPartClasses(heroCard, 1)}></div>*/}
+                        {/*<div className={getBossPartClasses(heroCard, 2)}></div>*/}
+                        {/*<div className={getBossPartClasses(heroCard, 3)}></div>*/}
+                        <Progress percent={getBossPartProgress(heroCard, 1)} indicating />
+                        <Progress percent={25} indicating />
+                        <Progress percent={50} indicating />
+                    </div>
+                </BossBar>
+            </div>
         </TopPanelWrapper>
     )
 };
 
 const TopPanelWrapper = styled.div`
     margin: 10px 30px;
-    display: flex;
     width: 100%;
     font-family: 'MagicalWorld';
+    
+    .top-side, .bottom-side {
+        display: flex;
+        width: 100%;
+        height: max-content;
+    }
+`;
+
+const BossBar = styled.div`
+    position: relative;
+    order: 1;
+    height: 60px;
+    
+    .boss-icon {
+        width: 60px;
+        height: 60px;
+        z-index: 1;
+        position: absolute;
+    }
+    
+    .boss-icon-background {
+        position: absolute;
+        margin: 5px;
+        width: 50px;
+        border-radius: 50px;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        animation: backgroundAnimation 4s infinite linear;
+        z-index: 0;
+
+        @keyframes backgroundAnimation {
+            0%, 100% {
+                background-color: red;
+            }
+            50% {
+                background-color: black;
+            }
+        }
+    }
 `;
 
 const LevelBar = styled.div`
@@ -45,6 +101,7 @@ const LevelBar = styled.div`
     
     .level-icon {
         width: 60px;
+        height: 60px;
         z-index: 1;
     }
 

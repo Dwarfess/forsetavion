@@ -1,37 +1,9 @@
-import {BattleCardType, HeroBattleCardType, PrimaryBattleCardType} from "./types";
+import {ArtifactCardType, BattleCardType, HeroBattleCardType, PrimaryBattleCardType} from "./types";
 
 export const defaultFontSize = 20;
 export const defaultWidth = 450;
 
-export const images = [
-    '1.png',
-    '2.png',
-    '3.png',
-    '4.png',
-    '5.png',
-    '6.png',
-    '7.png',
-    '8.png',
-    '9.png',
-    '10.png',
-    '11.png',
-    '12.png',
-    '13.png',
-    '14.png',
-    '15.png',
-    '16.png',
-    '17.png',
-    '1.png',
-    '2.png',
-    '3.png',
-    '4.png',
-    '5.png',
-    '6.png',
-    '7.png',
-    '8.png',
-    '9.png',
-    '10.png',
-];
+export const symbols = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '←'];
 
 // const DEFAULT_HEALTH = 10;
 
@@ -44,79 +16,64 @@ export const heroCard: HeroBattleCardType = {
     isVisible: true,
     active: true,
     health: 10,
-    maxHealth: 10,
-    healthBoost: 1,
+    // healthBoost: 1,
     exp: 0,
     level: 1,
     coins: 0,
     crystals: 0,
+    spheres: 0,
+    bossParts: 0,
+    stats: [
+        {
+            name: 'maxHealth',
+            title: 'Max. health',
+            value: 10,
+        },
+        {
+            name: 'def',
+            title: 'Def',
+            value: 0,
+        },
+        {
+            name: 'lifeDrain',
+            title: 'Life drain',
+            value: 0,
+        },
+        {
+            name: 'expBoost',
+            title: 'Exp. boost',
+            value: 1,
+        },
+        {
+            name: 'coinBoost',
+            title: 'Coin boost',
+            value: 1,
+        },
+    ],
+    artifacts: [],
     topCardIndex: null,
     topBottomIndex: null,
     topRightIndex: null,
     topLeftIndex: null,
 };
 
-export const enemyCards: PrimaryBattleCardType[] = [
+export const bossPartCards: PrimaryBattleCardType[] = [
+    // {
+    //     name: 'part3',
+    //     image: 'boss-part-3',
+    //     type: 'boss-part',
+    // },
+    // {
+    //     name: 'part4',
+    //     image: 'boss-part-4',
+    //     type: 'boss-part',
+    // },
     {
-        name: 'enemy1',
-        image: 'enemy1.png',
-        type: 'enemy',
-    },
-    {
-        name: 'enemy2',
-        image: 'enemy2.png',
-        type: 'enemy',
-    },
-    {
-        name: 'enemy3',
-        image: 'enemy3.png',
-        type: 'enemy',
-    },
-    {
-        name: 'enemy4',
-        image: 'enemy4.png',
-        type: 'enemy',
-    },
-    {
-        name: 'enemy5',
-        image: 'enemy5.png',
-        type: 'enemy',
-    },
-    {
-        name: 'enemy6',
-        image: 'enemy6.png',
-        type: 'enemy',
-    },
-    {
-        name: 'enemy7',
-        image: 'enemy7.png',
-        type: 'enemy',
-    },
-    {
-        name: 'enemy8',
-        image: 'enemy8.png',
-        type: 'enemy',
-    },
-    {
-        name: 'enemy9',
-        image: 'enemy9.png',
-        type: 'enemy',
-    },
-    {
-        name: 'enemy10',
-        image: 'enemy10.png',
-        type: 'enemy',
-    },
-    {
-        name: 'enemy11',
-        image: 'enemy11.png',
-        type: 'enemy',
-    },
-    {
-        name: 'enemy12',
-        image: 'enemy12.png',
-        type: 'enemy',
-    },
+        name: 'part7',
+        image: 'boss-part-7',
+        subImage: 'boss-part-7',
+        type: 'boss-part',
+    }
 ];
 
 export const newEnemyCards: PrimaryBattleCardType[] = [
@@ -202,29 +159,6 @@ export const newEnemyCards: PrimaryBattleCardType[] = [
     },
 ];
 
-export const potionCards = [
-    {
-        name: 'potion1',
-        image: 'potion1.png',
-        type: 'potion',
-    },
-    {
-        name: 'potion2',
-        image: 'potion2.png',
-        type: 'potion',
-    },
-    {
-        name: 'potion3',
-        image: 'potion3.png',
-        type: 'potion',
-    },
-    {
-        name: 'potion4',
-        image: 'potion4.png',
-        type: 'potion',
-    },
-];
-
 export const newPotionCards = [
     {
         name: 'potion1',
@@ -236,21 +170,26 @@ export const newPotionCards = [
         image: 'potion-2',
         type: 'potion',
     },
-    // {
-    //     name: 'potion3',
-    //     image: 'portal-3',
-    //     type: 'potion',
-    //     types: 'portal'
-    // },
+];
+
+export const superPotionCards = [
     {
         name: 'potion4',
         image: 'potion-4',
-        type: 'potion',
+        type: 'superPotion'
     },
     {
         name: 'potion5',
         image: 'potion-5',
-        type: 'potion',
+        type: 'superPotion',
+    },
+];
+
+export const superCoinsCards = [
+    {
+        name: 'coin-1',
+        image: 'coin-1',
+        type: 'superCoin',
     },
 ];
 
@@ -258,12 +197,12 @@ export const secretCards = [
     {
         name: 'portal',
         image: 'portal-3',
-        secondImage: 'portal-4',
+        subImage: 'portal-4',
         type: 'secret',
     },
 ];
 
-export const equipmentCards = [
+export const artifactCards: any[] = [
     // {
     //     name: 'equipment1',
     //     image: 'equipment-1',
@@ -272,44 +211,61 @@ export const equipmentCards = [
     {
         name: 'equipment2',
         image: 'equipment-2',
-        type: 'equipment',
+        type: 'artifact',
+        count: 1,
+        stats: [
+            {
+                name: 'expBoost',
+                title: 'Exp. boost',
+                value: 0.5,
+            },
+        ],
     },
     {
         name: 'equipment3',
         image: 'equipment-3',
-        type: 'equipment',
+        type: 'artifact',
+        count: 1,
+        stats: [
+            {
+                name: 'maxHealth',
+                title: 'Max. health',
+                value: 2,
+            },
+        ]
     },
-    // {
-    //     name: 'equipment4',
-    //     image: 'equipment-4',
-    //     type: 'equipment',
-    // },
     {
         name: 'equipment5',
         image: 'equipment-5',
-        type: 'equipment',
+        type: 'artifact',
+        count: 1,
+        stats: [
+            {
+                name: 'def',
+                title: 'Def',
+                value: 1,
+            },
+        ]
     }
 ];
 
 export const coinsCards = [
     {
-        name: 'coins-1',
-        image: 'coins-1',
-        type: 'coins',
+        name: 'coin-2',
+        image: 'coin-2',
+        type: 'coin',
     },
     {
-        name: 'coins-2',
-        image: 'coins-2',
-        type: 'coins',
+        name: 'coin-3',
+        image: 'coin-3',
+        type: 'coin',
     },
+];
+
+export const spheresCards = [
     {
-        name: 'coins-3',
-        image: 'coins-3',
-        type: 'coins',
+        name: 'sphere-1',
+        image: 'sphere-1',
+        type: 'sphere',
     },
-    // {
-    //     name: 'coins-4',
-    //     image: 'coins-4',
-    //     type: 'coins',
-    // }
 ];

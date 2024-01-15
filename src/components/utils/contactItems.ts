@@ -1,4 +1,4 @@
-import {BattleCardType} from "./types";
+import {BattleCardType} from "../types";
 
 export const addClassWhenContactCard = async (battleCard: BattleCardType) => {
     const cardEl = document.querySelector(`.battle-card-${battleCard.index}`);

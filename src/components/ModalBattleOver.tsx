@@ -6,9 +6,9 @@ import {
     Modal,
 } from 'semantic-ui-react'
 import styled from "styled-components";
-import {getHeroScore} from "./utils";
+import {getHeroScore} from "./utils/utils";
 
-const BattleOverModal = ({
+const ModalBattleOver = ({
     heroCard,
     isOpen,
     setIsOpen,
@@ -25,15 +25,12 @@ const BattleOverModal = ({
             closeOnEscape={false}
             closeOnDimmerClick={false}
             open={isOpen}
-            // onOpen={() => setIsOpen(true)}
-            // onClose={() => setIsOpen(false)}
-            // trigger={<Button>Show Modal</Button>}
         >
             <ModalHeader>The battle is over</ModalHeader>
             <ModalContent>
                 <p className="level">Level - {heroCard.level} (100 points)</p>
                 <p className="coins">Coins - {heroCard.coins} (5 points)</p>
-                <p className="crystal">Crystals - {heroCard.crystals} (20 points)</p>
+                <p className="crystal">Spheres - {heroCard.spheres} (20 points)</p>
                 <p className="score">Score - {getHeroScore(heroCard)} points</p>
             </ModalContent>
             <ModalActions>
@@ -52,6 +49,17 @@ const ModalWrapper = styled(Modal)`
         background-image: url("battle-over-modal.png");
         background-size: cover;
         padding: 100px;
+        
+        animation: slide-up 1s;
+
+        @keyframes slide-up {
+            0% {
+                transform: scale(0);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
         
         .header, .content, .actions {
             color: #8b0000;
@@ -103,4 +111,4 @@ const ModalWrapper = styled(Modal)`
     }
 `;
 
-export { BattleOverModal };
+export { ModalBattleOver };

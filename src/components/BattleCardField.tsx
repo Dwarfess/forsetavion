@@ -1,18 +1,24 @@
-import {memo, useEffect} from 'react';
+import {memo, useCallback, useEffect} from 'react';
 // @ts-ignore
 import styled from "styled-components";
 
-import {getCardSizeInPercent} from "./utils";
+import {getCardSizeInPercent} from "./utils/utils";
 import {HealthIndicator} from "./HealthIndicator";
 import BattleCardImage from "./BattleCardImage";
+import {LevelIndicator} from "./LevelIndicator";
 
-const BattleCardField = memo(({onCardClick, gridLength, battleCard}: any) => {
+const BattleCardField = memo(({onCardClick, onCardDoubleClick, gridLength, battleCard}: any) => {
 
     useEffect(() => {
         if (battleCard.subType) {
             console.log(battleCard.subType, 'battleCard.subType')
         }
-    }, [])
+    }, []);
+
+    const onDoubleClick = useCallback((e: any) => {
+        e.preventDefault();
+        onCardDoubleClick(battleCard.index);
+    }, [battleCard]);
 
     return <BattleCardFieldContainer
         // @ts-ignore
@@ -21,46 +27,17 @@ const BattleCardField = memo(({onCardClick, gridLength, battleCard}: any) => {
     >
         <BlockWithMargin />
         <BattleCard
+            onContextMenu={onDoubleClick}
             onClick={() => onCardClick(battleCard.index)}
             className={`battle-card-${battleCard.index} ${battleCard.isNew && 'newCard'} dynamic-class-${battleCard.id} `}
             data-type={battleCard.type}
         >
             <HealthIndicator battleCard={battleCard} gridLength={gridLength}/>
             <BattleCardImage battleCard={battleCard}/>
-            {/*<CardImage src={`${battleCard.image}.jpg`} data-type={battleCard.type} className={battleCard.types}/>*/}
+            <LevelIndicator battleCard={battleCard} gridLength={gridLength}/>
         </BattleCard>
     </BattleCardFieldContainer>;
 });
-
-// const CardImage = styled.img`
-//     max-width: ${(props: any) => props['data-type'] === 'hero' ? '100%' : '100%'};
-//     max-height: ${(props: any) => props['data-type'] === 'hero' ? '100%' : '100%'};
-//     border-radius: 5px;
-//
-//     &.portal::before {
-//         content: "";
-//         position: absolute;
-//         width: 100%;
-//         height: 100%;
-//         background-image: url("portal-4.png");
-//         background-size: cover;
-//         -webkit-animation:spin 4s linear infinite;
-//         -moz-animation:spin 4s linear infinite;
-//         animation:spin 4s linear infinite;
-//     }
-//     @-moz-keyframes spin {
-//         100% { -moz-transform: rotate(360deg); }
-//     }
-//     @-webkit-keyframes spin {
-//         100% { -webkit-transform: rotate(360deg); }
-//     }
-//     @keyframes spin {
-//         100% {
-//             -webkit-transform: rotate(360deg);
-//             transform:rotate(360deg);
-//         }
-//     }
-// `;
 
 const BattleCardFieldContainer = styled.div`
     width: ${(props: any) => props['card-size']};
@@ -92,8 +69,7 @@ const BattleCard = styled.div`
     top: 0;
     z-index: 1;
     opacity: 1;
-
-
+    
     // start border animation
     --borderWidth: 2px;
 
@@ -107,7 +83,7 @@ const BattleCard = styled.div`
         //background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
         background-size: 300% 300%;
         position: absolute;
-        z-index: -1;
+        z-index: -2;
         border-radius: 5px;
         animation: animationGradient ${(props: any) => props['data-type'] === 'hero' ? '1s' : '10s'} ease alternate infinite;
     }

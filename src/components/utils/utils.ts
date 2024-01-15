@@ -2,10 +2,9 @@ import {
     heroCard,
     newEnemyCards,
     newPotionCards,
-    equipmentCards,
-    secretCards, coinsCards
-} from "./constants";
-import {BattleCardType, HeroBattleCardType, PrimaryBattleCardType} from "./types";
+    secretCards, coinsCards, spheresCards, superCoinsCards, superPotionCards, artifactCards, bossPartCards
+} from "../constants";
+import {BattleCardType, HeroBattleCardType, PrimaryBattleCardType} from "../types";
 import {
     getBottomCardIndex,
     getLeftCardIndex,
@@ -18,7 +17,6 @@ import {addClassWhenContactCard} from "./contactItems";
 import {recalculateHeroStatsAfterContact} from "./recalculateHeroStats";
 
 export const getBattleCardsWithHero = (gridLength: number): (BattleCardType | HeroBattleCardType)[] => {
-
     const battleCards: (BattleCardType | HeroBattleCardType)[] = generateBattleCards(heroCard.level, gridLength);
 
     battleCards[0] = heroCard;
@@ -29,22 +27,33 @@ export const getBattleCardsWithHero = (gridLength: number): (BattleCardType | He
 export const generateBattleCards = (heroLevel: number, gridLength: number): BattleCardType[] => {
     const battleCards: any[] = [
         ...secretCards,
-        ...newEnemyCards,
-        ...newPotionCards,
-        // ...newPotionCards,
-        ...coinsCards,
-        // ...equipmentCards,
         ...secretCards,
+        ...secretCards,
+        ...secretCards,
+        ...bossPartCards,
+        ...bossPartCards,
+        ...bossPartCards,
+        // ...secretCards,
+        // ...secretCards,
+        // ...secretCards,
+        // ...secretCards,
+        // ...secretCards,
+        // ...secretCards,
+        // ...secretCards,
+        ...newEnemyCards,
         ...newEnemyCards,
         ...newPotionCards,
-        // ...newPotionCards,
+        ...newPotionCards,
+        ...newPotionCards,
         ...coinsCards,
-        // ...equipmentCards,
+        ...coinsCards,
+        ...coinsCards,
     ].map((battleCard: PrimaryBattleCardType) => ({
         ...battleCard,
         id: Math.random().toString(16).slice(2),
         value: getRandomValue(battleCard, heroLevel, gridLength),
         level: heroLevel,
+        expReward: battleCard.type === 'enemy' ? 10 : 0,
         isVisible: true,
     }));
 
@@ -55,6 +64,27 @@ export const generateBattleCards = (heroLevel: number, gridLength: number): Batt
     return battleCards;
 };
 
+export const generateSecretPrizeCard = (secretCard: BattleCardType) => {
+    const battleCards: any[] = [
+        // ...spheresCards,
+        // ...superCoinsCards,
+        // ...superPotionCards,
+        ...artifactCards,
+    ].map((battleCard: PrimaryBattleCardType) => ({
+        ...battleCard,
+        id: Math.random().toString(16).slice(2),
+        value: getRandomValue(battleCard, secretCard.level, 5),
+        level: 1,
+        isVisible: true,
+    }));
+
+    battleCards.sort(() => .5 - Math.random());
+
+    // battleCards.forEach((card: BattleCardType, index: number) => card.index = index);
+
+    return battleCards;
+}
+
 const getRandomValue = (battleCard: PrimaryBattleCardType, heroLevel: number, gridLength: number) => {
     const defaultValue = gridLength;
     const enemyDefaultValue = defaultValue * (1 + ((heroLevel - 1) / 5));
@@ -62,7 +92,10 @@ const getRandomValue = (battleCard: PrimaryBattleCardType, heroLevel: number, gr
     const healthMap: any = {
         enemy: randomHealth(enemyDefaultValue),
         potion: randomHealth(defaultValue * 3),
-        coins: randomHealth(defaultValue * 3),
+        coin: randomHealth(defaultValue * 3),
+        sphere: randomHealth(defaultValue * 3),
+        superPotion: 1000,
+        superCoin: randomHealth(defaultValue * 30),
         // boss:
     };
 
@@ -164,48 +197,7 @@ export const getCardSizeInPercent = (gridLength: number): string => {
 export const getHeroScore = (heroCard: HeroBattleCardType) => {
     const levelPoints = heroCard.level * 100;
     const coinPoints = heroCard.coins * 5;
-    const crystalPoints = heroCard.crystals * 20;
+    const crystalPoints = heroCard.spheres * 20;
 
     return levelPoints + coinPoints + crystalPoints;
-};
-
-export const updateAnswer = (answer: string, symbol: string): string => {
-    if (symbol === '←') {
-        answer = answer.slice(0, -1);
-    } else {
-        answer += symbol;
-    }
-
-    return answer;
-};
-
-export const getEquation = (battleCards: BattleCardType[]) => {
-    const secretCard = battleCards.find((battleCard: BattleCardType) => battleCard.type === 'secret' && battleCard.active);
-    const signs = ['+', '-', '*', '/'];
-    // const randomSignsIndex = randomNumberRange(0, signs.length);
-    // const randomSign = signs[randomSignsIndex];
-
-    console.log(secretCard?.level, 'secretCardLevel *************' )
-    return `${buildTree(secretCard?.level, signs)} = `;
-};
-
-const randomNumberRange = (min: number, max: number): number => {
-    return Math.floor(Math.random() * (max - min) + min);
-};
-
-const buildTree = (numNodes: number = 1, signs: string[]): any => {
-    if (numNodes === 1) return randomNumberRange(1, 10);
-
-    const numLeft = Math.floor(numNodes / 2);
-    const leftSubTree = buildTree(numLeft, signs);
-    const numRight = Math.ceil(numNodes / 2);
-    const rightSubTree = buildTree(numRight, signs);
-
-    const m = randomNumberRange(0, signs.length);
-    const operator = signs[m];
-    return treeNode(leftSubTree, rightSubTree, operator);
-};
-
-const treeNode = (left: number, right: number, operator: string) => {
-    return '(' + left + ' ' + operator + ' ' + right + ')';
 };
