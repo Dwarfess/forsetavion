@@ -8,6 +8,7 @@ export const recalculateHeroStatsAfterContact = (
 ) => {
     const audioMap: any = {
         enemy: 'punch-2',
+        boss: 'punch-2',
         potion: 'blob',
         superPotion: 'blob',
         coin: 'coins',
@@ -15,16 +16,19 @@ export const recalculateHeroStatsAfterContact = (
         equipment: 'punch-2',
         sphere: 'punch-2',
         artifact: 'punch-2',
+        bossPart: 'punch-2',
     };
 
     const recalculateHeroStatsMap: any = {
         enemy: recalculateHeroHealthAfterEnemy,
+        boss: recalculateHeroHealthAfterBoss,
         potion: recalculateHeroHealthAfterPotion,
         superPotion: recalculateHeroHealthAfterPotion,
         coin: recalculateHeroCoins,
         superCoin: recalculateHeroCoins,
         sphere: recalculateHeroSpheres,
         artifact: recalculateHeroArtifact,
+        bossPart: recalculateHeroBossPart,
     };
 
     const recalculateHeroStatsHandler = recalculateHeroStatsMap[selectedCard.type];
@@ -44,6 +48,12 @@ const recalculateHeroHealthAfterEnemy = (heroCard: HeroBattleCardType, selectedC
         heroCard.health = heroHealth;
         recalculateHeroExp(heroCard, selectedCard)
     }
+};
+
+const recalculateHeroHealthAfterBoss = (heroCard: HeroBattleCardType, selectedCard: BattleCardType) => {
+    recalculateHeroHealthAfterEnemy(heroCard, selectedCard);
+
+    heroCard.bossParts = 0;
 };
 
 const recalculateHeroHealthAfterPotion = (heroCard: HeroBattleCardType, selectedCard: BattleCardType) => {
@@ -112,6 +122,10 @@ const recalculateHeroExp = (heroCard: HeroBattleCardType, selectedCard: SimpleBa
     }
 
     heroCard.exp = heroExp;
+};
+
+const recalculateHeroBossPart = (heroCard: HeroBattleCardType) => {
+    heroCard.bossParts++;
 };
 
 export const getRecalculatedExpReward = (expReward: number, heroExpBoostValue: number) => {

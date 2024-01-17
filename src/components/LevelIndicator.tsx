@@ -5,8 +5,9 @@ import {defaultFontSize} from "./constants";
 
 
 const LevelIndicator = ({battleCard, gridLength}: { battleCard: BattleCardType | any, gridLength: number }) => {
+    const cardsWithLevel = ['secret', 'boss'];
     return <LevelIndicatorWrapper data-length={gridLength}>
-        {battleCard.type === "secret" && (<><span className="level-value">{battleCard.level}</span> lvl</>)}
+        {cardsWithLevel.includes(battleCard.type) && (<><span className="level-value">{battleCard.level}</span> lvl</>)}
     </LevelIndicatorWrapper>;
 };
 

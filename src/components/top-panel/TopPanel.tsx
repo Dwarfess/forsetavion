@@ -3,6 +3,7 @@ import { Progress } from 'semantic-ui-react'
 import styled from "styled-components";
 import {BattleCardType, HeroBattleCardType} from "../types";
 import {getBossPartProgress, getMaxExpForCurrentLever} from "../utils/recalculateHeroStats";
+import {ordinaryBossPartsCount} from "../constants";
 
 
 const TopPanel = ({heroCard}: { heroCard: HeroBattleCardType }) => {
@@ -32,15 +33,14 @@ const TopPanel = ({heroCard}: { heroCard: HeroBattleCardType }) => {
 
             <div className="bottom-side">
                 <BossBar>
-                    <div className="boss-icon-background"></div>
+                    {heroCard.bossParts === ordinaryBossPartsCount && (<div className="boss-icon-background"></div>)}
                     <img src="icon-boss.png" className="boss-icon"/>
                     <div className="boss-parts">
-                        {/*<div className={getBossPartClasses(heroCard, 1)}></div>*/}
-                        {/*<div className={getBossPartClasses(heroCard, 2)}></div>*/}
-                        {/*<div className={getBossPartClasses(heroCard, 3)}></div>*/}
                         <Progress percent={getBossPartProgress(heroCard, 1)} indicating />
-                        <Progress percent={25} indicating />
-                        <Progress percent={50} indicating />
+                        <Progress percent={getBossPartProgress(heroCard, 2)} indicating />
+                        <Progress percent={getBossPartProgress(heroCard, 3)} indicating />
+                        <Progress percent={getBossPartProgress(heroCard, 4)} indicating />
+                        <Progress percent={getBossPartProgress(heroCard, 5)} indicating />
                     </div>
                 </BossBar>
             </div>
@@ -93,6 +93,28 @@ const BossBar = styled.div`
             }
         }
     }
+    
+    .boss-parts {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: flex-start;
+        margin-left: 55px;
+        width: 250px;
+
+        .ui.progress {
+            //margin: 5px;
+            width: 17%;
+            height: max-content;
+            margin: 17px 0 0 5px;
+            box-shadow: 0px 0px 10px 3px #0e344d;
+            
+            .bar {
+                background-color: #8b0000 !important;
+                min-width: 0;
+            }
+        }
+    }
 `;
 
 const LevelBar = styled.div`
@@ -122,7 +144,7 @@ const LevelBar = styled.div`
         width: 250px;
         height: max-content;
         margin: 17px 0 0 -7px;
-        box-shadow: 0px 0px 10px 1px #0e344d;
+        box-shadow: 0px 0px 10px 3px #0e344d;
 
         .bar {
             background-color: #0f3e5b !important;

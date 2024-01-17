@@ -1,5 +1,5 @@
 import {BattleCardType} from "../types";
-import {generateSecretPrizeCard, getHeroCard} from "./utils";
+import {generateSecretPrizeCards, getHeroCard} from "./utils";
 
 export const updateAnswer = (answer: string, symbol: string): string => {
     if (symbol === '←') {
@@ -29,7 +29,8 @@ const randomNumberRange = (min: number, max: number): number => {
 
 const buildTreeAndCheck = (level: number, signs: string[]): string => {
     const equation = buildTree(level, signs);
-    if (Number.isInteger(calculateAnswer(equation))) {
+    const answer = calculateAnswer(equation);
+    if (Number.isInteger(answer) && Math.abs(answer) <= 100) {
         return equation;
     } else {
         return buildTreeAndCheck(level, signs);
@@ -59,7 +60,7 @@ export const resetBattleCardsAfterSecret = (battleCards: BattleCardType, isCorre
     if (!secretCard) return '';
 
     if (isCorrectAnswer) {
-        const secretPrizeCard = generateSecretPrizeCard(secretCard)[0];
+        const secretPrizeCard = generateSecretPrizeCards(secretCard)[0];
 
         secretPrizeCard.index = secretCard.index;
         clonedBattleCards[secretCard.index] = secretPrizeCard;

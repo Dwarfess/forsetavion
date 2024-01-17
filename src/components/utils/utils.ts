@@ -2,7 +2,7 @@ import {
     heroCard,
     newEnemyCards,
     newPotionCards,
-    secretCards, coinsCards, spheresCards, superCoinsCards, superPotionCards, artifactCards, bossPartCards
+    secretCards, coinsCards, spheresCards, superCoinsCards, superPotionCards, artifactCards, bossPartCards, bossCards
 } from "../constants";
 import {BattleCardType, HeroBattleCardType, PrimaryBattleCardType} from "../types";
 import {
@@ -33,6 +33,11 @@ export const generateBattleCards = (heroLevel: number, gridLength: number): Batt
         ...bossPartCards,
         ...bossPartCards,
         ...bossPartCards,
+        ...bossPartCards,
+        ...bossPartCards,
+        ...bossPartCards,
+        ...bossPartCards,
+        ...bossPartCards,
         // ...secretCards,
         // ...secretCards,
         // ...secretCards,
@@ -53,7 +58,7 @@ export const generateBattleCards = (heroLevel: number, gridLength: number): Batt
         id: Math.random().toString(16).slice(2),
         value: getRandomValue(battleCard, heroLevel, gridLength),
         level: heroLevel,
-        expReward: battleCard.type === 'enemy' ? 10 : 0,
+        expReward: calculateExpReward(battleCard.type),
         isVisible: true,
     }));
 
@@ -64,7 +69,16 @@ export const generateBattleCards = (heroLevel: number, gridLength: number): Batt
     return battleCards;
 };
 
-export const generateSecretPrizeCard = (secretCard: BattleCardType) => {
+const calculateExpReward = (battleCardType: string) => {
+    const expRewardMap: any = {
+        enemy: 10,
+        boss: 30,
+    };
+
+    return expRewardMap[battleCardType] || 0;
+}
+
+export const generateSecretPrizeCards = (secretCard: BattleCardType) => {
     const battleCards: any[] = [
         // ...spheresCards,
         // ...superCoinsCards,
@@ -83,27 +97,47 @@ export const generateSecretPrizeCard = (secretCard: BattleCardType) => {
     // battleCards.forEach((card: BattleCardType, index: number) => card.index = index);
 
     return battleCards;
-}
+};
+
+export const generateBossCards = (heroLevel: number, gridLength: number) => {
+    const battleCards: any[] = [
+        ...bossCards,
+    ].map((battleCard: PrimaryBattleCardType) => ({
+        ...battleCard,
+        id: Math.random().toString(16).slice(2),
+        value: getRandomValue(battleCard, heroLevel, gridLength),
+        level: heroLevel,
+        expReward: calculateExpReward(battleCard.type),
+        isVisible: true,
+    }));
+
+    battleCards.sort(() => .5 - Math.random());
+
+    return battleCards;
+};
 
 const getRandomValue = (battleCard: PrimaryBattleCardType, heroLevel: number, gridLength: number) => {
     const defaultValue = gridLength;
-    const enemyDefaultValue = defaultValue * (1 + ((heroLevel - 1) / 5));
+    const calculatedValue = defaultValue * (1 + ((heroLevel - 1) / 5));
 
     const healthMap: any = {
-        enemy: randomHealth(enemyDefaultValue),
-        potion: randomHealth(defaultValue * 3),
-        coin: randomHealth(defaultValue * 3),
-        sphere: randomHealth(defaultValue * 3),
+        enemy: getRandomCardValue(calculatedValue),
+        potion: getRandomCardValue(defaultValue * 2),
+        coin: getRandomCardValue(calculatedValue),
+        sphere: getRandomCardValue(calculatedValue),
         superPotion: 1000,
-        superCoin: randomHealth(defaultValue * 30),
-        // boss:
+        superCoin: getRandomCardValue(calculatedValue * 10),
+        boss: getBossValue(heroLevel, gridLength),
     };
 
     // const limitedValue = battleCard.type === 'enemy' ? enemyDefaultHealth : 10;
     return healthMap[battleCard.type] || 0;
 };
 
-const randomHealth = (health: number) => Math.floor(Math.random() * health) + 1;
+const getRandomCardValue = (value: number) => Math.floor(Math.random() * value) + 1;
+const getBossValue = (heroLevel: number, gridLength: number) => {
+    return (heroLevel + gridLength - 2) * 2 ;
+};
 
 export const getHeroCard = (battleCards: BattleCardType[]): any => {
     return battleCards.find((card: BattleCardType) => card.type === 'hero');

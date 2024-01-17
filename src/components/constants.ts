@@ -6,6 +6,7 @@ export const defaultWidth = 450;
 export const symbols = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '←'];
 
 // const DEFAULT_HEALTH = 10;
+export const ordinaryBossPartsCount = 5;
 
 export const heroCard: HeroBattleCardType = {
     id: Math.random().toString(16).slice(2),
@@ -72,26 +73,29 @@ export const bossPartCards: PrimaryBattleCardType[] = [
         name: 'part7',
         image: 'boss-part-7',
         subImage: 'boss-part-7',
-        type: 'boss-part',
+        type: 'bossPart',
     }
 ];
 
+export const bossCards: any = [
+    {
+        name: 'boss1',
+        image: 'boss-1',
+        type: 'boss',
+    },
+    {
+        name: 'boss2',
+        image: 'boss-2',
+        type: 'boss',
+    },
+    {
+        name: 'boss3',
+        image: 'boss-3',
+        type: 'boss',
+    },
+];
+
 export const newEnemyCards: PrimaryBattleCardType[] = [
-    {
-        name: 'enemy1',
-        image: 'beast-1',
-        type: 'enemy',
-    },
-    {
-        name: 'enemy2',
-        image: 'beast-2',
-        type: 'enemy',
-    },
-    {
-        name: 'enemy3',
-        image: 'beast-3',
-        type: 'enemy',
-    },
     {
         name: 'enemy4',
         image: 'beast-4',

@@ -6,7 +6,7 @@ const BattleCardImage = ({battleCard}: {battleCard: BattleCardType}) => {
     // const resolution = useMemo(() => battleCard.type === 'boss-part' ? 'png' : 'jpg', [battleCard]);
 
     return <>
-        {battleCard.type === 'boss-part'
+        {battleCard.type === 'bossPart'
             ? <CardImageBackground />
             : (<CardImage src={`${battleCard.image}.jpg`} data-type={battleCard.type}/>)
         }

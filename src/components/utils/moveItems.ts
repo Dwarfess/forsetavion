@@ -1,5 +1,7 @@
 import {BattleCardType, Direction, HeroBattleCardType} from "../types";
-import {cardHandler, generateBattleCards} from "./utils";
+import {cardHandler, generateBattleCards, generateBossCards} from "./utils";
+import {ordinaryBossPartsCount} from "../constants";
+import {BattleCardField} from "../BattleCardField";
 
 export const addClassForMovingCard = async (battleCard: BattleCardType, className: string) => {
     const transformDuration = 300;
@@ -23,12 +25,48 @@ export const moveBattleCards = async(
     battleCards: BattleCardType[],
     gridLength: number
 ):Promise<boolean> => {
-    const newBattleCards = generateBattleCards(heroCard.level, gridLength);
     hideSelectedCard(selectedCardIndex);
+    const selectedCardType = battleCards[selectedCardIndex].type;
     const calcLastCardIndex = await moveBattleCard(heroCard.index, selectedCardIndex, battleCards, gridLength);
-    newBattleCards[calcLastCardIndex].isNew = true;
-    battleCards[calcLastCardIndex] = newBattleCards[calcLastCardIndex];
+    const newBattleCard = defineNewBattleCard(heroCard, selectedCardType, battleCards, gridLength);
+    newBattleCard.index = calcLastCardIndex;
+    newBattleCard.isNew = true;
+
+    battleCards[calcLastCardIndex] = newBattleCard;
+
     return true;
+};
+
+const defineNewBattleCard = (
+    heroCard: HeroBattleCardType,
+    selectedCardType: string,
+    battleCards: BattleCardType[],
+    gridLength: number,
+) => {
+    let newBattleCards;
+
+    // console.log('heroCard.bossParts', heroCard.bossParts);
+    // console.log('ordinaryBossPartsCount', ordinaryBossPartsCount);
+    // console.log('selectedCard.type', selectedCard.type);
+    // console.log('selectedCard.type === bossPart', selectedCard.type === 'bossPart');
+    // console.log('heroCard.bossParts === ordinaryBossPartsCount', heroCard.bossParts === ordinaryBossPartsCount);
+    // console.log('result', heroCard.bossParts === ordinaryBossPartsCount && selectedCard.type === 'bossPart');
+
+    if (heroCard.bossParts === ordinaryBossPartsCount && selectedCardType === 'bossPart') {
+        newBattleCards = generateBossCards(heroCard.level, gridLength);
+    } else {
+        const bossPartsCount =
+            battleCards.filter((battleCard: BattleCardType) => battleCard.type === 'bossPart').length
+            + heroCard.bossParts;
+
+        newBattleCards = generateBattleCards(heroCard.level, gridLength);
+
+        if (bossPartsCount === ordinaryBossPartsCount) {
+            newBattleCards = newBattleCards.filter((newBattleCard: BattleCardType) => newBattleCard.type !== 'bossPart');
+        }
+    }
+
+    return newBattleCards[0];
 }
 
 export const moveBattleCard = async (

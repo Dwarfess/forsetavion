@@ -30,7 +30,7 @@ const HealthIndicator = ({battleCard, gridLength}: { battleCard: BattleCardType 
                 <span className="coinsAmount">{battleCard.value}</span>
             </>
         )}
-        {battleCard.type === 'enemy' && (
+        {(battleCard.type === 'enemy' || battleCard.type === 'boss') && (
             <>
                 <img src="indicator-might.png" className="might"/>
                 <span className="mightAmount">{battleCard.value}</span>
