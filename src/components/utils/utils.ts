@@ -225,7 +225,7 @@ const resetBattleCards = async (
 };
 
 export const getCardSizeInPercent = (gridLength: number): string => {
-    return `${100/gridLength - 2}%`;
+    return `${100/gridLength}%`;
 };
 
 export const getHeroScore = (heroCard: HeroBattleCardType) => {

@@ -122,8 +122,8 @@ const BattlePage = () => {
 };
 
 const BattleField = styled.div`
-    width: 100%;
-    //height: 700px;
+    width: 700px;
+    height: 700px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;

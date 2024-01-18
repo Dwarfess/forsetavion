@@ -20,28 +20,41 @@ const BattleCardField = memo(({onCardClick, onCardDoubleClick, gridLength, battl
         onCardDoubleClick(battleCard.index);
     }, [battleCard]);
 
-    return <BattleCardFieldContainer
-        // @ts-ignore
-        tabIndex="0"
-        card-size={getCardSizeInPercent(gridLength)}
-    >
-        <BlockWithMargin />
-        <BattleCard
-            onContextMenu={onDoubleClick}
-            onClick={() => onCardClick(battleCard.index)}
-            className={`battle-card-${battleCard.index} ${battleCard.isNew && 'newCard'} dynamic-class-${battleCard.id} `}
-            data-type={battleCard.type}
-        >
-            <HealthIndicator battleCard={battleCard} gridLength={gridLength}/>
-            <BattleCardImage battleCard={battleCard}/>
-            <LevelIndicator battleCard={battleCard} gridLength={gridLength}/>
-        </BattleCard>
-    </BattleCardFieldContainer>;
+    return <BattleCardFieldWrapper
+            // @ts-ignore
+            tabIndex="0"
+            card-size={getCardSizeInPercent(gridLength)}>
+        <BattleCardFieldContainer>
+            {/*<BlockWithMargin />*/}
+            <BattleCard
+                onContextMenu={onDoubleClick}
+                onClick={() => onCardClick(battleCard.index)}
+                className={`battle-card-${battleCard.index} ${battleCard.isNew && 'newCard'} dynamic-class-${battleCard.id} ${battleCard.type === 'hero' ? 'hero' : ''}`}
+                data-type={battleCard.type}
+            >
+                <HealthIndicator battleCard={battleCard} gridLength={gridLength}/>
+                <BattleCardImage battleCard={battleCard}/>
+                <LevelIndicator battleCard={battleCard} gridLength={gridLength}/>
+            </BattleCard>
+        </BattleCardFieldContainer>
+    </BattleCardFieldWrapper>;
 });
 
-const BattleCardFieldContainer = styled.div`
+const BattleCardFieldWrapper = styled.div`
     width: ${(props: any) => props['card-size']};
-    margin: 5px;
+    height: ${(props: any) => props['card-size']};
+    position: relative;
+    padding: 5px;
+    z-index: 0;
+
+    overflow: hidden;
+    //border: 1px solid red;
+`;
+
+const BattleCardFieldContainer = styled.div`
+    width: 100%;
+    height: 100%;
+    //margin: 5px;
     outline: none;
     position: relative;
     border-radius: 8px;
@@ -49,7 +62,7 @@ const BattleCardFieldContainer = styled.div`
 `;
 
 const BlockWithMargin = styled.div`
-    margin-top: 100%;
+    //margin-top: 100%;
 `;
 
 const BattleCard = styled.div`
@@ -65,7 +78,7 @@ const BattleCard = styled.div`
     justify-content: center;
     outline: none;
     position: absolute;
-    background-color: #e7f2fb;
+    //background-color: #e7f2fb;
     top: 0;
     z-index: 1;
     opacity: 1;
@@ -73,6 +86,63 @@ const BattleCard = styled.div`
     // start border animation
     --borderWidth: 2px;
 
+    &.hero {
+        //overflow: hidden;
+        &:before {
+            content: "";
+            height: calc(100% + var(--borderWidth) * 3);
+            width: calc(100% + var(--borderWidth) * 3);
+            background-image: conic-gradient(
+                    transparent,
+                    transparent,
+                    transparent,
+                    #d400d4
+            );
+            //background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+            background-size: 300% 300%;
+            position: absolute;
+            z-index: -2;
+            border-radius: 5px;
+            animation: animate 4s linear infinite;
+        }
+        
+        &:after {
+            content: "";
+            height: calc(100% + var(--borderWidth) * 3);
+            width: calc(100% + var(--borderWidth) * 3);
+            background-image: conic-gradient(
+                    transparent,
+                    transparent,
+                    transparent,
+                    #00ccff
+            );
+            //background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+            background-size: 300% 300%;
+            position: absolute;
+            z-index: -2;
+            border-radius: 5px;
+            animation: reverseAnimate 4s linear infinite;
+        }
+    }
+
+    @keyframes animate {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+    
+    @keyframes reverseAnimate {
+        0% {
+            transform: rotate(360deg);
+        }
+        100% {
+            transform: rotate(0deg);
+        }
+    }
+    
     &:after {
         content: "";
         height: calc(100% + var(--borderWidth) * 2);
