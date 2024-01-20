@@ -61,7 +61,7 @@ const defineNewBattleCard = (
 
         newBattleCards = generateBattleCards(heroCard.level, gridLength);
 
-        if (bossPartsCount === ordinaryBossPartsCount) {
+        if (bossPartsCount >= ordinaryBossPartsCount) {
             newBattleCards = newBattleCards.filter((newBattleCard: BattleCardType) => newBattleCard.type !== 'bossPart');
         }
     }

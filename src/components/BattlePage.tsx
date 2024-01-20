@@ -8,6 +8,7 @@ import {TopPanel} from "./top-panel/TopPanel";
 import {ModalBattleOver} from "./ModalBattleOver";
 import {ModalSecretCard} from "./ModalSecretCard";
 import {ModalBattleCardInfo} from "./card-info/ModalBattleCardInfo";
+import {BottomPanel} from "./bottom-panel/BottomPanel";
 
 const BattlePage = () => {
     const [battleCards, setBattleCards] = useState<any[]>([]);
@@ -97,7 +98,7 @@ const BattlePage = () => {
                     })
                 }
             </BattleField>
-
+            <BottomPanel heroCard={getHeroCard(battleCards)}/>
             <ModalBattleOver
                 heroCard={getHeroCard(battleCards)}
                 isOpen={isOpenBattleOverModal}
