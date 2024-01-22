@@ -8,6 +8,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-image: url('../public/cave2.jpg') !important;
   background-size: cover !important;
+  /*font-size: 8px !important;*/
 }
 
 code {

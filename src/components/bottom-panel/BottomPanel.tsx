@@ -4,10 +4,13 @@ import {BattleCardType, HeroBattleCardType} from "../types";
 import {SkillPanel} from "./SkillPanel";
 
 
-const BottomPanel = ({heroCard}: { heroCard: HeroBattleCardType }) => {
+const BottomPanel = ({
+    battleCards,
+    setBattleCards
+}: any) => {
     return (
         <BottomPanelWrapper>
-            <SkillPanel heroCard={heroCard}/>
+            <SkillPanel battleCards={battleCards} setBattleCards={setBattleCards}/>
         </BottomPanelWrapper>
     )
 };

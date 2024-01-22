@@ -15,6 +15,7 @@ import {
 } from "./moveItems";
 import {addClassWhenContactCard} from "./contactItems";
 import {recalculateHeroStatsAfterContact} from "./recalculateHeroStats";
+import {getActiveSkill} from "../bottom-panel/skillUtils";
 
 export const getBattleCardsWithHero = (gridLength: number): (BattleCardType | HeroBattleCardType)[] => {
     const battleCards: (BattleCardType | HeroBattleCardType)[] = generateBattleCards(heroCard.level, gridLength);
@@ -58,6 +59,8 @@ export const generateBattleCards = (heroLevel: number, gridLength: number): Batt
         id: Math.random().toString(16).slice(2),
         value: getRandomValue(battleCard, heroLevel, gridLength),
         level: heroLevel,
+        skills: [],
+        effects: [],
         expReward: calculateExpReward(battleCard.type),
         isVisible: true,
     }));
@@ -152,8 +155,13 @@ export const cardHandler = (
     setIsOpenBattleOverModal: (val: boolean) => void,
     setIsOpenSecretModal: (val: boolean) => void,
 ) => {
-    const clonedBattleCards = structuredClone(battleCards);
+    const cardLength = gridLength * gridLength;
+    if (selectedCardIndex < 0 || selectedCardIndex > cardLength) {
+        setIsMoving(false);
+        return;
+    }
 
+    const clonedBattleCards = structuredClone(battleCards);
     const heroCard = getHeroCard(clonedBattleCards);
 
     heroCard.topCardIndex = getTopCardIndex(heroCard.index, gridLength);
@@ -168,6 +176,8 @@ export const cardHandler = (
         heroCard.leftCardIndex
     ];
 
+    const activeSkill = getActiveSkill(heroCard);
+
     if (allowedIndexes.includes(selectedCardIndex)) {
         resetBattleCards(
             heroCard,
@@ -180,6 +190,7 @@ export const cardHandler = (
             setIsOpenSecretModal
         );
     } else {
+
         setIsMoving(false);
     }
 };

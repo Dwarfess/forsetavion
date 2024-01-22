@@ -17,6 +17,8 @@ export interface CommonBattleCardType extends PrimaryBattleCardType {
 export interface SimpleBattleCardType extends CommonBattleCardType {
     value: number;
     expReward: number;
+    skills: Skill[];
+    effects: any[];
     // active?: boolean;
     isNew?: boolean;
 }
@@ -36,6 +38,18 @@ export interface Stat {
     value: number;
 }
 
+export interface Skill {
+    name: string;
+    description: string;
+    image: string;
+    type: string;
+    level: number;
+    maxCoolDown: number;
+    coolDown: number;
+    nearbyCardsOnly: boolean;
+    active: boolean;
+}
+
 export interface HeroBattleCardType extends CommonBattleCardType {
     health: number;
     // healthBoost: number;
@@ -50,6 +64,8 @@ export interface HeroBattleCardType extends CommonBattleCardType {
     bossParts: number;
     // active: boolean;
     stats: Stat[];
+    skills: Skill[];
+    effects: any[];
     artifacts: ArtifactCardType[]
 }
 

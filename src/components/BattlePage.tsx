@@ -14,6 +14,7 @@ const BattlePage = () => {
     const [battleCards, setBattleCards] = useState<any[]>([]);
     const [heroCard, setHeroCard] = useState<any>(null);
     const [selectedBattleCardForInfo, setSelectedBattleCardForInfo] = useState<any>(null);
+    // const [activeHeroSkill, setActiveHeroSkill] = useState<any>(null);
     const [gridLength, setGridLength] = useState(0);
     const [isMoving, setIsMoving] = useState(false); // block/unblock extra click
 
@@ -68,8 +69,18 @@ const BattlePage = () => {
 
         setIsMoving(true);
         e.stopPropagation();
-        keyDownHandler(
+        const selectedCardIndex = keyDownHandler(
             e.key,
+            battleCards,
+            setBattleCards,
+            gridLength,
+            // setIsMoving,
+            // setIsOpenBattleOverModal,
+            // setIsOpenSecretModal
+        );
+
+        cardHandler(
+            selectedCardIndex,
             battleCards,
             setBattleCards,
             gridLength,
@@ -98,7 +109,7 @@ const BattlePage = () => {
                     })
                 }
             </BattleField>
-            <BottomPanel heroCard={getHeroCard(battleCards)}/>
+            <BottomPanel battleCards={battleCards} setBattleCards={setBattleCards}/>
             <ModalBattleOver
                 heroCard={getHeroCard(battleCards)}
                 isOpen={isOpenBattleOverModal}
@@ -129,7 +140,7 @@ const BattleField = styled.div`
     flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start;
-    padding: 30px;
+    margin: 30px;
 `;
 
 export { BattlePage };

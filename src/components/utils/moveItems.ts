@@ -44,14 +44,6 @@ const defineNewBattleCard = (
     gridLength: number,
 ) => {
     let newBattleCards;
-
-    // console.log('heroCard.bossParts', heroCard.bossParts);
-    // console.log('ordinaryBossPartsCount', ordinaryBossPartsCount);
-    // console.log('selectedCard.type', selectedCard.type);
-    // console.log('selectedCard.type === bossPart', selectedCard.type === 'bossPart');
-    // console.log('heroCard.bossParts === ordinaryBossPartsCount', heroCard.bossParts === ordinaryBossPartsCount);
-    // console.log('result', heroCard.bossParts === ordinaryBossPartsCount && selectedCard.type === 'bossPart');
-
     if (heroCard.bossParts === ordinaryBossPartsCount && selectedCardType === 'bossPart') {
         newBattleCards = generateBossCards(heroCard.level, gridLength);
     } else {
@@ -183,9 +175,9 @@ export const keyDownHandler = (
     battleCards: BattleCardType[],
     setBattleCards: (item: BattleCardType[]) => void,
     gridLength: number,
-    setIsMoving: (val: boolean) => void,
-    setIsOpenBattleOverModal: (val: boolean) => void,
-    setIsOpenSecretModal: (val: boolean) => void,
+    // setIsMoving: (val: boolean) => void,
+    // setIsOpenBattleOverModal: (val: boolean) => void,
+    // setIsOpenSecretModal: (val: boolean) => void,
 ) => {
     const allowedKeys = ['ArrowRight', 'ArrowLeft', 'ArrowUp', 'ArrowDown'];
     if (!allowedKeys.includes(key)) return;
@@ -199,18 +191,19 @@ export const keyDownHandler = (
         ArrowDown: () => heroCardIndex + gridLength,
     };
 
-    const selectedCardIndex = keyMap[key]();
-    const cardLength = gridLength * gridLength;
-
-    if (selectedCardIndex >= 0 && selectedCardIndex < cardLength) {
-        cardHandler(
-            selectedCardIndex,
-            battleCards,
-            setBattleCards,
-            gridLength,
-            setIsMoving,
-            setIsOpenBattleOverModal,
-            setIsOpenSecretModal
-        );
-    }
+    return keyMap[key]();
+    // const selectedCardIndex = keyMap[key]();
+    // const cardLength = gridLength * gridLength;
+    //
+    // if (selectedCardIndex >= 0 && selectedCardIndex < cardLength) {
+    //     cardHandler(
+    //         selectedCardIndex,
+    //         battleCards,
+    //         setBattleCards,
+    //         gridLength,
+    //         setIsMoving,
+    //         setIsOpenBattleOverModal,
+    //         setIsOpenSecretModal
+    //     );
+    // }
 };

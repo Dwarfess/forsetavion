@@ -51,6 +51,42 @@ export const heroCard: HeroBattleCardType = {
             value: 1,
         },
     ],
+    skills: [
+        {
+            name: 'light-ray',
+            description: '',
+            image: 'skill-light-ray',
+            type: 'skill',
+            level: 1,
+            maxCoolDown: 10,
+            coolDown: 5,
+            nearbyCardsOnly: true,
+            active: false,
+        },
+        {
+            name: 'poison',
+            description: '',
+            image: 'skill-poison',
+            type: 'skill',
+            level: 1,
+            maxCoolDown: 10,
+            coolDown: 0,
+            nearbyCardsOnly: true,
+            active: false,
+        },
+        {
+            name: 'ice-balls',
+            description: '',
+            image: 'skill-ice-balls',
+            type: 'skill',
+            level: 1,
+            maxCoolDown: 10,
+            coolDown: 0,
+            nearbyCardsOnly: false,
+            active: false,
+        }
+    ],
+    effects: [],
     artifacts: [],
     topCardIndex: null,
     topBottomIndex: null,
@@ -82,16 +118,19 @@ export const bossCards: any = [
         name: 'boss1',
         image: 'boss-1',
         type: 'boss',
+        skills: []
     },
     {
         name: 'boss2',
         image: 'boss-2',
         type: 'boss',
+        skills: []
     },
     {
         name: 'boss3',
         image: 'boss-3',
         type: 'boss',
+        skills: []
     },
 ];
 

@@ -1,17 +1,17 @@
 import React, {useMemo} from 'react';
 import styled from "styled-components";
-import {BattleCardType} from "./types";
+import {BattleCardType, Skill} from "./types";
 
-const BattleCardImage = ({battleCard}: {battleCard: BattleCardType}) => {
+const BattleCardImage = ({battleCard, radius = 5}: {battleCard: BattleCardType | any, radius?: number}) => {
     // const resolution = useMemo(() => battleCard.type === 'boss-part' ? 'png' : 'jpg', [battleCard]);
 
     return <>
         {battleCard.type === 'bossPart'
             ? <CardImageBackground />
-            : (<CardImage src={`${battleCard.image}.jpg`} data-type={battleCard.type}/>)
+            : (<CardImage src={`${battleCard.image}.jpg`} data-type={battleCard.type} data-radius={radius}/>)
         }
         {battleCard.subImage && (
-            <CardImage src={`${battleCard.subImage}.png`} className={battleCard.type}/>
+            <CardImage src={`${battleCard.subImage}.png`} className={battleCard.type} data-radius={radius}/>
         )}
     </>;
 };
@@ -37,14 +37,9 @@ const CardImageBackground = styled.div`
 `;
 
 const CardImage = styled.img`
-    max-width: ${(props: any) => props['data-type'] === 'hero' ? '100%' : '100%'};
-    max-height: ${(props: any) => props['data-type'] === 'hero' ? '100%' : '100%'};
-    border-radius: 5px;
-    //z-index: 1;
-    //
-    //&:last-of-type {
-    //    z-index: 2;
-    //}
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: ${(props: any) => props['data-radius']}px;
 
     &.secret {
         position: absolute;
