@@ -1,7 +1,5 @@
 import {useEffect, useState} from "react";
 import styled from "styled-components";
-import {cardHandler, getBattleCardsWithHero, getHeroCard} from "./utils/utils";
-import { keyDownHandler} from "./utils/moveItems";
 import { BattleCardField } from "./BattleCardField";
 import {GridLengthSwitcher} from "./GridLengthSwitcher";
 import {TopPanel} from "./top-panel/TopPanel";
@@ -9,6 +7,12 @@ import {ModalBattleOver} from "./ModalBattleOver";
 import {ModalSecretCard} from "./ModalSecretCard";
 import {ModalBattleCardInfo} from "./card-info/ModalBattleCardInfo";
 import {BottomPanel} from "./bottom-panel/BottomPanel";
+import {
+    cardHandler,
+    keyDownHandler,
+    getBattleCardsWithHero,
+    getHeroCard
+} from "./utils";
 
 const BattlePage = () => {
     const [battleCards, setBattleCards] = useState<any[]>([]);

@@ -3,3 +3,5 @@ export * from './contactItems';
 export * from './moveItems';
 export * from './recalculateHeroStats';
 export * from './secretUtils';
+export * from './skillUtils';
+export * from './cardUtils';

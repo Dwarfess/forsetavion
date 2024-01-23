@@ -13,6 +13,7 @@ const BattleCardImage = ({battleCard, radius = 5}: {battleCard: BattleCardType |
         {battleCard.subImage && (
             <CardImage src={`${battleCard.subImage}.png`} className={battleCard.type} data-radius={radius}/>
         )}
+        <CardImageErrorBackground className="card-image-error-background" />
     </>;
 };
 
@@ -34,6 +35,22 @@ const CardImageBackground = styled.div`
             background-color: black;
         }
     }
+`;
+
+const CardImageErrorBackground = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 5px;
+
+    background: rgba(255, 0, 0, 0.45);
+    z-index: 5;
+    
+    display: none;
+    
+    &.card-image-error-background.error { display: block }
 `;
 
 const CardImage = styled.img`

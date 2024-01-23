@@ -1,10 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
-import {BattleCardType, HeroBattleCardType, Skill} from "../types";
+import {
+    getHeroCard,
+    getActiveSkill,
+    getCardSkills,
+    getSkillClasses,
+    getUpdatedBattleCardsWithSkills
+} from "../utils";
+import {Skill} from "../types";
 import BattleCardImage from "../BattleCardImage";
-import {getActiveSkill, getCardSkills, getSkillClasses, getUpdatedBattleCardsWithSkills} from "./skillUtils";
-import {getHeroCard} from "../utils";
-
 
 const SkillPanel = ({
     battleCards,
@@ -13,7 +17,6 @@ const SkillPanel = ({
     const [activeSkill, setActiveSkill] = useState<any>(null);
 
     const onItemClick = (selectedSkill: Skill) => {
-        // if (selectedSkill.coolDown) return;
         setBattleCards(getUpdatedBattleCardsWithSkills(battleCards, selectedSkill));
     }
 

@@ -61,7 +61,7 @@ const BattleCardFieldWrapperForAnimation = styled.div`
     &.newCard {
         animation: slide-in 0.5s;
     }
-
+    
     // contact card 
     &.contactItem {
         animation: hit 1s ease-in-out infinite alternate;

@@ -1,6 +1,6 @@
 import {ArtifactCardType, BattleCardType, HeroBattleCardType, SimpleBattleCardType, Stat} from "../types";
 import {addClassWhenContactCard} from "./contactItems";
-import {heroCard} from "../constants";
+import {defaultHeroCard} from "../constants";
 
 export const recalculateHeroStatsAfterContact = (
     heroCard: HeroBattleCardType,
@@ -105,7 +105,7 @@ const recalculateHeroArtifact = (heroCard: HeroBattleCardType, selectedCard: Bat
     recalculateHeroStatAfterAddArtifact(heroCard, selectedCard, 'coinBoost');
 };
 
-const recalculateHeroExp = (heroCard: HeroBattleCardType, selectedCard: SimpleBattleCardType) => {
+export const recalculateHeroExp = (heroCard: HeroBattleCardType, selectedCard: SimpleBattleCardType) => {
     if (heroCard.health <= 0) return;
 
     const maxLevelExp = getMaxExpForCurrentLever(heroCard);

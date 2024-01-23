@@ -7,7 +7,23 @@ export const addClassWhenContactCard = async (battleCard: BattleCardType) => {
 
     await new Promise<void>((resolve) => setTimeout(() => {
         resolve();
-    }, 500));
+        // @ts-ignore
+        cardEl.classList.remove('contactItem', battleCard.type === 'enemy' ? 'contactEnemy' : 'contactPotion');
+    }, 600));
+
+    return true;
+};
+
+export const addClassErrorWhenContactCard = async (battleCard: BattleCardType) => {
+    const cardEl = document.querySelector(`.battle-card-${battleCard.index} .card-image-error-background`);
+    // @ts-ignore
+    cardEl.classList.add('error');
+
+    await new Promise<void>((resolve) => setTimeout(() => {
+        resolve();
+        // @ts-ignore
+        cardEl.classList.remove('error');
+    }, 300));
 
     return true;
 };

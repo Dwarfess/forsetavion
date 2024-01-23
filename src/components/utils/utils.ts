@@ -1,23 +1,13 @@
 import {
-    heroCard,
+    defaultHeroCard,
     newEnemyCards,
     newPotionCards,
     secretCards, coinsCards, spheresCards, superCoinsCards, superPotionCards, artifactCards, bossPartCards, bossCards
 } from "../constants";
-import {BattleCardType, HeroBattleCardType, PrimaryBattleCardType} from "../types";
-import {
-    getBottomCardIndex,
-    getLeftCardIndex,
-    getRightCardIndex,
-    getTopCardIndex, hideSelectedCard,
-    moveBattleCard, moveBattleCards,
-    // resetBattleCard
-} from "./moveItems";
-import {addClassWhenContactCard} from "./contactItems";
-import {recalculateHeroStatsAfterContact} from "./recalculateHeroStats";
-import {getActiveSkill} from "../bottom-panel/skillUtils";
+import {BattleCardType, HeroBattleCardType, PrimaryBattleCardType, Skill} from "../types";
 
 export const getBattleCardsWithHero = (gridLength: number): (BattleCardType | HeroBattleCardType)[] => {
+    const heroCard = defaultHeroCard;
     const battleCards: (BattleCardType | HeroBattleCardType)[] = generateBattleCards(heroCard.level, gridLength);
 
     battleCards[0] = heroCard;
@@ -142,99 +132,6 @@ const getBossValue = (heroLevel: number, gridLength: number) => {
     return (heroLevel + gridLength - 2) * 2 ;
 };
 
-export const getHeroCard = (battleCards: BattleCardType[]): any => {
-    return battleCards.find((card: BattleCardType) => card.type === 'hero');
-}
-
-export const cardHandler = (
-    selectedCardIndex: number,
-    battleCards: BattleCardType[],
-    setBattleCards: any,
-    gridLength: number,
-    setIsMoving: (val: boolean) => void,
-    setIsOpenBattleOverModal: (val: boolean) => void,
-    setIsOpenSecretModal: (val: boolean) => void,
-) => {
-    const cardLength = gridLength * gridLength;
-    if (selectedCardIndex < 0 || selectedCardIndex > cardLength) {
-        setIsMoving(false);
-        return;
-    }
-
-    const clonedBattleCards = structuredClone(battleCards);
-    const heroCard = getHeroCard(clonedBattleCards);
-
-    heroCard.topCardIndex = getTopCardIndex(heroCard.index, gridLength);
-    heroCard.bottomCardIndex = getBottomCardIndex(heroCard.index, gridLength);
-    heroCard.rightCardIndex = getRightCardIndex(heroCard.index, gridLength);
-    heroCard.leftCardIndex = getLeftCardIndex(heroCard.index, gridLength);
-
-    const allowedIndexes: any[] = [
-        heroCard.topCardIndex,
-        heroCard.bottomCardIndex,
-        heroCard.rightCardIndex,
-        heroCard.leftCardIndex
-    ];
-
-    const activeSkill = getActiveSkill(heroCard);
-
-    if (allowedIndexes.includes(selectedCardIndex)) {
-        resetBattleCards(
-            heroCard,
-            selectedCardIndex,
-            clonedBattleCards,
-            gridLength,
-            setBattleCards,
-            setIsMoving,
-            setIsOpenBattleOverModal,
-            setIsOpenSecretModal
-        );
-    } else {
-
-        setIsMoving(false);
-    }
-};
-
-const resetBattleCards = async (
-    heroCard: HeroBattleCardType,
-    selectedCardIndex: number,
-    battleCards: BattleCardType[],
-    gridLength: number,
-    setBattleCards: (item: BattleCardType[]) => void,
-    setIsMoving: (val: boolean) => void,
-    setIsOpenBattleOverModal: (val: boolean) => void,
-    setIsOpenSecretModal: (val: boolean) => void,
-) => {
-    const selectedCard = battleCards[selectedCardIndex];
-
-    if (selectedCard.type === 'secret') {
-        selectedCard.active = true;
-
-        setIsMoving(false);
-        setBattleCards(battleCards);
-        setIsOpenSecretModal(true);
-
-        return;
-    }
-
-    recalculateHeroStatsAfterContact(heroCard, selectedCard);
-    await addClassWhenContactCard(selectedCard);
-    setBattleCards(battleCards);
-
-    if (heroCard.health === 0) {
-        setIsMoving(false);
-        setIsOpenBattleOverModal(true);
-
-        return;
-    }
-
-    battleCards = structuredClone(battleCards);
-    await moveBattleCards(heroCard, selectedCardIndex, battleCards, gridLength);
-
-    setBattleCards(battleCards);
-    setIsMoving(false);
-};
-
 export const getCardSizeInPercent = (gridLength: number): string => {
     return `${100/gridLength}%`;
 };
@@ -245,4 +142,8 @@ export const getHeroScore = (heroCard: HeroBattleCardType) => {
     const crystalPoints = heroCard.spheres * 20;
 
     return levelPoints + coinPoints + crystalPoints;
+};
+
+export const getHeroCard = (battleCards: BattleCardType[]): any => {
+    return battleCards.find((card: BattleCardType) => card.type === 'hero');
 };

@@ -1,7 +1,6 @@
 import {BattleCardType, Direction, HeroBattleCardType} from "../types";
-import {cardHandler, generateBattleCards, generateBossCards} from "./utils";
+import {generateBattleCards, generateBossCards, getHeroCard} from "./utils";
 import {ordinaryBossPartsCount} from "../constants";
-import {BattleCardField} from "../BattleCardField";
 
 export const addClassForMovingCard = async (battleCard: BattleCardType, className: string) => {
     const transformDuration = 300;
@@ -20,11 +19,11 @@ export const addClassForMovingCard = async (battleCard: BattleCardType, classNam
 };
 
 export const moveBattleCards = async(
-    heroCard: HeroBattleCardType,
     selectedCardIndex: number,
     battleCards: BattleCardType[],
     gridLength: number
 ):Promise<boolean> => {
+    const heroCard = getHeroCard(battleCards);
     hideSelectedCard(selectedCardIndex);
     const selectedCardType = battleCards[selectedCardIndex].type;
     const calcLastCardIndex = await moveBattleCard(heroCard.index, selectedCardIndex, battleCards, gridLength);

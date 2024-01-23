@@ -8,7 +8,7 @@ export const symbols = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '
 // const DEFAULT_HEALTH = 10;
 export const ordinaryBossPartsCount = 5;
 
-export const heroCard: HeroBattleCardType = {
+export const defaultHeroCard: HeroBattleCardType = {
     id: Math.random().toString(16).slice(2),
     index: 0,
     name: 'hero',
@@ -56,10 +56,11 @@ export const heroCard: HeroBattleCardType = {
             name: 'light-ray',
             description: '',
             image: 'skill-light-ray',
-            type: 'skill',
+            type: 'attack',
             level: 1,
+            value: 1,
             maxCoolDown: 10,
-            coolDown: 5,
+            coolDown: 0,
             nearbyCardsOnly: true,
             active: false,
         },
@@ -67,8 +68,9 @@ export const heroCard: HeroBattleCardType = {
             name: 'poison',
             description: '',
             image: 'skill-poison',
-            type: 'skill',
+            type: 'debuff',
             level: 1,
+            value: 1,
             maxCoolDown: 10,
             coolDown: 0,
             nearbyCardsOnly: true,
@@ -78,8 +80,9 @@ export const heroCard: HeroBattleCardType = {
             name: 'ice-balls',
             description: '',
             image: 'skill-ice-balls',
-            type: 'skill',
+            type: 'attack',
             level: 1,
+            value: 1,
             maxCoolDown: 10,
             coolDown: 0,
             nearbyCardsOnly: false,

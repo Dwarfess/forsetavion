@@ -44,6 +44,7 @@ export interface Skill {
     image: string;
     type: string;
     level: number;
+    value: number;
     maxCoolDown: number;
     coolDown: number;
     nearbyCardsOnly: boolean;
