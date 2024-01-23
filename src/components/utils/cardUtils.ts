@@ -8,7 +8,7 @@ import {
 } from "./moveItems";
 import {addClassWhenContactCard} from "./contactItems";
 import {recalculateHeroStatsAfterContact} from "./recalculateHeroStats";
-import {checkAndUseActiveSkill, getActiveSkill, updateSkillsCoolDown} from "./skillUtils";
+import {checkAndUseActiveSkill, checkBattleCardsEffects, getActiveSkill, updateSkillsCoolDown} from "./skillUtils";
 import {getHeroCard} from "./utils";
 
 export const cardHandler = async (
@@ -105,6 +105,7 @@ const resetBattleCards = async (
 
     battleCards = structuredClone(battleCards);
     await moveBattleCards(selectedCardIndex, battleCards, gridLength);
+    checkBattleCardsEffects(battleCards, gridLength);
     updateSkillsCoolDown(battleCards);
 
     setBattleCards(battleCards);

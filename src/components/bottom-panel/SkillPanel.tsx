@@ -105,6 +105,7 @@ const SkillPanelWrapper = styled.div`
             width: 100px;
             line-height: 100px;
             text-align: center;
+            text-shadow: 0px 0px 3px #E6E6E6, 0px 0px 3px #1A1A1A, 0px 0px 3px #E3E3E3;
         }
 
         .skill-item {

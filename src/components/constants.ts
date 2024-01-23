@@ -63,6 +63,8 @@ export const defaultHeroCard: HeroBattleCardType = {
             coolDown: 0,
             nearbyCardsOnly: true,
             active: false,
+            duration: 0,
+            period: 0
         },
         {
             name: 'poison',
@@ -75,6 +77,8 @@ export const defaultHeroCard: HeroBattleCardType = {
             coolDown: 0,
             nearbyCardsOnly: true,
             active: false,
+            duration: 10,
+            period: 2
         },
         {
             name: 'ice-balls',
@@ -87,6 +91,8 @@ export const defaultHeroCard: HeroBattleCardType = {
             coolDown: 0,
             nearbyCardsOnly: false,
             active: false,
+            duration: 0,
+            period: 0
         }
     ],
     effects: [],
@@ -121,19 +127,22 @@ export const bossCards: any = [
         name: 'boss1',
         image: 'boss-1',
         type: 'boss',
-        skills: []
+        skills: [],
+        effects: []
     },
     {
         name: 'boss2',
         image: 'boss-2',
         type: 'boss',
-        skills: []
+        skills: [],
+        effects: []
     },
     {
         name: 'boss3',
         image: 'boss-3',
         type: 'boss',
-        skills: []
+        skills: [],
+        effects: []
     },
 ];
 

@@ -72,9 +72,9 @@ const skillsHandler = async (
     };
 
     const skillHandlerMap: any = {
-        'light-ray': lightRaySkillHandler,
-        'poison': lightRaySkillHandler,
-        'ice-balls': lightRaySkillHandler,
+        'light-ray': attackSkillHandler,
+        'poison': addDebuffSkill,
+        'ice-balls': attackSkillHandler,
     };
 
     const activeSkillHandler = skillHandlerMap[activeSkill.name](activeSkill, selectedCard);
@@ -88,13 +88,22 @@ const skillsHandler = async (
 
     await addClassWhenContactCard(selectedCard);
 
-    if (selectedCard.value <= 0) {
-        recalculateHeroExp(heroCard, selectedCard);
-        changeBattleCardAfterSkill(battleCards, selectedCard, heroCard.level, gridLength)
-    }
+    checkBattleCardAfterSkill(battleCards, selectedCard, gridLength);
 }
 
-const lightRaySkillHandler = (activeSkill: Skill, selectedCard: BattleCardType) => {
+const checkBattleCardAfterSkill = (
+    battleCards: BattleCardType[],
+    selectedCard: BattleCardType,
+    gridLength: number
+) => {
+    if (selectedCard.value > 0) return;
+
+    const heroCard = getHeroCard(battleCards);
+    recalculateHeroExp(heroCard, selectedCard);
+    changeBattleCardAfterSkill(battleCards, selectedCard, heroCard.level, gridLength);
+}
+
+const attackSkillHandler = (activeSkill: Skill, selectedCard: BattleCardType) => {
     const allowedCardTypes = ['enemy', 'beast', 'boss'];
     if (!allowedCardTypes.includes(selectedCard.type)) return;
 
@@ -103,6 +112,41 @@ const lightRaySkillHandler = (activeSkill: Skill, selectedCard: BattleCardType) 
     activeSkill.coolDown = activeSkill.maxCoolDown;
 
     return true;
+}
+
+const addDebuffSkill = (activeSkill: Skill, selectedCard: BattleCardType) => {
+    const allowedCardTypes = ['enemy', 'beast', 'boss'];
+    if (!allowedCardTypes.includes(selectedCard.type)) return;
+
+    const { name, value, type, duration, period } = activeSkill;
+    selectedCard.effects.push({ name, value, type, duration, period });
+
+    activeSkill.active = false;
+    activeSkill.coolDown = activeSkill.maxCoolDown;
+
+    return true;
+}
+
+export const checkBattleCardsEffects = (battleCards: BattleCardType[], gridLength: number) => {
+    const effectsMap: any = {
+        buff: debuffSkillHandler,
+        debuff: debuffSkillHandler,
+    }
+
+    battleCards.forEach((battleCard: BattleCardType) => {
+        battleCard.effects.forEach((effect: any) => {
+            effectsMap[effect.type](effect, battleCard);
+            checkBattleCardAfterSkill(battleCards, battleCard, gridLength);
+        });
+    });
+}
+
+const debuffSkillHandler = (effect: any, selectedCard: BattleCardType) => {
+    if (effect.duration % effect.period === 0) {
+        selectedCard.value -= effect.value;
+    }
+
+    effect.duration--;
 }
 
 const changeBattleCardAfterSkill = (battleCards: BattleCardType[], selectedCard: BattleCardType, heroLevel: number, gridLength: number) => {

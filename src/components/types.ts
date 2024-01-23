@@ -49,6 +49,8 @@ export interface Skill {
     coolDown: number;
     nearbyCardsOnly: boolean;
     active: boolean;
+    duration: number;
+    period: number;
 }
 
 export interface HeroBattleCardType extends CommonBattleCardType {
