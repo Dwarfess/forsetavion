@@ -1,4 +1,5 @@
-import {ArtifactCardType, BattleCardType, HeroBattleCardType, PrimaryBattleCardType} from "./types";
+import {ArtifactCardType, BattleCardType, HeroBattleCardType, PrimaryBattleCardType, Skill} from "./types";
+import {getSkill} from "./utils/cardsBuilder";
 
 export const defaultFontSize = 20;
 export const defaultWidth = 450;
@@ -7,6 +8,183 @@ export const symbols = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '
 
 // const DEFAULT_HEALTH = 10;
 export const ordinaryBossPartsCount = 5;
+
+const skills: Skill[] = [
+    {
+        name: 'light-ray',
+        description: '',
+        image: 'skill-light-ray',
+        type: 'attack',
+        level: 1,
+        coolDown: 0,
+        nearbyCardsOnly: true,
+        active: false,
+        stats: [
+            {
+                name: 'power',
+                title: 'Power',
+                value: 2,
+            },
+            {
+                name: 'maxCoolDown',
+                title: 'CoolDown',
+                value: 10,
+            },
+        ]
+    },
+    {
+        name: 'poison',
+        description: '',
+        image: 'skill-poison',
+        type: 'debuff',
+        level: 1,
+        coolDown: 0,
+        nearbyCardsOnly: true,
+        active: false,
+        stats: [
+            {
+                name: 'power',
+                title: 'Power',
+                value: 2,
+            },
+            {
+                name: 'duration',
+                title: 'Duration',
+                value: 10,
+            },
+            {
+                name: 'period',
+                title: 'Period',
+                value: 2,
+            },
+            {
+                name: 'maxCoolDown',
+                title: 'CoolDown',
+                value: 15,
+            },
+        ]
+    },
+    {
+        name: 'regeneration',
+        description: '',
+        image: 'skill-regeneration',
+        type: 'buff',
+        level: 1,
+        coolDown: 0,
+        nearbyCardsOnly: false,
+        active: false,
+        stats: [
+            {
+                name: 'power',
+                title: 'Power',
+                value: 2,
+            },
+            {
+                name: 'duration',
+                title: 'Duration',
+                value: 10,
+            },
+            {
+                name: 'period',
+                title: 'Period',
+                value: 2,
+            },
+            {
+                name: 'maxCoolDown',
+                title: 'CoolDown',
+                value: 15,
+            },
+        ]
+    },
+    {
+        name: 'ice-balls',
+        description: '',
+        image: 'skill-ice-balls',
+        type: 'attack',
+        level: 1,
+        coolDown: 0,
+        nearbyCardsOnly: false,
+        active: false,
+        stats: [
+            {
+                name: 'power',
+                title: 'Power',
+                value: 4,
+            },
+            {
+                name: 'maxCoolDown',
+                title: 'CoolDown',
+                value: 15,
+            },
+        ]
+    },
+    {
+        name: 'burning',
+        description: '',
+        image: 'skill-burning',
+        type: 'debuff',
+        level: 1,
+        coolDown: 0,
+        nearbyCardsOnly: false,
+        active: false,
+        stats: [
+            {
+                name: 'power',
+                title: 'Power',
+                value: 1,
+            },
+            {
+                name: 'maxCoolDown',
+                title: 'CoolDown',
+                value: 10,
+            },
+        ]
+    },
+    {
+        name: 'freezing',
+        description: '',
+        image: 'skill-freezing',
+        type: 'debuff',
+        level: 1,
+        coolDown: 0,
+        nearbyCardsOnly: false,
+        active: false,
+        stats: [
+            {
+                name: 'power',
+                title: 'Power',
+                value: 1,
+            },
+            {
+                name: 'maxCoolDown',
+                title: 'CoolDown',
+                value: 10,
+            },
+        ]
+    },
+    {
+        name: 'poisoned-claws',
+        description: '',
+        image: 'skill-poisoned-claws',
+        type: 'debuff',
+        level: 1,
+        coolDown: 0,
+        nearbyCardsOnly: false,
+        active: false,
+        stats: [
+            {
+                name: 'power',
+                title: 'Power',
+                value: 1,
+            },
+            {
+                name: 'maxCoolDown',
+                title: 'CoolDown',
+                value: 10,
+            },
+        ]
+    }
+];
 
 export const defaultHeroCard: HeroBattleCardType = {
     id: Math.random().toString(16).slice(2),
@@ -17,7 +195,6 @@ export const defaultHeroCard: HeroBattleCardType = {
     isVisible: true,
     active: true,
     health: 10,
-    // healthBoost: 1,
     exp: 0,
     level: 1,
     coins: 0,
@@ -52,114 +229,118 @@ export const defaultHeroCard: HeroBattleCardType = {
         },
     ],
     skills: [
-        {
-            name: 'light-ray',
-            description: '',
-            image: 'skill-light-ray',
-            type: 'attack',
-            level: 1,
-            coolDown: 0,
-            nearbyCardsOnly: true,
-            active: false,
-            stats: [
-                {
-                    name: 'power',
-                    title: 'Power',
-                    value: 2,
-                },
-                {
-                    name: 'maxCoolDown',
-                    title: 'CoolDown',
-                    value: 10,
-                },
-            ]
-        },
-        {
-            name: 'poison',
-            description: '',
-            image: 'skill-poison',
-            type: 'debuff',
-            level: 1,
-            coolDown: 0,
-            nearbyCardsOnly: true,
-            active: false,
-            stats: [
-                {
-                    name: 'power',
-                    title: 'Power',
-                    value: 2,
-                },
-                {
-                    name: 'duration',
-                    title: 'Duration',
-                    value: 10,
-                },
-                {
-                    name: 'period',
-                    title: 'Period',
-                    value: 2,
-                },
-                {
-                    name: 'maxCoolDown',
-                    title: 'CoolDown',
-                    value: 15,
-                },
-            ]
-        },
-        {
-            name: 'regeneration',
-            description: '',
-            image: 'skill-regeneration',
-            type: 'buff',
-            level: 1,
-            coolDown: 0,
-            nearbyCardsOnly: false,
-            active: false,
-            stats: [
-                {
-                    name: 'power',
-                    title: 'Power',
-                    value: 2,
-                },
-                {
-                    name: 'duration',
-                    title: 'Duration',
-                    value: 10,
-                },
-                {
-                    name: 'period',
-                    title: 'Period',
-                    value: 2,
-                },
-                {
-                    name: 'maxCoolDown',
-                    title: 'CoolDown',
-                    value: 15,
-                },
-            ]
-        },
-        {
-            name: 'ice-balls',
-            description: '',
-            image: 'skill-ice-balls',
-            type: 'attack',
-            level: 1,
-            coolDown: 0,
-            nearbyCardsOnly: false,
-            active: false,
-            stats: [
-                {
-                    name: 'power',
-                    title: 'Power',
-                    value: 4,
-                },
-                {
-                    name: 'maxCoolDown',
-                    title: 'CoolDown',
-                    value: 15,
-                },
-            ]
-        }
+        // {
+        //     name: 'light-ray',
+        //     description: '',
+        //     image: 'skill-light-ray',
+        //     type: 'attack',
+        //     level: 1,
+        //     coolDown: 0,
+        //     nearbyCardsOnly: true,
+        //     active: false,
+        //     stats: [
+        //         {
+        //             name: 'power',
+        //             title: 'Power',
+        //             value: 2,
+        //         },
+        //         {
+        //             name: 'maxCoolDown',
+        //             title: 'CoolDown',
+        //             value: 10,
+        //         },
+        //     ]
+        // },
+        // {
+        //     name: 'poison',
+        //     description: '',
+        //     image: 'skill-poison',
+        //     type: 'debuff',
+        //     level: 1,
+        //     coolDown: 0,
+        //     nearbyCardsOnly: true,
+        //     active: false,
+        //     stats: [
+        //         {
+        //             name: 'power',
+        //             title: 'Power',
+        //             value: 2,
+        //         },
+        //         {
+        //             name: 'duration',
+        //             title: 'Duration',
+        //             value: 10,
+        //         },
+        //         {
+        //             name: 'period',
+        //             title: 'Period',
+        //             value: 2,
+        //         },
+        //         {
+        //             name: 'maxCoolDown',
+        //             title: 'CoolDown',
+        //             value: 15,
+        //         },
+        //     ]
+        // },
+        // {
+        //     name: 'regeneration',
+        //     description: '',
+        //     image: 'skill-regeneration',
+        //     type: 'buff',
+        //     level: 1,
+        //     coolDown: 0,
+        //     nearbyCardsOnly: false,
+        //     active: false,
+        //     stats: [
+        //         {
+        //             name: 'power',
+        //             title: 'Power',
+        //             value: 2,
+        //         },
+        //         {
+        //             name: 'duration',
+        //             title: 'Duration',
+        //             value: 10,
+        //         },
+        //         {
+        //             name: 'period',
+        //             title: 'Period',
+        //             value: 2,
+        //         },
+        //         {
+        //             name: 'maxCoolDown',
+        //             title: 'CoolDown',
+        //             value: 15,
+        //         },
+        //     ]
+        // },
+        // {
+        //     name: 'ice-balls',
+        //     description: '',
+        //     image: 'skill-ice-balls',
+        //     type: 'attack',
+        //     level: 1,
+        //     coolDown: 0,
+        //     nearbyCardsOnly: false,
+        //     active: false,
+        //     stats: [
+        //         {
+        //             name: 'power',
+        //             title: 'Power',
+        //             value: 4,
+        //         },
+        //         {
+        //             name: 'maxCoolDown',
+        //             title: 'CoolDown',
+        //             value: 15,
+        //         },
+        //     ]
+        // },
+        getSkill(skills, 'light-ray'),
+        getSkill(skills, 'poison'),
+        getSkill(skills, 'regeneration'),
+        getSkill(skills, 'ice-balls'),
     ],
     effects: [],
     artifacts: [],
@@ -170,16 +351,6 @@ export const defaultHeroCard: HeroBattleCardType = {
 };
 
 export const bossPartCards: PrimaryBattleCardType[] = [
-    // {
-    //     name: 'part3',
-    //     image: 'boss-part-3',
-    //     type: 'boss-part',
-    // },
-    // {
-    //     name: 'part4',
-    //     image: 'boss-part-4',
-    //     type: 'boss-part',
-    // },
     {
         name: 'part7',
         image: 'boss-part-7',
@@ -190,24 +361,24 @@ export const bossPartCards: PrimaryBattleCardType[] = [
 
 export const bossCards: any = [
     {
-        name: 'boss1',
+        name: 'Iceheart overlord',
         image: 'boss-1',
         type: 'boss',
-        skills: [],
+        skills: [getSkill(skills, 'freezing')],
         effects: []
     },
     {
-        name: 'boss2',
+        name: 'Ember overlord',
         image: 'boss-2',
         type: 'boss',
-        skills: [],
+        skills: [getSkill(skills, 'burning')],
         effects: []
     },
     {
-        name: 'boss3',
+        name: 'Poisonfang overlord',
         image: 'boss-3',
         type: 'boss',
-        skills: [],
+        skills: [getSkill(skills, 'poisoned-claws')],
         effects: []
     },
 ];
