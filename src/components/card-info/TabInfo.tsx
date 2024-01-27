@@ -8,13 +8,6 @@ const TabInfo = ({
     heroCard,
     selectedBattleCard
 }: any) => {
-    const [selectedItem, setSelectItem] = useState<any>(null);
-    //
-    // const onItemClick = (item: any = null, event: any = null) => {
-    //     event && event.stopPropagation();
-    //     setSelectItem(item);
-    // }
-
     const panes = useMemo(() => {
         const getTabItem = (name: string, children: ReactNode) => ({
             menuItem: name,
@@ -25,10 +18,26 @@ const TabInfo = ({
 
         selectedBattleCard.stats?.length && tabItems.push(getTabItem('Stats', <TabInfoCardStats selectedItem={selectedBattleCard}/>));
         selectedBattleCard.skills?.length && tabItems.push(getTabItem('Skills', <TabInfoCardItem cardItems={selectedBattleCard.skills} />));
+        selectedBattleCard.effects?.length && tabItems.push(getTabItem('Effects', <TabInfoCardItem cardItems={selectedBattleCard.effects} />));
         selectedBattleCard.artifacts?.length && tabItems.push(getTabItem('Artifacts', <TabInfoCardItem cardItems={selectedBattleCard.artifacts} />));
 
         return tabItems;
-    }, [heroCard, selectedBattleCard, selectedItem]);
+    }, [heroCard, selectedBattleCard]);
+
+    // const panes = [
+    //     {
+    //         menuItem: 'Stats',
+    //         render: () => <TabPane><TabInfoCardStats selectedItem={selectedBattleCard}/></TabPane>
+    //     },
+    //     {
+    //         menuItem: 'Skills',
+    //         render: () => <TabPane><TabInfoCardItem cardItems={selectedBattleCard.skills} /></TabPane>
+    //     },
+    //     {
+    //         menuItem: 'Artifacts',
+    //         render: () => <TabPane><TabInfoCardItem cardItems={selectedBattleCard.artifacts} /></TabPane>
+    //     }
+    // ];
 
     return <TabWrapper>
         <Tab panes={panes} defaultActiveIndex={0}/>

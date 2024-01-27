@@ -73,12 +73,8 @@ const SkillPanelWrapper = styled.div`
         &.disabled {
             pointer-events: none;
             cursor: inherit;
-            opacity: 0.4;
-            //background: rgba(255, 255, 255, 0.5);
-            //
-            //.count-value {
-            //    background: rgba(255, 255, 255, 0.5);
-            //}
+            
+            .skill-item {opacity: 0.4}
         }
 
         &.active {

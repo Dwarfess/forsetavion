@@ -44,13 +44,21 @@ export interface Skill {
     image: string;
     type: string;
     level: number;
-    value: number;
-    maxCoolDown: number;
+    // value: number;
+    // maxCoolDown: number;
     coolDown: number;
     nearbyCardsOnly: boolean;
     active: boolean;
-    duration: number;
-    period: number;
+    // duration: number;
+    // period: number;
+    stats: Stat[];
+}
+
+export interface Effect {
+    name: string,
+    image: string,
+    type: string,
+    stats: Stat[]
 }
 
 export interface HeroBattleCardType extends CommonBattleCardType {

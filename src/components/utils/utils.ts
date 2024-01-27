@@ -19,16 +19,16 @@ export const generateBattleCards = (heroLevel: number, gridLength: number): Batt
     const battleCards: any[] = [
         ...secretCards,
         ...secretCards,
-        ...secretCards,
-        ...secretCards,
+        // ...secretCards,
+        // ...secretCards,
         ...bossPartCards,
         ...bossPartCards,
         ...bossPartCards,
         ...bossPartCards,
         ...bossPartCards,
         ...bossPartCards,
-        ...bossPartCards,
-        ...bossPartCards,
+        // ...bossPartCards,
+        // ...bossPartCards,
         // ...secretCards,
         // ...secretCards,
         // ...secretCards,
@@ -73,15 +73,16 @@ const calculateExpReward = (battleCardType: string) => {
 
 export const generateSecretPrizeCards = (secretCard: BattleCardType) => {
     const battleCards: any[] = [
-        // ...spheresCards,
-        // ...superCoinsCards,
-        // ...superPotionCards,
+        ...spheresCards,
+        ...superCoinsCards,
+        ...superPotionCards,
         ...artifactCards,
     ].map((battleCard: PrimaryBattleCardType) => ({
         ...battleCard,
         id: Math.random().toString(16).slice(2),
         value: getRandomValue(battleCard, secretCard.level, 5),
         level: 1,
+        effects: [],
         isVisible: true,
     }));
 

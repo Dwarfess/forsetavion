@@ -6,6 +6,7 @@ import {getCardSizeInPercent} from "./utils/utils";
 import {HealthIndicator} from "./HealthIndicator";
 import BattleCardImage from "./BattleCardImage";
 import {LevelIndicator} from "./LevelIndicator";
+import {EffectPanel} from "./bottom-panel/EffectPanel";
 
 const BattleCardField = memo(({onCardClick, onCardDoubleClick, gridLength, battleCard}: any) => {
 
@@ -33,6 +34,7 @@ const BattleCardField = memo(({onCardClick, onCardDoubleClick, gridLength, battl
                 <BattleCard data-type={battleCard.type} className={`${battleCard.type}`}>
                     <HealthIndicator battleCard={battleCard} gridLength={gridLength}/>
                     <BattleCardImage battleCard={battleCard}/>
+                    <EffectPanel battleCard={battleCard}/>
                     <LevelIndicator battleCard={battleCard} gridLength={gridLength}/>
                 </BattleCard>
             </BattleCardFieldContainer>
@@ -201,7 +203,7 @@ const BattleCard = styled.div`
                     transparent,
                     #d400d4
             );
-            background-size: 300% 300%;
+            background-size: 500% 500%;
             position: absolute;
             z-index: -2;
             border-radius: 5px;
@@ -218,7 +220,7 @@ const BattleCard = styled.div`
                     transparent,
                     #00ccff
             );
-            background-size: 300% 300%;
+            background-size: 500% 500%;
             position: absolute;
             z-index: -2;
             border-radius: 5px;
@@ -228,18 +230,18 @@ const BattleCard = styled.div`
 
     @keyframes animate {
         0% {transform: rotate(0deg)}
-        25% {transform: rotate(90deg)}
-        50% {transform: rotate(180deg)}
-        75% {transform: rotate(270deg)}
-        100% {transform: rotate(360deg)}
+        25% {transform: rotate(75deg)}
+        50% {transform: rotate(150deg)}
+        75% {transform: rotate(225deg)}
+        100% {transform: rotate(300deg)}
     }
     
     @keyframes reverseAnimate {
-        0% {transform: rotate(0deg)}
-        25% {transform: rotate(270deg)}
-        50% {transform: rotate(180deg)}
-        75% {transform: rotate(90deg)}
-        100% {transform: rotate(360deg)}
+        0% {transform: rotate(35deg)}
+        25% {transform: rotate(110deg)}
+        50% {transform: rotate(185deg)}
+        75% {transform: rotate(260deg)}
+        100% {transform: rotate(335deg)}
     }
     
     &:after {

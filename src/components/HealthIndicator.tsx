@@ -2,13 +2,13 @@ import styled from "styled-components";
 
 import {BattleCardType, HeroBattleCardType} from "./types";
 import {defaultFontSize} from "./constants";
-import {getBattleCardStat} from "./utils";
+import {getItemStat} from "./utils";
 
 
 const HealthIndicator = ({battleCard, gridLength}: { battleCard: BattleCardType | any, gridLength: number }) => {
     return <HealthIndicatorWrapper
         data-health={battleCard.health}
-        data-max-health={battleCard.type === "hero" && getBattleCardStat(battleCard, 'maxHealth').value}
+        data-max-health={battleCard.type === "hero" && getItemStat(battleCard, 'maxHealth').value}
         data-length={gridLength}
     >
         {battleCard.type === 'hero' && (

@@ -39,7 +39,7 @@ export const recalculateHeroStatsAfterContact = (
 };
 
 const recalculateHeroHealthAfterEnemy = (heroCard: HeroBattleCardType, selectedCard: BattleCardType) => {
-    const beastHealth = selectedCard.value - getBattleCardStat(heroCard, 'def').value;
+    const beastHealth = selectedCard.value - getItemStat(heroCard, 'def').value;
     const heroHealth = beastHealth > 0 ? heroCard.health - beastHealth : heroCard.health;
 
     if (heroHealth <= 0) {
@@ -58,7 +58,7 @@ const recalculateHeroHealthAfterBoss = (heroCard: HeroBattleCardType, selectedCa
 
 const recalculateHeroHealthAfterPotion = (heroCard: HeroBattleCardType, selectedCard: BattleCardType) => {
     const heroHealth = heroCard.health + selectedCard.value;
-    const heroStatMaxHealth = getBattleCardStat(heroCard, 'maxHealth');
+    const heroStatMaxHealth = getItemStat(heroCard, 'maxHealth');
 
     heroCard.health = heroStatMaxHealth.value < heroHealth ? heroStatMaxHealth.value : heroHealth;
 };
@@ -71,7 +71,7 @@ const recalculateHeroSpheres = (heroCard: HeroBattleCardType, selectedCard: Batt
     heroCard.spheres += selectedCard.value;
 };
 
-export const getBattleCardStat = (battleCard: HeroBattleCardType, name: string) => {
+export const getItemStat = (battleCard: any, name: string) => {
     return battleCard.stats.find((stat: Stat) => stat.name === name) || {value: 0};
 };
 
@@ -80,9 +80,9 @@ const recalculateHeroStatAfterAddArtifact = (
     selectedCard: BattleCardType,
     name: string
 ) => {
-    const selectedCardStat = getBattleCardStat(selectedCard, name);
+    const selectedCardStat = getItemStat(selectedCard, name);
     if (selectedCardStat.value) {
-        const heroStat = getBattleCardStat(heroCard, name);
+        const heroStat = getItemStat(heroCard, name);
         heroStat.value += selectedCardStat.value;
 
         if (name === 'maxHealth') heroCard.health += selectedCardStat.value;
@@ -109,14 +109,14 @@ export const recalculateHeroExp = (heroCard: HeroBattleCardType, selectedCard: S
     if (heroCard.health <= 0) return;
 
     const maxLevelExp = getMaxExpForCurrentLever(heroCard);
-    const heroExpBoostValue = getBattleCardStat(heroCard, 'expBoost').value;
+    const heroExpBoostValue = getItemStat(heroCard, 'expBoost').value;
     let heroExp = heroCard.exp + getRecalculatedExpReward(selectedCard.expReward, heroExpBoostValue);
 
     if (heroExp >= maxLevelExp) {
         heroExp -= maxLevelExp;
         heroCard.level++;
 
-        const heroStatMaxHealth = getBattleCardStat(heroCard, 'maxHealth');
+        const heroStatMaxHealth = getItemStat(heroCard, 'maxHealth');
         heroStatMaxHealth.value++;
         heroCard.health = heroStatMaxHealth.value;
     }
@@ -135,7 +135,7 @@ export const getRecalculatedExpReward = (expReward: number, heroExpBoostValue: n
 export const getRecalculatedExpRewardString = (heroCard: HeroBattleCardType, selectedCard: SimpleBattleCardType) => {
     if (!selectedCard.expReward) return;
 
-    const heroExpBoostValue = getBattleCardStat(heroCard, 'expBoost').value;
+    const heroExpBoostValue = getItemStat(heroCard, 'expBoost').value;
     let expRewardString: string = 'Exp: ';
     if (heroExpBoostValue !== 1) {
         expRewardString += `${selectedCard.expReward} * ${heroExpBoostValue} = ${getRecalculatedExpReward(selectedCard.expReward, heroExpBoostValue)}`;

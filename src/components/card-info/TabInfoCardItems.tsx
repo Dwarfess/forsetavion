@@ -1,15 +1,16 @@
-import React, {useMemo, useState} from 'react'
-import {TabPane, Tab} from 'semantic-ui-react'
+import React, {useEffect, useMemo, useState} from 'react'
 import styled from "styled-components";
-import {Stat} from "../types";
 import BattleCardImage from "../BattleCardImage";
 import {TabInfoCardStats} from "./TabInfoCardStats";
-import {defaultFontSize} from "../constants";
 
 const TabInfoCardItem = ({
     cardItems
 }: any) => {
     const [selectedItem, setSelectItem] = useState<any>(null);
+
+    useEffect(() => {
+        setSelectItem(null);
+    }, [cardItems]);
 
     const onItemClick = (item: any = null) => {
         setSelectItem(item);
@@ -40,7 +41,6 @@ const TabWrapper = styled.div`
     .card-items {
         display: flex;
         flex-wrap: wrap;
-        //justify-content: center;
         align-items: flex-start;
 
         .card-item {

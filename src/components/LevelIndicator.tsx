@@ -1,14 +1,15 @@
 import styled from "styled-components";
-
-import {BattleCardType, HeroBattleCardType} from "./types";
+import {BattleCardType} from "./types";
 import {defaultFontSize} from "./constants";
-
 
 const LevelIndicator = ({battleCard, gridLength}: { battleCard: BattleCardType | any, gridLength: number }) => {
     const cardsWithLevel = ['secret', 'boss'];
-    return <LevelIndicatorWrapper data-length={gridLength}>
-        {cardsWithLevel.includes(battleCard.type) && (<><span className="level-value">{battleCard.level}</span> lvl</>)}
-    </LevelIndicatorWrapper>;
+    return <>
+        {cardsWithLevel.includes(battleCard.type) && (<LevelIndicatorWrapper data-length={gridLength}>
+            <span className="level-value">{battleCard.level}</span> lvl
+        </LevelIndicatorWrapper>
+        )}
+    </>;
 };
 
 const LevelIndicatorWrapper = styled.div`

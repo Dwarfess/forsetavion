@@ -58,13 +58,21 @@ export const defaultHeroCard: HeroBattleCardType = {
             image: 'skill-light-ray',
             type: 'attack',
             level: 1,
-            value: 1,
-            maxCoolDown: 10,
             coolDown: 0,
             nearbyCardsOnly: true,
             active: false,
-            duration: 0,
-            period: 0
+            stats: [
+                {
+                    name: 'power',
+                    title: 'Power',
+                    value: 2,
+                },
+                {
+                    name: 'maxCoolDown',
+                    title: 'CoolDown',
+                    value: 10,
+                },
+            ]
         },
         {
             name: 'poison',
@@ -72,13 +80,63 @@ export const defaultHeroCard: HeroBattleCardType = {
             image: 'skill-poison',
             type: 'debuff',
             level: 1,
-            value: 1,
-            maxCoolDown: 10,
             coolDown: 0,
             nearbyCardsOnly: true,
             active: false,
-            duration: 10,
-            period: 2
+            stats: [
+                {
+                    name: 'power',
+                    title: 'Power',
+                    value: 2,
+                },
+                {
+                    name: 'duration',
+                    title: 'Duration',
+                    value: 10,
+                },
+                {
+                    name: 'period',
+                    title: 'Period',
+                    value: 2,
+                },
+                {
+                    name: 'maxCoolDown',
+                    title: 'CoolDown',
+                    value: 15,
+                },
+            ]
+        },
+        {
+            name: 'regeneration',
+            description: '',
+            image: 'skill-regeneration',
+            type: 'buff',
+            level: 1,
+            coolDown: 0,
+            nearbyCardsOnly: false,
+            active: false,
+            stats: [
+                {
+                    name: 'power',
+                    title: 'Power',
+                    value: 2,
+                },
+                {
+                    name: 'duration',
+                    title: 'Duration',
+                    value: 10,
+                },
+                {
+                    name: 'period',
+                    title: 'Period',
+                    value: 2,
+                },
+                {
+                    name: 'maxCoolDown',
+                    title: 'CoolDown',
+                    value: 15,
+                },
+            ]
         },
         {
             name: 'ice-balls',
@@ -86,13 +144,21 @@ export const defaultHeroCard: HeroBattleCardType = {
             image: 'skill-ice-balls',
             type: 'attack',
             level: 1,
-            value: 1,
-            maxCoolDown: 10,
             coolDown: 0,
             nearbyCardsOnly: false,
             active: false,
-            duration: 0,
-            period: 0
+            stats: [
+                {
+                    name: 'power',
+                    title: 'Power',
+                    value: 4,
+                },
+                {
+                    name: 'maxCoolDown',
+                    title: 'CoolDown',
+                    value: 15,
+                },
+            ]
         }
     ],
     effects: [],
