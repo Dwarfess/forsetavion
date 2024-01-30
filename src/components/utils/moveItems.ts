@@ -1,5 +1,5 @@
 import {BattleCardType, Direction, HeroBattleCardType} from "../types";
-import {generateBattleCards, generateBossCards, getHeroCard} from "./utils";
+import {generateBattleCards, generateBossCards, generatePrizeCards, getHeroCard} from "./utils";
 import {ordinaryBossPartsCount} from "../constants";
 
 export const addClassForMovingCard = async (battleCard: BattleCardType, className: string) => {
@@ -26,8 +26,9 @@ export const moveBattleCards = async(
     const heroCard = getHeroCard(battleCards);
     hideSelectedCard(selectedCardIndex);
     const selectedCardType = battleCards[selectedCardIndex].type;
+    const selectedCardLevel = battleCards[selectedCardIndex].level;
     const calcLastCardIndex = await moveBattleCard(heroCard.index, selectedCardIndex, battleCards, gridLength);
-    const newBattleCard = defineNewBattleCard(heroCard, selectedCardType, battleCards, gridLength);
+    const newBattleCard = defineNewBattleCard(heroCard, selectedCardType, selectedCardLevel, battleCards, gridLength);
     newBattleCard.index = calcLastCardIndex;
     newBattleCard.isNew = true;
 
@@ -36,14 +37,17 @@ export const moveBattleCards = async(
     return true;
 };
 
-const defineNewBattleCard = (
+export const defineNewBattleCard = (
     heroCard: HeroBattleCardType,
     selectedCardType: string,
+    selectedCardLevel: number,
     battleCards: BattleCardType[],
     gridLength: number,
 ) => {
     let newBattleCards;
-    if (heroCard.bossParts === ordinaryBossPartsCount && selectedCardType === 'bossPart') {
+    if (['boss', 'secret'].includes(selectedCardType)) {
+        newBattleCards = generatePrizeCards(selectedCardLevel);
+    } else if (heroCard.bossParts === ordinaryBossPartsCount && selectedCardType === 'bossPart') {
         newBattleCards = generateBossCards(heroCard.level, gridLength);
     } else {
         const bossPartsCount =

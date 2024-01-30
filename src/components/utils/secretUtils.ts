@@ -1,5 +1,5 @@
 import {BattleCardType} from "../types";
-import {generateSecretPrizeCards, getHeroCard} from "./utils";
+import {generatePrizeCards, getHeroCard} from "./utils";
 
 export const updateAnswer = (answer: string, symbol: string): string => {
     if (symbol === '←') {
@@ -60,7 +60,7 @@ export const resetBattleCardsAfterSecret = (battleCards: BattleCardType, isCorre
     if (!secretCard) return '';
 
     if (isCorrectAnswer) {
-        const secretPrizeCard = generateSecretPrizeCards(secretCard)[0];
+        const secretPrizeCard = generatePrizeCards(secretCard.level)[0];
 
         secretPrizeCard.index = secretCard.index;
         clonedBattleCards[secretCard.index] = secretPrizeCard;

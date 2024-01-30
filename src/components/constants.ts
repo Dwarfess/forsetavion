@@ -134,9 +134,19 @@ const skills: Skill[] = [
                 value: 1,
             },
             {
+                name: 'duration',
+                title: 'Duration',
+                value: 10,
+            },
+            {
+                name: 'period',
+                title: 'Period',
+                value: 2,
+            },
+            {
                 name: 'maxCoolDown',
                 title: 'CoolDown',
-                value: 10,
+                value: 5,
             },
         ]
     },
@@ -153,12 +163,22 @@ const skills: Skill[] = [
             {
                 name: 'power',
                 title: 'Power',
-                value: 1,
+                value: 2,
+            },
+            {
+                name: 'duration',
+                title: 'Duration',
+                value: 10,
+            },
+            {
+                name: 'period',
+                title: 'Period',
+                value: 2,
             },
             {
                 name: 'maxCoolDown',
                 title: 'CoolDown',
-                value: 10,
+                value: 5,
             },
         ]
     },
@@ -175,12 +195,22 @@ const skills: Skill[] = [
             {
                 name: 'power',
                 title: 'Power',
-                value: 1,
+                value: 2,
+            },
+            {
+                name: 'duration',
+                title: 'Duration',
+                value: 10,
+            },
+            {
+                name: 'period',
+                title: 'Period',
+                value: 2,
             },
             {
                 name: 'maxCoolDown',
                 title: 'CoolDown',
-                value: 10,
+                value: 5,
             },
         ]
     }

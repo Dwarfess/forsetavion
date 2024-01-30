@@ -71,7 +71,7 @@ const calculateExpReward = (battleCardType: string) => {
     return expRewardMap[battleCardType] || 0;
 }
 
-export const generateSecretPrizeCards = (secretCard: BattleCardType) => {
+export const generatePrizeCards = (selectedCardLevel: number) => {
     const battleCards: any[] = [
         ...spheresCards,
         ...superCoinsCards,
@@ -80,7 +80,7 @@ export const generateSecretPrizeCards = (secretCard: BattleCardType) => {
     ].map((battleCard: PrimaryBattleCardType) => ({
         ...battleCard,
         id: Math.random().toString(16).slice(2),
-        value: getRandomValue(battleCard, secretCard.level, 5),
+        value: getRandomValue(battleCard, selectedCardLevel, 5),
         level: 1,
         effects: [],
         isVisible: true,
@@ -95,7 +95,7 @@ export const generateSecretPrizeCards = (secretCard: BattleCardType) => {
 
 export const generateBossCards = (heroLevel: number, gridLength: number) => {
     const battleCards: any[] = [
-        ...bossCards,
+        ...structuredClone(bossCards),
     ].map((battleCard: PrimaryBattleCardType) => ({
         ...battleCard,
         id: Math.random().toString(16).slice(2),

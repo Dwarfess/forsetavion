@@ -8,7 +8,14 @@ import {
 } from "./moveItems";
 import {addClassWhenContactCard} from "./contactItems";
 import {recalculateHeroStatsAfterContact} from "./recalculateHeroStats";
-import {checkAndUseActiveSkill, checkBattleCardsEffects, getActiveSkill, updateSkillsCoolDown} from "./skillUtils";
+import {
+    changeBattleCardAfterSkill,
+    checkAndUseActiveSkill,
+    checkBattleCardsEffects,
+    checkBossSkillsReadyToUse,
+    getActiveSkill,
+    updateSkillsCoolDown
+} from "./skillUtils";
 import {getHeroCard} from "./utils";
 
 export const cardHandler = async (
@@ -80,33 +87,49 @@ const resetBattleCards = async (
         setBattleCards(battleCards);
 
         return;
-    }
+    } else {
+        if (selectedCard.type === 'secret') {
+            selectedCard.active = true;
 
-    if (selectedCard.type === 'secret') {
-        selectedCard.active = true;
+            setIsMoving(false);
+            setBattleCards(battleCards);
+            setIsOpenSecretModal(true);
 
-        setIsMoving(false);
+            return;
+        }
+
+        recalculateHeroStatsAfterContact(heroCard, selectedCard);
+        await addClassWhenContactCard(selectedCard);
         setBattleCards(battleCards);
-        setIsOpenSecretModal(true);
 
-        return;
+        // MOVE THIS LOGIC TO BATTLE PAGE (AFTER DEBUFF HERO DOESN'T DIE)
+        if (heroCard.health <= 0) {
+            setIsMoving(false);
+            setIsOpenBattleOverModal(true);
+
+            return;
+        }
+
+        battleCards = structuredClone(battleCards);
+        if (selectedCard.type === 'boss') {
+            changeBattleCardAfterSkill(battleCards, selectedCard, heroCard, gridLength);
+        } else {
+            await moveBattleCards(selectedCardIndex, battleCards, gridLength);
+
+        }
     }
 
-    recalculateHeroStatsAfterContact(heroCard, selectedCard);
-    await addClassWhenContactCard(selectedCard);
-    setBattleCards(battleCards);
+    checkBossSkillsReadyToUse(battleCards);
+    checkBattleCardsEffects(battleCards, gridLength);
+    updateSkillsCoolDown(battleCards);
 
-    if (heroCard.health === 0) {
+    // MOVE THIS LOGIC TO BATTLE PAGE (AFTER DEBUFF HERO DOESN'T DIE)
+    if (getHeroCard(battleCards).health <= 0) {
         setIsMoving(false);
         setIsOpenBattleOverModal(true);
 
         return;
     }
-
-    battleCards = structuredClone(battleCards);
-    await moveBattleCards(selectedCardIndex, battleCards, gridLength);
-    checkBattleCardsEffects(battleCards, gridLength);
-    updateSkillsCoolDown(battleCards);
 
     setBattleCards(battleCards);
     setIsMoving(false);
