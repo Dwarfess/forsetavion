@@ -13,6 +13,7 @@ import {
     getBattleCardsWithHero,
     getHeroCard
 } from "./utils";
+import {ModalLevelUp} from "./level-up/ModalLevelUp";
 
 const BattlePage = () => {
     const [battleCards, setBattleCards] = useState<any[]>([]);
@@ -24,6 +25,7 @@ const BattlePage = () => {
 
     const [isOpenBattleOverModal, setIsOpenBattleOverModal] = useState(false);
     const [isOpenSecretModal, setIsOpenSecretModal] = useState(false);
+    const [isOpenLevelUpModal, setIsOpenLevelUpModal] = useState(false);
 
     useEffect(() => {
         gridLength && setBattleCards(getBattleCardsWithHero(gridLength));
@@ -47,6 +49,12 @@ const BattlePage = () => {
             }
         }
     }, [battleCards, isMoving]);
+
+    useEffect(() => {
+        if(heroCard?.skillPoints) {
+            setIsOpenLevelUpModal(true);
+        }
+    }, [heroCard]);
 
     const onCardClick = (selectedCardIndex: number) => {
         if (isMoving) return;
@@ -78,9 +86,6 @@ const BattlePage = () => {
             battleCards,
             setBattleCards,
             gridLength,
-            // setIsMoving,
-            // setIsOpenBattleOverModal,
-            // setIsOpenSecretModal
         );
 
         cardHandler(
@@ -94,7 +99,6 @@ const BattlePage = () => {
         );
     };
 
-    // console.log(battleCards)
     return <>
         <GridLengthSwitcher gridLength={gridLength} setGridLength={setGridLength} />
         {!!gridLength && battleCards.length && (<>
@@ -126,6 +130,14 @@ const BattlePage = () => {
                 setBattleCards={setBattleCards}
                 isOpen={isOpenSecretModal}
                 setIsOpen={setIsOpenSecretModal}
+            />}
+
+            {isOpenLevelUpModal && <ModalLevelUp
+                heroCard={getHeroCard(battleCards)}
+                battleCards={battleCards}
+                setBattleCards={setBattleCards}
+                isOpen={isOpenLevelUpModal}
+                setIsOpen={setIsOpenLevelUpModal}
             />}
 
             {selectedBattleCardForInfo && <ModalBattleCardInfo

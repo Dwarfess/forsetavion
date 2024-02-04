@@ -2,20 +2,20 @@ import styled from "styled-components";
 import {BattleCardType} from "./types";
 import {defaultFontSize} from "./constants";
 
-const LevelIndicator = ({battleCard, gridLength}: { battleCard: BattleCardType | any, gridLength: number }) => {
-    const cardsWithLevel = ['secret', 'boss'];
+const LevelIndicator = ({
+    battleCard, gridLength, position
+}: { battleCard: BattleCardType | any, gridLength: number, position?: any }) => {
     return <>
-        {cardsWithLevel.includes(battleCard.type) && (<LevelIndicatorWrapper data-length={gridLength}>
+        <LevelIndicatorWrapper data-length={gridLength} data-bottom={position?.bottom}>
             <span className="level-value">{battleCard.level}</span> lvl
         </LevelIndicatorWrapper>
-        )}
     </>;
 };
 
 const LevelIndicatorWrapper = styled.div`
     position: absolute;
-    right: 0px;
-    bottom: 0px;
+    right: ${(props: any) => props['data-position']?.right || 0}px;
+    bottom: ${(props: any) => props['data-bottom'] || 0}px;
     height: 25%;
     overflow: hidden;
     padding: 0 5px;

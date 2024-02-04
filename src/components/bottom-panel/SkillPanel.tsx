@@ -34,6 +34,7 @@ const SkillPanel = ({
                 >
                     <div className="skill-item">
                         <BattleCardImage battleCard={skill} radius={50}/>
+                        <img src="lock.png" className='img-lock'/>
                     </div>
                     {skill.coolDown ? <span className="count-value">{skill.coolDown}</span> : <></>}
                 </div>
@@ -70,12 +71,18 @@ const SkillPanelWrapper = styled.div`
             transform: scale(0.95)
         }
 
-        &.disabled {
+        &.disabled, &.block {
             pointer-events: none;
             cursor: inherit;
             
             .skill-item {opacity: 0.4}
         }
+        
+        &.block {
+            .img-lock {
+                display: block !important;
+            }
+        } 
 
         &.active {
             animation: pulseSkill 2s ease infinite;
@@ -109,6 +116,18 @@ const SkillPanelWrapper = styled.div`
             margin: auto;
             align-items: center;
             justify-content: center;
+
+            position: relative;
+
+            .img-lock {
+                display: none;
+                width: 100%;
+                height: 100%;
+                opacity: 0.7;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
 
             --borderWidth: 1px;
 

@@ -44,6 +44,7 @@ export interface Skill {
     image: string;
     type: string;
     level: number;
+    temporaryPoints: number;
     // value: number;
     // maxCoolDown: number;
     coolDown: number;
@@ -68,7 +69,8 @@ export interface HeroBattleCardType extends CommonBattleCardType {
     topBottomIndex: number | null;
     topRightIndex: number | null;
     topLeftIndex: number | null;
-    exp: number | any;
+    exp: number;
+    skillPoints: number;
     coins: any;
     crystals: number;
     spheres: number;

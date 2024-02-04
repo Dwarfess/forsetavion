@@ -9,7 +9,7 @@ import {LevelIndicator} from "./LevelIndicator";
 import {EffectPanel} from "./bottom-panel/EffectPanel";
 
 const BattleCardField = memo(({onCardClick, onCardDoubleClick, gridLength, battleCard}: any) => {
-
+    const cardsWithLevel = ['secret', 'boss'];
     useEffect(() => {
         if (battleCard.subType) {
             console.log(battleCard.subType, 'battleCard.subType')
@@ -35,7 +35,9 @@ const BattleCardField = memo(({onCardClick, onCardDoubleClick, gridLength, battl
                     <HealthIndicator battleCard={battleCard} gridLength={gridLength}/>
                     <BattleCardImage battleCard={battleCard}/>
                     <EffectPanel battleCard={battleCard}/>
-                    <LevelIndicator battleCard={battleCard} gridLength={gridLength}/>
+                    {cardsWithLevel.includes(battleCard.type)
+                        && (<LevelIndicator battleCard={battleCard} gridLength={gridLength}/>
+                    )}
                 </BattleCard>
             </BattleCardFieldContainer>
         </BattleCardFieldWrapperForAnimation>
