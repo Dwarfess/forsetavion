@@ -1,6 +1,7 @@
 import {BattleCardType, Direction, HeroBattleCardType} from "../types";
 import {generateBattleCards, generateBossCards, generatePrizeCards, getHeroCard} from "./utils";
 import {ordinaryBossPartsCount} from "../constants";
+import {recalculateSkillsStatsAccordingLevel} from "./skillLevelUtils";
 
 export const addClassForMovingCard = async (battleCard: BattleCardType, className: string) => {
     const transformDuration = 300;
@@ -60,6 +61,11 @@ export const defineNewBattleCard = (
             newBattleCards = newBattleCards.filter((newBattleCard: BattleCardType) => newBattleCard.type !== 'bossPart');
         }
     }
+
+    const newBattleCard = newBattleCards[0];
+
+    if (newBattleCard.type === 'boss')
+    recalculateSkillsStatsAccordingLevel(newBattleCard.skills);
 
     return newBattleCards[0];
 }

@@ -35,6 +35,7 @@ export interface ArtifactCardType extends CommonBattleCardType {
 export interface Stat {
     name: string;
     title: string;
+    defaultValue?: number;
     value: number;
 }
 

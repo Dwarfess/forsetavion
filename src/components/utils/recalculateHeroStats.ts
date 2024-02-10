@@ -71,8 +71,8 @@ const recalculateHeroSpheres = (heroCard: HeroBattleCardType, selectedCard: Batt
     heroCard.spheres += selectedCard.value;
 };
 
-export const getItemStat = (battleCard: any, name: string) => {
-    return battleCard.stats.find((stat: Stat) => stat.name === name) || {value: 0};
+export const getItemStat = (item: any, name: string) => {
+    return item.stats.find((stat: Stat) => stat.name === name) || {};
 };
 
 const recalculateHeroStatAfterAddArtifact = (
@@ -115,7 +115,7 @@ export const recalculateHeroExp = (heroCard: HeroBattleCardType, selectedCard: S
     if (heroExp >= maxLevelExp) {
         heroExp -= maxLevelExp;
         heroCard.level++;
-        heroCard.skillPoints+=2;
+        heroCard.skillPoints+=12;
 
         const heroStatMaxHealth = getItemStat(heroCard, 'maxHealth');
         heroStatMaxHealth.value++;

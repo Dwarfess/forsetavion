@@ -5,6 +5,7 @@ import {
     secretCards, coinsCards, spheresCards, superCoinsCards, superPotionCards, artifactCards, bossPartCards, bossCards
 } from "../constants";
 import {BattleCardType, HeroBattleCardType, PrimaryBattleCardType, Skill} from "../types";
+import {recalculateSkillsStatsAccordingLevel} from "./skillLevelUtils";
 
 export const getBattleCardsWithHero = (gridLength: number): (BattleCardType | HeroBattleCardType)[] => {
     const heroCard = defaultHeroCard;
@@ -106,6 +107,13 @@ export const generateBossCards = (heroLevel: number, gridLength: number) => {
     }));
 
     battleCards.sort(() => .5 - Math.random());
+    battleCards.forEach((battleCard: BattleCardType) => {
+        battleCard.skills.forEach((skill: Skill) => {
+            skill.level = battleCard.level;
+        });
+
+        recalculateSkillsStatsAccordingLevel(battleCard.skills);
+    });
 
     return battleCards;
 };
