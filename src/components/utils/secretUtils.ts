@@ -1,26 +1,40 @@
 import {BattleCardType} from "../types";
 import {generatePrizeCards, getHeroCard} from "./utils";
 
-export const updateAnswer = (answer: string, symbol: string): string => {
-    if (symbol === '←') {
-        answer = answer.slice(0, -1);
-    } else {
-        answer += symbol;
-    }
+export const updateAnswer = (answer: string, symbol: string, isCorrectAnswer: any): string => {
+    if (isCorrectAnswer !== null) return answer;
 
-    return answer;
+    if (symbol === '←') return answer.slice(0, -1);
+
+    if (answer.length === 3 || symbol === '-' && answer.length) return answer;
+
+    return answer + symbol;
 };
 
 export const getActiveSecretCard = (battleCards: BattleCardType[]) => {
     return battleCards.find((battleCard: BattleCardType) => battleCard.type === 'secret' && battleCard.active);
 };
 
+export const getDuration = (battleCards: BattleCardType[]): number => {
+    const secretCard = getActiveSecretCard(battleCards);
+    if (!secretCard) return 0;
+
+    return 30 - Math.floor(secretCard.level / 3);
+}
+
 export const getEquation = (battleCards: BattleCardType[]): string => {
     const secretCard = getActiveSecretCard(battleCards);
     if (!secretCard) return '';
 
-    const signs = ['+', '-', '*', '/'];
-    return buildTreeAndCheck(secretCard?.level + 1, signs);
+    const signs = ['+', '-'];
+
+    let level = secretCard.level;
+    if (secretCard?.level > 3) {
+        signs.push('*', '/');
+        level = Math.floor(level / 1.5);
+    }
+
+    return buildTreeAndCheck(level + 1, signs);
 };
 
 const randomNumberRange = (min: number, max: number): number => {

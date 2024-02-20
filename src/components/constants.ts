@@ -514,11 +514,11 @@ export const newEnemyCards: PrimaryBattleCardType[] = [
 ];
 
 export const newPotionCards = [
-    {
-        name: 'potion1',
-        image: 'potion-1',
-        type: 'potion',
-    },
+    // {
+    //     name: 'potion1',
+    //     image: 'potion-1',
+    //     type: 'potion',
+    // },
     {
         name: 'potion2',
         image: 'potion-2',
@@ -527,11 +527,11 @@ export const newPotionCards = [
 ];
 
 export const superPotionCards = [
-    {
-        name: 'potion4',
-        image: 'potion-4',
-        type: 'superPotion'
-    },
+    // {
+    //     name: 'potion4',
+    //     image: 'potion-4',
+    //     type: 'superPotion'
+    // },
     {
         name: 'potion5',
         image: 'potion-5',
@@ -609,11 +609,11 @@ export const coinsCards = [
         image: 'coin-2',
         type: 'coin',
     },
-    {
-        name: 'coin-3',
-        image: 'coin-3',
-        type: 'coin',
-    },
+    // {
+    //     name: 'coin-3',
+    //     image: 'coin-3',
+    //     type: 'coin',
+    // },
 ];
 
 export const spheresCards = [

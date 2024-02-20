@@ -18,33 +18,11 @@ export const getBattleCardsWithHero = (gridLength: number): (BattleCardType | He
 
 export const generateBattleCards = (heroLevel: number, gridLength: number): BattleCardType[] => {
     const battleCards: any[] = [
-        ...secretCards,
-        ...secretCards,
-        // ...secretCards,
-        // ...secretCards,
-        ...bossPartCards,
-        ...bossPartCards,
-        ...bossPartCards,
-        ...bossPartCards,
-        ...bossPartCards,
-        ...bossPartCards,
-        // ...bossPartCards,
-        // ...bossPartCards,
-        // ...secretCards,
-        // ...secretCards,
-        // ...secretCards,
-        // ...secretCards,
-        // ...secretCards,
-        // ...secretCards,
-        // ...secretCards,
-        ...newEnemyCards,
-        ...newEnemyCards,
-        ...newPotionCards,
-        ...newPotionCards,
-        ...newPotionCards,
-        ...coinsCards,
-        ...coinsCards,
-        ...coinsCards,
+        ...getMultiCards(secretCards, 2),
+        ...getMultiCards(bossPartCards, 6),
+        ...getMultiCards(newEnemyCards, 2),
+        ...getMultiCards(newPotionCards, 8),
+        ...getMultiCards(coinsCards, 8),
     ].map((battleCard: PrimaryBattleCardType) => ({
         ...battleCard,
         id: Math.random().toString(16).slice(2),
@@ -73,11 +51,12 @@ const calculateExpReward = (battleCardType: string) => {
 }
 
 export const generatePrizeCards = (selectedCardLevel: number) => {
+    const artifactCardsAmount = 1 + Math.floor((selectedCardLevel / 4));
     const battleCards: any[] = [
-        ...spheresCards,
-        ...superCoinsCards,
-        ...superPotionCards,
-        ...artifactCards,
+        ...getMultiCards(spheresCards, 4),
+        ...getMultiCards(superCoinsCards, 4),
+        ...getMultiCards(superPotionCards, 4),
+        ...getMultiCards(artifactCards, artifactCardsAmount),
     ].map((battleCard: PrimaryBattleCardType) => ({
         ...battleCard,
         id: Math.random().toString(16).slice(2),
@@ -92,6 +71,15 @@ export const generatePrizeCards = (selectedCardLevel: number) => {
     // battleCards.forEach((card: BattleCardType, index: number) => card.index = index);
 
     return battleCards;
+};
+
+const getMultiCards = (battleCards: any[], amount: number) => {
+    const cards = [];
+    for (let i = 0; i < amount; i++) {
+        cards.push(...structuredClone(battleCards));
+    }
+
+    return cards;
 };
 
 export const generateBossCards = (heroLevel: number, gridLength: number) => {

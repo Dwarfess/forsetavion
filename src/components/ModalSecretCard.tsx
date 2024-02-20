@@ -8,7 +8,7 @@ import {
 import styled from "styled-components";
 import {CountdownCircleTimer} from 'react-countdown-circle-timer';
 
-import {calculateAnswer, getEquation, resetBattleCardsAfterSecret, updateAnswer} from "./utils";
+import {calculateAnswer, getDuration, getEquation, resetBattleCardsAfterSecret, updateAnswer} from "./utils";
 import {symbols} from "./constants";
 
 const ModalSecretCard = ({
@@ -19,7 +19,7 @@ const ModalSecretCard = ({
  }: any) => {
     const [answer, setAnswer] = useState('');
     const [isCorrectAnswer, setIsCorrectAnswer] = useState<any>(null);
-    const [duration, setDuration] = useState<number>(20);
+    const [duration, setDuration] = useState<number>(getDuration(battleCards));
 
     const onButtonClick = () => {
         setBattleCards(resetBattleCardsAfterSecret(battleCards, isCorrectAnswer));
@@ -36,7 +36,7 @@ const ModalSecretCard = ({
     }, [battleCards]);
 
     const onSymbolClick = (symbol: string) => {
-        setAnswer(updateAnswer(answer, symbol));
+        setAnswer(updateAnswer(answer, symbol, isCorrectAnswer));
     }
 
     const equation = useMemo(() => {
