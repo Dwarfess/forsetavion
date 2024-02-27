@@ -1,4 +1,6 @@
 import {useEffect, useState} from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../store';
 import styled from "styled-components";
 import { BattleCardField } from "./BattleCardField";
 import {GridLengthSwitcher} from "./GridLengthSwitcher";
@@ -26,6 +28,12 @@ const BattlePage = () => {
     const [isOpenBattleOverModal, setIsOpenBattleOverModal] = useState(false);
     const [isOpenSecretModal, setIsOpenSecretModal] = useState(false);
     const [isOpenLevelUpModal, setIsOpenLevelUpModal] = useState(false);
+
+    const battleFieldSize = useSelector((state: RootState) => state.battleFieldSize.value);
+
+    useEffect(() => {
+       console.log(battleFieldSize, 'count *****************');
+    }, []);
 
     useEffect(() => {
         gridLength && setBattleCards(getBattleCardsWithHero(gridLength));
