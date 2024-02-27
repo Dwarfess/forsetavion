@@ -1,16 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-export interface BattleFieldSizeState {
+export interface BattleFieldLengthState {
     value: number
 }
 
-const initialState: BattleFieldSizeState = {
+const initialState: BattleFieldLengthState = {
     value: 0,
 }
 
-export const battleFieldSizeSlice = createSlice({
-    name: 'battleFieldSize',
+export const battleFieldLengthSlice = createSlice({
+    name: 'battleFieldLength',
     initialState,
     reducers: {
         increment: (state) => {
@@ -26,13 +26,13 @@ export const battleFieldSizeSlice = createSlice({
         incrementByAmount: (state, action: PayloadAction<number>) => {
             state.value += action.payload
         },
-        changeBattleFieldSize: (state, action: PayloadAction<number>) => {
+        changeBattleFieldLength: (state, action: PayloadAction<number>) => {
             state.value = action.payload;
         },
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount, changeBattleFieldSize } = battleFieldSizeSlice.actions;
+export const { increment, decrement, incrementByAmount, changeBattleFieldLength } = battleFieldLengthSlice.actions;
 
-export default battleFieldSizeSlice.reducer;
+export default battleFieldLengthSlice.reducer;

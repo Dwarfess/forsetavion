@@ -2,6 +2,7 @@ import {BattleCardType, Direction, HeroBattleCardType} from "../types";
 import {generateBattleCards, generateBossCards, generatePrizeCards, getHeroCard} from "./utils";
 import {ordinaryBossPartsCount} from "../constants";
 import {recalculateSkillsStatsAccordingLevel} from "./skillLevelUtils";
+import {getStateValue} from "../../store/storeUtils";
 
 export const addClassForMovingCard = async (battleCard: BattleCardType, className: string) => {
     const transformDuration = 300;
@@ -29,7 +30,7 @@ export const moveBattleCards = async(
     const selectedCardType = battleCards[selectedCardIndex].type;
     const selectedCardLevel = battleCards[selectedCardIndex].level;
     const calcLastCardIndex = await moveBattleCard(heroCard.index, selectedCardIndex, battleCards, gridLength);
-    const newBattleCard = defineNewBattleCard(heroCard, selectedCardType, selectedCardLevel, battleCards, gridLength);
+    const newBattleCard = defineNewBattleCard(heroCard, selectedCardType, selectedCardLevel, battleCards);
     newBattleCard.index = calcLastCardIndex;
     newBattleCard.isNew = true;
 
@@ -42,20 +43,19 @@ export const defineNewBattleCard = (
     heroCard: HeroBattleCardType,
     selectedCardType: string,
     selectedCardLevel: number,
-    battleCards: BattleCardType[],
-    gridLength: number,
+    battleCards: BattleCardType[]
 ) => {
     let newBattleCards;
     if (['boss', 'secret'].includes(selectedCardType)) {
         newBattleCards = generatePrizeCards(selectedCardLevel);
     } else if (heroCard.bossParts === ordinaryBossPartsCount && selectedCardType === 'bossPart') {
-        newBattleCards = generateBossCards(heroCard.level, gridLength);
+        newBattleCards = generateBossCards(heroCard.level);
     } else {
         const bossPartsCount =
             battleCards.filter((battleCard: BattleCardType) => battleCard.type === 'bossPart').length
             + heroCard.bossParts;
 
-        newBattleCards = generateBattleCards(heroCard.level, gridLength);
+        newBattleCards = generateBattleCards(heroCard.level);
 
         if (bossPartsCount >= ordinaryBossPartsCount) {
             newBattleCards = newBattleCards.filter((newBattleCard: BattleCardType) => newBattleCard.type !== 'bossPart');
@@ -182,8 +182,8 @@ const directionList: Direction[] = [
 export const keyDownHandler = (
     key: string,
     battleCards: BattleCardType[],
-    setBattleCards: (item: BattleCardType[]) => void,
-    gridLength: number,
+    // setBattleCards: (item: BattleCardType[]) => void,
+    // gridLength: number,
     // setIsMoving: (val: boolean) => void,
     // setIsOpenBattleOverModal: (val: boolean) => void,
     // setIsOpenSecretModal: (val: boolean) => void,
@@ -191,13 +191,14 @@ export const keyDownHandler = (
     const allowedKeys = ['ArrowRight', 'ArrowLeft', 'ArrowUp', 'ArrowDown'];
     if (!allowedKeys.includes(key)) return;
 
+    const battleFieldLength = getStateValue('battleFieldLength');
     const heroCardIndex: any = battleCards.find((card: BattleCardType) => card.type === 'hero')?.index;
 
     const keyMap: any = {
         ArrowRight: () => heroCardIndex + 1,
         ArrowLeft: () => heroCardIndex - 1,
-        ArrowUp: () => heroCardIndex - gridLength,
-        ArrowDown: () => heroCardIndex + gridLength,
+        ArrowUp: () => heroCardIndex - battleFieldLength,
+        ArrowDown: () => heroCardIndex + battleFieldLength,
     };
 
     return keyMap[key]();

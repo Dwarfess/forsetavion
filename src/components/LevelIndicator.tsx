@@ -3,10 +3,12 @@ import {BattleCardType} from "./types";
 import {defaultFontSize} from "./constants";
 
 const LevelIndicator = ({
-    battleCard, gridLength, position
-}: { battleCard: BattleCardType | any, gridLength: number, position?: any }) => {
+    battleCard,
+    size,
+    position
+}: { battleCard: BattleCardType | any, size?: number, position?: any }) => {
     return <>
-        <LevelIndicatorWrapper data-length={gridLength} data-bottom={position?.bottom}>
+        <LevelIndicatorWrapper data-size={size} data-bottom={position?.bottom}>
             <span className="level-value">{battleCard.level}</span> lvl
         </LevelIndicatorWrapper>
     </>;
@@ -22,7 +24,7 @@ const LevelIndicatorWrapper = styled.div`
     display: flex;
     align-items: center;
     vertical-align: middle;
-    font-size: ${(props: any) => (defaultFontSize * 5) / props['data-length']}px;
+    font-size: ${(props: any) => (defaultFontSize * 5) / props['data-size']}px;
     font-family: 'MagicalWorld';
     font-weight: bold;
     z-index: 4;

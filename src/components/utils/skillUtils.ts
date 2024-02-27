@@ -1,5 +1,4 @@
 import {BattleCardType, Effect, HeroBattleCardType, Skill} from "../types";
-import {generateBattleCards, generatePrizeCards} from "./utils";
 import {getItemStat, recalculateHeroExp} from "./recalculateHeroStats";
 import {addClassErrorWhenContactCard, addClassWhenContactCard} from "./contactItems";
 import {defineNewBattleCard} from "./moveItems";
@@ -44,14 +43,13 @@ export const checkAndUseActiveSkill = async (
     heroCard: any,
     selectedCard: any,
     battleCards: BattleCardType[],
-    gridLength: number,
     nearbyCardsOnly: boolean
 ) => {
     const activeSkill = getActiveSkill(heroCard);
     if (!activeSkill) return;
 
     if (!activeSkill.nearbyCardsOnly || activeSkill.nearbyCardsOnly === nearbyCardsOnly) {
-        await skillsHandler(activeSkill, heroCard, selectedCard, battleCards, gridLength);
+        await skillsHandler(activeSkill, heroCard, selectedCard, battleCards);
     } else {
         await unsuitedCardHandler(selectedCard);
     }
@@ -67,8 +65,7 @@ const skillsHandler = async (
     activeSkill: Skill,
     heroCard: HeroBattleCardType,
     selectedCard: BattleCardType,
-    battleCards: BattleCardType[],
-    gridLength: number
+    battleCards: BattleCardType[]
 ) => {
     const audioMap: any = {
         'light-ray': 'punch-2',
@@ -94,13 +91,12 @@ const skillsHandler = async (
 
     await addClassWhenContactCard(selectedCard);
 
-    checkBattleCardAfterSkill(battleCards, selectedCard, gridLength);
+    checkBattleCardAfterSkill(battleCards, selectedCard);
 }
 
 const checkBattleCardAfterSkill = (
     battleCards: BattleCardType[],
-    selectedCard: BattleCardType,
-    gridLength: number
+    selectedCard: BattleCardType
 ) => {
     if (selectedCard.value > 0 || selectedCard.type === 'hero') return;
 
@@ -111,7 +107,7 @@ const checkBattleCardAfterSkill = (
     }
 
     recalculateHeroExp(heroCard, selectedCard);
-    changeBattleCardAfterSkill(battleCards, selectedCard, heroCard, gridLength);
+    changeBattleCardAfterSkill(battleCards, selectedCard, heroCard);
 }
 
 const allowedCardTypesForNegativeSkill = ['enemy', 'beast', 'boss'];
@@ -157,7 +153,7 @@ const addEffect = (activeSkill: Skill, selectedCard: BattleCardType) => {
     return true;
 }
 
-export const checkBattleCardsEffects = (battleCards: BattleCardType[], gridLength: number) => {
+export const checkBattleCardsEffects = (battleCards: BattleCardType[]) => {
     const effectsMap: any = {
         buff: buffSkillHandler,
         debuff: debuffSkillHandler,
@@ -166,7 +162,7 @@ export const checkBattleCardsEffects = (battleCards: BattleCardType[], gridLengt
     battleCards.forEach((battleCard: BattleCardType) => {
         battleCard.effects.forEach((effect: Effect) => {
             effectsMap[effect.type](effect, battleCard);
-            checkBattleCardAfterSkill(battleCards, battleCard, gridLength);
+            checkBattleCardAfterSkill(battleCards, battleCard);
         });
         battleCard.effects = battleCard.effects.filter((effect: Effect) => getItemStat(effect, 'duration').value > 0);
     });
@@ -205,8 +201,8 @@ const buffSkillHandler = (effect: Effect, selectedCard: BattleCardType) => {
     duration.value--;
 }
 
-export const changeBattleCardAfterSkill = (battleCards: BattleCardType[], selectedCard: BattleCardType, heroCard: HeroBattleCardType, gridLength: number) => {
-    const battleCard = defineNewBattleCard(heroCard, selectedCard.type, selectedCard.level, battleCards, gridLength);
+export const changeBattleCardAfterSkill = (battleCards: BattleCardType[], selectedCard: BattleCardType, heroCard: HeroBattleCardType) => {
+    const battleCard = defineNewBattleCard(heroCard, selectedCard.type, selectedCard.level, battleCards);
 
     battleCard.index = selectedCard.index;
     battleCard.isNew = true;

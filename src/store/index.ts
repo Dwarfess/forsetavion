@@ -1,2 +1,2 @@
 export * from './store';
-export * from './battleFieldSizeSlice';
+export * from './battleFieldLengthSlice';

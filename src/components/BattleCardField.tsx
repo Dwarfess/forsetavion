@@ -7,8 +7,12 @@ import {HealthIndicator} from "./HealthIndicator";
 import BattleCardImage from "./BattleCardImage";
 import {LevelIndicator} from "./LevelIndicator";
 import {EffectPanel} from "./bottom-panel/EffectPanel";
+import {getStateValue} from "../store/storeUtils";
+import {useSelector} from "react-redux";
+import {RootState} from "../store";
 
-const BattleCardField = memo(({onCardClick, onCardDoubleClick, gridLength, battleCard}: any) => {
+const BattleCardField = memo(({onCardClick, onCardDoubleClick, battleCard}: any) => {
+    const battleFieldLength = useSelector((state: RootState) => state.battleFieldLength.value);
     const cardsWithLevel = ['secret', 'boss'];
     useEffect(() => {
         if (battleCard.subType) {
@@ -24,7 +28,7 @@ const BattleCardField = memo(({onCardClick, onCardDoubleClick, gridLength, battl
     return <BattleCardFieldWrapper
             // @ts-ignore
             tabIndex="0"
-            card-size={getCardSizeInPercent(gridLength)}>
+            card-size={getCardSizeInPercent()}>
         <BattleCardFieldWrapperForAnimation
             onContextMenu={onDoubleClick}
             onClick={() => onCardClick(battleCard.index)}
@@ -32,11 +36,11 @@ const BattleCardField = memo(({onCardClick, onCardDoubleClick, gridLength, battl
         >
             <BattleCardFieldContainer>
                 <BattleCard data-type={battleCard.type} className={`${battleCard.type}`}>
-                    <HealthIndicator battleCard={battleCard} gridLength={gridLength}/>
+                    <HealthIndicator battleCard={battleCard} />
                     <BattleCardImage battleCard={battleCard}/>
                     <EffectPanel battleCard={battleCard}/>
                     {cardsWithLevel.includes(battleCard.type)
-                        && (<LevelIndicator battleCard={battleCard} gridLength={gridLength}/>
+                        && (<LevelIndicator battleCard={battleCard} size={battleFieldLength}/>
                     )}
                 </BattleCard>
             </BattleCardFieldContainer>

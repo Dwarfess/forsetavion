@@ -17,18 +17,21 @@ import {
     updateSkillsCoolDown
 } from "./skillUtils";
 import {getHeroCard} from "./utils";
+import {getStateValue} from "../../store/storeUtils";
 
 export const cardHandler = async (
     selectedCardIndex: number,
     battleCards: BattleCardType[],
     setBattleCards: any,
-    gridLength: number,
+    // gridLength: number,
     setIsMoving: (val: boolean) => void,
     setIsOpenBattleOverModal: (val: boolean) => void,
     setIsOpenSecretModal: (val: boolean) => void,
 ) => {
-    const cardLength = gridLength * gridLength;
-    if (selectedCardIndex < 0 || selectedCardIndex > cardLength) {
+    const battleFieldLength = getStateValue('battleFieldLength');
+    const cardAmount = battleFieldLength * battleFieldLength;
+
+    if (selectedCardIndex < 0 || selectedCardIndex > cardAmount) {
         setIsMoving(false);
         return;
     }
@@ -37,10 +40,10 @@ export const cardHandler = async (
     const heroCard = getHeroCard(clonedBattleCards);
     const selectedCard = clonedBattleCards[selectedCardIndex];
 
-    heroCard.topCardIndex = getTopCardIndex(heroCard.index, gridLength);
-    heroCard.bottomCardIndex = getBottomCardIndex(heroCard.index, gridLength);
-    heroCard.rightCardIndex = getRightCardIndex(heroCard.index, gridLength);
-    heroCard.leftCardIndex = getLeftCardIndex(heroCard.index, gridLength);
+    heroCard.topCardIndex = getTopCardIndex(heroCard.index, battleFieldLength);
+    heroCard.bottomCardIndex = getBottomCardIndex(heroCard.index, battleFieldLength);
+    heroCard.rightCardIndex = getRightCardIndex(heroCard.index, battleFieldLength);
+    heroCard.leftCardIndex = getLeftCardIndex(heroCard.index, battleFieldLength);
 
     const allowedIndexes: any[] = [
         heroCard.topCardIndex,
@@ -54,14 +57,14 @@ export const cardHandler = async (
             heroCard,
             selectedCardIndex,
             clonedBattleCards,
-            gridLength,
+            battleFieldLength,
             setBattleCards,
             setIsMoving,
             setIsOpenBattleOverModal,
             setIsOpenSecretModal
         );
     } else {
-        await checkAndUseActiveSkill(heroCard, selectedCard,clonedBattleCards, gridLength, false);
+        await checkAndUseActiveSkill(heroCard, selectedCard, clonedBattleCards, false);
         setBattleCards(clonedBattleCards);
         setIsMoving(false);
 
@@ -82,7 +85,7 @@ const resetBattleCards = async (
     const selectedCard = battleCards[selectedCardIndex];
     const activeSkill = getActiveSkill(heroCard);
     if (activeSkill) {
-        await checkAndUseActiveSkill(heroCard, selectedCard, battleCards, gridLength, true);
+        await checkAndUseActiveSkill(heroCard, selectedCard, battleCards, true);
         setIsMoving(false);
         setBattleCards(battleCards);
 
@@ -112,7 +115,7 @@ const resetBattleCards = async (
 
         battleCards = structuredClone(battleCards);
         if (selectedCard.type === 'boss') {
-            changeBattleCardAfterSkill(battleCards, selectedCard, heroCard, gridLength);
+            changeBattleCardAfterSkill(battleCards, selectedCard, heroCard);
         } else {
             await moveBattleCards(selectedCardIndex, battleCards, gridLength);
 
@@ -120,7 +123,7 @@ const resetBattleCards = async (
     }
 
     checkBossSkillsReadyToUse(battleCards);
-    checkBattleCardsEffects(battleCards, gridLength);
+    checkBattleCardsEffects(battleCards);
     updateSkillsCoolDown(battleCards);
 
     // MOVE THIS LOGIC TO BATTLE PAGE (AFTER DEBUFF HERO DOESN'T DIE)

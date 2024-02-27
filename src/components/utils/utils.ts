@@ -6,17 +6,18 @@ import {
 } from "../constants";
 import {BattleCardType, HeroBattleCardType, PrimaryBattleCardType, Skill} from "../types";
 import {recalculateSkillsStatsAccordingLevel} from "./skillLevelUtils";
+import {getStateValue} from "../../store/storeUtils";
 
 export const getBattleCardsWithHero = (gridLength: number): (BattleCardType | HeroBattleCardType)[] => {
     const heroCard = defaultHeroCard;
-    const battleCards: (BattleCardType | HeroBattleCardType)[] = generateBattleCards(heroCard.level, gridLength);
+    const battleCards: (BattleCardType | HeroBattleCardType)[] = generateBattleCards(heroCard.level);
 
     battleCards[0] = heroCard;
 
     return battleCards.splice(0, gridLength * gridLength);
 };
 
-export const generateBattleCards = (heroLevel: number, gridLength: number): BattleCardType[] => {
+export const generateBattleCards = (heroLevel: number): BattleCardType[] => {
     const battleCards: any[] = [
         ...getMultiCards(secretCards, 2),
         ...getMultiCards(bossPartCards, 6),
@@ -26,7 +27,7 @@ export const generateBattleCards = (heroLevel: number, gridLength: number): Batt
     ].map((battleCard: PrimaryBattleCardType) => ({
         ...battleCard,
         id: Math.random().toString(16).slice(2),
-        value: getRandomValue(battleCard, heroLevel, gridLength),
+        value: getRandomValue(battleCard, heroLevel),
         level: heroLevel,
         skills: [],
         effects: [],
@@ -60,7 +61,7 @@ export const generatePrizeCards = (selectedCardLevel: number) => {
     ].map((battleCard: PrimaryBattleCardType) => ({
         ...battleCard,
         id: Math.random().toString(16).slice(2),
-        value: getRandomValue(battleCard, selectedCardLevel, 5),
+        value: getRandomValue(battleCard, selectedCardLevel),
         level: 1,
         effects: [],
         isVisible: true,
@@ -82,13 +83,13 @@ const getMultiCards = (battleCards: any[], amount: number) => {
     return cards;
 };
 
-export const generateBossCards = (heroLevel: number, gridLength: number) => {
+export const generateBossCards = (heroLevel: number) => {
     const battleCards: any[] = [
         ...structuredClone(bossCards),
     ].map((battleCard: PrimaryBattleCardType) => ({
         ...battleCard,
         id: Math.random().toString(16).slice(2),
-        value: getRandomValue(battleCard, heroLevel, gridLength),
+        value: getRandomValue(battleCard, heroLevel),
         level: heroLevel,
         expReward: calculateExpReward(battleCard.type),
         isVisible: true,
@@ -106,8 +107,9 @@ export const generateBossCards = (heroLevel: number, gridLength: number) => {
     return battleCards;
 };
 
-const getRandomValue = (battleCard: PrimaryBattleCardType, heroLevel: number, gridLength: number) => {
-    const defaultValue = gridLength;
+const getRandomValue = (battleCard: PrimaryBattleCardType, heroLevel: number) => {
+    const battleFieldLength = getStateValue('battleFieldLength');
+    const defaultValue = battleFieldLength;
     const calculatedValue = defaultValue * (1 + ((heroLevel - 1) / 5));
 
     const healthMap: any = {
@@ -117,7 +119,7 @@ const getRandomValue = (battleCard: PrimaryBattleCardType, heroLevel: number, gr
         sphere: getRandomCardValue(calculatedValue),
         superPotion: 1000,
         superCoin: getRandomCardValue(calculatedValue * 10),
-        boss: getBossValue(heroLevel, gridLength),
+        boss: getBossValue(heroLevel, battleFieldLength),
     };
 
     // const limitedValue = battleCard.type === 'enemy' ? enemyDefaultHealth : 10;
@@ -125,15 +127,16 @@ const getRandomValue = (battleCard: PrimaryBattleCardType, heroLevel: number, gr
 };
 
 const getRandomCardValue = (value: number) => Math.floor(Math.random() * value) + 1;
-const getBossValue = (heroLevel: number, gridLength: number) => {
-    return (heroLevel + gridLength - 2) * 2 ;
+const getBossValue = (heroLevel: number, battleFieldLength: number) => {
+    return (heroLevel + battleFieldLength - 2) * 2 ;
 };
 
-export const getCardSizeInPercent = (gridLength: number): string => {
-    return `${100/gridLength}%`;
+export const getCardSizeInPercent = (): string => {
+    const battleFieldLength = getStateValue('battleFieldLength');
+    return `${100/battleFieldLength}%`;
 };
 
-export const getHeroScore = (heroCard: HeroBattleCardType) => {
+export const getHeroScore = (heroCard: HeroBattleCardType): number => {
     const levelPoints = heroCard.level * 100;
     const coinPoints = heroCard.coins * 5;
     const crystalPoints = heroCard.spheres * 20;

@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import battleFieldSizeReducer from './battleFieldSizeSlice';
+import battleFieldLengthReducer from './battleFieldLengthSlice';
 
 export const store = configureStore({
     reducer: {
-        battleFieldSize: battleFieldSizeReducer,
+        battleFieldLength: battleFieldLengthReducer,
     },
-})
+});
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;

@@ -3,13 +3,17 @@ import styled from "styled-components";
 import {BattleCardType, HeroBattleCardType} from "./types";
 import {defaultFontSize} from "./constants";
 import {getItemStat} from "./utils";
+import {useSelector} from "react-redux";
+import {RootState} from "../store";
 
 
-const HealthIndicator = ({battleCard, gridLength}: { battleCard: BattleCardType | any, gridLength: number }) => {
+const HealthIndicator = ({ battleCard }: { battleCard: BattleCardType | any}) => {
+    const battleFieldLength = useSelector((state: RootState) => state.battleFieldLength.value);
+
     return <HealthIndicatorWrapper
         data-health={battleCard.health}
         data-max-health={battleCard.type === "hero" && getItemStat(battleCard, 'maxHealth').value}
-        data-length={gridLength}
+        data-length={battleFieldLength}
     >
         {battleCard.type === 'hero' && (
             <>

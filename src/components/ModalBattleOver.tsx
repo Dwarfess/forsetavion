@@ -7,16 +7,16 @@ import {
 } from 'semantic-ui-react'
 import styled from "styled-components";
 import {getHeroScore} from "./utils/utils";
+import {setStateValue} from "../store/storeUtils";
 
 const ModalBattleOver = ({
     heroCard,
     isOpen,
     setIsOpen,
-    setGridLength
 }: any) => {
     const onButtonClick = () => {
         setIsOpen(false);
-        setGridLength(0);
+        setStateValue('battleFieldLength', 0);
     }
 
     return (

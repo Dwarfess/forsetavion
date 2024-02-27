@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store';
 import styled from "styled-components";
 import { BattleCardField } from "./BattleCardField";
-import {GridLengthSwitcher} from "./GridLengthSwitcher";
+import { BattleFieldLengthSwitcher } from './index';
 import {TopPanel} from "./top-panel/TopPanel";
 import {ModalBattleOver} from "./ModalBattleOver";
 import {ModalSecretCard} from "./ModalSecretCard";
@@ -29,16 +29,16 @@ const BattlePage = () => {
     const [isOpenSecretModal, setIsOpenSecretModal] = useState(false);
     const [isOpenLevelUpModal, setIsOpenLevelUpModal] = useState(false);
 
-    const battleFieldSize = useSelector((state: RootState) => state.battleFieldSize.value);
+    const battleFieldLength = useSelector((state: RootState) => state.battleFieldLength.value);
 
     useEffect(() => {
-       console.log(battleFieldSize, 'count *****************');
-    }, []);
+       console.log(battleFieldLength, 'count *****************');
+    }, [battleFieldLength]);
 
     useEffect(() => {
-        gridLength && setBattleCards(getBattleCardsWithHero(gridLength));
+        battleFieldLength && setBattleCards(getBattleCardsWithHero(battleFieldLength));
         setIsOpenBattleOverModal(false);
-    }, [gridLength]);
+    }, [battleFieldLength]);
 
     useEffect(() => {
         if (battleCards.length) {
@@ -72,7 +72,7 @@ const BattlePage = () => {
             selectedCardIndex,
             battleCards,
             setBattleCards,
-            gridLength,
+            // battleFieldLength,
             setIsMoving,
             setIsOpenBattleOverModal,
             setIsOpenSecretModal
@@ -92,15 +92,15 @@ const BattlePage = () => {
         const selectedCardIndex = keyDownHandler(
             e.key,
             battleCards,
-            setBattleCards,
-            gridLength,
+            // setBattleCards,
+            // battleFieldLength,
         );
 
         cardHandler(
             selectedCardIndex,
             battleCards,
             setBattleCards,
-            gridLength,
+            // battleFieldLength,
             setIsMoving,
             setIsOpenBattleOverModal,
             setIsOpenSecretModal
@@ -108,8 +108,8 @@ const BattlePage = () => {
     };
 
     return <>
-        <GridLengthSwitcher gridLength={gridLength} setGridLength={setGridLength} />
-        {!!gridLength && battleCards.length && (<>
+        <BattleFieldLengthSwitcher />
+        {!!battleFieldLength && battleCards.length && (<>
             <TopPanel heroCard={getHeroCard(battleCards)} />
 
             <BattleField>
@@ -119,7 +119,6 @@ const BattlePage = () => {
                             onCardClick={onCardClick}
                             onCardDoubleClick={onCardDoubleClick}
                             battleCard={battleCard}
-                            gridLength={gridLength}
                             key={index}
                         />
                     })
