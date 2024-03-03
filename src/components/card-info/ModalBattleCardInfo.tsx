@@ -9,14 +9,14 @@ import styled from "styled-components";
 import BattleCardImage from "../BattleCardImage";
 import {TabInfo} from "./TabInfo";
 import {getRecalculatedExpRewardString} from "../utils";
+import {useHeroCard} from "../../store/storeHooks";
 
 const ModalBattleCardInfo = ({
-     heroCard,
      selectedBattleCard,
      setSelectedBattleCard,
  }: any) => {
     const [isOpen, setIsOpen] = useState(false);
-
+    const { heroCard } = useHeroCard();
     useEffect(() => {
         setIsOpen(!!selectedBattleCard)
     }, [selectedBattleCard]);

@@ -8,12 +8,13 @@ import {
 import styled from "styled-components";
 import {getHeroScore} from "./utils/utils";
 import {setStateValue} from "../store/storeUtils";
+import {useHeroCard} from "../store/storeHooks";
 
 const ModalBattleOver = ({
-    heroCard,
     isOpen,
     setIsOpen,
 }: any) => {
+    const { heroCard } = useHeroCard();
     const onButtonClick = () => {
         setIsOpen(false);
         setStateValue('battleFieldLength', 0);

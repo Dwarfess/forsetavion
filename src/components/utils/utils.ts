@@ -4,13 +4,13 @@ import {
     newPotionCards,
     secretCards, coinsCards, spheresCards, superCoinsCards, superPotionCards, artifactCards, bossPartCards, bossCards
 } from "../constants";
-import {BattleCardType, HeroBattleCardType, PrimaryBattleCardType, Skill} from "../types";
+import {BattleCardType, IHeroBattleCard, PrimaryBattleCardType, Skill} from "../types";
 import {recalculateSkillsStatsAccordingLevel} from "./skillLevelUtils";
 import {getStateValue} from "../../store/storeUtils";
 
-export const getBattleCardsWithHero = (gridLength: number): (BattleCardType | HeroBattleCardType)[] => {
+export const getBattleCardsWithHero = (gridLength: number): (BattleCardType | IHeroBattleCard)[] => {
     const heroCard = defaultHeroCard;
-    const battleCards: (BattleCardType | HeroBattleCardType)[] = generateBattleCards(heroCard.level);
+    const battleCards: (BattleCardType | IHeroBattleCard)[] = generateBattleCards(heroCard.level);
 
     battleCards[0] = heroCard;
 
@@ -136,7 +136,7 @@ export const getCardSizeInPercent = (): string => {
     return `${100/battleFieldLength}%`;
 };
 
-export const getHeroScore = (heroCard: HeroBattleCardType): number => {
+export const getHeroScore = (heroCard: IHeroBattleCard): number => {
     const levelPoints = heroCard.level * 100;
     const coinPoints = heroCard.coins * 5;
     const crystalPoints = heroCard.spheres * 20;

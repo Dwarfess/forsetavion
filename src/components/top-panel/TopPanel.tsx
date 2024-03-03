@@ -1,12 +1,13 @@
 import React from 'react'
 import { Progress } from 'semantic-ui-react'
 import styled from "styled-components";
-import {BattleCardType, HeroBattleCardType} from "../types";
 import {getBossPartProgress, getMaxExpForCurrentLever} from "../utils/recalculateHeroStats";
 import {ordinaryBossPartsCount} from "../constants";
+import { useHeroCard } from '../../store/storeHooks';
 
 
-const TopPanel = ({heroCard}: { heroCard: HeroBattleCardType }) => {
+const TopPanel = () => {
+    const { heroCard } = useHeroCard();
     return (
         <TopPanelWrapper>
             <div className="top-side">
@@ -18,13 +19,7 @@ const TopPanel = ({heroCard}: { heroCard: HeroBattleCardType }) => {
                 <CoinsBar>
                     <img src="icon-coins.png" className="coins-icon"/>
                     <div className="coins-value">{heroCard.coins}</div>
-                    {/*<div className="coins-value2">{heroCard.coins}</div>*/}
                 </CoinsBar>
-                {/*<CoinsBar>*/}
-                {/*    <img src="icon-crystals.png" className="coins-icon"/>*/}
-                {/*    <div className="coins-value">{heroCard.crystals}</div>*/}
-                {/*    /!*<div className="coins-value2">{heroCard.coins}</div>*!/*/}
-                {/*</CoinsBar>*/}
                 <CoinsBar>
                     <img src="icon-spheres.png" className="coins-icon"/>
                     <div className="coins-value">{heroCard.spheres}</div>

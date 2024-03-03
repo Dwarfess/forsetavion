@@ -16,20 +16,19 @@ import {
     getHeroCard
 } from "./utils";
 import {ModalLevelUp} from "./level-up/ModalLevelUp";
+import {useBattleFieldLength, useHeroCard} from "../store/storeHooks";
 
 const BattlePage = () => {
     const [battleCards, setBattleCards] = useState<any[]>([]);
-    const [heroCard, setHeroCard] = useState<any>(null);
     const [selectedBattleCardForInfo, setSelectedBattleCardForInfo] = useState<any>(null);
-    // const [activeHeroSkill, setActiveHeroSkill] = useState<any>(null);
-    const [gridLength, setGridLength] = useState(0);
     const [isMoving, setIsMoving] = useState(false); // block/unblock extra click
 
     const [isOpenBattleOverModal, setIsOpenBattleOverModal] = useState(false);
     const [isOpenSecretModal, setIsOpenSecretModal] = useState(false);
     const [isOpenLevelUpModal, setIsOpenLevelUpModal] = useState(false);
 
-    const battleFieldLength = useSelector((state: RootState) => state.battleFieldLength.value);
+    const { battleFieldLength } = useBattleFieldLength();
+    const { heroCard, setHeroCard } = useHeroCard();
 
     useEffect(() => {
        console.log(battleFieldLength, 'count *****************');
@@ -109,8 +108,8 @@ const BattlePage = () => {
 
     return <>
         <BattleFieldLengthSwitcher />
-        {!!battleFieldLength && battleCards.length && (<>
-            <TopPanel heroCard={getHeroCard(battleCards)} />
+        {!!battleFieldLength && heroCard && (<>
+            <TopPanel />
 
             <BattleField>
                 {
@@ -125,12 +124,10 @@ const BattlePage = () => {
                 }
             </BattleField>
             <BottomPanel battleCards={battleCards} setBattleCards={setBattleCards}/>
-            <ModalBattleOver
-                heroCard={getHeroCard(battleCards)}
+            {isOpenBattleOverModal && <ModalBattleOver
                 isOpen={isOpenBattleOverModal}
                 setIsOpen={setIsOpenBattleOverModal}
-                setGridLength={setGridLength}
-            />
+            />}
 
             {isOpenSecretModal && <ModalSecretCard
                 battleCards={battleCards}
@@ -140,7 +137,6 @@ const BattlePage = () => {
             />}
 
             {isOpenLevelUpModal && <ModalLevelUp
-                heroCard={getHeroCard(battleCards)}
                 battleCards={battleCards}
                 setBattleCards={setBattleCards}
                 isOpen={isOpenLevelUpModal}
@@ -148,7 +144,6 @@ const BattlePage = () => {
             />}
 
             {selectedBattleCardForInfo && <ModalBattleCardInfo
-                heroCard={heroCard}
                 selectedBattleCard={selectedBattleCardForInfo}
                 setSelectedBattleCard={setSelectedBattleCardForInfo}
             />}

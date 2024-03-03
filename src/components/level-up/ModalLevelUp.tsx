@@ -16,14 +16,15 @@ import {
     getHeroSkillsWithIncreasedSkill,
     getHeroSkillsWithTemporaryPoints, getUpdatedBattleCardsByNewSkillLevels
 } from "../utils";
+import {useHeroCard} from "../../store/storeHooks";
 
 const ModalLevelUp = ({
-    heroCard,
     battleCards,
     setBattleCards,
     isOpen,
     setIsOpen,
 }: any) => {
+    const { heroCard } = useHeroCard();
     const [heroSkills, setHeroSkills] = useState<Skill[]>([]);
     const [heroSkillPoints, setHeroSkillPoints] = useState<number>(0);
 

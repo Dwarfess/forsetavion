@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-export interface BattleFieldLengthState {
+export interface IBattleFieldLengthState {
     value: number
 }
 
-const initialState: BattleFieldLengthState = {
+const initialState: IBattleFieldLengthState = {
     value: 0,
 }
 

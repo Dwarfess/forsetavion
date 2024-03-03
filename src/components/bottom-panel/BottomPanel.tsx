@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-import {BattleCardType, HeroBattleCardType} from "../types";
+import {BattleCardType, IHeroBattleCard} from "../types";
 import {SkillPanel} from "./SkillPanel";
 
 

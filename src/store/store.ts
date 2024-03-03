@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import battleFieldLengthReducer from './battleFieldLengthSlice';
+import heroCardReducer from './heroCardSlice';
 
 export const store = configureStore({
     reducer: {
         battleFieldLength: battleFieldLengthReducer,
+        heroCard: heroCardReducer,
     },
 });
 

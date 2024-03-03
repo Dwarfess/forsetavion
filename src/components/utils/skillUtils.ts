@@ -1,4 +1,4 @@
-import {BattleCardType, Effect, HeroBattleCardType, Skill} from "../types";
+import {BattleCardType, Effect, IHeroBattleCard, Skill} from "../types";
 import {getItemStat, recalculateHeroExp} from "./recalculateHeroStats";
 import {addClassErrorWhenContactCard, addClassWhenContactCard} from "./contactItems";
 import {defineNewBattleCard} from "./moveItems";
@@ -35,7 +35,7 @@ export const getSkillClasses = (skill: Skill, activeSkill: Skill) => {
     return skillClasses;
 }
 
-export const getActiveSkill = (heroCard: HeroBattleCardType) => {
+export const getActiveSkill = (heroCard: IHeroBattleCard) => {
     return heroCard.skills.find((skill:Skill) => skill.active);
 }
 
@@ -63,7 +63,7 @@ const unsuitedCardHandler = async (selectedCard: BattleCardType) => {
 // const skillNames = ['light-ray', 'poison', 'ice-balls'];
 const skillsHandler = async (
     activeSkill: Skill,
-    heroCard: HeroBattleCardType,
+    heroCard: IHeroBattleCard,
     selectedCard: BattleCardType,
     battleCards: BattleCardType[]
 ) => {
@@ -201,7 +201,7 @@ const buffSkillHandler = (effect: Effect, selectedCard: BattleCardType) => {
     duration.value--;
 }
 
-export const changeBattleCardAfterSkill = (battleCards: BattleCardType[], selectedCard: BattleCardType, heroCard: HeroBattleCardType) => {
+export const changeBattleCardAfterSkill = (battleCards: BattleCardType[], selectedCard: BattleCardType, heroCard: IHeroBattleCard) => {
     const battleCard = defineNewBattleCard(heroCard, selectedCard.type, selectedCard.level, battleCards);
 
     battleCard.index = selectedCard.index;

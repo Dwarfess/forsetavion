@@ -1,4 +1,4 @@
-import {BattleCardType, HeroBattleCardType, PrimaryBattleCardType, Skill} from "../types";
+import {BattleCardType, IHeroBattleCard, PrimaryBattleCardType, Skill} from "../types";
 import {
     getBottomCardIndex,
     getLeftCardIndex,
@@ -73,7 +73,7 @@ export const cardHandler = async (
 };
 
 const resetBattleCards = async (
-    heroCard: HeroBattleCardType,
+    heroCard: IHeroBattleCard,
     selectedCardIndex: number,
     battleCards: BattleCardType[],
     gridLength: number,

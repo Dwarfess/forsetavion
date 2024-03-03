@@ -2,15 +2,13 @@ import React, { memo } from 'react';
 import { Button } from 'semantic-ui-react';
 import styled from "styled-components";
 
-import { useSelector, useDispatch } from 'react-redux';
-import { changeBattleFieldLength, RootState } from '../store';
+import { useBattleFieldLength } from '../store/storeHooks';
 
 const BattleFieldLengthSwitcher = memo(() => {
-    const battleFieldLength = useSelector((state: RootState) => state.battleFieldLength.value);
-    const dispatch = useDispatch();
+    const { battleFieldLength, setBattleFieldLength } = useBattleFieldLength();
 
     const onButtonClick = (val: number)=> {
-        dispatch(changeBattleFieldLength(val));
+        setBattleFieldLength(val);
     }
 
     return (

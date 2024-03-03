@@ -1,9 +1,9 @@
-import {ArtifactCardType, BattleCardType, HeroBattleCardType, SimpleBattleCardType, Stat} from "../types";
+import {ArtifactCardType, BattleCardType, IHeroBattleCard, SimpleBattleCardType, Stat} from "../types";
 import {addClassWhenContactCard} from "./contactItems";
 import {defaultHeroCard} from "../constants";
 
 export const recalculateHeroStatsAfterContact = (
-    heroCard: HeroBattleCardType,
+    heroCard: IHeroBattleCard,
     selectedCard: BattleCardType,
 ) => {
     const audioMap: any = {
@@ -38,7 +38,7 @@ export const recalculateHeroStatsAfterContact = (
     audioName && new Audio(`sounds/${audioMap[selectedCard.type]}.mp3`).play();
 };
 
-const recalculateHeroHealthAfterEnemy = (heroCard: HeroBattleCardType, selectedCard: BattleCardType) => {
+const recalculateHeroHealthAfterEnemy = (heroCard: IHeroBattleCard, selectedCard: BattleCardType) => {
     const beastHealth = selectedCard.value - getItemStat(heroCard, 'def').value;
     const heroHealth = beastHealth > 0 ? heroCard.health - beastHealth : heroCard.health;
 
@@ -50,24 +50,24 @@ const recalculateHeroHealthAfterEnemy = (heroCard: HeroBattleCardType, selectedC
     }
 };
 
-const recalculateHeroHealthAfterBoss = (heroCard: HeroBattleCardType, selectedCard: BattleCardType) => {
+const recalculateHeroHealthAfterBoss = (heroCard: IHeroBattleCard, selectedCard: BattleCardType) => {
     recalculateHeroHealthAfterEnemy(heroCard, selectedCard);
 
     heroCard.bossParts = 0;
 };
 
-const recalculateHeroHealthAfterPotion = (heroCard: HeroBattleCardType, selectedCard: BattleCardType) => {
+const recalculateHeroHealthAfterPotion = (heroCard: IHeroBattleCard, selectedCard: BattleCardType) => {
     const heroHealth = heroCard.health + selectedCard.value;
     const heroStatMaxHealth = getItemStat(heroCard, 'maxHealth');
 
     heroCard.health = heroStatMaxHealth.value < heroHealth ? heroStatMaxHealth.value : heroHealth;
 };
 
-const recalculateHeroCoins = (heroCard: HeroBattleCardType, selectedCard: BattleCardType) => {
+const recalculateHeroCoins = (heroCard: IHeroBattleCard, selectedCard: BattleCardType) => {
     heroCard.coins += selectedCard.value;
 };
 
-const recalculateHeroSpheres = (heroCard: HeroBattleCardType, selectedCard: BattleCardType) => {
+const recalculateHeroSpheres = (heroCard: IHeroBattleCard, selectedCard: BattleCardType) => {
     heroCard.spheres += selectedCard.value;
 };
 
@@ -76,7 +76,7 @@ export const getItemStat = (item: any, name: string) => {
 };
 
 const recalculateHeroStatAfterAddArtifact = (
-    heroCard: HeroBattleCardType,
+    heroCard: IHeroBattleCard,
     selectedCard: BattleCardType,
     name: string
 ) => {
@@ -89,7 +89,7 @@ const recalculateHeroStatAfterAddArtifact = (
     }
 };
 
-const recalculateHeroArtifact = (heroCard: HeroBattleCardType, selectedCard: BattleCardType) => {
+const recalculateHeroArtifact = (heroCard: IHeroBattleCard, selectedCard: BattleCardType) => {
     const selectedArtifact = heroCard.artifacts.find((artifact: ArtifactCardType) => artifact.name === selectedCard.name);
 
     if (selectedArtifact) {
@@ -105,7 +105,7 @@ const recalculateHeroArtifact = (heroCard: HeroBattleCardType, selectedCard: Bat
     recalculateHeroStatAfterAddArtifact(heroCard, selectedCard, 'coinBoost');
 };
 
-export const recalculateHeroExp = (heroCard: HeroBattleCardType, selectedCard: SimpleBattleCardType) => {
+export const recalculateHeroExp = (heroCard: IHeroBattleCard, selectedCard: SimpleBattleCardType) => {
     if (heroCard.health <= 0) return;
 
     const maxLevelExp = getMaxExpForCurrentLever(heroCard);
@@ -125,7 +125,7 @@ export const recalculateHeroExp = (heroCard: HeroBattleCardType, selectedCard: S
     heroCard.exp = heroExp;
 };
 
-const recalculateHeroBossPart = (heroCard: HeroBattleCardType) => {
+const recalculateHeroBossPart = (heroCard: IHeroBattleCard) => {
     heroCard.bossParts++;
 };
 
@@ -133,7 +133,7 @@ export const getRecalculatedExpReward = (expReward: number, heroExpBoostValue: n
     return expReward * heroExpBoostValue;
 };
 
-export const getRecalculatedExpRewardString = (heroCard: HeroBattleCardType, selectedCard: SimpleBattleCardType) => {
+export const getRecalculatedExpRewardString = (heroCard: IHeroBattleCard, selectedCard: SimpleBattleCardType) => {
     if (!selectedCard.expReward) return;
 
     const heroExpBoostValue = getItemStat(heroCard, 'expBoost').value;
@@ -147,11 +147,11 @@ export const getRecalculatedExpRewardString = (heroCard: HeroBattleCardType, sel
     return expRewardString;
 };
 
-export const getMaxExpForCurrentLever = (heroCard: HeroBattleCardType): number => {
+export const getMaxExpForCurrentLever = (heroCard: IHeroBattleCard): number => {
     const maxExpForDefaultLever = 50;
     return maxExpForDefaultLever + (maxExpForDefaultLever/2 * (heroCard.level - 1));
 };
 
-export const getBossPartProgress = (heroCard: HeroBattleCardType, level: number) => {
+export const getBossPartProgress = (heroCard: IHeroBattleCard, level: number) => {
     return heroCard.bossParts >= level ? 100 : 0;
 }

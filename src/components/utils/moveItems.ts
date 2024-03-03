@@ -1,4 +1,4 @@
-import {BattleCardType, Direction, HeroBattleCardType} from "../types";
+import {BattleCardType, Direction, IHeroBattleCard} from "../types";
 import {generateBattleCards, generateBossCards, generatePrizeCards, getHeroCard} from "./utils";
 import {ordinaryBossPartsCount} from "../constants";
 import {recalculateSkillsStatsAccordingLevel} from "./skillLevelUtils";
@@ -40,7 +40,7 @@ export const moveBattleCards = async(
 };
 
 export const defineNewBattleCard = (
-    heroCard: HeroBattleCardType,
+    heroCard: IHeroBattleCard,
     selectedCardType: string,
     selectedCardLevel: number,
     battleCards: BattleCardType[]

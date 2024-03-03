@@ -1,4 +1,4 @@
-import {ArtifactCardType, BattleCardType, HeroBattleCardType, PrimaryBattleCardType, Skill} from "./types";
+import {ArtifactCardType, BattleCardType, IHeroBattleCard, PrimaryBattleCardType, Skill} from "./types";
 import {getSkill} from "./utils/cardsBuilder";
 
 export const defaultFontSize = 20;
@@ -247,7 +247,7 @@ const skills: Skill[] = [
     }
 ];
 
-export const defaultHeroCard: HeroBattleCardType = {
+export const defaultHeroCard: IHeroBattleCard = {
     id: Math.random().toString(16).slice(2),
     index: 0,
     name: 'hero',

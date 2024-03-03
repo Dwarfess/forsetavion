@@ -23,7 +23,7 @@ export interface SimpleBattleCardType extends CommonBattleCardType {
     isNew?: boolean;
 }
 
-export interface BattleCardType extends SimpleBattleCardType, ArtifactCardType, HeroBattleCardType {};
+export interface BattleCardType extends SimpleBattleCardType, ArtifactCardType, IHeroBattleCard {};
 
 export interface ArtifactCardType extends CommonBattleCardType {
     count: number;
@@ -63,7 +63,7 @@ export interface Effect {
     stats: Stat[]
 }
 
-export interface HeroBattleCardType extends CommonBattleCardType {
+export interface IHeroBattleCard extends CommonBattleCardType {
     health: number;
     // healthBoost: number;
     topCardIndex: number | null;

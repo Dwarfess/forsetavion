@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import {BattleCardType, HeroBattleCardType} from "./types";
+import {BattleCardType, IHeroBattleCard} from "./types";
 import {defaultFontSize} from "./constants";
 import {getItemStat} from "./utils";
 import {useSelector} from "react-redux";
