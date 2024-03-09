@@ -16,11 +16,11 @@ import {
     getHeroCard
 } from "./utils";
 import {ModalLevelUp} from "./level-up/ModalLevelUp";
-import {useBattleFieldLength, useHeroCard} from "../store/storeHooks";
+import {useBattleFieldLength, useHeroCard, useSelectedCardForInfo} from "../store/storeHooks";
 
 const BattlePage = () => {
     const [battleCards, setBattleCards] = useState<any[]>([]);
-    const [selectedBattleCardForInfo, setSelectedBattleCardForInfo] = useState<any>(null);
+    const { selectedCardForInfo, setSelectedCardForInfo } = useSelectedCardForInfo();
     const [isMoving, setIsMoving] = useState(false); // block/unblock extra click
 
     const [isOpenBattleOverModal, setIsOpenBattleOverModal] = useState(false);
@@ -29,10 +29,6 @@ const BattlePage = () => {
 
     const { battleFieldLength } = useBattleFieldLength();
     const { heroCard, setHeroCard } = useHeroCard();
-
-    useEffect(() => {
-       console.log(battleFieldLength, 'count *****************');
-    }, [battleFieldLength]);
 
     useEffect(() => {
         battleFieldLength && setBattleCards(getBattleCardsWithHero());
@@ -79,7 +75,7 @@ const BattlePage = () => {
 
     const onCardDoubleClick = (selectedCardIndex: number) => {
         if (isMoving) return;
-        setSelectedBattleCardForInfo(battleCards[selectedCardIndex]);
+        setSelectedCardForInfo(battleCards[selectedCardIndex]);
     };
 
     const onKeyDown = (e: any): void => {
@@ -136,10 +132,7 @@ const BattlePage = () => {
                 setIsOpen={setIsOpenLevelUpModal}
             />}
 
-            {selectedBattleCardForInfo && <ModalBattleCardInfo
-                selectedBattleCard={selectedBattleCardForInfo}
-                setSelectedBattleCard={setSelectedBattleCardForInfo}
-            />}
+            {selectedCardForInfo && <ModalBattleCardInfo />}
         </>)}
     </>
 };

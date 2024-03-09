@@ -4,10 +4,7 @@ import styled from "styled-components";
 import {TabInfoCardStats} from "./TabInfoCardStats";
 import {TabInfoCardItem} from "./TabInfoCardItems";
 
-const TabInfo = ({
-    heroCard,
-    selectedBattleCard
-}: any) => {
+const TabInfo = ({selectedBattleCard}: any) => {
     const panes = useMemo(() => {
         const getTabItem = (name: string, children: ReactNode) => ({
             menuItem: name,
@@ -22,7 +19,7 @@ const TabInfo = ({
         selectedBattleCard.artifacts?.length && tabItems.push(getTabItem('Artifacts', <TabInfoCardItem cardItems={selectedBattleCard.artifacts} />));
 
         return tabItems;
-    }, [heroCard, selectedBattleCard]);
+    }, [selectedBattleCard]);
 
     // const panes = [
     //     {

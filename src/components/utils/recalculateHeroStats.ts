@@ -1,6 +1,5 @@
 import {ArtifactCardType, BattleCardType, IHeroBattleCard, SimpleBattleCardType, Stat} from "../types";
-import {addClassWhenContactCard} from "./contactItems";
-import {defaultHeroCard} from "../constants";
+import {getStateValue} from "../../store/storeUtils";
 
 export const recalculateHeroStatsAfterContact = (
     heroCard: IHeroBattleCard,
@@ -133,9 +132,10 @@ export const getRecalculatedExpReward = (expReward: number, heroExpBoostValue: n
     return expReward * heroExpBoostValue;
 };
 
-export const getRecalculatedExpRewardString = (heroCard: IHeroBattleCard, selectedCard: SimpleBattleCardType) => {
+export const getRecalculatedExpRewardString = (selectedCard: SimpleBattleCardType) => {
     if (!selectedCard.expReward) return;
 
+    const heroCard = getStateValue('heroCard');
     const heroExpBoostValue = getItemStat(heroCard, 'expBoost').value;
     let expRewardString: string = 'Exp: ';
     if (heroExpBoostValue !== 1) {

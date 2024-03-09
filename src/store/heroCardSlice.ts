@@ -13,13 +13,13 @@ export const heroCardSlice = createSlice({
     name: 'heroCardSlice',
     initialState,
     reducers: {
-        changeHeroCardSlice: (state, action: PayloadAction<any>) => {
+        changeHeroCard: (state, action: PayloadAction<any>) => {
             state.value = action.payload;
         },
     },
-})
+});
 
 // Action creators are generated for each case reducer function
-export const { changeHeroCardSlice } = heroCardSlice.actions;
+export const { changeHeroCard } = heroCardSlice.actions;
 
 export default heroCardSlice.reducer;
