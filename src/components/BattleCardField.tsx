@@ -7,12 +7,10 @@ import {HealthIndicator} from "./HealthIndicator";
 import BattleCardImage from "./BattleCardImage";
 import {LevelIndicator} from "./LevelIndicator";
 import {EffectPanel} from "./bottom-panel/EffectPanel";
-import {getStateValue} from "../store/storeUtils";
-import {useSelector} from "react-redux";
-import {RootState} from "../store";
+import {useBattleFieldLength} from "../store/storeHooks";
 
 const BattleCardField = memo(({onCardClick, onCardDoubleClick, battleCard}: any) => {
-    const battleFieldLength = useSelector((state: RootState) => state.battleFieldLength.value);
+    const { battleFieldLength } = useBattleFieldLength();
     const cardsWithLevel = ['secret', 'boss'];
     useEffect(() => {
         if (battleCard.subType) {

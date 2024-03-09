@@ -3,12 +3,11 @@ import styled from "styled-components";
 import {BattleCardType, IHeroBattleCard} from "./types";
 import {defaultFontSize} from "./constants";
 import {getItemStat} from "./utils";
-import {useSelector} from "react-redux";
-import {RootState} from "../store";
+import {useBattleFieldLength} from "../store/storeHooks";
 
 
 const HealthIndicator = ({ battleCard }: { battleCard: BattleCardType | any}) => {
-    const battleFieldLength = useSelector((state: RootState) => state.battleFieldLength.value);
+    const { battleFieldLength } = useBattleFieldLength();
 
     return <HealthIndicatorWrapper
         data-health={battleCard.health}

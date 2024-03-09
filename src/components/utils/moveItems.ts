@@ -22,14 +22,13 @@ export const addClassForMovingCard = async (battleCard: BattleCardType, classNam
 
 export const moveBattleCards = async(
     selectedCardIndex: number,
-    battleCards: BattleCardType[],
-    gridLength: number
+    battleCards: BattleCardType[]
 ):Promise<boolean> => {
     const heroCard = getHeroCard(battleCards);
     hideSelectedCard(selectedCardIndex);
     const selectedCardType = battleCards[selectedCardIndex].type;
     const selectedCardLevel = battleCards[selectedCardIndex].level;
-    const calcLastCardIndex = await moveBattleCard(heroCard.index, selectedCardIndex, battleCards, gridLength);
+    const calcLastCardIndex = await moveBattleCard(heroCard.index, selectedCardIndex, battleCards);
     const newBattleCard = defineNewBattleCard(heroCard, selectedCardType, selectedCardLevel, battleCards);
     newBattleCard.index = calcLastCardIndex;
     newBattleCard.isNew = true;
@@ -73,8 +72,7 @@ export const defineNewBattleCard = (
 export const moveBattleCard = async (
     previousCardIndex: number,
     nextCardIndex: number,
-    battleCards: BattleCardType[],
-    gridLength: number,
+    battleCards: BattleCardType[]
 ): Promise<number> => {
     // previousCard is a hero card and next
     // nextCard is a selected card and next
@@ -86,10 +84,11 @@ export const moveBattleCard = async (
     battleCards[nextCardIndex] = battleCards[previousCardIndex];
     battleCards[nextCardIndex].index = nextCardIndex;
 
-    const calcNewPreviousCardIndex = direction.getOppositeIndex(previousCardIndex, gridLength);
+    const battleFieldLength = getStateValue('battleFieldLength');
+    const calcNewPreviousCardIndex = direction.getOppositeIndex(previousCardIndex, battleFieldLength);
 
     if (calcNewPreviousCardIndex !== null) {
-        return moveBattleCard(calcNewPreviousCardIndex, previousCardIndex, battleCards, gridLength);
+        return moveBattleCard(calcNewPreviousCardIndex, previousCardIndex, battleCards);
     } else {
         return previousCardIndex;
     }
@@ -135,29 +134,29 @@ export const getDirection = ((heroCardIndex: number, selectedCardIndex: number):
 
 // const moveClassList = ['move-left', 'move-right', 'move-top', 'move-bottom', 'moving'];
 
-export const getTopCardIndex = (currentCardIndex: number, gridLength: number) => {
-    const newCardIndex = currentCardIndex - gridLength;
+export const getTopCardIndex = (currentCardIndex: number, battleFieldLength: number) => {
+    const newCardIndex = currentCardIndex - battleFieldLength;
 
     return (newCardIndex >= 0) ? newCardIndex : null;
 };
 
-export const getBottomCardIndex = (currentCardIndex: number, gridLength: number) => {
-    const cardLength = gridLength * gridLength;
-    const newCardIndex = currentCardIndex + gridLength;
+export const getBottomCardIndex = (currentCardIndex: number, battleFieldLength: number) => {
+    const cardLength = battleFieldLength * battleFieldLength;
+    const newCardIndex = currentCardIndex + battleFieldLength;
 
     return (newCardIndex < cardLength) ? newCardIndex : null;
 };
 
-export const getRightCardIndex = (currentCardIndex: number, gridLength: number) => {
+export const getRightCardIndex = (currentCardIndex: number, battleFieldLength: number) => {
     const newCardIndex = currentCardIndex + 1;
 
-    return (!currentCardIndex || (currentCardIndex + 1) % gridLength) ? newCardIndex : null;
+    return (!currentCardIndex || (currentCardIndex + 1) % battleFieldLength) ? newCardIndex : null;
 };
 
-export const getLeftCardIndex = (currentCardIndex: number, gridLength: number) => {
+export const getLeftCardIndex = (currentCardIndex: number, battleFieldLength: number) => {
     const newCardIndex = currentCardIndex - 1;
 
-    return (!newCardIndex || currentCardIndex % gridLength) ? newCardIndex : null;
+    return (!newCardIndex || currentCardIndex % battleFieldLength) ? newCardIndex : null;
 };
 
 const directionList: Direction[] = [

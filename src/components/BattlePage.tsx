@@ -35,7 +35,7 @@ const BattlePage = () => {
     }, [battleFieldLength]);
 
     useEffect(() => {
-        battleFieldLength && setBattleCards(getBattleCardsWithHero(battleFieldLength));
+        battleFieldLength && setBattleCards(getBattleCardsWithHero());
         setIsOpenBattleOverModal(false);
     }, [battleFieldLength]);
 

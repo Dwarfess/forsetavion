@@ -8,13 +8,14 @@ import {BattleCardType, IHeroBattleCard, PrimaryBattleCardType, Skill} from "../
 import {recalculateSkillsStatsAccordingLevel} from "./skillLevelUtils";
 import {getStateValue} from "../../store/storeUtils";
 
-export const getBattleCardsWithHero = (gridLength: number): (BattleCardType | IHeroBattleCard)[] => {
+export const getBattleCardsWithHero = (): (BattleCardType | IHeroBattleCard)[] => {
     const heroCard = defaultHeroCard;
     const battleCards: (BattleCardType | IHeroBattleCard)[] = generateBattleCards(heroCard.level);
 
     battleCards[0] = heroCard;
 
-    return battleCards.splice(0, gridLength * gridLength);
+    const battleFieldLength = getStateValue('battleFieldLength');
+    return battleCards.splice(0, battleFieldLength * battleFieldLength);
 };
 
 export const generateBattleCards = (heroLevel: number): BattleCardType[] => {
@@ -119,7 +120,7 @@ const getRandomValue = (battleCard: PrimaryBattleCardType, heroLevel: number) =>
         sphere: getRandomCardValue(calculatedValue),
         superPotion: 1000,
         superCoin: getRandomCardValue(calculatedValue * 10),
-        boss: getBossValue(heroLevel, battleFieldLength),
+        boss: getBossValue(heroLevel),
     };
 
     // const limitedValue = battleCard.type === 'enemy' ? enemyDefaultHealth : 10;
@@ -127,7 +128,8 @@ const getRandomValue = (battleCard: PrimaryBattleCardType, heroLevel: number) =>
 };
 
 const getRandomCardValue = (value: number) => Math.floor(Math.random() * value) + 1;
-const getBossValue = (heroLevel: number, battleFieldLength: number) => {
+const getBossValue = (heroLevel: number) => {
+    const battleFieldLength = getStateValue('battleFieldLength');
     return (heroLevel + battleFieldLength - 2) * 2 ;
 };
 

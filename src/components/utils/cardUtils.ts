@@ -53,10 +53,8 @@ export const cardHandler = async (
 
     if (allowedIndexes.includes(selectedCardIndex)) {
         resetBattleCards(
-            heroCard,
             selectedCardIndex,
             clonedBattleCards,
-            battleFieldLength,
             setBattleCards,
             setIsMoving,
             setIsOpenBattleOverModal,
@@ -72,15 +70,14 @@ export const cardHandler = async (
 };
 
 const resetBattleCards = async (
-    heroCard: IHeroBattleCard,
     selectedCardIndex: number,
     battleCards: BattleCardType[],
-    gridLength: number,
     setBattleCards: (item: BattleCardType[]) => void,
     setIsMoving: (val: boolean) => void,
     setIsOpenBattleOverModal: (val: boolean) => void,
     setIsOpenSecretModal: (val: boolean) => void,
 ) => {
+    const heroCard = getHeroCard(battleCards);
     const selectedCard = battleCards[selectedCardIndex];
     const activeSkill = getActiveSkill(heroCard);
     if (activeSkill) {
@@ -116,7 +113,7 @@ const resetBattleCards = async (
         if (selectedCard.type === 'boss') {
             changeBattleCardAfterSkill(battleCards, selectedCard, heroCard);
         } else {
-            await moveBattleCards(selectedCardIndex, battleCards, gridLength);
+            await moveBattleCards(selectedCardIndex, battleCards);
 
         }
     }
