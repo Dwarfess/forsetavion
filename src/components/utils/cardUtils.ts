@@ -61,7 +61,7 @@ export const cardHandler = async (
             setIsOpenSecretModal
         );
     } else {
-        await checkAndUseActiveSkill(heroCard, selectedCard, clonedBattleCards, false);
+        await checkAndUseActiveSkill(selectedCard, clonedBattleCards, false);
         setBattleCards(clonedBattleCards);
         setIsMoving(false);
 
@@ -81,7 +81,7 @@ const resetBattleCards = async (
     const selectedCard = battleCards[selectedCardIndex];
     const activeSkill = getActiveSkill(heroCard);
     if (activeSkill) {
-        await checkAndUseActiveSkill(heroCard, selectedCard, battleCards, true);
+        await checkAndUseActiveSkill(selectedCard, battleCards, true);
         setIsMoving(false);
         setBattleCards(battleCards);
 
@@ -111,7 +111,7 @@ const resetBattleCards = async (
 
         battleCards = structuredClone(battleCards);
         if (selectedCard.type === 'boss') {
-            changeBattleCardAfterSkill(battleCards, selectedCard, heroCard);
+            changeBattleCardAfterSkill(battleCards, selectedCard);
         } else {
             await moveBattleCards(selectedCardIndex, battleCards);
 

@@ -40,16 +40,16 @@ export const getActiveSkill = (heroCard: IHeroBattleCard) => {
 }
 
 export const checkAndUseActiveSkill = async (
-    heroCard: any,
     selectedCard: any,
     battleCards: BattleCardType[],
     nearbyCardsOnly: boolean
 ) => {
+    const heroCard = getHeroCard(battleCards);
     const activeSkill = getActiveSkill(heroCard);
     if (!activeSkill) return;
 
     if (!activeSkill.nearbyCardsOnly || activeSkill.nearbyCardsOnly === nearbyCardsOnly) {
-        await skillsHandler(activeSkill, heroCard, selectedCard, battleCards);
+        await skillsHandler(activeSkill, selectedCard, battleCards);
     } else {
         await unsuitedCardHandler(selectedCard);
     }
@@ -63,7 +63,6 @@ const unsuitedCardHandler = async (selectedCard: BattleCardType) => {
 // const skillNames = ['light-ray', 'poison', 'ice-balls'];
 const skillsHandler = async (
     activeSkill: Skill,
-    heroCard: IHeroBattleCard,
     selectedCard: BattleCardType,
     battleCards: BattleCardType[]
 ) => {
@@ -107,7 +106,7 @@ const checkBattleCardAfterSkill = (
     }
 
     recalculateHeroExp(heroCard, selectedCard);
-    changeBattleCardAfterSkill(battleCards, selectedCard, heroCard);
+    changeBattleCardAfterSkill(battleCards, selectedCard);
 }
 
 const allowedCardTypesForNegativeSkill = ['enemy', 'beast', 'boss'];
@@ -201,8 +200,8 @@ const buffSkillHandler = (effect: Effect, selectedCard: BattleCardType) => {
     duration.value--;
 }
 
-export const changeBattleCardAfterSkill = (battleCards: BattleCardType[], selectedCard: BattleCardType, heroCard: IHeroBattleCard) => {
-    const battleCard = defineNewBattleCard(heroCard, selectedCard.type, selectedCard.level, battleCards);
+export const changeBattleCardAfterSkill = (battleCards: BattleCardType[], selectedCard: BattleCardType) => {
+    const battleCard = defineNewBattleCard(selectedCard.type, selectedCard.level, battleCards);
 
     battleCard.index = selectedCard.index;
     battleCard.isNew = true;

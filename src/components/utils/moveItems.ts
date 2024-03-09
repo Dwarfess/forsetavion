@@ -29,7 +29,7 @@ export const moveBattleCards = async(
     const selectedCardType = battleCards[selectedCardIndex].type;
     const selectedCardLevel = battleCards[selectedCardIndex].level;
     const calcLastCardIndex = await moveBattleCard(heroCard.index, selectedCardIndex, battleCards);
-    const newBattleCard = defineNewBattleCard(heroCard, selectedCardType, selectedCardLevel, battleCards);
+    const newBattleCard = defineNewBattleCard(selectedCardType, selectedCardLevel, battleCards);
     newBattleCard.index = calcLastCardIndex;
     newBattleCard.isNew = true;
 
@@ -39,11 +39,11 @@ export const moveBattleCards = async(
 };
 
 export const defineNewBattleCard = (
-    heroCard: IHeroBattleCard,
     selectedCardType: string,
     selectedCardLevel: number,
     battleCards: BattleCardType[]
 ) => {
+    const heroCard = getHeroCard(battleCards);
     let newBattleCards;
     if (['boss', 'secret'].includes(selectedCardType)) {
         newBattleCards = generatePrizeCards(selectedCardLevel);
