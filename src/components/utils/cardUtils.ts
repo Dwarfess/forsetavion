@@ -23,7 +23,6 @@ export const cardHandler = async (
     selectedCardIndex: number,
     battleCards: BattleCardType[],
     setBattleCards: any,
-    // gridLength: number,
     setIsMoving: (val: boolean) => void,
     setIsOpenBattleOverModal: (val: boolean) => void,
     setIsOpenSecretModal: (val: boolean) => void,

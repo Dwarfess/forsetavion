@@ -71,7 +71,6 @@ const BattlePage = () => {
             selectedCardIndex,
             battleCards,
             setBattleCards,
-            // battleFieldLength,
             setIsMoving,
             setIsOpenBattleOverModal,
             setIsOpenSecretModal
@@ -88,18 +87,12 @@ const BattlePage = () => {
 
         setIsMoving(true);
         e.stopPropagation();
-        const selectedCardIndex = keyDownHandler(
-            e.key,
-            battleCards,
-            // setBattleCards,
-            // battleFieldLength,
-        );
+        const selectedCardIndex = keyDownHandler(e.key);
 
         cardHandler(
             selectedCardIndex,
             battleCards,
             setBattleCards,
-            // battleFieldLength,
             setIsMoving,
             setIsOpenBattleOverModal,
             setIsOpenSecretModal

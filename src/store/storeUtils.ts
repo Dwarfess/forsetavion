@@ -4,7 +4,7 @@ import {
 } from './index';
 
 export const getStateValue = (name: string) => {
-    const state = store.getState() as any;
+    const state = structuredClone(store.getState() as any);
     return state[name].value;
 }
 

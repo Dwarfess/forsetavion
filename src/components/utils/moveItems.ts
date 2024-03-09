@@ -179,20 +179,12 @@ const directionList: Direction[] = [
     },
 ];
 
-export const keyDownHandler = (
-    key: string,
-    battleCards: BattleCardType[],
-    // setBattleCards: (item: BattleCardType[]) => void,
-    // gridLength: number,
-    // setIsMoving: (val: boolean) => void,
-    // setIsOpenBattleOverModal: (val: boolean) => void,
-    // setIsOpenSecretModal: (val: boolean) => void,
-) => {
+export const keyDownHandler = (key: string) => {
     const allowedKeys = ['ArrowRight', 'ArrowLeft', 'ArrowUp', 'ArrowDown'];
     if (!allowedKeys.includes(key)) return;
 
     const battleFieldLength = getStateValue('battleFieldLength');
-    const heroCardIndex: any = battleCards.find((card: BattleCardType) => card.type === 'hero')?.index;
+    const heroCardIndex: any = getStateValue('heroCard')?.index;
 
     const keyMap: any = {
         ArrowRight: () => heroCardIndex + 1,
@@ -202,18 +194,4 @@ export const keyDownHandler = (
     };
 
     return keyMap[key]();
-    // const selectedCardIndex = keyMap[key]();
-    // const cardLength = gridLength * gridLength;
-    //
-    // if (selectedCardIndex >= 0 && selectedCardIndex < cardLength) {
-    //     cardHandler(
-    //         selectedCardIndex,
-    //         battleCards,
-    //         setBattleCards,
-    //         gridLength,
-    //         setIsMoving,
-    //         setIsOpenBattleOverModal,
-    //         setIsOpenSecretModal
-    //     );
-    // }
 };

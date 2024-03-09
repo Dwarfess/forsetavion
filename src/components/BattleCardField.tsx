@@ -32,7 +32,7 @@ const BattleCardField = memo(({onCardClick, onCardDoubleClick, battleCard}: any)
         <BattleCardFieldWrapperForAnimation
             onContextMenu={onDoubleClick}
             onClick={() => onCardClick(battleCard.index)}
-            className={`battle-card-${battleCard.index} ${battleCard.isNew ? 'newCard' : ''} test-card dynamic-class-${battleCard.id} ${battleCard.type}` }
+            className={`battle-card-${battleCard.index} ${battleCard.isNew ? 'newCard' : ''} dynamic-class-${battleCard.id} ${battleCard.type}` }
         >
             <BattleCardFieldContainer>
                 <BattleCard data-type={battleCard.type} className={`${battleCard.type}`}>
@@ -54,6 +54,7 @@ const BattleCardFieldWrapper = styled.div`
     position: relative;
     z-index: 0;
     padding: 3px;
+    outline: none;
     //border: 1px solid red;
 `;
 
