@@ -16,14 +16,14 @@ import {
     getHeroCard
 } from "./utils";
 import {ModalLevelUp} from "./level-up/ModalLevelUp";
-import {useBattleFieldLength, useHeroCard, useSelectedCardForInfo} from "../store/storeHooks";
+import {useBattleFieldLength, useHeroCard, useIsOpenBattleOverModal, useSelectedCardForInfo} from "../store/storeHooks";
 
 const BattlePage = () => {
     const [battleCards, setBattleCards] = useState<any[]>([]);
     const { selectedCardForInfo, setSelectedCardForInfo } = useSelectedCardForInfo();
-    const [isMoving, setIsMoving] = useState(false); // block/unblock extra click
+    const { isOpenBattleOverModal } = useIsOpenBattleOverModal();
 
-    const [isOpenBattleOverModal, setIsOpenBattleOverModal] = useState(false);
+    const [isMoving, setIsMoving] = useState(false); // block/unblock extra click
     const [isOpenSecretModal, setIsOpenSecretModal] = useState(false);
     const [isOpenLevelUpModal, setIsOpenLevelUpModal] = useState(false);
 
@@ -32,7 +32,6 @@ const BattlePage = () => {
 
     useEffect(() => {
         battleFieldLength && setBattleCards(getBattleCardsWithHero());
-        setIsOpenBattleOverModal(false);
     }, [battleFieldLength]);
 
     useEffect(() => {
@@ -68,7 +67,6 @@ const BattlePage = () => {
             battleCards,
             setBattleCards,
             setIsMoving,
-            setIsOpenBattleOverModal,
             setIsOpenSecretModal
         );
     };
@@ -90,7 +88,6 @@ const BattlePage = () => {
             battleCards,
             setBattleCards,
             setIsMoving,
-            setIsOpenBattleOverModal,
             setIsOpenSecretModal
         );
     };
@@ -113,10 +110,8 @@ const BattlePage = () => {
                 }
             </BattleField>
             <BottomPanel battleCards={battleCards} setBattleCards={setBattleCards}/>
-            {isOpenBattleOverModal && <ModalBattleOver
-                isOpen={isOpenBattleOverModal}
-                setIsOpen={setIsOpenBattleOverModal}
-            />}
+
+            {isOpenBattleOverModal && <ModalBattleOver />}
 
             {isOpenSecretModal && <ModalSecretCard
                 battleCards={battleCards}

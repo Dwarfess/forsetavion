@@ -1,17 +1,15 @@
 import styled from "styled-components";
 import {getHeroScore} from "./utils/utils";
-import {setStateValue} from "../store/storeUtils";
-import {useHeroCard} from "../store/storeHooks";
+import {useBattleFieldLength, useHeroCard, useIsOpenBattleOverModal} from "../store/storeHooks";
 import {ModalX} from "./shared";
 
-const ModalBattleOver = ({
-    isOpen,
-    setIsOpen,
-}: any) => {
+const ModalBattleOver = () => {
+    const { setIsOpenBattleOverModal } = useIsOpenBattleOverModal();
+    const { setBattleFieldLength } = useBattleFieldLength();
     const { heroCard } = useHeroCard();
     const onButtonClick = () => {
-        setIsOpen(false);
-        setStateValue('battleFieldLength', 0);
+        setIsOpenBattleOverModal(false);
+        setBattleFieldLength(0);
     }
 
     return (

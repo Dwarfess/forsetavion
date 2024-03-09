@@ -17,14 +17,13 @@ import {
     updateSkillsCoolDown
 } from "./skillUtils";
 import {getHeroCard} from "./utils";
-import {getStateValue} from "../../store/storeUtils";
+import {getStateValue, setStateValue} from "../../store/storeUtils";
 
 export const cardHandler = async (
     selectedCardIndex: number,
     battleCards: BattleCardType[],
     setBattleCards: any,
     setIsMoving: (val: boolean) => void,
-    setIsOpenBattleOverModal: (val: boolean) => void,
     setIsOpenSecretModal: (val: boolean) => void,
 ) => {
     const battleFieldLength = getStateValue('battleFieldLength');
@@ -57,7 +56,6 @@ export const cardHandler = async (
             clonedBattleCards,
             setBattleCards,
             setIsMoving,
-            setIsOpenBattleOverModal,
             setIsOpenSecretModal
         );
     } else {
@@ -74,7 +72,6 @@ const resetBattleCards = async (
     battleCards: BattleCardType[],
     setBattleCards: (item: BattleCardType[]) => void,
     setIsMoving: (val: boolean) => void,
-    setIsOpenBattleOverModal: (val: boolean) => void,
     setIsOpenSecretModal: (val: boolean) => void,
 ) => {
     const heroCard = getHeroCard(battleCards);
@@ -104,7 +101,8 @@ const resetBattleCards = async (
         // MOVE THIS LOGIC TO BATTLE PAGE (AFTER DEBUFF HERO DOESN'T DIE)
         if (heroCard.health <= 0) {
             setIsMoving(false);
-            setIsOpenBattleOverModal(true);
+            setStateValue('isOpenBattleOverModal', true);
+            // setIsOpenBattleOverModal(true);
 
             return;
         }
@@ -125,7 +123,7 @@ const resetBattleCards = async (
     // MOVE THIS LOGIC TO BATTLE PAGE (AFTER DEBUFF HERO DOESN'T DIE)
     if (getHeroCard(battleCards).health <= 0) {
         setIsMoving(false);
-        setIsOpenBattleOverModal(true);
+        setStateValue('isOpenBattleOverModal', true);
 
         return;
     }

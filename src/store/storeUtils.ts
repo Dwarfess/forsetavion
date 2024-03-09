@@ -1,6 +1,6 @@
 import {
     store,
-    changeBattleFieldLength
+    changeBattleFieldLength, changeIsOpenBattleOverModal
 } from './index';
 
 export const getStateValue = (name: string) => {
@@ -10,7 +10,8 @@ export const getStateValue = (name: string) => {
 
 export const setStateValue = (name: string, data: any) => {
     const reducerMap: any = {
-        battleFieldLength: changeBattleFieldLength
+        battleFieldLength: changeBattleFieldLength,
+        isOpenBattleOverModal: changeIsOpenBattleOverModal,
     };
 
     store.dispatch(reducerMap[name](data));

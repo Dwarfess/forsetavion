@@ -1,5 +1,11 @@
 import { useSelector, useDispatch } from 'react-redux';
-import {changeBattleFieldLength, changeHeroCard, changeSelectedCardForInfo, RootState} from './index';
+import {
+    changeBattleFieldLength,
+    changeHeroCard,
+    changeSelectedCardForInfo,
+    changeIsOpenBattleOverModal,
+    RootState
+} from './index';
 
 export const useBattleFieldLength = () => {
     const dispatch = useDispatch();
@@ -32,4 +38,15 @@ export const useSelectedCardForInfo = () => {
     }
 
     return { selectedCardForInfo, setSelectedCardForInfo };
+}
+
+export const useIsOpenBattleOverModal = () => {
+    const dispatch = useDispatch();
+    const isOpenBattleOverModal = useSelector((state: RootState) => state.isOpenBattleOverModal.value);
+
+    const setIsOpenBattleOverModal = (val: any) => {
+        dispatch(changeIsOpenBattleOverModal(val));
+    }
+
+    return { isOpenBattleOverModal, setIsOpenBattleOverModal };
 }
