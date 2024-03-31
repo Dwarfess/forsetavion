@@ -3,7 +3,9 @@ import {
     changeBattleFieldLength,
     changeHeroCard,
     changeSelectedCardForInfo,
+    changeSelectedSecretCard,
     changeIsOpenBattleOverModal,
+    changeIsOpenLevelUpModal,
     RootState
 } from './index';
 
@@ -40,6 +42,17 @@ export const useSelectedCardForInfo = () => {
     return { selectedCardForInfo, setSelectedCardForInfo };
 }
 
+export const useSelectedSecretCard = () => {
+    const dispatch = useDispatch();
+    const selectedSecretCard = useSelector((state: RootState) => state.selectedSecretCard.value);
+
+    const setSelectedSecretCard = (val: any) => {
+        dispatch(changeSelectedSecretCard(val));
+    }
+
+    return { selectedSecretCard, setSelectedSecretCard };
+}
+
 export const useIsOpenBattleOverModal = () => {
     const dispatch = useDispatch();
     const isOpenBattleOverModal = useSelector((state: RootState) => state.isOpenBattleOverModal.value);
@@ -49,4 +62,15 @@ export const useIsOpenBattleOverModal = () => {
     }
 
     return { isOpenBattleOverModal, setIsOpenBattleOverModal };
+}
+
+export const useIsOpenLevelUpModal = () => {
+    const dispatch = useDispatch();
+    const isOpenLevelUpModal = useSelector((state: RootState) => state.isOpenLevelUpModal.value);
+
+    const setIsOpenLevelUpModal = (val: any) => {
+        dispatch(changeIsOpenLevelUpModal(val));
+    }
+
+    return { isOpenLevelUpModal, setIsOpenLevelUpModal };
 }

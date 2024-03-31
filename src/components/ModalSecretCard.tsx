@@ -6,20 +6,20 @@ import {CountdownCircleTimer} from 'react-countdown-circle-timer';
 import {calculateAnswer, getDuration, getEquation, resetBattleCardsAfterSecret, updateAnswer} from "./utils";
 import {symbols} from "./constants";
 import {ModalX} from "./shared";
+import { useSelectedSecretCard } from "../store/storeHooks";
 
 const ModalSecretCard = ({
      battleCards,
-     setBattleCards,
-     isOpen,
-     setIsOpen
+     setBattleCards
  }: any) => {
+    const { setSelectedSecretCard } = useSelectedSecretCard();
     const [answer, setAnswer] = useState('');
     const [isCorrectAnswer, setIsCorrectAnswer] = useState<any>(null);
-    const [duration, setDuration] = useState<number>(getDuration(battleCards));
+    const [duration, setDuration] = useState<number>(getDuration());
 
-    const onButtonClick = () => {
+    const onCloseClick = () => {
         setBattleCards(resetBattleCardsAfterSecret(battleCards, isCorrectAnswer));
-        setIsOpen(false);
+        setSelectedSecretCard(false);
     }
 
     const onButtonCheckClick = () => {
@@ -36,7 +36,7 @@ const ModalSecretCard = ({
     }
 
     const equation = useMemo(() => {
-        return getEquation(battleCards);
+        return getEquation();
     }, [battleCards]);
 
     const timerContent = useCallback((remainingTime: number) => {
@@ -95,7 +95,7 @@ const ModalSecretCard = ({
                 <div className="actions">
                     {isCorrectAnswer === null
                         ? (<button className="btn" onClick={onButtonCheckClick}>Check</button>)
-                        : (<button className="btn" onClick={onButtonClick}>Close</button>)}
+                        : (<button className="btn" onClick={onCloseClick}>Close</button>)}
                 </div>
             </ModalXContainer>
         </ModalX>

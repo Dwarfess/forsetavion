@@ -16,16 +16,24 @@ import {
     getHeroCard
 } from "./utils";
 import {ModalLevelUp} from "./level-up/ModalLevelUp";
-import {useBattleFieldLength, useHeroCard, useIsOpenBattleOverModal, useSelectedCardForInfo} from "../store/storeHooks";
+import {
+    useBattleFieldLength,
+    useHeroCard,
+    useIsOpenBattleOverModal,
+    useIsOpenLevelUpModal,
+    useSelectedCardForInfo,
+    useSelectedSecretCard
+} from "../store/storeHooks";
 
 const BattlePage = () => {
     const [battleCards, setBattleCards] = useState<any[]>([]);
     const { selectedCardForInfo, setSelectedCardForInfo } = useSelectedCardForInfo();
+    const { selectedSecretCard } = useSelectedSecretCard();
     const { isOpenBattleOverModal } = useIsOpenBattleOverModal();
+    const { isOpenLevelUpModal, setIsOpenLevelUpModal } = useIsOpenLevelUpModal();
 
+    //TODO rewrite it to store
     const [isMoving, setIsMoving] = useState(false); // block/unblock extra click
-    const [isOpenSecretModal, setIsOpenSecretModal] = useState(false);
-    const [isOpenLevelUpModal, setIsOpenLevelUpModal] = useState(false);
 
     const { battleFieldLength } = useBattleFieldLength();
     const { heroCard, setHeroCard } = useHeroCard();
@@ -67,15 +75,15 @@ const BattlePage = () => {
             battleCards,
             setBattleCards,
             setIsMoving,
-            setIsOpenSecretModal
         );
     };
 
-    const onCardDoubleClick = (selectedCardIndex: number) => {
+    const onCardRightClick = (selectedCardIndex: number) => {
         if (isMoving) return;
         setSelectedCardForInfo(battleCards[selectedCardIndex]);
     };
 
+    //TODO needs to be handle double method (like onCardClick)
     const onKeyDown = (e: any): void => {
         if (isMoving) return;
 
@@ -88,7 +96,6 @@ const BattlePage = () => {
             battleCards,
             setBattleCards,
             setIsMoving,
-            setIsOpenSecretModal
         );
     };
 
@@ -102,7 +109,7 @@ const BattlePage = () => {
                     battleCards.map((battleCard: any, index: number) => {
                         return <BattleCardField
                             onCardClick={onCardClick}
-                            onCardDoubleClick={onCardDoubleClick}
+                            onCardRightClick={onCardRightClick}
                             battleCard={battleCard}
                             key={index}
                         />
@@ -113,21 +120,17 @@ const BattlePage = () => {
 
             {isOpenBattleOverModal && <ModalBattleOver />}
 
-            {isOpenSecretModal && <ModalSecretCard
+            {!!selectedSecretCard && <ModalSecretCard
                 battleCards={battleCards}
                 setBattleCards={setBattleCards}
-                isOpen={isOpenSecretModal}
-                setIsOpen={setIsOpenSecretModal}
             />}
 
             {isOpenLevelUpModal && <ModalLevelUp
                 battleCards={battleCards}
                 setBattleCards={setBattleCards}
-                isOpen={isOpenLevelUpModal}
-                setIsOpen={setIsOpenLevelUpModal}
             />}
 
-            {selectedCardForInfo && <ModalBattleCardInfo />}
+            {!!selectedCardForInfo && <ModalBattleCardInfo />}
         </>)}
     </>
 };

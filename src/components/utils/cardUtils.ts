@@ -24,7 +24,6 @@ export const cardHandler = async (
     battleCards: BattleCardType[],
     setBattleCards: any,
     setIsMoving: (val: boolean) => void,
-    setIsOpenSecretModal: (val: boolean) => void,
 ) => {
     const battleFieldLength = getStateValue('battleFieldLength');
     const cardAmount = battleFieldLength * battleFieldLength;
@@ -55,8 +54,7 @@ export const cardHandler = async (
             selectedCardIndex,
             clonedBattleCards,
             setBattleCards,
-            setIsMoving,
-            setIsOpenSecretModal
+            setIsMoving
         );
     } else {
         await checkAndUseActiveSkill(selectedCard, clonedBattleCards, false);
@@ -71,8 +69,7 @@ const resetBattleCards = async (
     selectedCardIndex: number,
     battleCards: BattleCardType[],
     setBattleCards: (item: BattleCardType[]) => void,
-    setIsMoving: (val: boolean) => void,
-    setIsOpenSecretModal: (val: boolean) => void,
+    setIsMoving: (val: boolean) => void
 ) => {
     const heroCard = getHeroCard(battleCards);
     const selectedCard = battleCards[selectedCardIndex];
@@ -85,11 +82,9 @@ const resetBattleCards = async (
         return;
     } else {
         if (selectedCard.type === 'secret') {
-            selectedCard.active = true;
-
             setIsMoving(false);
             setBattleCards(battleCards);
-            setIsOpenSecretModal(true);
+            setStateValue('selectedSecretCard', selectedCard);
 
             return;
         }
@@ -98,11 +93,10 @@ const resetBattleCards = async (
         await addClassWhenContactCard(selectedCard);
         setBattleCards(battleCards);
 
-        // MOVE THIS LOGIC TO BATTLE PAGE (AFTER DEBUFF HERO DOESN'T DIE)
+        //TODO MOVE THIS LOGIC TO BATTLE PAGE (AFTER DEBUFF HERO DOESN'T DIE)
         if (heroCard.health <= 0) {
             setIsMoving(false);
             setStateValue('isOpenBattleOverModal', true);
-            // setIsOpenBattleOverModal(true);
 
             return;
         }

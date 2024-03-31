@@ -10,14 +10,14 @@ import {
     getHeroSkillsWithIncreasedSkill,
     getHeroSkillsWithTemporaryPoints, getUpdatedBattleCardsByNewSkillLevels
 } from "../utils";
-import {useHeroCard} from "../../store/storeHooks";
+import {useHeroCard, useIsOpenLevelUpModal} from "../../store/storeHooks";
 import { ModalX } from "../shared";
 
 const ModalLevelUp = ({
     battleCards,
     setBattleCards,
-    setIsOpen,
 }: any) => {
+    const { setIsOpenLevelUpModal } = useIsOpenLevelUpModal();
     const { heroCard } = useHeroCard();
     const [heroSkills, setHeroSkills] = useState<Skill[]>([]);
     const [heroSkillPoints, setHeroSkillPoints] = useState<number>(0);
@@ -29,7 +29,7 @@ const ModalLevelUp = ({
 
     const completePoints = () => {
         setBattleCards(getUpdatedBattleCardsByNewSkillLevels(battleCards, heroSkills));
-        setIsOpen(false);
+        setIsOpenLevelUpModal(false);
     }
 
     const increaseSkillLevel = (skill: Skill) => {

@@ -1,6 +1,10 @@
 import {
     store,
-    changeBattleFieldLength, changeIsOpenBattleOverModal
+    changeBattleFieldLength,
+    changeIsOpenBattleOverModal,
+    changeSelectedCardForInfo,
+    changeSelectedSecretCard,
+    changeIsOpenLevelUpModal
 } from './index';
 
 export const getStateValue = (name: string) => {
@@ -12,9 +16,10 @@ export const setStateValue = (name: string, data: any) => {
     const reducerMap: any = {
         battleFieldLength: changeBattleFieldLength,
         isOpenBattleOverModal: changeIsOpenBattleOverModal,
+        isOpenLevelUpModal: changeIsOpenLevelUpModal,
+        selectedCardForInfo: changeSelectedCardForInfo,
+        selectedSecretCard: changeSelectedSecretCard
     };
 
     store.dispatch(reducerMap[name](data));
 }
-
-

@@ -1,5 +1,6 @@
 import {BattleCardType} from "../types";
 import {generatePrizeCards, getHeroCard} from "./utils";
+import {getStateValue} from "../../store/storeUtils";
 
 export const updateAnswer = (answer: string, symbol: string, isCorrectAnswer: any): string => {
     if (isCorrectAnswer !== null) return answer;
@@ -11,25 +12,25 @@ export const updateAnswer = (answer: string, symbol: string, isCorrectAnswer: an
     return answer + symbol;
 };
 
-export const getActiveSecretCard = (battleCards: BattleCardType[]) => {
-    return battleCards.find((battleCard: BattleCardType) => battleCard.type === 'secret' && battleCard.active);
-};
+// export const getActiveSecretCard = (battleCards: BattleCardType[]) => {
+//     return battleCards.find((battleCard: BattleCardType) => battleCard.type === 'secret' && battleCard.active);
+// };
 
-export const getDuration = (battleCards: BattleCardType[]): number => {
-    const secretCard = getActiveSecretCard(battleCards);
-    if (!secretCard) return 0;
+export const getDuration = (): number => {
+    const selectedSecretCard = getStateValue('selectedSecretCard');
+    if (!selectedSecretCard) return 0;
 
-    return 30 - Math.floor(secretCard.level / 3);
+    return 30 - Math.floor(selectedSecretCard.level / 3);
 }
 
-export const getEquation = (battleCards: BattleCardType[]): string => {
-    const secretCard = getActiveSecretCard(battleCards);
-    if (!secretCard) return '';
+export const getEquation = (): string => {
+    const selectedSecretCard = getStateValue('selectedSecretCard');
+    if (!selectedSecretCard) return '';
 
     const signs = ['+', '-'];
 
-    let level = secretCard.level;
-    if (secretCard?.level > 3) {
+    let level = selectedSecretCard.level;
+    if (selectedSecretCard?.level > 3) {
         signs.push('*', '/');
         level = Math.floor(level / 1.5);
     }
@@ -70,20 +71,26 @@ export const calculateAnswer = (mathProblem: string): number => eval(mathProblem
 
 export const resetBattleCardsAfterSecret = (battleCards: BattleCardType, isCorrectAnswer: boolean) => {
     const clonedBattleCards = structuredClone(battleCards);
-    const secretCard = getActiveSecretCard(clonedBattleCards);
-    if (!secretCard) return '';
+    const selectedSecretCard = getStateValue('selectedSecretCard');
+    if (!selectedSecretCard) return '';
 
     if (isCorrectAnswer) {
-        const secretPrizeCard = generatePrizeCards(secretCard.level)[0];
+        const secretPrizeCard = generatePrizeCards(selectedSecretCard.level)[0];
 
-        secretPrizeCard.index = secretCard.index;
-        clonedBattleCards[secretCard.index] = secretPrizeCard;
+        secretPrizeCard.index = selectedSecretCard.index;
+        clonedBattleCards[selectedSecretCard.index] = secretPrizeCard;
     } else {
         const heroCard = getHeroCard(clonedBattleCards);
 
         heroCard.health > 1 && heroCard.health--;
-        secretCard.level > 1 && secretCard.level--;
+        selectedSecretCard.level > 1 && decreaseSelectedSecretCardLevel(clonedBattleCards, selectedSecretCard.index);
     }
 
     return clonedBattleCards;
+};
+
+const decreaseSelectedSecretCardLevel = (battleCards: BattleCardType[], selectedSecretCardIndex: number) => {
+    battleCards.forEach((battleCard: BattleCardType) => {
+        if (battleCard.index === selectedSecretCardIndex) battleCard.level--;
+    });
 };

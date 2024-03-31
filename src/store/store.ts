@@ -3,14 +3,18 @@ import { configureStore } from '@reduxjs/toolkit';
 import battleFieldLengthReducer from './battleFieldLengthSlice';
 import heroCardReducer from './heroCardSlice';
 import selectedCardForInfoReducer from './selectedCardForInfoSlice';
+import selectedSecretCardReducer from './selectedSecretCardSlice';
 import isOpenBattleOverModalReducer from './isOpenBattleOverModalSlice';
+import isOpenLevelUpModalReducer from './isOpenLevelUpModalSlice';
 
 export const store = configureStore({
     reducer: {
         battleFieldLength: battleFieldLengthReducer,
         heroCard: heroCardReducer,
         selectedCardForInfo: selectedCardForInfoReducer,
+        selectedSecretCard: selectedSecretCardReducer,
         isOpenBattleOverModal: isOpenBattleOverModalReducer,
+        isOpenLevelUpModal: isOpenLevelUpModalReducer,
     },
 });
 

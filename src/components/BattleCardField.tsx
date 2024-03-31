@@ -9,7 +9,7 @@ import {LevelIndicator} from "./LevelIndicator";
 import {EffectPanel} from "./bottom-panel/EffectPanel";
 import {useBattleFieldLength} from "../store/storeHooks";
 
-const BattleCardField = memo(({onCardClick, onCardDoubleClick, battleCard}: any) => {
+const BattleCardField = memo(({onCardClick, onCardRightClick, battleCard}: any) => {
     const { battleFieldLength } = useBattleFieldLength();
     const cardsWithLevel = ['secret', 'boss'];
     useEffect(() => {
@@ -20,7 +20,7 @@ const BattleCardField = memo(({onCardClick, onCardDoubleClick, battleCard}: any)
 
     const onDoubleClick = useCallback((e: any) => {
         e.preventDefault();
-        onCardDoubleClick(battleCard.index);
+        onCardRightClick(battleCard.index);
     }, [battleCard]);
 
     return <BattleCardFieldWrapper
