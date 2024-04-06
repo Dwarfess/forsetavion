@@ -2,6 +2,7 @@ import {BattleCardType, Effect, IHeroBattleCard, Skill} from "../types";
 import {getItemStat, recalculateHeroExp} from "./recalculateHeroStats";
 import {addClassErrorWhenContactCard, addClassWhenContactCard} from "./contactItems";
 import {defineNewBattleCard} from "./moveItems";
+import {getStateValue, setStateValue} from "../../store/storeUtils";
 
 
 const getHeroCard = (battleCards: BattleCardType[]): any => {
@@ -12,10 +13,10 @@ export const getCardSkills = (battleCards: BattleCardType[], type: string): Skil
     return battleCards.find((battleCard:BattleCardType) => battleCard.type === type)?.skills || [];
 }
 
-export const getUpdatedBattleCardsWithSkills = (battleCards: BattleCardType[], skill: Skill) => {
-    const clonedBattleCards = structuredClone(battleCards);
+export const updateBattleCardsWithSelectedSkill = (skill: Skill) => {
+    const battleCards = getStateValue('battleCards');
 
-    getHeroCard(clonedBattleCards).skills.forEach((heroSkill: Skill) => {
+    getHeroCard(battleCards).skills.forEach((heroSkill: Skill) => {
         if (heroSkill.name === skill.name) {
             heroSkill.active = !heroSkill.active;
         } else {
@@ -23,7 +24,7 @@ export const getUpdatedBattleCardsWithSkills = (battleCards: BattleCardType[], s
         }
     });
 
-    return clonedBattleCards;
+    setStateValue('battleCards', battleCards);
 }
 
 export const getSkillClasses = (skill: Skill, activeSkill: Skill) => {

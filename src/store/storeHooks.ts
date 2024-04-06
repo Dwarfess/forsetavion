@@ -6,6 +6,8 @@ import {
     changeSelectedSecretCard,
     changeIsOpenBattleOverModal,
     changeIsOpenLevelUpModal,
+    changeIsMoving,
+    changeBattleCards,
     RootState
 } from './index';
 
@@ -73,4 +75,26 @@ export const useIsOpenLevelUpModal = () => {
     }
 
     return { isOpenLevelUpModal, setIsOpenLevelUpModal };
+}
+
+export const useIsMoving = () => {
+    const dispatch = useDispatch();
+    const isMoving = useSelector((state: RootState) => state.isMoving.value);
+
+    const setIsMoving = (val: any) => {
+        dispatch(changeIsMoving(val));
+    }
+
+    return { isMoving, setIsMoving };
+}
+
+export const useBattleCards = () => {
+    const dispatch = useDispatch();
+    const battleCards = useSelector((state: RootState) => state.battleCards.value);
+
+    const setBattleCards = (val: any) => {
+        dispatch(changeBattleCards(val));
+    }
+
+    return { battleCards, setBattleCards };
 }

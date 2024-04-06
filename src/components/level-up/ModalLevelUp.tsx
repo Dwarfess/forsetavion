@@ -3,32 +3,31 @@ import styled from "styled-components";
 import { Icon } from 'semantic-ui-react';
 import {Skill} from "../types";
 import BattleCardImage from "../BattleCardImage";
-import {LevelIndicator} from "../LevelIndicator";
+import { LevelIndicator } from "../LevelIndicator";
 import {
     availableSkill,
     getHeroSkillsWithDecreasedSkill,
     getHeroSkillsWithIncreasedSkill,
-    getHeroSkillsWithTemporaryPoints, getUpdatedBattleCardsByNewSkillLevels
+    getHeroSkillsWithTemporaryPoints,
+    updateBattleCardsByNewSkillLevels
 } from "../utils";
-import {useHeroCard, useIsOpenLevelUpModal} from "../../store/storeHooks";
+import { useHeroCard, useIsOpenLevelUpModal} from "../../store/storeHooks";
 import { ModalX } from "../shared";
 
-const ModalLevelUp = ({
-    battleCards,
-    setBattleCards,
-}: any) => {
+const ModalLevelUp = () => {
     const { setIsOpenLevelUpModal } = useIsOpenLevelUpModal();
     const { heroCard } = useHeroCard();
+
     const [heroSkills, setHeroSkills] = useState<Skill[]>([]);
     const [heroSkillPoints, setHeroSkillPoints] = useState<number>(0);
 
     useEffect(() => {
         setHeroSkills(getHeroSkillsWithTemporaryPoints(heroCard.skills));
         setHeroSkillPoints(heroCard.skillPoints);
-    }, [battleCards]);
+    }, [heroCard]);
 
     const completePoints = () => {
-        setBattleCards(getUpdatedBattleCardsByNewSkillLevels(battleCards, heroSkills));
+        updateBattleCardsByNewSkillLevels(heroSkills);
         setIsOpenLevelUpModal(false);
     }
 

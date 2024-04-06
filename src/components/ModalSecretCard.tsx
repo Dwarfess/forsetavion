@@ -3,22 +3,19 @@ import { Icon } from 'semantic-ui-react'
 import styled from "styled-components";
 import {CountdownCircleTimer} from 'react-countdown-circle-timer';
 
-import {calculateAnswer, getDuration, getEquation, resetBattleCardsAfterSecret, updateAnswer} from "./utils";
+import {calculateAnswer, getDuration, getEquation, updateBattleCardsAfterSecret, updateAnswer} from "./utils";
 import {symbols} from "./constants";
 import {ModalX} from "./shared";
-import { useSelectedSecretCard } from "../store/storeHooks";
+import {useBattleCards, useSelectedSecretCard} from "../store/storeHooks";
 
-const ModalSecretCard = ({
-     battleCards,
-     setBattleCards
- }: any) => {
+const ModalSecretCard = () => {
     const { setSelectedSecretCard } = useSelectedSecretCard();
     const [answer, setAnswer] = useState('');
     const [isCorrectAnswer, setIsCorrectAnswer] = useState<any>(null);
     const [duration, setDuration] = useState<number>(getDuration());
 
     const onCloseClick = () => {
-        setBattleCards(resetBattleCardsAfterSecret(battleCards, isCorrectAnswer));
+        updateBattleCardsAfterSecret(isCorrectAnswer);
         setSelectedSecretCard(false);
     }
 
@@ -29,15 +26,13 @@ const ModalSecretCard = ({
 
     useEffect(() => {
         setAnswer('')
-    }, [battleCards]);
+    }, []);
 
     const onSymbolClick = (symbol: string) => {
         setAnswer(updateAnswer(answer, symbol, isCorrectAnswer));
     }
 
-    const equation = useMemo(() => {
-        return getEquation();
-    }, [battleCards]);
+    const equation = useMemo(() => getEquation(), []);
 
     const timerContent = useCallback((remainingTime: number) => {
         const iconName = isCorrectAnswer ? 'thumbs up' : 'thumbs down';

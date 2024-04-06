@@ -10,7 +10,7 @@ const initialState: IHeroCardState = {
 }
 
 export const heroCardSlice = createSlice({
-    name: 'heroCardSlice',
+    name: 'heroCard',
     initialState,
     reducers: {
         changeHeroCard: (state, action: PayloadAction<any>) => {

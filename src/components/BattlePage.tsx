@@ -1,24 +1,27 @@
 import {useEffect, useState} from "react";
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../store';
 import styled from "styled-components";
+
 import { BattleCardField } from "./BattleCardField";
 import { BattleFieldLengthSwitcher } from './index';
 import {TopPanel} from "./top-panel/TopPanel";
 import {ModalBattleOver} from "./ModalBattleOver";
 import {ModalSecretCard} from "./ModalSecretCard";
 import {ModalBattleCardInfo} from "./card-info/ModalBattleCardInfo";
+import {ModalLevelUp} from "./level-up/ModalLevelUp";
 import {BottomPanel} from "./bottom-panel/BottomPanel";
+
 import {
     cardHandler,
     keyDownHandler,
     getBattleCardsWithHero,
     getHeroCard
 } from "./utils";
-import {ModalLevelUp} from "./level-up/ModalLevelUp";
+
 import {
+    useBattleCards,
     useBattleFieldLength,
     useHeroCard,
+    useIsMoving,
     useIsOpenBattleOverModal,
     useIsOpenLevelUpModal,
     useSelectedCardForInfo,
@@ -26,14 +29,14 @@ import {
 } from "../store/storeHooks";
 
 const BattlePage = () => {
-    const [battleCards, setBattleCards] = useState<any[]>([]);
+    // const [battleCards, setBattleCards] = useState<any[]>([]);
+    const { battleCards, setBattleCards } = useBattleCards();
     const { selectedCardForInfo, setSelectedCardForInfo } = useSelectedCardForInfo();
     const { selectedSecretCard } = useSelectedSecretCard();
     const { isOpenBattleOverModal } = useIsOpenBattleOverModal();
     const { isOpenLevelUpModal, setIsOpenLevelUpModal } = useIsOpenLevelUpModal();
 
-    //TODO rewrite it to store
-    const [isMoving, setIsMoving] = useState(false); // block/unblock extra click
+    const { isMoving, setIsMoving } = useIsMoving(); // block/unblock extra click
 
     const { battleFieldLength } = useBattleFieldLength();
     const { heroCard, setHeroCard } = useHeroCard();
@@ -74,7 +77,6 @@ const BattlePage = () => {
             selectedCardIndex,
             battleCards,
             setBattleCards,
-            setIsMoving,
         );
     };
 
@@ -95,7 +97,6 @@ const BattlePage = () => {
             selectedCardIndex,
             battleCards,
             setBattleCards,
-            setIsMoving,
         );
     };
 
@@ -116,20 +117,11 @@ const BattlePage = () => {
                     })
                 }
             </BattleField>
-            <BottomPanel battleCards={battleCards} setBattleCards={setBattleCards}/>
+            <BottomPanel />
 
             {isOpenBattleOverModal && <ModalBattleOver />}
-
-            {!!selectedSecretCard && <ModalSecretCard
-                battleCards={battleCards}
-                setBattleCards={setBattleCards}
-            />}
-
-            {isOpenLevelUpModal && <ModalLevelUp
-                battleCards={battleCards}
-                setBattleCards={setBattleCards}
-            />}
-
+            {isOpenLevelUpModal && <ModalLevelUp />}
+            {!!selectedSecretCard && <ModalSecretCard />}
             {!!selectedCardForInfo && <ModalBattleCardInfo />}
         </>)}
     </>

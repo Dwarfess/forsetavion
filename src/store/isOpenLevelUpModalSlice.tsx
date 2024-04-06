@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-export interface IIsOpenLevelUpModal {
+export interface IIsOpenLevelUpModalState {
     value: boolean
 }
 
-const initialState: IIsOpenLevelUpModal = {
+const initialState: IIsOpenLevelUpModalState = {
     value: false,
 }
 

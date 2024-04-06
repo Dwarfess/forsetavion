@@ -6,6 +6,7 @@ import {
     getTopCardIndex,
     moveBattleCards,
 } from "./moveItems";
+
 import {addClassWhenContactCard} from "./contactItems";
 import {recalculateHeroStatsAfterContact} from "./recalculateHeroStats";
 import {
@@ -16,20 +17,21 @@ import {
     getActiveSkill,
     updateSkillsCoolDown
 } from "./skillUtils";
+
 import {getHeroCard} from "./utils";
+
 import {getStateValue, setStateValue} from "../../store/storeUtils";
 
 export const cardHandler = async (
     selectedCardIndex: number,
     battleCards: BattleCardType[],
     setBattleCards: any,
-    setIsMoving: (val: boolean) => void,
 ) => {
     const battleFieldLength = getStateValue('battleFieldLength');
     const cardAmount = battleFieldLength * battleFieldLength;
 
     if (selectedCardIndex < 0 || selectedCardIndex > cardAmount) {
-        setIsMoving(false);
+        setStateValue('isMoving',false);
         return;
     }
 
@@ -54,12 +56,11 @@ export const cardHandler = async (
             selectedCardIndex,
             clonedBattleCards,
             setBattleCards,
-            setIsMoving
         );
     } else {
         await checkAndUseActiveSkill(selectedCard, clonedBattleCards, false);
         setBattleCards(clonedBattleCards);
-        setIsMoving(false);
+        setStateValue('isMoving',false);
 
         return;
     }
@@ -69,20 +70,19 @@ const resetBattleCards = async (
     selectedCardIndex: number,
     battleCards: BattleCardType[],
     setBattleCards: (item: BattleCardType[]) => void,
-    setIsMoving: (val: boolean) => void
 ) => {
     const heroCard = getHeroCard(battleCards);
     const selectedCard = battleCards[selectedCardIndex];
     const activeSkill = getActiveSkill(heroCard);
     if (activeSkill) {
         await checkAndUseActiveSkill(selectedCard, battleCards, true);
-        setIsMoving(false);
+        setStateValue('isMoving',false);
         setBattleCards(battleCards);
 
         return;
     } else {
         if (selectedCard.type === 'secret') {
-            setIsMoving(false);
+            setStateValue('isMoving',false);
             setBattleCards(battleCards);
             setStateValue('selectedSecretCard', selectedCard);
 
@@ -95,7 +95,7 @@ const resetBattleCards = async (
 
         //TODO MOVE THIS LOGIC TO BATTLE PAGE (AFTER DEBUFF HERO DOESN'T DIE)
         if (heroCard.health <= 0) {
-            setIsMoving(false);
+            setStateValue('isMoving',false);
             setStateValue('isOpenBattleOverModal', true);
 
             return;
@@ -116,12 +116,12 @@ const resetBattleCards = async (
 
     // MOVE THIS LOGIC TO BATTLE PAGE (AFTER DEBUFF HERO DOESN'T DIE)
     if (getHeroCard(battleCards).health <= 0) {
-        setIsMoving(false);
+        setStateValue('isMoving',false);
         setStateValue('isOpenBattleOverModal', true);
 
         return;
     }
 
     setBattleCards(battleCards);
-    setIsMoving(false);
+    setStateValue('isMoving',false);
 };

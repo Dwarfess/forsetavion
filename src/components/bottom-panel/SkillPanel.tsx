@@ -5,19 +5,18 @@ import {
     getActiveSkill,
     getCardSkills,
     getSkillClasses,
-    getUpdatedBattleCardsWithSkills
+    updateBattleCardsWithSelectedSkill
 } from "../utils";
 import {Skill} from "../types";
 import BattleCardImage from "../BattleCardImage";
+import { useBattleCards } from "../../store/storeHooks";
 
-const SkillPanel = ({
-    battleCards,
-    setBattleCards
-}: any) => {
+const SkillPanel = () => {
+    const { battleCards } = useBattleCards();
     const [activeSkill, setActiveSkill] = useState<any>(null);
 
     const onItemClick = (selectedSkill: Skill) => {
-        setBattleCards(getUpdatedBattleCardsWithSkills(battleCards, selectedSkill));
+        updateBattleCardsWithSelectedSkill(selectedSkill);
     }
 
     useEffect(() => {

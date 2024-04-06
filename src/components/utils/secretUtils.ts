@@ -1,6 +1,6 @@
 import {BattleCardType} from "../types";
 import {generatePrizeCards, getHeroCard} from "./utils";
-import {getStateValue} from "../../store/storeUtils";
+import {getStateValue, setStateValue} from "../../store/storeUtils";
 
 export const updateAnswer = (answer: string, symbol: string, isCorrectAnswer: any): string => {
     if (isCorrectAnswer !== null) return answer;
@@ -69,8 +69,8 @@ const treeNode = (left: number, right: number, operator: string) => `${left} ${o
 
 export const calculateAnswer = (mathProblem: string): number => eval(mathProblem);
 
-export const resetBattleCardsAfterSecret = (battleCards: BattleCardType, isCorrectAnswer: boolean) => {
-    const clonedBattleCards = structuredClone(battleCards);
+export const updateBattleCardsAfterSecret = (isCorrectAnswer: boolean) => {
+    const battleCards = getStateValue('battleCards');
     const selectedSecretCard = getStateValue('selectedSecretCard');
     if (!selectedSecretCard) return '';
 
@@ -78,15 +78,15 @@ export const resetBattleCardsAfterSecret = (battleCards: BattleCardType, isCorre
         const secretPrizeCard = generatePrizeCards(selectedSecretCard.level)[0];
 
         secretPrizeCard.index = selectedSecretCard.index;
-        clonedBattleCards[selectedSecretCard.index] = secretPrizeCard;
+        battleCards[selectedSecretCard.index] = secretPrizeCard;
     } else {
-        const heroCard = getHeroCard(clonedBattleCards);
+        const heroCard = getHeroCard(battleCards);
 
         heroCard.health > 1 && heroCard.health--;
-        selectedSecretCard.level > 1 && decreaseSelectedSecretCardLevel(clonedBattleCards, selectedSecretCard.index);
+        selectedSecretCard.level > 1 && decreaseSelectedSecretCardLevel(battleCards, selectedSecretCard.index);
     }
 
-    return clonedBattleCards;
+    setStateValue('battleCards', battleCards);
 };
 
 const decreaseSelectedSecretCardLevel = (battleCards: BattleCardType[], selectedSecretCardIndex: number) => {

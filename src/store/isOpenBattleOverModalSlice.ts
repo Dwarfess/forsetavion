@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-export interface IIsOpenBattleOverModal {
+export interface IIsOpenBattleOverModalState {
     value: boolean
 }
 
-const initialState: IIsOpenBattleOverModal = {
+const initialState: IIsOpenBattleOverModalState = {
     value: false,
 }
 

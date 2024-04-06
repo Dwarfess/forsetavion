@@ -1,5 +1,7 @@
 import {BattleCardType, Skill} from "../types";
 import {getItemStat} from "./recalculateHeroStats";
+import {getStateValue, setStateValue} from "../../store/storeUtils";
+import {getHeroCard} from "./utils";
 
 export const availableSkill = (selectedSkill: Skill, skills: Skill[]) => {
     const selectedSkillIndex = skills.findIndex((skill: Skill) => skill.name === selectedSkill.name);
@@ -49,23 +51,17 @@ export const getHeroSkillsWithDecreasedSkill = (selectedSkill: Skill, skills: Sk
     return clonedSkills;
 }
 
-export const getUpdatedBattleCardsByNewSkillLevels = (battleCards: BattleCardType[], heroSkills: Skill[]) => {
-    const clonedBattleCards = structuredClone(battleCards);
-    const clonedHeroSkills = structuredClone(heroSkills);
-    recalculateSkillsStatsAccordingLevel(clonedHeroSkills);
+export const updateBattleCardsByNewSkillLevels = (heroSkills: Skill[]) => {
+    const battleCards = getStateValue('battleCards');
+    recalculateSkillsStatsAccordingLevel(heroSkills);
 
-    clonedHeroSkills.forEach((skill: Skill) => {
-        skill.temporaryPoints = 0;
-    });
+    heroSkills.forEach((skill: Skill) => skill.temporaryPoints = 0);
 
-    clonedBattleCards.forEach((battleCard: BattleCardType) => {
-        if (battleCard.type === 'hero') {
-            battleCard.skills = clonedHeroSkills;
-            battleCard.skillPoints = 0;
-        }
-    });
+    const heroCard = getHeroCard(battleCards);
+    heroCard.skills = heroSkills;
+    heroCard.skillPoints = 0;
 
-    return clonedBattleCards;
+    setStateValue('battleCards', battleCards);
 }
 
 export const getHeroSkillsWithTemporaryPoints = (skills: Skill[]) => {

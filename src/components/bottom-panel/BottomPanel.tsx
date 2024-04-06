@@ -4,13 +4,10 @@ import {BattleCardType, IHeroBattleCard} from "../types";
 import {SkillPanel} from "./SkillPanel";
 
 
-const BottomPanel = ({
-    battleCards,
-    setBattleCards
-}: any) => {
+const BottomPanel = () => {
     return (
         <BottomPanelWrapper>
-            <SkillPanel battleCards={battleCards} setBattleCards={setBattleCards}/>
+            <SkillPanel />
         </BottomPanelWrapper>
     )
 };
