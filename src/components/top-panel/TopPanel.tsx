@@ -3,11 +3,10 @@ import { Progress } from 'semantic-ui-react'
 import styled from "styled-components";
 import {getBossPartProgress, getMaxExpForCurrentLever} from "../utils/recalculateHeroStats";
 import {ordinaryBossPartsCount} from "../constants";
-import { useHeroCard } from '../../store/storeHooks';
-
+import {useBattleCards} from "../../store/storeHooks";
 
 const TopPanel = () => {
-    const { heroCard } = useHeroCard();
+    const { heroCard } = useBattleCards();
     return (
         <TopPanelWrapper>
             <div className="top-side">

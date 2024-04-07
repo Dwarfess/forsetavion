@@ -183,7 +183,7 @@ export const keyDownHandler = (key: string) => {
     if (!allowedKeys.includes(key)) return;
 
     const battleFieldLength = getStateValue('battleFieldLength');
-    const heroCardIndex: any = getStateValue('heroCard')?.index;
+    const heroCardIndex = getHeroCard(getStateValue('battleCards')).index;
 
     const keyMap: any = {
         ArrowRight: () => heroCardIndex + 1,

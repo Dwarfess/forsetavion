@@ -1,5 +1,6 @@
 import {ArtifactCardType, BattleCardType, IHeroBattleCard, SimpleBattleCardType, Stat} from "../types";
 import {getStateValue} from "../../store/storeUtils";
+import {getHeroCard} from "./utils";
 
 export const recalculateHeroStatsAfterContact = (
     heroCard: IHeroBattleCard,
@@ -114,7 +115,7 @@ export const recalculateHeroExp = (heroCard: IHeroBattleCard, selectedCard: Simp
     if (heroExp >= maxLevelExp) {
         heroExp -= maxLevelExp;
         heroCard.level++;
-        heroCard.skillPoints+=5;
+        heroCard.skillPoints += 1;
 
         const heroStatMaxHealth = getItemStat(heroCard, 'maxHealth');
         heroStatMaxHealth.value++;
@@ -135,7 +136,7 @@ export const getRecalculatedExpReward = (expReward: number, heroExpBoostValue: n
 export const getRecalculatedExpRewardString = (selectedCard: SimpleBattleCardType) => {
     if (!selectedCard.expReward) return;
 
-    const heroCard = getStateValue('heroCard');
+    const heroCard = getHeroCard(getStateValue('battleCards'));
     const heroExpBoostValue = getItemStat(heroCard, 'expBoost').value;
     let expRewardString: string = 'Exp: ';
     if (heroExpBoostValue !== 1) {

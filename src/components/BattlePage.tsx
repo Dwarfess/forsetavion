@@ -29,8 +29,7 @@ import {
 } from "../store/storeHooks";
 
 const BattlePage = () => {
-    // const [battleCards, setBattleCards] = useState<any[]>([]);
-    const { battleCards, setBattleCards } = useBattleCards();
+    const { heroCard, battleCards, setBattleCards } = useBattleCards();
     const { selectedCardForInfo, setSelectedCardForInfo } = useSelectedCardForInfo();
     const { selectedSecretCard } = useSelectedSecretCard();
     const { isOpenBattleOverModal } = useIsOpenBattleOverModal();
@@ -39,17 +38,10 @@ const BattlePage = () => {
     const { isMoving, setIsMoving } = useIsMoving(); // block/unblock extra click
 
     const { battleFieldLength } = useBattleFieldLength();
-    const { heroCard, setHeroCard } = useHeroCard();
 
     useEffect(() => {
         battleFieldLength && setBattleCards(getBattleCardsWithHero());
     }, [battleFieldLength]);
-
-    useEffect(() => {
-        if (battleCards.length) {
-            setHeroCard(getHeroCard(battleCards));
-        }
-    }, [battleCards]);
 
     useEffect(() => {
         // @ts-ignore
@@ -64,20 +56,16 @@ const BattlePage = () => {
     }, [battleCards, isMoving]);
 
     useEffect(() => {
-        if(heroCard?.skillPoints) {
+        if (heroCard?.skillPoints) {
             setIsOpenLevelUpModal(true);
         }
     }, [heroCard]);
 
     const onCardClick = (selectedCardIndex: number) => {
         if (isMoving) return;
-
         setIsMoving(true);
-        cardHandler(
-            selectedCardIndex,
-            battleCards,
-            setBattleCards,
-        );
+
+        cardHandler(selectedCardIndex);
     };
 
     const onCardRightClick = (selectedCardIndex: number) => {
@@ -85,24 +73,19 @@ const BattlePage = () => {
         setSelectedCardForInfo(battleCards[selectedCardIndex]);
     };
 
-    //TODO needs to be handle double method (like onCardClick)
     const onKeyDown = (e: any): void => {
-        if (isMoving) return;
-
-        setIsMoving(true);
         e.stopPropagation();
-        const selectedCardIndex = keyDownHandler(e.key);
 
-        cardHandler(
-            selectedCardIndex,
-            battleCards,
-            setBattleCards,
-        );
+        if (isMoving) return;
+        setIsMoving(true);
+
+        const selectedCardIndex = keyDownHandler(e.key);
+        cardHandler(selectedCardIndex);
     };
 
     return <>
         <BattleFieldLengthSwitcher />
-        {!!battleFieldLength && heroCard && (<>
+        {battleCards.length && (<>
             <TopPanel />
 
             <BattleField>
@@ -117,6 +100,7 @@ const BattlePage = () => {
                     })
                 }
             </BattleField>
+
             <BottomPanel />
 
             {isOpenBattleOverModal && <ModalBattleOver />}

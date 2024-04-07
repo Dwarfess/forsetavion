@@ -10,6 +10,7 @@ import {
     changeBattleCards,
     RootState
 } from './index';
+import {getHeroCard} from "../components/utils";
 
 export const useBattleFieldLength = () => {
     const dispatch = useDispatch();
@@ -91,10 +92,11 @@ export const useIsMoving = () => {
 export const useBattleCards = () => {
     const dispatch = useDispatch();
     const battleCards = useSelector((state: RootState) => state.battleCards.value);
+    const heroCard = getHeroCard(battleCards);
 
     const setBattleCards = (val: any) => {
         dispatch(changeBattleCards(val));
     }
 
-    return { battleCards, setBattleCards };
+    return { heroCard, battleCards, setBattleCards };
 }

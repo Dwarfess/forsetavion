@@ -11,12 +11,12 @@ import {
     getHeroSkillsWithTemporaryPoints,
     updateBattleCardsByNewSkillLevels
 } from "../utils";
-import { useHeroCard, useIsOpenLevelUpModal} from "../../store/storeHooks";
+import {useBattleCards, useIsOpenLevelUpModal} from "../../store/storeHooks";
 import { ModalX } from "../shared";
 
 const ModalLevelUp = () => {
     const { setIsOpenLevelUpModal } = useIsOpenLevelUpModal();
-    const { heroCard } = useHeroCard();
+    const { heroCard } = useBattleCards();
 
     const [heroSkills, setHeroSkills] = useState<Skill[]>([]);
     const [heroSkillPoints, setHeroSkillPoints] = useState<number>(0);

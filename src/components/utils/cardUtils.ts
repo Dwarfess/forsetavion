@@ -22,11 +22,7 @@ import {getHeroCard} from "./utils";
 
 import {getStateValue, setStateValue} from "../../store/storeUtils";
 
-export const cardHandler = async (
-    selectedCardIndex: number,
-    battleCards: BattleCardType[],
-    setBattleCards: any,
-) => {
+export const cardHandler = async (selectedCardIndex: number) => {
     const battleFieldLength = getStateValue('battleFieldLength');
     const cardAmount = battleFieldLength * battleFieldLength;
 
@@ -35,9 +31,8 @@ export const cardHandler = async (
         return;
     }
 
-    const clonedBattleCards = structuredClone(battleCards);
-    const heroCard = getHeroCard(clonedBattleCards);
-    const selectedCard = clonedBattleCards[selectedCardIndex];
+    const battleCards = getStateValue('battleCards');
+    const heroCard = getHeroCard(battleCards);
 
     heroCard.topCardIndex = getTopCardIndex(heroCard.index, battleFieldLength);
     heroCard.bottomCardIndex = getBottomCardIndex(heroCard.index, battleFieldLength);
@@ -52,38 +47,33 @@ export const cardHandler = async (
     ];
 
     if (allowedIndexes.includes(selectedCardIndex)) {
-        resetBattleCards(
-            selectedCardIndex,
-            clonedBattleCards,
-            setBattleCards,
-        );
+        resetBattleCards(selectedCardIndex);
     } else {
-        await checkAndUseActiveSkill(selectedCard, clonedBattleCards, false);
-        setBattleCards(clonedBattleCards);
+        const selectedCard = battleCards[selectedCardIndex];
+        await checkAndUseActiveSkill(selectedCard, battleCards, false);
+        setStateValue('battleCards', battleCards);
         setStateValue('isMoving',false);
 
         return;
     }
 };
 
-const resetBattleCards = async (
-    selectedCardIndex: number,
-    battleCards: BattleCardType[],
-    setBattleCards: (item: BattleCardType[]) => void,
-) => {
+const resetBattleCards = async (selectedCardIndex: number) => {
+    let battleCards = getStateValue('battleCards');
     const heroCard = getHeroCard(battleCards);
     const selectedCard = battleCards[selectedCardIndex];
     const activeSkill = getActiveSkill(heroCard);
+
     if (activeSkill) {
         await checkAndUseActiveSkill(selectedCard, battleCards, true);
         setStateValue('isMoving',false);
-        setBattleCards(battleCards);
+        setStateValue('battleCards', battleCards);
 
         return;
     } else {
         if (selectedCard.type === 'secret') {
             setStateValue('isMoving',false);
-            setBattleCards(battleCards);
+            setStateValue('battleCards', battleCards);
             setStateValue('selectedSecretCard', selectedCard);
 
             return;
@@ -91,9 +81,8 @@ const resetBattleCards = async (
 
         recalculateHeroStatsAfterContact(heroCard, selectedCard);
         await addClassWhenContactCard(selectedCard);
-        setBattleCards(battleCards);
+        setStateValue('battleCards', battleCards);
 
-        //TODO MOVE THIS LOGIC TO BATTLE PAGE (AFTER DEBUFF HERO DOESN'T DIE)
         if (heroCard.health <= 0) {
             setStateValue('isMoving',false);
             setStateValue('isOpenBattleOverModal', true);
@@ -106,7 +95,6 @@ const resetBattleCards = async (
             changeBattleCardAfterSkill(battleCards, selectedCard);
         } else {
             await moveBattleCards(selectedCardIndex, battleCards);
-
         }
     }
 
@@ -122,6 +110,6 @@ const resetBattleCards = async (
         return;
     }
 
-    setBattleCards(battleCards);
+    setStateValue('battleCards', battleCards);
     setStateValue('isMoving',false);
 };
