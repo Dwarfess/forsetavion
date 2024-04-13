@@ -1,4 +1,21 @@
-import {BattleCardType} from "../types";
+import {BattleCardType, Skill} from "../types";
+
+export const addClassWhenUseSkill = async (battleCard: BattleCardType, skill: Skill) => {
+    const skillEffectEl = document.querySelector(`.battle-card-${battleCard.index} .effect-usage-image`);
+    const imgElement = skillEffectEl?.querySelector('img');
+
+    imgElement && (imgElement.src = `${skill.image}.jpg`);
+    // @ts-ignore
+    skillEffectEl.classList.add('active');
+
+    await new Promise<void>((resolve) => setTimeout(() => {
+        resolve();
+        // @ts-ignore
+        skillEffectEl.classList.remove('active');
+    }, 2000));
+
+    return true;
+};
 
 export const addClassWhenContactCard = async (battleCard: BattleCardType) => {
     const cardEl = document.querySelector(`.battle-card-${battleCard.index}`);

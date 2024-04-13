@@ -39,6 +39,7 @@ const BattleCardField = memo(({onCardClick, battleCard}: any) => {
                     {cardsWithLevel.includes(battleCard.type)
                         && (<LevelIndicator battleCard={battleCard} size={battleFieldLength}/>
                     )}
+                    <div className="effect-usage-image"><img/></div>
                 </BattleCard>
             </BattleCardFieldContainer>
         </BattleCardFieldWrapperForAnimation>
@@ -173,6 +174,40 @@ const BattleCardFieldContainer = styled.div`
     position: relative;
     border-radius: 8px;
     z-index: 0;
+    
+    .effect-usage-image {
+        display: none;
+        width: 80%;
+        height: 80%;
+        border-radius: 100px;
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        box-shadow: 0px 0px 10px 0px white;
+        animation: slide-out 2.5s;
+        
+        &.active { display: flex }
+        
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    @keyframes slide-out {
+        0% {
+            transform: scale(1);
+            opacity: 0.2;
+        }
+        50% {
+            //transform: scale(0.5);
+            opacity: 0.5;
+        }
+        100% {
+            transform: scale(0.4);
+            opacity: 0.2;
+        }
+    }
 `;
 
 const BattleCard = styled.div`

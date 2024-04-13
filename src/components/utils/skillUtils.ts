@@ -1,6 +1,6 @@
 import {BattleCardType, Effect, IHeroBattleCard, Skill} from "../types";
 import {getItemStat, recalculateHeroExp} from "./recalculateHeroStats";
-import {addClassErrorWhenContactCard, addClassWhenContactCard} from "./contactItems";
+import {addClassErrorWhenContactCard, addClassWhenContactCard, addClassWhenUseSkill} from "./contactItems";
 import {defineNewBattleCard} from "./moveItems";
 import {getStateValue, setStateValue} from "../../store/storeUtils";
 
@@ -89,7 +89,8 @@ const skillsHandler = async (
     const audioName = audioMap[activeSkill.name];
     audioName && new Audio(`sounds/${audioName}.mp3`).play();
 
-    await addClassWhenContactCard(selectedCard);
+    await addClassWhenUseSkill(selectedCard, activeSkill);
+    // await addClassWhenContactCard(selectedCard);
 
     checkBattleCardAfterSkill(battleCards, selectedCard);
 }
