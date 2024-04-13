@@ -11,11 +11,13 @@ import {
     getHeroSkillsWithTemporaryPoints,
     updateBattleCardsByNewSkillLevels
 } from "../utils";
-import {useBattleCards, useIsOpenLevelUpModal} from "../../store/storeHooks";
+import {useBattleCards, useIsMoving, useIsOpenLevelUpModal, useSelectedCardForInfo} from "../../store/storeHooks";
 import { ModalX } from "../shared";
 
 const ModalLevelUp = () => {
     const { setIsOpenLevelUpModal } = useIsOpenLevelUpModal();
+    const { setSelectedCardForInfo } = useSelectedCardForInfo();
+    const { isMoving } = useIsMoving();
     const { heroCard } = useBattleCards();
 
     const [heroSkills, setHeroSkills] = useState<Skill[]>([]);
@@ -45,6 +47,13 @@ const ModalLevelUp = () => {
         setHeroSkillPoints(newHeroSkills.leftPoints);
     }
 
+    const onCardRightClick = (e: any, skill: Skill) => {
+        e.preventDefault();
+        if (isMoving) return;
+
+        setSelectedCardForInfo(skill);
+    };
+
     return (
         <ModalX>
             <ModalXContainer>
@@ -52,7 +61,7 @@ const ModalLevelUp = () => {
                 <div className="content">
                     <p>Your current point amount - {heroSkillPoints}</p>
                     {heroSkills.map((skill: Skill, index: number) => {
-                        return <div className="skill-container" key={index}>
+                        return <div className="skill-container" key={index} onContextMenu={(e: any) => onCardRightClick(e, skill)}>
                             <div className="img-container">
                                 <BattleCardImage battleCard={skill}/>
                                 {skill.level ?

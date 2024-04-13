@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-import {BattleCardType, IHeroBattleCard} from "../types";
 import {SkillPanel} from "./SkillPanel";
-
 
 const BottomPanel = () => {
     return (

@@ -15,10 +15,10 @@ const ModalX = ({children}: any) => {
 const ModalWrapper = styled(Modal)`
     &&& {
         width: 700px;
-        height: 700px;
+        height: 900px;
         box-shadow: none;
         background-color: transparent;
-        background-image: url("battle-over-modal.png");
+        background-image: url("battle-over-modal2.png");
         background-size: cover;
         padding: 100px;
 

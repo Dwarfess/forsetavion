@@ -7,28 +7,27 @@ import {HealthIndicator} from "./HealthIndicator";
 import BattleCardImage from "./BattleCardImage";
 import {LevelIndicator} from "./LevelIndicator";
 import {EffectPanel} from "./bottom-panel/EffectPanel";
-import {useBattleFieldLength} from "../store/storeHooks";
+import {useBattleFieldLength, useIsMoving, useSelectedCardForInfo} from "../store/storeHooks";
 
-const BattleCardField = memo(({onCardClick, onCardRightClick, battleCard}: any) => {
+const BattleCardField = memo(({onCardClick, battleCard}: any) => {
     const { battleFieldLength } = useBattleFieldLength();
+    const { setSelectedCardForInfo } = useSelectedCardForInfo();
+    const { isMoving } = useIsMoving();
     const cardsWithLevel = ['secret', 'boss'];
-    useEffect(() => {
-        if (battleCard.subType) {
-            console.log(battleCard.subType, 'battleCard.subType')
-        }
-    }, []);
 
-    const onDoubleClick = useCallback((e: any) => {
+    const onCardRightClick = (e: any) => {
         e.preventDefault();
-        onCardRightClick(battleCard.index);
-    }, [battleCard]);
+        if (isMoving) return;
+
+        setSelectedCardForInfo(battleCard);
+    };
 
     return <BattleCardFieldWrapper
             // @ts-ignore
             tabIndex="0"
             card-size={getCardSizeInPercent()}>
         <BattleCardFieldWrapperForAnimation
-            onContextMenu={onDoubleClick}
+            onContextMenu={onCardRightClick}
             onClick={() => onCardClick(battleCard.index)}
             className={`battle-card-${battleCard.index} ${battleCard.isNew ? 'newCard' : ''} dynamic-class-${battleCard.id} ${battleCard.type}` }
         >
@@ -53,7 +52,6 @@ const BattleCardFieldWrapper = styled.div`
     z-index: 0;
     padding: 3px;
     outline: none;
-    //border: 1px solid red;
 `;
 
 const BattleCardFieldWrapperForAnimation = styled.div`

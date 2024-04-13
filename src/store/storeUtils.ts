@@ -7,7 +7,7 @@ import {
     changeIsOpenLevelUpModal,
     changeIsMoving,
     changeBattleCards
-} from './index';
+} from "./index";
 
 export const getStateValue = (name: string) => {
     const state = structuredClone(store.getState() as any);

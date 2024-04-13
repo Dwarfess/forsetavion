@@ -14,13 +14,11 @@ import {
     cardHandler,
     keyDownHandler,
     getBattleCardsWithHero,
-    getHeroCard
 } from "./utils";
 
 import {
     useBattleCards,
     useBattleFieldLength,
-    useHeroCard,
     useIsMoving,
     useIsOpenBattleOverModal,
     useIsOpenLevelUpModal,
@@ -30,7 +28,7 @@ import {
 
 const BattlePage = () => {
     const { heroCard, battleCards, setBattleCards } = useBattleCards();
-    const { selectedCardForInfo, setSelectedCardForInfo } = useSelectedCardForInfo();
+    const { selectedCardForInfo } = useSelectedCardForInfo();
     const { selectedSecretCard } = useSelectedSecretCard();
     const { isOpenBattleOverModal } = useIsOpenBattleOverModal();
     const { isOpenLevelUpModal, setIsOpenLevelUpModal } = useIsOpenLevelUpModal();
@@ -68,11 +66,6 @@ const BattlePage = () => {
         cardHandler(selectedCardIndex);
     };
 
-    const onCardRightClick = (selectedCardIndex: number) => {
-        if (isMoving) return;
-        setSelectedCardForInfo(battleCards[selectedCardIndex]);
-    };
-
     const onKeyDown = (e: any): void => {
         e.stopPropagation();
 
@@ -93,7 +86,6 @@ const BattlePage = () => {
                     battleCards.map((battleCard: any, index: number) => {
                         return <BattleCardField
                             onCardClick={onCardClick}
-                            onCardRightClick={onCardRightClick}
                             battleCard={battleCard}
                             key={index}
                         />

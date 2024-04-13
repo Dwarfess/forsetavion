@@ -182,22 +182,6 @@ const CoinsBar = styled.div`
         z-index: 2;
         order: 3;
     }
-    
-    .coins-value2 {
-        width: max-content;
-        height: max-content;
-        margin: 17px 0 0 -7px;
-        box-shadow: 0px 0px 10px 1px #0e344d;
-        font-weight: 400;
-        font-size: 20px;
-        color: rgba(255,255,255,.7);
-        text-shadow: 0px 0px 3px #1A1A1A, 0px 0px 3px #1A1A1A, 0px 0px 3px #E3E3E3;
-        order: 1;
-        padding: 2.8px 10px;
-        margin-right: -10px;
-        border-radius: 5px;
-        background-color: rgb(161 147 44 / 70%)
-    }
 `;
 
 export { TopPanel };

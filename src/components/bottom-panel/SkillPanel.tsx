@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {MouseEventHandler, useEffect, useState} from 'react';
 import styled from "styled-components";
 import {
     getHeroCard,
@@ -9,19 +9,28 @@ import {
 } from "../utils";
 import {Skill} from "../types";
 import BattleCardImage from "../BattleCardImage";
-import { useBattleCards } from "../../store/storeHooks";
+import {useBattleCards, useIsMoving, useSelectedCardForInfo} from "../../store/storeHooks";
 
 const SkillPanel = () => {
     const { battleCards } = useBattleCards();
+    const { setSelectedCardForInfo } = useSelectedCardForInfo();
+    const { isMoving } = useIsMoving();
     const [activeSkill, setActiveSkill] = useState<any>(null);
+
+    useEffect(() => {
+        setActiveSkill(getActiveSkill(getHeroCard(battleCards)));
+    }, [battleCards]);
 
     const onItemClick = (selectedSkill: Skill) => {
         updateBattleCardsWithSelectedSkill(selectedSkill);
     }
 
-    useEffect(() => {
-        setActiveSkill(getActiveSkill(getHeroCard(battleCards)));
-    }, [battleCards])
+    const onCardRightClick = (e: any, skill: Skill) => {
+        e.preventDefault();
+        if (isMoving) return;
+
+        setSelectedCardForInfo(skill);
+    };
 
     return (
         <SkillPanelWrapper>
@@ -29,6 +38,7 @@ const SkillPanel = () => {
                 return  <div
                     className={`skill-item-wrapper ${getSkillClasses(skill, activeSkill)}`}
                     onClick={() => onItemClick(skill)}
+                    onContextMenu={(e: any) => onCardRightClick(e, skill)}
                     key={index}
                 >
                     <div className="skill-item">
