@@ -46,60 +46,69 @@ export const cardHandler = async (selectedCardIndex: number) => {
         heroCard.leftCardIndex
     ];
 
-    if (allowedIndexes.includes(selectedCardIndex)) {
-        resetBattleCards(selectedCardIndex);
-    } else {
+
+    const activeSkill = getActiveSkill(heroCard);
+    if (activeSkill) {
         const selectedCard = battleCards[selectedCardIndex];
-        await checkAndUseActiveSkill(selectedCard, battleCards, false);
+        await checkAndUseActiveSkill(selectedCard, battleCards, allowedIndexes.includes(selectedCardIndex));
+
         setStateValue('battleCards', battleCards);
         setStateValue('isMoving',false);
 
         return;
     }
+
+    if (allowedIndexes.includes(selectedCardIndex)) {
+        resetBattleCards(selectedCardIndex);
+    }
 };
 
+// TODO: should to refactor this large method
 const resetBattleCards = async (selectedCardIndex: number) => {
     let battleCards = getStateValue('battleCards');
     const heroCard = getHeroCard(battleCards);
     const selectedCard = battleCards[selectedCardIndex];
-    const activeSkill = getActiveSkill(heroCard);
+    // const activeSkill = getActiveSkill(heroCard);
 
-    if (activeSkill) {
-        await checkAndUseActiveSkill(selectedCard, battleCards, true);
+    // if (activeSkill) {
+    //     await checkAndUseActiveSkill(selectedCard, battleCards, true);
+    //     await checkBattleCardsEffects(battleCards);
+    //
+    //     setStateValue('isMoving',false);
+    //     setStateValue('battleCards', battleCards);
+    //
+    //     return;
+    // } else {
+    if (selectedCard.type === 'secret') {
         setStateValue('isMoving',false);
         setStateValue('battleCards', battleCards);
+        setStateValue('selectedSecretCard', selectedCard);
 
         return;
-    } else {
-        if (selectedCard.type === 'secret') {
-            setStateValue('isMoving',false);
-            setStateValue('battleCards', battleCards);
-            setStateValue('selectedSecretCard', selectedCard);
-
-            return;
-        }
-
-        recalculateHeroStatsAfterContact(heroCard, selectedCard);
-        await addClassWhenContactCard(selectedCard);
-        setStateValue('battleCards', battleCards);
-
-        if (heroCard.health <= 0) {
-            setStateValue('isMoving',false);
-            setStateValue('isOpenBattleOverModal', true);
-
-            return;
-        }
-
-        battleCards = structuredClone(battleCards);
-        if (selectedCard.type === 'boss') {
-            changeBattleCardAfterSkill(battleCards, selectedCard);
-        } else {
-            await moveBattleCards(selectedCardIndex, battleCards);
-        }
     }
 
+    recalculateHeroStatsAfterContact(heroCard, selectedCard);
+    await addClassWhenContactCard(selectedCard);
+    setStateValue('battleCards', battleCards);
+
+    if (heroCard.health <= 0) {
+        setStateValue('isMoving',false);
+        setStateValue('isOpenBattleOverModal', true);
+
+        return;
+    }
+
+    battleCards = structuredClone(battleCards);
+    if (selectedCard.type === 'boss') {
+        changeBattleCardAfterSkill(battleCards, selectedCard);
+    } else {
+        await moveBattleCards(selectedCardIndex, battleCards);
+    }
+    // }
+
+    // TODO: add animation for boss effects
     checkBossSkillsReadyToUse(battleCards);
-    checkBattleCardsEffects(battleCards);
+    await checkBattleCardsEffects(battleCards);
     updateSkillsCoolDown(battleCards);
 
     // MOVE THIS LOGIC TO BATTLE PAGE (AFTER DEBUFF HERO DOESN'T DIE)

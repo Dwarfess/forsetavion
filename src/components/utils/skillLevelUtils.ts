@@ -86,8 +86,9 @@ export const recalculateSkillsStatsAccordingLevel = (skills: Skill[]) => {
 
 const updateSkillPower = (skill: Skill) => {
     const power = getItemStat(skill, 'power');
-    const level = (skill.type === 'attack' ? skill.level : Math.floor(skill.level / 2));
-    power.value = power.defaultValue + (level - 1);
+    // TODO: needs to resolve valid formula for skill power
+    const level = (skill.type === 'attack' ? (skill.level - 1) : Math.floor(skill.level / 2));
+    power.value = power.defaultValue + level;
 }
 
 const updateSkillCoolDown = (skill: Skill) => {

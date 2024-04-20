@@ -1,6 +1,11 @@
 import {BattleCardType, Effect, IHeroBattleCard, Skill} from "../types";
 import {getItemStat, recalculateHeroExp} from "./recalculateHeroStats";
-import {addClassErrorWhenContactCard, addClassWhenContactCard, addClassWhenUseSkill} from "./contactItems";
+import {
+    addClassErrorWhenContactCard,
+    addClassWhenChangeHealth,
+    addClassWhenContactCard,
+    addClassWhenUseSkill
+} from "./contactItems";
 import {defineNewBattleCard} from "./moveItems";
 import {getStateValue, setStateValue} from "../../store/storeUtils";
 
@@ -51,6 +56,7 @@ export const checkAndUseActiveSkill = async (
 
     if (!activeSkill.nearbyCardsOnly || activeSkill.nearbyCardsOnly === nearbyCardsOnly) {
         await skillsHandler(activeSkill, selectedCard, battleCards);
+        return true;
     } else {
         await unsuitedCardHandler(selectedCard);
     }
@@ -68,7 +74,7 @@ const skillsHandler = async (
     battleCards: BattleCardType[]
 ) => {
     const audioMap: any = {
-        'light-ray': 'punch-2',
+        'light-ray': 'magic1',
         'poison': 'punch-2',
         'ice-balls': 'punch-2',
     };
@@ -90,8 +96,12 @@ const skillsHandler = async (
     audioName && new Audio(`sounds/${audioName}.mp3`).play();
 
     await addClassWhenUseSkill(selectedCard, activeSkill);
-    // await addClassWhenContactCard(selectedCard);
 
+    if (activeSkill.type === 'attack') {
+        await addClassWhenChangeHealth(selectedCard, activeSkill);
+    }
+
+    await checkBattleCardsEffects(battleCards);
     checkBattleCardAfterSkill(battleCards, selectedCard);
 }
 
@@ -154,40 +164,45 @@ const addEffect = (activeSkill: Skill, selectedCard: BattleCardType) => {
     return true;
 }
 
-export const checkBattleCardsEffects = (battleCards: BattleCardType[]) => {
+export const checkBattleCardsEffects = async (battleCards: BattleCardType[]) => {
     const effectsMap: any = {
         buff: buffSkillHandler,
         debuff: debuffSkillHandler,
     }
 
-    battleCards.forEach((battleCard: BattleCardType) => {
-        battleCard.effects.forEach((effect: Effect) => {
-            effectsMap[effect.type](effect, battleCard);
+    await battleCards.forEach((battleCard: BattleCardType) => {
+        battleCard.effects.forEach(async (effect: Effect) => {
+            await effectsMap[effect.type](effect, battleCard);
             checkBattleCardAfterSkill(battleCards, battleCard);
         });
         battleCard.effects = battleCard.effects.filter((effect: Effect) => getItemStat(effect, 'duration').value > 0);
     });
 }
 
-const debuffSkillHandler = (effect: Effect, selectedCard: BattleCardType) => {
-    const duration = getItemStat(effect, 'duration');
+const debuffSkillHandler = async (effect: Effect, selectedCard: BattleCardType) => {
+    let duration = getItemStat(effect, 'duration');
     const period = getItemStat(effect, 'period');
 
     if (duration.value % period.value === 0 || duration.value === 0) {
         const power = getItemStat(effect, 'power');
 
+        // TODO: hero health to value
         if (selectedCard.type === 'hero') {
             selectedCard.health -= power.value;
         } else {
             selectedCard.value -= power.value;
         }
+
+        // TODO: resolve the problem with duration.value-- when switch on the method below
+
+        // await addClassWhenChangeHealth(selectedCard, effect);
     }
 
     duration.value--;
 }
 
-const buffSkillHandler = (effect: Effect, selectedCard: BattleCardType) => {
-    const duration = getItemStat(effect, 'duration');
+const buffSkillHandler = async (effect: Effect, selectedCard: BattleCardType) => {
+    let duration = getItemStat(effect, 'duration');
     const period = getItemStat(effect, 'period');
 
     if (duration.value % period.value === 0 || duration.value === 0) {
@@ -197,6 +212,10 @@ const buffSkillHandler = (effect: Effect, selectedCard: BattleCardType) => {
         const heroStatMaxHealth = getItemStat(selectedCard, 'maxHealth');
 
         selectedCard.health = heroStatMaxHealth.value < heroHealth ? heroStatMaxHealth.value : heroHealth;
+
+        // TODO: resolve the problem with duration.value-- when switch on the method below
+
+        // await addClassWhenChangeHealth(selectedCard, effect);
     }
 
     duration.value--;

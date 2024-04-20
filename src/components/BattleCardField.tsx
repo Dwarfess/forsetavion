@@ -32,14 +32,15 @@ const BattleCardField = memo(({onCardClick, battleCard}: any) => {
             className={`battle-card-${battleCard.index} ${battleCard.isNew ? 'newCard' : ''} dynamic-class-${battleCard.id} ${battleCard.type}` }
         >
             <BattleCardFieldContainer>
-                <BattleCard data-type={battleCard.type} className={`${battleCard.type}`}>
+                <BattleCard data-type={battleCard.type} className={`${battleCard.type}`} data-length={battleFieldLength}>
                     <HealthIndicator battleCard={battleCard} />
                     <BattleCardImage battleCard={battleCard}/>
                     <EffectPanel battleCard={battleCard}/>
                     {cardsWithLevel.includes(battleCard.type)
                         && (<LevelIndicator battleCard={battleCard} size={battleFieldLength}/>
                     )}
-                    <div className="effect-usage-image"><img/></div>
+                    <div className="skill-usage-image"><img/></div>
+                    <div className="health-value-effect">+2</div>
                 </BattleCard>
             </BattleCardFieldContainer>
         </BattleCardFieldWrapperForAnimation>
@@ -93,37 +94,6 @@ const BattleCardFieldWrapperForAnimation = styled.div`
         }
     }
 
-    //@keyframes lds-ripple {
-    //    0% {
-    //        top: 20%;
-    //        left: 20%;
-    //        width: 0;
-    //        height: 0;
-    //        opacity: 0;
-    //    }
-    //    4.9% {
-    //        top: 20%;
-    //        left: 20%;
-    //        width: 20%;
-    //        height: 20%;
-    //        opacity: 0;
-    //    }
-    //    5% {
-    //        top: 20%;
-    //        left: 20%;
-    //        width: 50%;
-    //        height: 50%;
-    //        opacity: 1;
-    //    }
-    //    100% {
-    //        top: 0;
-    //        left: 0;
-    //        width: 100%;
-    //        height: 100%;
-    //        opacity: 0;
-    //    }
-    //}
-
     @keyframes hit {
         0% {transform: scale(1)}
         50% {transform: scale(.95)}
@@ -174,40 +144,6 @@ const BattleCardFieldContainer = styled.div`
     position: relative;
     border-radius: 8px;
     z-index: 0;
-    
-    .effect-usage-image {
-        display: none;
-        width: 80%;
-        height: 80%;
-        border-radius: 100px;
-        overflow: hidden;
-        position: absolute;
-        top: 0;
-        box-shadow: 0px 0px 10px 0px white;
-        animation: slide-out 2.5s;
-        
-        &.active { display: flex }
-        
-        img {
-            width: 100%;
-            height: 100%;
-        }
-    }
-
-    @keyframes slide-out {
-        0% {
-            transform: scale(1);
-            opacity: 0.2;
-        }
-        50% {
-            //transform: scale(0.5);
-            opacity: 0.5;
-        }
-        100% {
-            transform: scale(0.4);
-            opacity: 0.2;
-        }
-    }
 `;
 
 const BattleCard = styled.div`
@@ -305,6 +241,72 @@ const BattleCard = styled.div`
         100% {background-position: 100% 0%}
     }
     // finish border animation
+
+    
+    // skills animations
+    .skill-usage-image {
+        display: none;
+        width: 80%;
+        height: 80%;
+        border-radius: 100px;
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        box-shadow: 0px 0px 10px 0px white;
+        animation: slide-out 2.5s;
+
+        &.active { display: flex }
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .health-value-effect {
+        display: none;
+        color: green;
+        position: absolute;
+        margin: auto;
+        font-family: 'MagicalWorld';
+        font-size: ${(props: any) => 150 / props['data-length']}px;
+        font-weight: bold;
+
+        animation: move-up 2s;
+
+        &.active { display: block }
+        &.negativeEffect { color: red }
+        &.positiveEffect { color: green }
+    }
+
+    @keyframes slide-out {
+        0% {
+            transform: scale(1);
+            opacity: 0.2;
+        }
+        50% {
+            //transform: scale(0.5);
+            opacity: 0.5;
+        }
+        100% {
+            transform: scale(0.4);
+            opacity: 0.2;
+        }
+    } 
+    
+    @keyframes move-up {
+        0% {
+            //transform: translateY(0);
+            opacity: 0.2;
+        }
+        70% {
+            opacity: 0.8;
+        }
+        100% {
+            transform: translateY(-300%);
+            opacity: 0.4;
+        }
+    }
 `;
 
 export { BattleCardField };
