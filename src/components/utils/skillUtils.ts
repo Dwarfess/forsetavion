@@ -170,17 +170,17 @@ export const checkBattleCardsEffects = async (battleCards: BattleCardType[]) => 
         debuff: debuffSkillHandler,
     }
 
-    await battleCards.forEach((battleCard: BattleCardType) => {
-        battleCard.effects.forEach(async (effect: Effect) => {
+    for (const battleCard of battleCards) {
+        for (const effect of battleCard.effects) {
             await effectsMap[effect.type](effect, battleCard);
             checkBattleCardAfterSkill(battleCards, battleCard);
-        });
+        }
         battleCard.effects = battleCard.effects.filter((effect: Effect) => getItemStat(effect, 'duration').value > 0);
-    });
+    }
 }
 
 const debuffSkillHandler = async (effect: Effect, selectedCard: BattleCardType) => {
-    let duration = getItemStat(effect, 'duration');
+    const duration = getItemStat(effect, 'duration');
     const period = getItemStat(effect, 'period');
 
     if (duration.value % period.value === 0 || duration.value === 0) {
@@ -193,16 +193,14 @@ const debuffSkillHandler = async (effect: Effect, selectedCard: BattleCardType) 
             selectedCard.value -= power.value;
         }
 
-        // TODO: resolve the problem with duration.value-- when switch on the method below
-
-        // await addClassWhenChangeHealth(selectedCard, effect);
+        await addClassWhenChangeHealth(selectedCard, effect);
     }
 
     duration.value--;
 }
 
 const buffSkillHandler = async (effect: Effect, selectedCard: BattleCardType) => {
-    let duration = getItemStat(effect, 'duration');
+    const duration = getItemStat(effect, 'duration');
     const period = getItemStat(effect, 'period');
 
     if (duration.value % period.value === 0 || duration.value === 0) {
@@ -213,9 +211,7 @@ const buffSkillHandler = async (effect: Effect, selectedCard: BattleCardType) =>
 
         selectedCard.health = heroStatMaxHealth.value < heroHealth ? heroStatMaxHealth.value : heroHealth;
 
-        // TODO: resolve the problem with duration.value-- when switch on the method below
-
-        // await addClassWhenChangeHealth(selectedCard, effect);
+        await addClassWhenChangeHealth(selectedCard, effect);
     }
 
     duration.value--;

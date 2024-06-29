@@ -31,7 +31,7 @@ export const addClassWhenChangeHealth = async (battleCard: BattleCardType, skill
 
     await new Promise<void>((resolve) => setTimeout(() => {
         resolve();
-        healthValueEffectEl.classList.remove('active');
+        healthValueEffectEl.classList.remove('active', skill.type === 'buff' ? 'positiveEffect' : 'negativeEffect');
     }, 2000));
 
     return true;

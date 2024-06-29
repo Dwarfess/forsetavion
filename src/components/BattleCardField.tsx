@@ -265,7 +265,6 @@ const BattleCard = styled.div`
 
     .health-value-effect {
         display: none;
-        color: green;
         position: absolute;
         margin: auto;
         font-family: 'MagicalWorld';
