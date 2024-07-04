@@ -27,7 +27,7 @@ export const cardHandler = async (selectedCardIndex: number) => {
     const cardAmount = battleFieldLength * battleFieldLength;
 
     if (selectedCardIndex < 0 || selectedCardIndex > cardAmount) {
-        setStateValue('isMoving',false);
+        setStateValue('isProcessingAction',false);
         return;
     }
 
@@ -53,7 +53,7 @@ export const cardHandler = async (selectedCardIndex: number) => {
         await checkAndUseActiveSkill(selectedCard, battleCards, allowedIndexes.includes(selectedCardIndex));
 
         setStateValue('battleCards', battleCards);
-        setStateValue('isMoving',false);
+        setStateValue('isProcessingAction',false);
 
         return;
     }
@@ -74,25 +74,28 @@ const resetBattleCards = async (selectedCardIndex: number) => {
     //     await checkAndUseActiveSkill(selectedCard, battleCards, true);
     //     await checkBattleCardsEffects(battleCards);
     //
-    //     setStateValue('isMoving',false);
+    //     setStateValue('isProcessingAction',false);
     //     setStateValue('battleCards', battleCards);
     //
     //     return;
     // } else {
     if (selectedCard.type === 'secret') {
-        setStateValue('isMoving',false);
+        setStateValue('isProcessingAction',false);
         setStateValue('battleCards', battleCards);
         setStateValue('selectedSecretCard', selectedCard);
 
         return;
     }
 
+    // from the part of code starts moving card
+    setStateValue('isMoving',true);
+
     recalculateHeroStatsAfterContact(heroCard, selectedCard);
     await addClassWhenContactCard(selectedCard);
     setStateValue('battleCards', battleCards);
 
     if (heroCard.health <= 0) {
-        setStateValue('isMoving',false);
+        setStateValue('isProcessingAction',false);
         setStateValue('isOpenBattleOverModal', true);
 
         return;
@@ -107,18 +110,41 @@ const resetBattleCards = async (selectedCardIndex: number) => {
     // }
 
     // TODO: add animation for boss effects
+    // checkBossSkillsReadyToUse(battleCards);
+    // await checkBattleCardsEffects(battleCards);
+    // updateSkillsCoolDown(battleCards);
+    //
+    // // MOVE THIS LOGIC TO BATTLE PAGE (AFTER DEBUFF HERO DOESN'T DIE)
+    // if (getHeroCard(battleCards).health <= 0) {
+    //     setStateValue('isProcessingAction',false);
+    //     setStateValue('isOpenBattleOverModal', true);
+    //
+    //     return;
+    // }
+
+    setStateValue('battleCards', battleCards);
+    setStateValue('isProcessingAction',false);
+    setStateValue('isMoving',false);
+};
+
+export const executeMethodsAfterMoving = async () => {
+    setStateValue('isProcessingAction',true);
+
+    let battleCards = getStateValue('battleCards');
+    // TODO: add animation for boss effects
     checkBossSkillsReadyToUse(battleCards);
     await checkBattleCardsEffects(battleCards);
     updateSkillsCoolDown(battleCards);
 
     // MOVE THIS LOGIC TO BATTLE PAGE (AFTER DEBUFF HERO DOESN'T DIE)
     if (getHeroCard(battleCards).health <= 0) {
-        setStateValue('isMoving',false);
+        setStateValue('isProcessingAction',false);
         setStateValue('isOpenBattleOverModal', true);
 
         return;
     }
 
     setStateValue('battleCards', battleCards);
-    setStateValue('isMoving',false);
-};
+    setStateValue('isProcessingAction',false);
+}
+

@@ -7,17 +7,17 @@ import {HealthIndicator} from "./HealthIndicator";
 import BattleCardImage from "./BattleCardImage";
 import {LevelIndicator} from "./LevelIndicator";
 import {EffectPanel} from "./bottom-panel/EffectPanel";
-import {useBattleFieldLength, useIsMoving, useSelectedCardForInfo} from "../store/storeHooks";
+import {useBattleFieldLength, useIsProcessingAction, useSelectedCardForInfo} from "../store/storeHooks";
 
 const BattleCardField = memo(({onCardClick, battleCard}: any) => {
     const { battleFieldLength } = useBattleFieldLength();
     const { setSelectedCardForInfo } = useSelectedCardForInfo();
-    const { isMoving } = useIsMoving();
+    const { isProcessingAction } = useIsProcessingAction();
     const cardsWithLevel = ['secret', 'boss'];
 
     const onCardRightClick = (e: any) => {
         e.preventDefault();
-        if (isMoving) return;
+        if (isProcessingAction) return;
 
         setSelectedCardForInfo(battleCard);
     };
@@ -118,13 +118,13 @@ const BattleCardFieldWrapperForAnimation = styled.div`
         100% {opacity: 0}
     }
 
-    // moving card
+    // ProcessingAction card
     &.hidden {visibility: hidden}
 
-    &.moving {transition: transform 300ms}
+    &.ProcessingAction {transition: transform 300ms}
 
     // transformDuration
-    &.movingHero {transition: transform 700ms}
+    &.ProcessingActionHero {transition: transform 700ms}
 
     //transformHeroDuration
     &.move-left {transform: translateX(calc(-100% - 6px))}

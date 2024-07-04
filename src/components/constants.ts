@@ -61,7 +61,7 @@ const skills: Skill[] = [
             {
                 name: 'period',
                 title: 'Period',
-                defaultValue: 0,
+                defaultValue: 3,
                 value: 0,
             },
             {
@@ -98,7 +98,7 @@ const skills: Skill[] = [
             {
                 name: 'period',
                 title: 'Period',
-                defaultValue: 0,
+                defaultValue: 3,
                 value: 0,
             },
             {

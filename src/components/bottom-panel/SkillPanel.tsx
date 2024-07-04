@@ -9,12 +9,12 @@ import {
 } from "../utils";
 import {Skill} from "../types";
 import BattleCardImage from "../BattleCardImage";
-import {useBattleCards, useIsMoving, useSelectedCardForInfo} from "../../store/storeHooks";
+import {useBattleCards, useIsProcessingAction, useSelectedCardForInfo} from "../../store/storeHooks";
 
 const SkillPanel = () => {
     const { battleCards } = useBattleCards();
     const { setSelectedCardForInfo } = useSelectedCardForInfo();
-    const { isMoving } = useIsMoving();
+    const { isProcessingAction } = useIsProcessingAction();
     const [activeSkill, setActiveSkill] = useState<any>(null);
 
     useEffect(() => {
@@ -27,7 +27,7 @@ const SkillPanel = () => {
 
     const onCardRightClick = (e: any, skill: Skill) => {
         e.preventDefault();
-        if (isMoving) return;
+        if (isProcessingAction) return;
 
         setSelectedCardForInfo(skill);
     };

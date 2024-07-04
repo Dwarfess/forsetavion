@@ -7,6 +7,7 @@ import {
     changeIsOpenBattleOverModal,
     changeIsOpenLevelUpModal,
     changeIsMoving,
+    changeIsProcessingAction,
     changeBattleCards,
     RootState
 } from './index';
@@ -87,6 +88,17 @@ export const useIsMoving = () => {
     }
 
     return { isMoving, setIsMoving };
+}
+
+export const useIsProcessingAction = () => {
+    const dispatch = useDispatch();
+    const isProcessingAction = useSelector((state: RootState) => state.isProcessingAction.value);
+
+    const setIsProcessingAction = (val: any) => {
+        dispatch(changeIsProcessingAction(val));
+    }
+
+    return { isProcessingAction, setIsProcessingAction };
 }
 
 export const useBattleCards = () => {

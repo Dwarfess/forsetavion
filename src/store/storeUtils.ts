@@ -6,6 +6,7 @@ import {
     changeSelectedSecretCard,
     changeIsOpenLevelUpModal,
     changeIsMoving,
+    changeIsProcessingAction,
     changeBattleCards
 } from "./index";
 
@@ -22,6 +23,7 @@ export const setStateValue = (name: string, data: any) => {
         selectedCardForInfo: changeSelectedCardForInfo,
         selectedSecretCard: changeSelectedSecretCard,
         isMoving: changeIsMoving,
+        isProcessingAction: changeIsProcessingAction,
         battleCards: changeBattleCards
     };
 

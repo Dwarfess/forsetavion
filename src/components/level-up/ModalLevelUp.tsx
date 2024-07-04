@@ -11,13 +11,13 @@ import {
     getHeroSkillsWithTemporaryPoints,
     updateBattleCardsByNewSkillLevels
 } from "../utils";
-import {useBattleCards, useIsMoving, useIsOpenLevelUpModal, useSelectedCardForInfo} from "../../store/storeHooks";
+import {useBattleCards, useIsProcessingAction, useIsOpenLevelUpModal, useSelectedCardForInfo} from "../../store/storeHooks";
 import { ModalX } from "../shared";
 
 const ModalLevelUp = () => {
     const { setIsOpenLevelUpModal } = useIsOpenLevelUpModal();
     const { setSelectedCardForInfo } = useSelectedCardForInfo();
-    const { isMoving } = useIsMoving();
+    const { isProcessingAction } = useIsProcessingAction();
     const { heroCard } = useBattleCards();
 
     const [heroSkills, setHeroSkills] = useState<Skill[]>([]);
@@ -49,7 +49,7 @@ const ModalLevelUp = () => {
 
     const onCardRightClick = (e: any, skill: Skill) => {
         e.preventDefault();
-        if (isMoving) return;
+        if (isProcessingAction) return;
 
         setSelectedCardForInfo(skill);
     };

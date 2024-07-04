@@ -7,6 +7,7 @@ import selectedSecretCardReducer from './selectedSecretCardSlice';
 import isOpenBattleOverModalReducer from './isOpenBattleOverModalSlice';
 import isOpenLevelUpModalReducer from './isOpenLevelUpModalSlice';
 import isMovingReducer from './isMovingSlice';
+import isProcessingActionReducer from './isProcessingActionSlice';
 import battleCardsReducer from './battleCardsSlice';
 
 export const store = configureStore({
@@ -18,6 +19,7 @@ export const store = configureStore({
         isOpenBattleOverModal: isOpenBattleOverModalReducer,
         isOpenLevelUpModal: isOpenLevelUpModalReducer,
         isMoving: isMovingReducer,
+        isProcessingAction: isProcessingActionReducer,
         battleCards: battleCardsReducer,
     },
 });

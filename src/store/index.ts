@@ -6,4 +6,5 @@ export * from './selectedSecretCardSlice';
 export * from './isOpenBattleOverModalSlice';
 export * from './isOpenLevelUpModalSlice';
 export * from './isMovingSlice';
+export * from './isProcessingActionSlice';
 export * from './battleCardsSlice';

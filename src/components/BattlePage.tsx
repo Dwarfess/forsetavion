@@ -13,17 +13,18 @@ import {BottomPanel} from "./bottom-panel/BottomPanel";
 import {
     cardHandler,
     keyDownHandler,
-    getBattleCardsWithHero,
+    getBattleCardsWithHero, executeMethodsAfterMoving,
 } from "./utils";
 
 import {
     useBattleCards,
     useBattleFieldLength,
-    useIsMoving,
+    useIsProcessingAction,
     useIsOpenBattleOverModal,
     useIsOpenLevelUpModal,
     useSelectedCardForInfo,
-    useSelectedSecretCard
+    useSelectedSecretCard,
+    useIsMoving
 } from "../store/storeHooks";
 
 const BattlePage = () => {
@@ -33,9 +34,16 @@ const BattlePage = () => {
     const { isOpenBattleOverModal } = useIsOpenBattleOverModal();
     const { isOpenLevelUpModal, setIsOpenLevelUpModal } = useIsOpenLevelUpModal();
 
-    const { isMoving, setIsMoving } = useIsMoving(); // block/unblock extra click
+    const { isProcessingAction, setIsProcessingAction } = useIsProcessingAction(); // block/unblock extra click action
+    const { isMoving } = useIsMoving();
 
     const { battleFieldLength } = useBattleFieldLength();
+
+    useEffect(() => {
+        if (battleCards.length && !isMoving) {
+            executeMethodsAfterMoving();
+        }
+    }, [isMoving]);
 
     useEffect(() => {
         battleFieldLength && setBattleCards(getBattleCardsWithHero());
@@ -51,7 +59,7 @@ const BattlePage = () => {
                 document.removeEventListener('keydown', onKeyDown);
             }
         }
-    }, [battleCards, isMoving]);
+    }, [battleCards, isProcessingAction]);
 
     useEffect(() => {
         if (heroCard?.skillPoints) {
@@ -60,8 +68,8 @@ const BattlePage = () => {
     }, [heroCard]);
 
     const onCardClick = (selectedCardIndex: number) => {
-        if (isMoving) return;
-        setIsMoving(true);
+        if (isProcessingAction) return;
+        setIsProcessingAction(true);
 
         cardHandler(selectedCardIndex);
     };
@@ -69,8 +77,8 @@ const BattlePage = () => {
     const onKeyDown = (e: any): void => {
         e.stopPropagation();
 
-        if (isMoving) return;
-        setIsMoving(true);
+        if (isProcessingAction) return;
+        setIsProcessingAction(true);
 
         const selectedCardIndex = keyDownHandler(e.key);
         cardHandler(selectedCardIndex);
