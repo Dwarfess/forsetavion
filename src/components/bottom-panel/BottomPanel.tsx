@@ -11,7 +11,7 @@ const BottomPanel = () => {
 };
 
 const BottomPanelWrapper = styled.div`
-    margin: 10px 30px;
+    margin: 50px 0;
     width: 100%;
     font-family: 'MagicalWorld';
     

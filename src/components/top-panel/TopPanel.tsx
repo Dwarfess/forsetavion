@@ -3,10 +3,12 @@ import { Progress } from 'semantic-ui-react'
 import styled from "styled-components";
 import {getBossPartProgress, getMaxExpForCurrentLever} from "../utils/recalculateHeroStats";
 import {ordinaryBossPartsCount} from "../constants";
-import {useBattleCards} from "../../store/storeHooks";
+import {useBattleCards, useBattleFieldLength} from "../../store/storeHooks";
 
 const TopPanel = () => {
     const { heroCard } = useBattleCards();
+    const { setBattleFieldLength } = useBattleFieldLength();
+
     return (
         <TopPanelWrapper>
             <div className="top-side">
@@ -21,8 +23,9 @@ const TopPanel = () => {
                 </CoinsBar>
                 <CoinsBar>
                     <img src="icon-spheres.png" className="coins-icon"/>
-                    <div className="coins-value">{heroCard.spheres}</div>
+                    <div className="spheres-value">{heroCard.spheres}</div>
                 </CoinsBar>
+                <ExitButton onClick={() => setBattleFieldLength(0)}>Exit</ExitButton>
             </div>
 
             <div className="bottom-side">
@@ -43,7 +46,7 @@ const TopPanel = () => {
 };
 
 const TopPanelWrapper = styled.div`
-    margin: 10px 30px;
+    margin: 10px 0;
     width: 100%;
     font-family: 'MagicalWorld';
     
@@ -51,7 +54,31 @@ const TopPanelWrapper = styled.div`
         display: flex;
         width: 100%;
         height: max-content;
+        position: relative;
     }
+`;
+
+const ExitButton = styled.div`
+    width: 120px;
+    background-color: rgba(0, 0, 0, .4);
+    position: absolute;
+    right: -20px;
+
+    line-height: 60px;
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    color: #494117;
+    text-shadow: 0px 0px 3px #E6E6E6, 0px 0px 3px #1A1A1A, 0px 0px 3px #E6E6E6, 0px 0px 3px #E6E6E6, 0px 0px 3px #E6E6E6;
+    text-transform: uppercase;
+    cursor: pointer;
+    user-select: none;
+    
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    
+    //&:hover { box-shadow: 0px 0px 20px 0px black }
+    //&:active { box-shadow: none }
 `;
 
 const BossBar = styled.div`
@@ -102,6 +129,7 @@ const BossBar = styled.div`
             height: max-content;
             margin: 17px 0 0 5px;
             box-shadow: 0px 0px 10px 3px #0e344d;
+            background: rgba(255, 255, 255, .3);
             
             .bar {
                 background-color: #8b0000 !important;
@@ -139,6 +167,7 @@ const LevelBar = styled.div`
         height: max-content;
         margin: 17px 0 0 -7px;
         box-shadow: 0px 0px 10px 3px #0e344d;
+        background: rgba(255, 255, 255, .3);
 
         .bar {
             background-color: #0f3e5b !important;
@@ -158,7 +187,7 @@ const LevelBar = styled.div`
 const CoinsBar = styled.div`
     display: flex;
     position: relative;
-    width: 200px;
+    width: 150px;
     align-items: center;
     justify-content: center;
 
@@ -167,7 +196,7 @@ const CoinsBar = styled.div`
         z-index: 1;
     }
 
-    .coins-value {
+    .coins-value, .spheres-value {
         position: absolute;
         height: 60px;
         width: 100%;

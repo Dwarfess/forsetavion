@@ -1,5 +1,5 @@
-import {ArtifactCardType, BattleCardType, IHeroBattleCard, PrimaryBattleCardType, Skill} from "./types";
-import {getSkill} from "./utils/cardsBuilder";
+import {ArtifactCardType, BattleCardType, IHeroBattleCard, PrimaryBattleCardType, Skill, Stat} from "./types";
+import {generateSkill} from "./utils/cardsBuilder";
 
 export const defaultFontSize = 20;
 export const defaultWidth = 450;
@@ -9,7 +9,7 @@ export const symbols = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '
 // const DEFAULT_HEALTH = 10;
 export const ordinaryBossPartsCount = 5;
 
-const skills: Skill[] = [
+export const skills: Skill[] = [
     {
         name: 'light-ray',
         description: '',
@@ -247,10 +247,81 @@ const skills: Skill[] = [
     }
 ];
 
+export const stats: Stat[] = [
+    {
+        name: 'maxHealth',
+        title: 'Max. health',
+        value: 10,
+    },
+    {
+        name: 'def',
+        title: 'Def',
+        value: 0,
+    },
+    {
+        name: 'lifeDrain',
+        title: 'Life drain',
+        value: 0,
+    },
+    {
+        name: 'expBoost',
+        title: 'Exp. boost',
+        value: 1,
+    },
+    {
+        name: 'coinBoost',
+        title: 'Coin boost',
+        value: 1,
+    },
+];
+
+export const heroCollection = [
+    {
+        name: 'Healer',
+        image: 'hero-1',
+        maxHealth: 10,
+        def: 0,
+        lifeDrain: 0,
+        expBoost: 1,
+        coinBoost: 1,
+        skills: ['light-ray', 'poison', 'regeneration', 'ice-balls']
+    },
+    {
+        name: 'Blightbringer',
+        image: 'hero-2',
+        maxHealth: 15,
+        def: 0,
+        lifeDrain: 0,
+        expBoost: 1,
+        coinBoost: 1,
+        skills: ['light-ray', 'poison', 'regeneration', 'ice-balls']
+    },
+    {
+        name: 'Celestial',
+        image: 'hero-3',
+        maxHealth: 12,
+        def: 0,
+        lifeDrain: 0,
+        expBoost: 1,
+        coinBoost: 1,
+        skills: ['light-ray', 'poison', 'regeneration', 'ice-balls']
+    },
+    {
+        name: 'Aqua Wizard',
+        image: 'hero-4',
+        maxHealth: 12,
+        def: 0,
+        lifeDrain: 0,
+        expBoost: 1,
+        coinBoost: 1,
+        skills: ['light-ray', 'poison', 'regeneration', 'ice-balls']
+    }
+];
+
 export const defaultHeroCard: IHeroBattleCard = {
     id: Math.random().toString(16).slice(2),
     index: 0,
-    name: 'hero',
+    name: 'Healer',
     image: 'hero-1',
     type: 'hero',
     isVisible: true,
@@ -291,118 +362,10 @@ export const defaultHeroCard: IHeroBattleCard = {
         },
     ],
     skills: [
-        // {
-        //     name: 'light-ray',
-        //     description: '',
-        //     image: 'skill-light-ray',
-        //     type: 'attack',
-        //     level: 1,
-        //     coolDown: 0,
-        //     nearbyCardsOnly: true,
-        //     active: false,
-        //     stats: [
-        //         {
-        //             name: 'power',
-        //             title: 'Power',
-        //             value: 2,
-        //         },
-        //         {
-        //             name: 'maxCoolDown',
-        //             title: 'CoolDown',
-        //             value: 10,
-        //         },
-        //     ]
-        // },
-        // {
-        //     name: 'poison',
-        //     description: '',
-        //     image: 'skill-poison',
-        //     type: 'debuff',
-        //     level: 1,
-        //     coolDown: 0,
-        //     nearbyCardsOnly: true,
-        //     active: false,
-        //     stats: [
-        //         {
-        //             name: 'power',
-        //             title: 'Power',
-        //             value: 2,
-        //         },
-        //         {
-        //             name: 'duration',
-        //             title: 'Duration',
-        //             value: 10,
-        //         },
-        //         {
-        //             name: 'period',
-        //             title: 'Period',
-        //             value: 2,
-        //         },
-        //         {
-        //             name: 'maxCoolDown',
-        //             title: 'CoolDown',
-        //             value: 15,
-        //         },
-        //     ]
-        // },
-        // {
-        //     name: 'regeneration',
-        //     description: '',
-        //     image: 'skill-regeneration',
-        //     type: 'buff',
-        //     level: 1,
-        //     coolDown: 0,
-        //     nearbyCardsOnly: false,
-        //     active: false,
-        //     stats: [
-        //         {
-        //             name: 'power',
-        //             title: 'Power',
-        //             value: 2,
-        //         },
-        //         {
-        //             name: 'duration',
-        //             title: 'Duration',
-        //             value: 10,
-        //         },
-        //         {
-        //             name: 'period',
-        //             title: 'Period',
-        //             value: 2,
-        //         },
-        //         {
-        //             name: 'maxCoolDown',
-        //             title: 'CoolDown',
-        //             value: 15,
-        //         },
-        //     ]
-        // },
-        // {
-        //     name: 'ice-balls',
-        //     description: '',
-        //     image: 'skill-ice-balls',
-        //     type: 'attack',
-        //     level: 1,
-        //     coolDown: 0,
-        //     nearbyCardsOnly: false,
-        //     active: false,
-        //     stats: [
-        //         {
-        //             name: 'power',
-        //             title: 'Power',
-        //             value: 4,
-        //         },
-        //         {
-        //             name: 'maxCoolDown',
-        //             title: 'CoolDown',
-        //             value: 15,
-        //         },
-        //     ]
-        // },
-        getSkill(skills, 'light-ray'),
-        getSkill(skills, 'poison'),
-        getSkill(skills, 'regeneration'),
-        getSkill(skills, 'ice-balls'),
+        generateSkill(skills, 'light-ray'),
+        generateSkill(skills, 'poison'),
+        generateSkill(skills, 'regeneration'),
+        generateSkill(skills, 'ice-balls'),
     ],
     effects: [],
     artifacts: [],
@@ -426,21 +389,21 @@ export const bossCards: any = [
         name: 'Iceheart overlord',
         image: 'boss-1',
         type: 'boss',
-        skills: [getSkill(skills, 'freezing')],
+        skills: [generateSkill(skills, 'freezing')],
         effects: []
     },
     {
         name: 'Ember overlord',
         image: 'boss-2',
         type: 'boss',
-        skills: [getSkill(skills, 'burning')],
+        skills: [generateSkill(skills, 'burning')],
         effects: []
     },
     {
         name: 'Poisonfang overlord',
         image: 'boss-3',
         type: 'boss',
-        skills: [getSkill(skills, 'poisoned-claws')],
+        skills: [generateSkill(skills, 'poisoned-claws')],
         effects: []
     },
 ];

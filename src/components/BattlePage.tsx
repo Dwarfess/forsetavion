@@ -46,7 +46,11 @@ const BattlePage = () => {
     }, [isMoving]);
 
     useEffect(() => {
-        battleFieldLength && setBattleCards(getBattleCardsWithHero());
+        if (battleFieldLength) {
+            setBattleCards(getBattleCardsWithHero());
+        } else {
+            setBattleCards([]);
+        }
     }, [battleFieldLength]);
 
     useEffect(() => {
@@ -84,7 +88,7 @@ const BattlePage = () => {
         cardHandler(selectedCardIndex);
     };
 
-    return <>
+    return <BattlePageContainer>
         <BattleFieldLengthSwitcher />
         {battleCards.length && (<>
             <TopPanel />
@@ -108,8 +112,13 @@ const BattlePage = () => {
             {!!selectedSecretCard && <ModalSecretCard />}
             {!!selectedCardForInfo && <ModalBattleCardInfo />}
         </>)}
-    </>
+    </BattlePageContainer>
 };
+
+const BattlePageContainer = styled.div`
+    width: 700px;
+    padding: 20px;
+`;
 
 const BattleField = styled.div`
     width: 700px;
@@ -118,7 +127,8 @@ const BattleField = styled.div`
     flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start;
-    margin: 30px;
+    box-sizing: border-box;
+    position: relative;
 `;
 
 export { BattlePage };

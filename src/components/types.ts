@@ -11,6 +11,7 @@ export interface CommonBattleCardType extends PrimaryBattleCardType {
     index: number;
     level: number;
     isVisible: boolean;
+    description?: string;
     active?: boolean;
 }
 

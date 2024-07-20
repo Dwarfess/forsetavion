@@ -2,11 +2,30 @@ import {
     defaultHeroCard,
     newEnemyCards,
     newPotionCards,
-    secretCards, coinsCards, spheresCards, superCoinsCards, superPotionCards, artifactCards, bossPartCards, bossCards
+    secretCards,
+    coinsCards,
+    spheresCards,
+    superCoinsCards,
+    superPotionCards,
+    artifactCards,
+    bossPartCards,
+    bossCards,
+    heroCollection
 } from "../constants";
 import {BattleCardType, IHeroBattleCard, PrimaryBattleCardType, Skill} from "../types";
 import {recalculateSkillsStatsAccordingLevel} from "./skillLevelUtils";
 import {getStateValue} from "../../store/storeUtils";
+
+// export const generateHeroCards = () => {
+//     return heroCollection.map(hero => {
+//         const clonedDefaultHeroCard = structuredClone(defaultHeroCard);
+//         clonedDefaultHeroCard.name = hero.name;
+//         clonedDefaultHeroCard.image = hero.image;
+//         clonedDefaultHeroCard.name = hero.name;
+//         clonedDefaultHeroCard.name = hero.name;
+//         clonedDefaultHeroCard.name = hero.name;
+//     })
+// }
 
 export const getBattleCardsWithHero = (): (BattleCardType | IHeroBattleCard)[] => {
     const heroCard = defaultHeroCard;
