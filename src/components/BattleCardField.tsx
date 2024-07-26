@@ -121,10 +121,10 @@ const BattleCardFieldWrapperForAnimation = styled.div`
     // ProcessingAction card
     &.hidden {visibility: hidden}
 
-    &.ProcessingAction {transition: transform 300ms}
+    &.moving {transition: transform 300ms}
 
     // transformDuration
-    &.ProcessingActionHero {transition: transform 700ms}
+    &.movingHero {transition: transform 700ms}
 
     //transformHeroDuration
     &.move-left {transform: translateX(calc(-100% - 6px))}

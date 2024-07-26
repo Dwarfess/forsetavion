@@ -4,14 +4,14 @@ import {ordinaryBossPartsCount} from "../constants";
 import {recalculateSkillsStatsAccordingLevel} from "./skillLevelUtils";
 import {getStateValue} from "../../store/storeUtils";
 
-export const addClassForProcessingActionCard = async (battleCard: BattleCardType, className: string) => {
+export const addClassForMovingCard = async (battleCard: BattleCardType, className: string) => {
     const transformDuration = 300;
     const transformHeroDuration = 600;
     const cardEl = document.querySelector(`.battle-card-${battleCard.index}`);
     // @ts-ignore
     cardEl.classList.remove('newCard');
     // @ts-ignore
-    cardEl.classList.add(className, `${battleCard.name === 'hero' ? 'ProcessingActionHero' : 'ProcessingAction'}`);
+    cardEl.classList.add(className, `${battleCard.name === 'hero' ? 'movingHero' : 'moving'}`);
 
     await new Promise<void>((resolve) => setTimeout(() => {
         resolve();
@@ -79,7 +79,7 @@ export const moveBattleCard = async (
     const direction = getDirection(previousCardIndex, nextCardIndex);
 
     battleCards[previousCardIndex].isNew = false;
-    await addClassForProcessingActionCard(battleCards[previousCardIndex], direction.className);
+    await addClassForMovingCard(battleCards[previousCardIndex], direction.className);
 
     battleCards[nextCardIndex] = battleCards[previousCardIndex];
     battleCards[nextCardIndex].index = nextCardIndex;
