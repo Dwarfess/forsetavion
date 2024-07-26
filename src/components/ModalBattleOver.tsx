@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {getHeroScore} from "./utils/utils";
+import {getHeroScore, recalculateCharacterParamsAfterBattle} from "./utils/utils";
 import {useBattleCards, useBattleFieldLength, useIsOpenBattleOverModal} from "../store/storeHooks";
 import {ModalX} from "./shared";
 
@@ -8,6 +8,7 @@ const ModalBattleOver = () => {
     const { setBattleFieldLength } = useBattleFieldLength();
     const { heroCard, setBattleCards } = useBattleCards();
     const onButtonClick = () => {
+        recalculateCharacterParamsAfterBattle(heroCard);
         setIsOpenBattleOverModal(false);
         setBattleCards([]);
         setBattleFieldLength(0);

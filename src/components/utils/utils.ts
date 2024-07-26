@@ -9,26 +9,15 @@ import {
     superPotionCards,
     artifactCards,
     bossPartCards,
-    bossCards,
-    heroCollection
+    bossCards
 } from "../constants";
 import {BattleCardType, IHeroBattleCard, PrimaryBattleCardType, Skill} from "../types";
 import {recalculateSkillsStatsAccordingLevel} from "./skillLevelUtils";
-import {getStateValue} from "../../store/storeUtils";
-
-// export const generateHeroCards = () => {
-//     return heroCollection.map(hero => {
-//         const clonedDefaultHeroCard = structuredClone(defaultHeroCard);
-//         clonedDefaultHeroCard.name = hero.name;
-//         clonedDefaultHeroCard.image = hero.image;
-//         clonedDefaultHeroCard.name = hero.name;
-//         clonedDefaultHeroCard.name = hero.name;
-//         clonedDefaultHeroCard.name = hero.name;
-//     })
-// }
+import {getStateValue, setStateValue} from "../../store/storeUtils";
 
 export const getBattleCardsWithHero = (): (BattleCardType | IHeroBattleCard)[] => {
-    const heroCard = defaultHeroCard;
+    const character = getStateValue('character');
+    const heroCard = character.hero || defaultHeroCard;
     const battleCards: (BattleCardType | IHeroBattleCard)[] = generateBattleCards(heroCard.level);
 
     battleCards[0] = heroCard;
@@ -164,6 +153,20 @@ export const getHeroScore = (heroCard: IHeroBattleCard): number => {
 
     return levelPoints + coinPoints + crystalPoints;
 };
+
+export const recalculateCharacterParamsAfterBattle = (heroCard: IHeroBattleCard) => {
+    const character = getStateValue('character');
+    const coins = character.coins + heroCard.coins;
+    const spheres = character.spheres + heroCard.spheres;
+
+    const battleScore = getHeroScore(heroCard);
+    const score = character.score > battleScore ? character.score : battleScore;
+
+    setStateValue('character', {
+        ...getStateValue('character'),
+        coins, spheres, score
+    })
+}
 
 export const getHeroCard = (battleCards: BattleCardType[]): any => {
     return battleCards.find((card: BattleCardType) => card.type === 'hero');

@@ -22,7 +22,7 @@ const TopPanel = () => {
                     <div className="coins-value">{heroCard.coins}</div>
                 </CoinsBar>
                 <CoinsBar>
-                    <img src="icon-spheres.png" className="coins-icon"/>
+                    <img src="icon-sphere.png" className="coins-icon"/>
                     <div className="spheres-value">{heroCard.spheres}</div>
                 </CoinsBar>
                 <ExitButton onClick={() => setBattleFieldLength(0)}>Exit</ExitButton>

@@ -11,12 +11,16 @@ import {getRecalculatedExpRewardString} from "../utils";
 import {TabInfo} from "../card-info/TabInfo";
 import {defaultHeroCard} from "../constants";
 import {generateHeroCards} from "../utils/cardsBuilder";
+import {useCharacter} from "../../store/storeHooks";
+import {IHeroBattleCard} from "../types";
 
 interface IHeroSelectionPanel {
     children: ReactNode
 }
 
 const HeroSelectionPanel: React.FC<IHeroSelectionPanel> = ({ children }) => {
+    const { character, setCharacter } = useCharacter();
+
     const NavigateButton = ({className, symbol, onClick}: any) => <button className={`${className} btn`} onClick={onClick}>{symbol}</button>;
 
     const settings = {
@@ -29,22 +33,32 @@ const HeroSelectionPanel: React.FC<IHeroSelectionPanel> = ({ children }) => {
         prevArrow: <NavigateButton symbol={"<"} />
     };
     const heroCards = generateHeroCards();
-    // const heroCard = heroCards[3]
+
+    const clickSelectButton  = (heroCard: IHeroBattleCard) => {
+        setCharacter({ ...character, hero: heroCard });
+    };
+
     return (
         <HeroSelectionPanelWrapper>
             {/*<button className="btn" onClick={() => {}}>⬅</button>*/}
 
                 <Slider {...settings}>
                     {heroCards.map((heroCard, index) => {
+                        const selectedHero = character.hero.name === heroCard.name;
+
                         return (<HeroSelectionPanelContainer key={index}>
                             <div className="header">
-                                <div className="battle-card-image"><BattleCardImage battleCard={heroCard}/></div>
+                                <div className="battle-card-image">
+                                    <BattleCardImage battleCard={heroCard}/>
+                                    {!selectedHero && <button className="btn" onClick={() => clickSelectButton(heroCard)}>Select</button>}
+                                    {selectedHero && <div className="selected-hero-title">Selected</div>}
+                                </div>
                                 <div className="battle-card-content">
                                     <div className="battle-card-name">{heroCard.name}</div>
-                                    <div
-                                        className="battle-card-description">{heroCard.description || 'An ordinary monster'}</div>
+                                    <div className="battle-card-description">{heroCard.description || 'An ordinary monster'}</div>
                                 </div>
                             </div>
+
                             <div className="content">
                                 <TabInfo selectedBattleCard={heroCard}/>
                             </div>
@@ -75,7 +89,6 @@ const HeroSelectionPanelWrapper = styled.div`
     .btn {
         margin: 20px;
         width: 70px;
-        min-width: 70px;
         height: 70px;
         letter-spacing: 2px;
         border-radius: 8px;
@@ -162,7 +175,23 @@ const HeroSelectionPanelContainer = styled.div`
             width: 30%;
             margin-right: 10px;
             position: relative;
-            display: flex;
+            
+            .btn {
+                width: 100%;
+                margin: 5px 0 0 0;
+                padding: 5px;
+                font-size: 25px;
+                height: max-content;
+            }
+            
+            .selected-hero-title {
+                position: absolute;
+                top: 40%;
+                transform: rotate(-45deg);
+                font-size: 40px;
+                opacity: 0.6;
+                text-shadow: 0px 0px 5px #fff;
+            }
         }
     }
 

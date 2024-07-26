@@ -1,4 +1,4 @@
-import {ArtifactCardType, BattleCardType, IHeroBattleCard, PrimaryBattleCardType, Skill, Stat} from "./types";
+import {IArtifactCard, BattleCardType, IHeroBattleCard, PrimaryBattleCardType, Skill, Stat} from "./types";
 import {generateSkill} from "./utils/cardsBuilder";
 
 export const defaultFontSize = 20;

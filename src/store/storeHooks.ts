@@ -9,7 +9,8 @@ import {
     changeIsMoving,
     changeIsProcessingAction,
     changeBattleCards,
-    RootState
+    changeCharacter,
+    RootState,
 } from './index';
 import {getHeroCard} from "../components/utils";
 
@@ -111,4 +112,15 @@ export const useBattleCards = () => {
     }
 
     return { heroCard, battleCards, setBattleCards };
+}
+
+export const useCharacter = () => {
+    const dispatch = useDispatch();
+    const character = useSelector((state: RootState) => state.character.value);
+
+    const setCharacter = (val: any) => {
+        dispatch(changeCharacter(val));
+    }
+
+    return { character, setCharacter };
 }

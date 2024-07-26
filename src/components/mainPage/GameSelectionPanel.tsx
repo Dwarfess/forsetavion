@@ -26,7 +26,7 @@ const GameSelectionPanelContainer = styled.div`
 `;
 
 const GameSelectionButton = styled.div`
-    background-image: url("game-selection-button2.png");
+    background-image: url("game-selection-button.png");
     background-size: cover;
     width: 100px;
     height: 100px;

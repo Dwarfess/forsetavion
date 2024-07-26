@@ -13,6 +13,7 @@ body {
 
 * {
   caret-color: transparent;
+  font-family: 'MagicalWorld' !important;
 }
 
 .modals {

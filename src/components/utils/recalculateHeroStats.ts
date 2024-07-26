@@ -1,4 +1,4 @@
-import {ArtifactCardType, BattleCardType, IHeroBattleCard, SimpleBattleCardType, Stat} from "../types";
+import { IArtifactCard, BattleCardType, IHeroBattleCard, SimpleBattleCardType, Stat } from "../types";
 import {getStateValue} from "../../store/storeUtils";
 import {getHeroCard} from "./utils";
 
@@ -90,7 +90,7 @@ const recalculateHeroStatAfterAddArtifact = (
 };
 
 const recalculateHeroArtifact = (heroCard: IHeroBattleCard, selectedCard: BattleCardType) => {
-    const selectedArtifact = heroCard.artifacts.find((artifact: ArtifactCardType) => artifact.name === selectedCard.name);
+    const selectedArtifact = heroCard.artifacts.find((artifact: IArtifactCard) => artifact.name === selectedCard.name);
 
     if (selectedArtifact) {
         selectedArtifact.count++;

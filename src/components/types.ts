@@ -24,9 +24,9 @@ export interface SimpleBattleCardType extends CommonBattleCardType {
     isNew?: boolean;
 }
 
-export interface BattleCardType extends SimpleBattleCardType, ArtifactCardType, IHeroBattleCard {};
+export interface BattleCardType extends SimpleBattleCardType, IArtifactCard, IHeroBattleCard {};
 
-export interface ArtifactCardType extends CommonBattleCardType {
+export interface IArtifactCard extends CommonBattleCardType {
     count: number;
     stats: Stat[];
     // active?: boolean;
@@ -81,7 +81,7 @@ export interface IHeroBattleCard extends CommonBattleCardType {
     stats: Stat[];
     skills: Skill[];
     effects: any[];
-    artifacts: ArtifactCardType[]
+    artifacts: IArtifactCard[]
 }
 
 export interface Direction {

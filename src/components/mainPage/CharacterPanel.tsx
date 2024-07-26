@@ -1,27 +1,31 @@
-import React, { ReactNode } from "react";
+import React, {ReactNode, useEffect, useState} from "react";
 import styled from "styled-components";
-import BattleCardImage from "../BattleCardImage";
-import {getRecalculatedExpRewardString} from "../utils";
-import {TabInfo} from "../card-info/TabInfo";
-import {defaultHeroCard} from "../constants";
+import {CharacterInfo} from "./CharacterInfo";
+import {AvatarSelection} from "./AvatarSelection";
+import {useCharacter} from "../../store/storeHooks";
 
 interface ICharacterPanel {
     // children: ReactNode
 }
 
 const CharacterPanel: React.FC<ICharacterPanel> = () => {
+    const { character } = useCharacter();
+    const [ characterSelectedPanel, setCharacterSelectedPanel ] = useState('character-info');
     return (
         <CharacterPanelContainer>
             <div className="character-menu">
-                <div className="avatar">
-                    <img src="tmp-avatar.jpg" alt=""/>
-                    <div className="avatar-border"></div>
-                </div>
-                <button className="inventory btn"></button>
+                <button className="avatar btn" onClick={() => setCharacterSelectedPanel('avatar-selection')}>
+                    <img src={`${character.avatar}.jpg`} alt=""/>
+                    {/*<div className="avatar-border"></div>*/}
+                </button>
+                <button className="inventory btn" onClick={() => setCharacterSelectedPanel('character-info')}></button>
                 <button className="shop btn"></button>
                 <button className="forge btn"></button>
             </div>
-            <div className="character-info"></div>
+            <div className="character-selected-panel">
+                { characterSelectedPanel === 'character-info' && <CharacterInfo /> }
+                { characterSelectedPanel === 'avatar-selection' && <AvatarSelection /> }
+            </div>
         </CharacterPanelContainer>
     )
 }
@@ -31,9 +35,6 @@ const CharacterPanelContainer = styled.div`
     margin: 20px 0 0 50px;
     height: 500px;
     display: flex;
-    //width: 700px;
-    //width: auto;
-    //height: calc(100vh - 50px);
 
     background-size: 100% 100%;
     background-repeat: no-repeat;
@@ -42,109 +43,48 @@ const CharacterPanelContainer = styled.div`
     .character-menu {
         width: 150px;
         height: 100%;
-        //padding: 20px;
         box-sizing: border-box;
-        //border: 1px solid red;
 
         .btn {
             display: block;
-            margin: 20px;
             width: 70px;
-            min-width: 70px;
             height: 70px;
-            letter-spacing: 2px;
-            border-radius: 8px;
-            font-family: 'Skranji', cursive;
-            color: #ffc000;
-            font-size: 40px;
-            font-weight: 400;
-            text-shadow: 0 1px 3px #000;
-            text-align: center;
-            //padding: 10px 0;
-            background: radial-gradient(circle, #8b0000, #8b0000);
-            border-top: 4px groove #ffb000;
-            border-left: 4px groove #ffb000;
-            border-right: 4px groove #ffb000;
-            border-bottom: 4px groove #ffb000;
-            box-shadow: inset 0px 0px 5px 3px rgba(1, 1, 1, 0.3);
+            margin: 20px auto;
+
+            background-color: transparent;
+            background-size: cover;
+            box-shadow: 0 0 10px 1px black;
+            border-radius: 5px;
             z-index: 1;
             cursor: pointer;
 
-            &:hover {
-                //background: radial-gradient(circle, #e52b2b, #8b0000);
-                box-shadow: 0px 0 5px 5px rgba(255, 255, 255, 0.2)
-            }
+            &:hover { box-shadow: 0 0 10px 2px black; }
 
-            &:active {
-                //background: radial-gradient(circle, #ec6a6a, #e52b2b);
-                box-shadow: none;
-            }
+            &:active { box-shadow: none }
         }
         
         .avatar {
             width: 100px;
             height: 100px;
             margin: 50px auto 20px;
-            background-image: url('avatar-bg.png');
-            background-size: cover;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
             
-            img {
-                max-width: 70px;
-                max-height: 70px;
-                border-radius: 70px;
-                position: absolute;
-                //top: 0;
-                z-index: 1;
-            }
-
-            .avatar-border {
-                width: 100%;
-                height: 100%;
-                background-image: url('avatar-bg.png');
-                background-size: cover;
-                position: absolute;
-                top: 0;
-                z-index: 2;
-            }
+            img { width: 80px }
         }
         
-        .inventory {
-            width: 70px;
-            height: 70px;
-            margin: 20px auto;
+        .inventory { background-image: url('icon-character-info.png') }
 
-            background-image: url('icon-inventory3.png');
-            background-size: cover;
-            box-shadow: 0 0 10px 1px black;
-            border-radius: 5px;
-        }
-
-        .shop {
-            width: 70px;
-            height: 70px;
-            margin: 20px auto;
-
-            background-image: url('icon-shop.png');
-            background-size: cover;
-            box-shadow: 0 0 10px 1px black;
-            border-radius: 5px;
-        }
+        .shop { background-image: url('icon-shop.png') }
         
-        .forge {
-            width: 70px;
-            height: 70px;
-            margin: 20px auto;
+        .forge { background-image: url('icon-forge3.png') }        
+    }
 
-            background-image: url('icon-forge3.png');
-            background-size: cover;
-            box-shadow: 0 0 10px 1px black;
-            border-radius: 5px;
-        }
-        
+    .character-selected-panel {
+        //border: 1px solid red;
+        width: 500px;
+        margin: 90px 10px;
     }
 `;
 

@@ -9,6 +9,7 @@ import isOpenLevelUpModalReducer from './isOpenLevelUpModalSlice';
 import isMovingReducer from './isMovingSlice';
 import isProcessingActionReducer from './isProcessingActionSlice';
 import battleCardsReducer from './battleCardsSlice';
+import characterReducer from './characterSlice';
 
 export const store = configureStore({
     reducer: {
@@ -21,6 +22,7 @@ export const store = configureStore({
         isMoving: isMovingReducer,
         isProcessingAction: isProcessingActionReducer,
         battleCards: battleCardsReducer,
+        character: characterReducer,
     },
 });
 

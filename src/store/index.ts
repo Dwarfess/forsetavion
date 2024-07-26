@@ -8,3 +8,4 @@ export * from './isOpenLevelUpModalSlice';
 export * from './isMovingSlice';
 export * from './isProcessingActionSlice';
 export * from './battleCardsSlice';
+export * from './characterSlice';

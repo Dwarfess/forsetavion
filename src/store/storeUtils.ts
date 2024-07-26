@@ -7,7 +7,8 @@ import {
     changeIsOpenLevelUpModal,
     changeIsMoving,
     changeIsProcessingAction,
-    changeBattleCards
+    changeBattleCards,
+    changeCharacter
 } from "./index";
 
 export const getStateValue = (name: string) => {
@@ -24,7 +25,8 @@ export const setStateValue = (name: string, data: any) => {
         selectedSecretCard: changeSelectedSecretCard,
         isMoving: changeIsMoving,
         isProcessingAction: changeIsProcessingAction,
-        battleCards: changeBattleCards
+        battleCards: changeBattleCards,
+        character: changeCharacter
     };
 
     store.dispatch(reducerMap[name](data));
