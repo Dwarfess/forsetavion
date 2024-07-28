@@ -11,11 +11,11 @@ export const addClassForMovingCard = async (battleCard: BattleCardType, classNam
     // @ts-ignore
     cardEl.classList.remove('newCard');
     // @ts-ignore
-    cardEl.classList.add(className, `${battleCard.name === 'hero' ? 'movingHero' : 'moving'}`);
+    cardEl.classList.add(className, `${battleCard.type === 'hero' ? 'movingHero' : 'moving'}`);
 
     await new Promise<void>((resolve) => setTimeout(() => {
         resolve();
-    }, battleCard.name === 'hero' ? transformHeroDuration : transformDuration));
+    }, battleCard.type === 'hero' ? transformHeroDuration : transformDuration));
 
     return true;
 };

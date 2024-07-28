@@ -24,7 +24,7 @@ import {
     useIsOpenLevelUpModal,
     useSelectedCardForInfo,
     useSelectedSecretCard,
-    useIsMoving
+    useIsMoving,
 } from "../store/storeHooks";
 
 const BattlePage = () => {
@@ -47,6 +47,7 @@ const BattlePage = () => {
 
     useEffect(() => {
         if (battleFieldLength) {
+            const test = getBattleCardsWithHero();
             setBattleCards(getBattleCardsWithHero());
         } else {
             setBattleCards([]);

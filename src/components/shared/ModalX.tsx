@@ -62,7 +62,7 @@ const ModalWrapper = styled(Modal)`
             width: 250px;
             letter-spacing: 2px;
             border-radius: 8px;
-            font-family: 'Skranji', cursive;
+            font-family: 'Skranji', cursive !important;
             color: #ffc000;
             font-size: 18px;
             font-weight: 400;

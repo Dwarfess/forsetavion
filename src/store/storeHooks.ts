@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import {
+    RootState,
     changeBattleFieldLength,
     changeHeroCard,
     changeSelectedCardForInfo,
@@ -10,9 +11,33 @@ import {
     changeIsProcessingAction,
     changeBattleCards,
     changeCharacter,
-    RootState,
+    changeActiveMap,
+    changeActivePage,
 } from './index';
-import {getHeroCard} from "../components/utils";
+import { getHeroCard } from "../components/utils";
+import {ICharacter} from "../components/character-page/types";
+
+export const useActiveMap = () => {
+    const dispatch = useDispatch();
+    const activeMap = useSelector((state: RootState) => state.activeMap.value);
+
+    const setActiveMap = (val: string) => {
+        dispatch(changeActiveMap(val));
+    }
+
+    return { activeMap, setActiveMap };
+}
+
+export const useActivePage = () => {
+    const dispatch = useDispatch();
+    const activePage = useSelector((state: RootState) => state.activePage.value);
+
+    const setActivePage = (val: string) => {
+        dispatch(changeActivePage(val));
+    }
+
+    return { activePage, setActivePage };
+}
 
 export const useBattleFieldLength = () => {
     const dispatch = useDispatch();
@@ -118,7 +143,7 @@ export const useCharacter = () => {
     const dispatch = useDispatch();
     const character = useSelector((state: RootState) => state.character.value);
 
-    const setCharacter = (val: any) => {
+    const setCharacter = (val: ICharacter) => {
         dispatch(changeCharacter(val));
     }
 

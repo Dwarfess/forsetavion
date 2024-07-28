@@ -1,12 +1,11 @@
 import React, {ReactNode, useEffect, useRef, useState} from "react";
 import styled from "styled-components";
-import {useCharacter} from "../../store/storeHooks";
+import {useActivePage, useCharacter} from "../../store/storeHooks";
 
-interface ICharacterPanel {
-    // children: ReactNode
-}
+interface ICharacterPanel {}
 
 const CharacterInfo: React.FC<ICharacterPanel> = () => {
+    const { setActivePage } = useActivePage();
     const { character, setCharacter } = useCharacter();
     const [ nicknameEditMode, setNicknameEditMode ] = useState(false);
 
@@ -32,54 +31,56 @@ const CharacterInfo: React.FC<ICharacterPanel> = () => {
 
     return (
         <CharacterInfoContainer>
-                <div className="info-item nickname-wrapper">
-                    <h2
-                        className={nicknameEditMode ? "nickname-edit-mode nickname" : "nickname"}
-                        ref={editableRef}
-                        suppressContentEditableWarning={true}
-                        contentEditable={nicknameEditMode}
-                    >
-                        {character.nickname}
-                    </h2>
+            <div className="info-item nickname-wrapper">
+                <h2
+                    className={nicknameEditMode ? "nickname-edit-mode nickname" : "nickname"}
+                    ref={editableRef}
+                    suppressContentEditableWarning={true}
+                    contentEditable={nicknameEditMode}
+                >
+                    {character.nickname}
+                </h2>
 
-                    {!nicknameEditMode && <button className="btn" onClick={clickEditButton}>✎</button>}
-                    {nicknameEditMode && <button className="btn" onClick={clickApplyButton}>✔</button>}
-                    {nicknameEditMode && <button className="btn" onClick={clickCancelButton}>✖</button>}
+                {!nicknameEditMode && <button className="btn" onClick={clickEditButton}>✎</button>}
+                {nicknameEditMode && <button className="btn" onClick={clickApplyButton}>✔</button>}
+                {nicknameEditMode && <button className="btn" onClick={clickCancelButton}>✖</button>}
+            </div>
+            <div className="info-item">
+                <p className="info-item-title">Hero: </p>
+                <div className="img-bar">
+                    <div className="img-value">{character.hero.name}</div>
+                    <img src={`${character.hero.image}.jpg`} className="img-icon"/>
                 </div>
-                <div className="info-item">
-                    <p className="info-item-title">Hero: </p>
-                    <div className="img-bar">
-                        <div className="img-value">{character.hero.name}</div>
-                        <img src={`${character.hero.image}.jpg`} className="img-icon"/>
-                    </div>
+            </div>
+            <div className="info-item">
+                <p className="info-item-title">Coins: </p>
+                <div className="img-bar">
+                    <div className="img-value">{character.coins}</div>
+                    <img src="icon-coins.png" className="img-icon"/>
                 </div>
-                <div className="info-item">
-                    <p className="info-item-title">Coins: </p>
-                    <div className="img-bar">
-                        <div className="img-value">{character.coins}</div>
-                        <img src="icon-coins.png" className="img-icon"/>
-                    </div>
+            </div>
+            <div className="info-item">
+                <p className="info-item-title">Spheres: </p>
+                <div className="img-bar">
+                    <div className="img-value">{character.spheres}</div>
+                    <img src="icon-sphere.png" className="img-icon"/>
                 </div>
-                <div className="info-item">
-                    <p className="info-item-title">Spheres: </p>
-                    <div className="img-bar">
-                        <div className="img-value">{character.spheres}</div>
-                        <img src="icon-sphere.png" className="img-icon"/>
-                    </div>
+            </div>
+            <div className="info-item">
+                <p className="info-item-title">Score: </p>
+                <div className="img-bar">
+                    <div className="img-value">{character.score}</div>
+                    <img src="icon-score6.png" className="img-icon"/>
                 </div>
-                <div className="info-item">
-                    <p className="info-item-title">Score: </p>
-                    <div className="img-bar">
-                        <div className="img-value">{character.score}</div>
-                        <img src="icon-score6.png" className="img-icon"/>
-                    </div>
-                </div>
+            </div>
+
+            <div className="play-game-button" onClick={() => setActivePage('game-selection-page')}></div>
         </CharacterInfoContainer>
     )
 }
 
 const CharacterInfoContainer = styled.div`
-    //margin: 80px 0 0 20px;
+    position: relative;
     
     .info-item {
         display: flex;
@@ -89,6 +90,7 @@ const CharacterInfoContainer = styled.div`
             height: 100px;
             
             .nickname {
+                font-family: 'MagicalWorld';
                 font-size: 70px;
                 font-weight: bold;
                 line-height: 70px;
@@ -181,6 +183,23 @@ const CharacterInfoContainer = styled.div`
                 text-shadow: 0px 0px 3px #E6E6E6, 0px 0px 3px #1A1A1A, 0px 0px 3px #E6E6E6, 0px 0px 3px #E6E6E6, 0px 0px 3px #E6E6E6;
             }
         }
+    }
+    
+    .play-game-button {
+        width: 150px;
+        height: 150px;
+        background-image: url("play-game-button.png");
+        background-size: cover;
+        opacity: .5;
+        position: absolute;
+        top: calc(50% - 50px);
+        right: 10px;
+        border-radius: 200px;
+        box-shadow: 0 0 20px 5px black;
+        cursor: pointer;
+        
+        &:hover { box-shadow: 0 0 10px 10px black }
+        &:active { box-shadow: 0 0 10px 1px black }
     }
 `;
 

@@ -4,9 +4,7 @@ import {CharacterInfo} from "./CharacterInfo";
 import {AvatarSelection} from "./AvatarSelection";
 import {useCharacter} from "../../store/storeHooks";
 
-interface ICharacterPanel {
-    // children: ReactNode
-}
+interface ICharacterPanel {}
 
 const CharacterPanel: React.FC<ICharacterPanel> = () => {
     const { character } = useCharacter();

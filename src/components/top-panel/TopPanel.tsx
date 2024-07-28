@@ -3,11 +3,18 @@ import { Progress } from 'semantic-ui-react'
 import styled from "styled-components";
 import {getBossPartProgress, getMaxExpForCurrentLever} from "../utils/recalculateHeroStats";
 import {ordinaryBossPartsCount} from "../constants";
-import {useBattleCards, useBattleFieldLength} from "../../store/storeHooks";
+import {useActivePage, useBattleCards, useBattleFieldLength} from "../../store/storeHooks";
 
 const TopPanel = () => {
-    const { heroCard } = useBattleCards();
+    const { setActivePage } = useActivePage();
+    const { heroCard, setBattleCards } = useBattleCards();
     const { setBattleFieldLength } = useBattleFieldLength();
+
+    const onExitButtonClick = () => {
+        setBattleCards([]);
+        setBattleFieldLength(0);
+        setActivePage('character-page');
+    }
 
     return (
         <TopPanelWrapper>
@@ -25,7 +32,7 @@ const TopPanel = () => {
                     <img src="icon-sphere.png" className="coins-icon"/>
                     <div className="spheres-value">{heroCard.spheres}</div>
                 </CoinsBar>
-                <ExitButton onClick={() => setBattleFieldLength(0)}>Exit</ExitButton>
+                <ExitButton onClick={onExitButtonClick}>Exit</ExitButton>
             </div>
 
             <div className="bottom-side">

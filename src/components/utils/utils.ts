@@ -11,7 +11,7 @@ import {
     bossPartCards,
     bossCards
 } from "../constants";
-import {BattleCardType, IHeroBattleCard, PrimaryBattleCardType, Skill} from "../types";
+import {BattleCardType, IHeroBattleCard, PrimaryBattleCardType, Skill, Stat} from "../types";
 import {recalculateSkillsStatsAccordingLevel} from "./skillLevelUtils";
 import {getStateValue, setStateValue} from "../../store/storeUtils";
 
@@ -171,3 +171,14 @@ export const recalculateCharacterParamsAfterBattle = (heroCard: IHeroBattleCard)
 export const getHeroCard = (battleCards: BattleCardType[]): any => {
     return battleCards.find((card: BattleCardType) => card.type === 'hero');
 };
+
+// export const generateSkill = (skills: Skill[], name: string): Skill => {
+//     return structuredClone(skills).find((skill: Skill) => skill.name === name);
+// }
+//
+// export const generateStat = (stats: Stat[], name: string, value: number) => {
+//     return structuredClone(stats).find((stat: Stat) => {
+//         stat.value = value;
+//         return stat.name === name;
+//     });
+// }

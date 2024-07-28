@@ -1,15 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-// import { useNavigate } from "react-router-dom";
-import { useBattleFieldLength } from "../../store/storeHooks";
+import {useActivePage, useBattleFieldLength} from "../../store/storeHooks";
 
 const GameSelectionPanel = () => {
-    // const navigate = useNavigate();
-    const { battleFieldLength, setBattleFieldLength } = useBattleFieldLength();
+    const { setActivePage } = useActivePage();
+    const { setBattleFieldLength } = useBattleFieldLength();
 
     const onButtonClick = (val: number)=> {
         setBattleFieldLength(val);
-        // navigate("/battle")
+        setActivePage('battle-page');
     }
 
     return <GameSelectionPanelContainer>

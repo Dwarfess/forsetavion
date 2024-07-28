@@ -21,7 +21,6 @@ const AvatarSelection = () => {
     const [ selectedAvatarName, setSelectedAvatarName ] = useState('');
 
     const clickApplyButton = () => {
-        // @ts-ignore
         setCharacter({ ...character, avatar: selectedAvatarName });
         setSelectedAvatarName('');
     }
@@ -44,13 +43,14 @@ const AvatarSelection = () => {
                     <img src={`${name}.jpg`} alt=""/>
                 </button>
             ))}
-            <button className="avatar btn">+</button>
+            <button className="btn">+</button>
         </div>
     </AvatarSelectionContainer>
 }
 
 const AvatarSelectionContainer = styled.div`
     h2 {
+        font-family: 'MagicalWorld';
         margin: 0 0 5px 0;
         font-size: 35px;
         font-weight: bold;
@@ -59,7 +59,6 @@ const AvatarSelectionContainer = styled.div`
     }
     
     .avatar-wrapper {
-
         margin-bottom: 10px;
         display: flex;
         align-items: end;
@@ -89,7 +88,6 @@ const AvatarSelectionContainer = styled.div`
             font-weight: 400;
             text-shadow: 0 1px 3px #000;
             text-align: center;
-            //padding: 10px 0;
             background: radial-gradient(circle, #8b0000, #8b0000);
             border-top: 4px ridge #ffb000;
             border-left: 4px groove #ffb000;
@@ -122,11 +120,15 @@ const AvatarSelectionContainer = styled.div`
             align-items: center;
             justify-content: center;
             font-size: 100px;
+            font-family: 'MagicalWorld';
             padding: 0;
             background-color: transparent;
             box-shadow: 0 0 10px 1px black;
             border-radius: 5px;
             cursor: pointer;
+            color: #494117;
+            text-shadow: 0px 0px 3px #E6E6E6, 0px 0px 3px #1A1A1A, 0px 0px 3px #E6E6E6, 0px 0px 3px #E6E6E6, 0px 0px 3px #E6E6E6;
+
 
             &:hover { box-shadow: 0 0 10px 2px black; }
 

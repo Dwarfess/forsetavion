@@ -115,7 +115,7 @@ export const recalculateHeroExp = (heroCard: IHeroBattleCard, selectedCard: Simp
     if (heroExp >= maxLevelExp) {
         heroExp -= maxLevelExp;
         heroCard.level++;
-        heroCard.skillPoints += 4;
+        heroCard.skillPoints += 1;
 
         const heroStatMaxHealth = getItemStat(heroCard, 'maxHealth');
         heroStatMaxHealth.value++;

@@ -1,5 +1,6 @@
 import {IHeroBattleCard, Skill, Stat} from "../types";
-import {defaultHeroCard, heroCollection, stats} from "../constants";
+import {defaultHeroCard, heroCollection, skills, stats} from "../constants";
+import {generateSkill, generateStat} from "./utils2";
 
 export const bossCardBuilder = () => {
     return true;
@@ -21,19 +22,15 @@ export const generateHeroCards = (): IHeroBattleCard[] => {
             generateStat(stats, 'coinBoost', hero.coinBoost)
         ];
 
+        clonedDefaultHeroCard.skills = [
+            generateSkill(skills, 'light-ray'),
+            generateSkill(skills, 'poison'),
+            generateSkill(skills, 'regeneration'),
+            generateSkill(skills, 'ice-balls'),
+        ];
+
         return clonedDefaultHeroCard;
     });
 
     return heroCards;
-}
-
-export const generateSkill = (skills: Skill[], name: string): Skill => {
-    return structuredClone(skills).find((skill: Skill) => skill.name === name);
-}
-
-export const generateStat = (stats: Stat[], name: string, value: number) => {
-    return structuredClone(stats).find((stat: Stat) => {
-        stat.value = value;
-        return stat.name === name;
-    });
 }

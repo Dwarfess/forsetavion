@@ -1,16 +1,11 @@
 import { HeroSelectionPanel } from "./HeroSelectionPanel";
-import {GameSelectionPanel} from "./GameSelectionPanel";
 import styled from "styled-components";
-import {CharacterPanel} from "./CharacterPanel";
+import { CharacterPanel } from "./CharacterPanel";
 
-const MainPage = () => {
-
+const CharacterPage = () => {
     return <MainPageContainer>
         <CharacterPanel />
-        <HeroSelectionPanel>
-            Test2
-        </HeroSelectionPanel>
-        <GameSelectionPanel />
+        <HeroSelectionPanel />
     </MainPageContainer>
 }
 
@@ -28,4 +23,4 @@ const MainPageContainer = styled.div`
     //background-position: center center; /* Center the image within the block */
 `;
 
-export { MainPage }
+export { CharacterPage }

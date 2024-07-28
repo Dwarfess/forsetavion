@@ -10,6 +10,8 @@ import isMovingReducer from './isMovingSlice';
 import isProcessingActionReducer from './isProcessingActionSlice';
 import battleCardsReducer from './battleCardsSlice';
 import characterReducer from './characterSlice';
+import activeMapReducer from './activeMapSlice';
+import activePageReducer from './activePageSlice';
 
 export const store = configureStore({
     reducer: {
@@ -23,6 +25,8 @@ export const store = configureStore({
         isProcessingAction: isProcessingActionReducer,
         battleCards: battleCardsReducer,
         character: characterReducer,
+        activeMap: activeMapReducer,
+        activePage: activePageReducer,
     },
 });
 

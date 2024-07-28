@@ -1,5 +1,5 @@
 import {IArtifactCard, BattleCardType, IHeroBattleCard, PrimaryBattleCardType, Skill, Stat} from "./types";
-import {generateSkill} from "./utils/cardsBuilder";
+import {generateSkill} from "./utils/utils2";
 
 export const defaultFontSize = 20;
 export const defaultWidth = 450;
@@ -362,10 +362,10 @@ export const defaultHeroCard: IHeroBattleCard = {
         },
     ],
     skills: [
-        generateSkill(skills, 'light-ray'),
-        generateSkill(skills, 'poison'),
-        generateSkill(skills, 'regeneration'),
-        generateSkill(skills, 'ice-balls'),
+        // generateSkill(skills, 'light-ray'),
+        // generateSkill(skills, 'poison'),
+        // generateSkill(skills, 'regeneration'),
+        // generateSkill(skills, 'ice-balls'),
     ],
     effects: [],
     artifacts: [],

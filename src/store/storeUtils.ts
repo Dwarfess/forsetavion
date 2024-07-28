@@ -8,7 +8,9 @@ import {
     changeIsMoving,
     changeIsProcessingAction,
     changeBattleCards,
-    changeCharacter
+    changeCharacter,
+    changeActiveMap,
+    changeActivePage
 } from "./index";
 
 export const getStateValue = (name: string) => {
@@ -18,6 +20,8 @@ export const getStateValue = (name: string) => {
 
 export const setStateValue = (name: string, data: any) => {
     const reducerMap: any = {
+        activeMap: changeActiveMap,
+        activePage: changeActivePage,
         battleFieldLength: changeBattleFieldLength,
         isOpenBattleOverModal: changeIsOpenBattleOverModal,
         isOpenLevelUpModal: changeIsOpenLevelUpModal,

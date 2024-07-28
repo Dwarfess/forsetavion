@@ -7,18 +7,16 @@ import "slick-carousel/slick/slick-theme.css";
 
 import styled from "styled-components";
 import BattleCardImage from "../BattleCardImage";
-import {getRecalculatedExpRewardString} from "../utils";
 import {TabInfo} from "../card-info/TabInfo";
-import {defaultHeroCard} from "../constants";
 import {generateHeroCards} from "../utils/cardsBuilder";
 import {useCharacter} from "../../store/storeHooks";
 import {IHeroBattleCard} from "../types";
 
 interface IHeroSelectionPanel {
-    children: ReactNode
+    // children: ReactNode
 }
 
-const HeroSelectionPanel: React.FC<IHeroSelectionPanel> = ({ children }) => {
+const HeroSelectionPanel: React.FC<IHeroSelectionPanel> = () => {
     const { character, setCharacter } = useCharacter();
 
     const NavigateButton = ({className, symbol, onClick}: any) => <button className={`${className} btn`} onClick={onClick}>{symbol}</button>;
@@ -40,37 +38,34 @@ const HeroSelectionPanel: React.FC<IHeroSelectionPanel> = ({ children }) => {
 
     return (
         <HeroSelectionPanelWrapper>
-            {/*<button className="btn" onClick={() => {}}>⬅</button>*/}
+            <Slider {...settings}>
+                {heroCards.map((heroCard, index) => {
+                    const selectedHero = character.hero.name === heroCard.name;
 
-                <Slider {...settings}>
-                    {heroCards.map((heroCard, index) => {
-                        const selectedHero = character.hero.name === heroCard.name;
+                    return (<HeroSelectionPanelContainer key={index}>
+                        <div className="header">
+                            <div className="battle-card-image">
+                                <BattleCardImage battleCard={heroCard}/>
+                                {!selectedHero && <button className="btn" onClick={() => clickSelectButton(heroCard)}>Select</button>}
+                                {selectedHero && <div className="selected-hero-title">Selected</div>}
+                            </div>
+                            <div className="battle-card-content">
+                                <div className="battle-card-name">{heroCard.name}</div>
+                                <div className="battle-card-description">{heroCard.description || 'An ordinary monster'}</div>
+                            </div>
+                        </div>
 
-                        return (<HeroSelectionPanelContainer key={index}>
-                            <div className="header">
-                                <div className="battle-card-image">
-                                    <BattleCardImage battleCard={heroCard}/>
-                                    {!selectedHero && <button className="btn" onClick={() => clickSelectButton(heroCard)}>Select</button>}
-                                    {selectedHero && <div className="selected-hero-title">Selected</div>}
-                                </div>
-                                <div className="battle-card-content">
-                                    <div className="battle-card-name">{heroCard.name}</div>
-                                    <div className="battle-card-description">{heroCard.description || 'An ordinary monster'}</div>
-                                </div>
-                            </div>
-
-                            <div className="content">
-                                <TabInfo selectedBattleCard={heroCard}/>
-                            </div>
-                            <div className="actions">
-                                {/*<button className="btn" onClick={onCloseClick}>Close</button>*/}
-                            </div>
-                        </HeroSelectionPanelContainer>);
-                    })}
-                </Slider>
-            {/*<button className="btn" onClick={() => {}}>⮕</button>*/}
+                        <div className="content">
+                            <TabInfo selectedBattleCard={heroCard}/>
+                        </div>
+                        <div className="actions">
+                            {/*<button className="btn" onClick={onCloseClick}>Close</button>*/}
+                        </div>
+                    </HeroSelectionPanelContainer>);
+                })}
+            </Slider>
         </HeroSelectionPanelWrapper>
-    )
+    );
 }
 
 const HeroSelectionPanelWrapper = styled.div`
