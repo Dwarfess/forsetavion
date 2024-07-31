@@ -13,7 +13,7 @@ const TopPanel = () => {
     const onExitButtonClick = () => {
         setBattleCards([]);
         setBattleFieldLength(0);
-        setActivePage('character-page');
+        setActivePage('game-selection-page');
     }
 
     return (

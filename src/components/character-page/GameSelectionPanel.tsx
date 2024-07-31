@@ -1,50 +1,65 @@
 import React from "react";
 import styled from "styled-components";
 import {useActivePage, useBattleFieldLength} from "../../store/storeHooks";
+import {MapPlace} from "../home-map/MapPlace";
 
 const GameSelectionPanel = () => {
     const { setActivePage } = useActivePage();
     const { setBattleFieldLength } = useBattleFieldLength();
 
-    const onButtonClick = (val: number)=> {
+    const onBattleIconClick = (val: number)=> {
         setBattleFieldLength(val);
         setActivePage('battle-page');
     }
 
+    const onCharacterIconClick = ()=> {
+        setActivePage('character-page');
+    }
+
     return <GameSelectionPanelContainer>
-        <GameSelectionButton onClick={() => onButtonClick(3)}>3x3</GameSelectionButton>
-        <GameSelectionButton onClick={() => onButtonClick(4)}>4x4</GameSelectionButton>
-        <GameSelectionButton onClick={() => onButtonClick(5)}>5x5</GameSelectionButton>
+        <MapPlace
+            imgName="icon-place-character"
+            // title1="Battle"
+            title2="Character"
+            topPosition="720"
+            leftPosition="40"
+            onClickHandler={onCharacterIconClick}
+        />
+
+        <MapPlace
+            imgName="icon-battle-3"
+            title1="Battle"
+            title2="3x3"
+            topPosition="390"
+            leftPosition="20"
+            onClickHandler={() => onBattleIconClick(3)}
+        />
+
+        <MapPlace
+            imgName="icon-battle-4"
+            title1="Battle"
+            title2="4x4"
+            topPosition="460"
+            leftPosition="340"
+            onClickHandler={() => onBattleIconClick(4)}
+        />
+
+        <MapPlace
+            imgName="icon-battle-5"
+            title1="Battle"
+            title2="5x5"
+            topPosition="250"
+            leftPosition="450"
+            onClickHandler={() => onBattleIconClick(5)}
+        />
     </GameSelectionPanelContainer>
 }
 
 const GameSelectionPanelContainer = styled.div`
     margin: 10px;
     width: 100%;
+    position: relative;
     display: flex;
-`;
-
-const GameSelectionButton = styled.div`
-    background-image: url("game-selection-button.png");
-    background-size: cover;
-    width: 100px;
-    height: 100px;
-    border-radius: 150px;
-    margin: 30px 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #1b4041;
-    text-shadow: 0px 0px 3px #E6E6E6, 0px 0px 3px #1A1A1A, 0px 0px 3px #E3E3E3;
-    font-family: 'Skranji', cursive;
-    font-size: 30px;
-    font-weight: 700;
-    box-shadow: 0px 0px 10px 0px black;
-    cursor: pointer;
-    user-select: none;
-    
-    &:hover { box-shadow: 0px 0px 20px 0px black }
-    &:active { box-shadow: none }
 `;
 
 export { GameSelectionPanel };

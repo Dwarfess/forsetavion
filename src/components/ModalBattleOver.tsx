@@ -13,7 +13,7 @@ const ModalBattleOver = () => {
         setIsOpenBattleOverModal(false);
         setBattleCards([]);
         setBattleFieldLength(0);
-        setActivePage('character-page');
+        setActivePage('game-selection-page');
     }
 
     return (

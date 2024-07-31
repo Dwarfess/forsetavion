@@ -54,6 +54,41 @@ const BattleCardFieldWrapper = styled.div`
     z-index: 0;
     padding: 3px;
     outline: none;
+
+    opacity: 0; /* Початковий стан – прозорий */
+    animation: fadeInCard 1s forwards; /* Виклик анімації */
+
+    &:nth-child(1) { animation-delay: 0s }
+    &:nth-child(2) { animation-delay: 0.1s }
+    &:nth-child(3) { animation-delay: 0.2s }
+    &:nth-child(4) { animation-delay: 0.3s }
+    &:nth-child(5) { animation-delay: 0.4s }
+    &:nth-child(6) { animation-delay: 0.5s }
+    &:nth-child(7) { animation-delay: 0.6s }
+    &:nth-child(8) { animation-delay: 0.7s }
+    &:nth-child(9) { animation-delay: 0.8s }
+    &:nth-child(10) { animation-delay: 0.9s }
+    &:nth-child(11) { animation-delay: 1s }
+    &:nth-child(12) { animation-delay: 1.1s }
+    &:nth-child(13) { animation-delay: 1.2s }
+    &:nth-child(14) { animation-delay: 1.3s }
+    &:nth-child(15) { animation-delay: 1.4s }
+    &:nth-child(16) { animation-delay: 1.5s }
+    &:nth-child(17) { animation-delay: 1.6s }
+    &:nth-child(18) { animation-delay: 1.7s }
+    &:nth-child(19) { animation-delay: 1.8s }
+    &:nth-child(20) { animation-delay: 1.9s }
+    &:nth-child(21) { animation-delay: 2s }
+    &:nth-child(22) { animation-delay: 2.1s }
+    &:nth-child(23) { animation-delay: 2.2s }
+    &:nth-child(24) { animation-delay: 2.3s }
+    &:nth-child(25) { animation-delay: 2.4s }
+
+    @keyframes fadeInCard {
+        //100% {opacity: 1}
+        0% {transform: scale(0); opacity: 1}
+        100% {transform: scale(1); opacity: 1}
+    }
 `;
 
 const BattleCardFieldWrapperForAnimation = styled.div`
@@ -161,7 +196,7 @@ const BattleCard = styled.div`
     position: absolute;
     top: 0;
     z-index: 1;
-    opacity: 1;
+    //opacity: 1;
     
     // start border animation
     --borderWidth: 2px;

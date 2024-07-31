@@ -119,6 +119,8 @@ const BattlePage = () => {
 const BattlePageContainer = styled.div`
     width: 700px;
     padding: 20px;
+    background-image: url("main-bg.jpg");
+    background-size: cover;
 `;
 
 const BattleField = styled.div`
