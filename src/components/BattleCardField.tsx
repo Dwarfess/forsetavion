@@ -40,7 +40,8 @@ const BattleCardField = memo(({onCardClick, battleCard}: any) => {
                         && (<LevelIndicator battleCard={battleCard} size={battleFieldLength}/>
                     )}
                     <div className="skill-usage-image"><img/></div>
-                    <div className="health-value-effect">+2</div>
+                    <div className="health-value-effect buff-effect"></div>
+                    <div className="health-value-effect attack-effect debuff-effect"></div>
                 </BattleCard>
             </BattleCardFieldContainer>
         </BattleCardFieldWrapperForAnimation>
@@ -55,8 +56,8 @@ const BattleCardFieldWrapper = styled.div`
     padding: 3px;
     outline: none;
 
-    opacity: 0; /* Початковий стан – прозорий */
-    animation: fadeInCard 1s forwards; /* Виклик анімації */
+    opacity: 0; 
+    animation: fadeInCard 1s forwards; 
 
     &:nth-child(1) { animation-delay: 0s }
     &:nth-child(2) { animation-delay: 0.1s }
@@ -306,11 +307,16 @@ const BattleCard = styled.div`
         font-size: ${(props: any) => 150 / props['data-length']}px;
         font-weight: bold;
 
-        animation: move-up 2s;
+        animation: move-up 1.5s;
 
         &.active { display: block }
-        &.negativeEffect { color: red }
-        &.positiveEffect { color: green }
+        &.buff-effect { 
+            color: green; 
+            margin: 0 0 -50px 50px;
+            animation: move-up 2s;
+        }
+        &.debuff-effect, 
+        &.attack-effect { color: red }
     }
 
     @keyframes slide-out {
@@ -330,15 +336,15 @@ const BattleCard = styled.div`
     
     @keyframes move-up {
         0% {
-            //transform: translateY(0);
+            transform: scale(0.5);
             opacity: 0.2;
         }
-        70% {
+        50% {
             opacity: 0.8;
         }
         100% {
-            transform: translateY(-300%);
-            opacity: 0.4;
+            transform: translateY(-300%) scale(1.5);
+            opacity: 0.1;
         }
     }
 `;

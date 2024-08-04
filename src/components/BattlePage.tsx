@@ -47,7 +47,6 @@ const BattlePage = () => {
 
     useEffect(() => {
         if (battleFieldLength) {
-            const test = getBattleCardsWithHero();
             setBattleCards(getBattleCardsWithHero());
         } else {
             setBattleCards([]);

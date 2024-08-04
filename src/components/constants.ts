@@ -24,7 +24,7 @@ export const skills: Skill[] = [
             {
                 name: 'power',
                 title: 'Power',
-                defaultValue: 2,
+                defaultValue: 6,
                 value: 0,
             },
             {
@@ -49,7 +49,7 @@ export const skills: Skill[] = [
             {
                 name: 'power',
                 title: 'Power',
-                defaultValue: 2,
+                defaultValue: 1,
                 value: 0,
             },
             {
@@ -58,16 +58,16 @@ export const skills: Skill[] = [
                 defaultValue: 6,
                 value: 0,
             },
-            {
-                name: 'period',
-                title: 'Period',
-                defaultValue: 3,
-                value: 0,
-            },
+            // {
+            //     name: 'period',
+            //     title: 'Period',
+            //     defaultValue: 3,
+            //     value: 0,
+            // },
             {
                 name: 'maxCoolDown',
                 title: 'CoolDown',
-                defaultValue: 15,
+                defaultValue: 2,
                 value: 0,
             },
         ]
@@ -95,12 +95,12 @@ export const skills: Skill[] = [
                 defaultValue: 6,
                 value: 0,
             },
-            {
-                name: 'period',
-                title: 'Period',
-                defaultValue: 3,
-                value: 0,
-            },
+            // {
+            //     name: 'period',
+            //     title: 'Period',
+            //     defaultValue: 3,
+            //     value: 0,
+            // },
             {
                 name: 'maxCoolDown',
                 title: 'CoolDown',
@@ -123,7 +123,7 @@ export const skills: Skill[] = [
             {
                 name: 'power',
                 title: 'Power',
-                defaultValue: 4,
+                defaultValue: 10,
                 value: 0,
             },
             {
@@ -148,7 +148,7 @@ export const skills: Skill[] = [
             {
                 name: 'power',
                 title: 'Power',
-                defaultValue: 2,
+                defaultValue: 1,
                 value: 0,
             },
             {
@@ -157,12 +157,12 @@ export const skills: Skill[] = [
                 defaultValue: 6,
                 value: 0,
             },
-            {
-                name: 'period',
-                title: 'Period',
-                defaultValue: 3,
-                value: 0,
-            },
+            // {
+            //     name: 'period',
+            //     title: 'Period',
+            //     defaultValue: 3,
+            //     value: 0,
+            // },
             {
                 name: 'maxCoolDown',
                 title: 'CoolDown',
@@ -185,7 +185,7 @@ export const skills: Skill[] = [
             {
                 name: 'power',
                 title: 'Power',
-                defaultValue: 2,
+                defaultValue: 1,
                 value: 0,
             },
             {
@@ -194,12 +194,12 @@ export const skills: Skill[] = [
                 defaultValue: 6,
                 value: 0,
             },
-            {
-                name: 'period',
-                title: 'Period',
-                defaultValue: 3,
-                value: 0,
-            },
+            // {
+            //     name: 'period',
+            //     title: 'Period',
+            //     defaultValue: 3,
+            //     value: 0,
+            // },
             {
                 name: 'maxCoolDown',
                 title: 'CoolDown',
@@ -222,7 +222,7 @@ export const skills: Skill[] = [
             {
                 name: 'power',
                 title: 'Power',
-                defaultValue: 2,
+                defaultValue: 1,
                 value: 0,
             },
             {
@@ -231,12 +231,12 @@ export const skills: Skill[] = [
                 defaultValue: 6,
                 value: 0,
             },
-            {
-                name: 'period',
-                title: 'Period',
-                defaultValue: 3,
-                value: 0,
-            },
+            // {
+            //     name: 'period',
+            //     title: 'Period',
+            //     defaultValue: 3,
+            //     value: 0,
+            // },
             {
                 name: 'maxCoolDown',
                 title: 'CoolDown',
@@ -251,7 +251,7 @@ export const stats: Stat[] = [
     {
         name: 'maxHealth',
         title: 'Max. health',
-        value: 10,
+        value: 30,
     },
     {
         name: 'def',
@@ -279,7 +279,7 @@ export const heroCollection = [
     {
         name: 'Healer',
         image: 'hero-1',
-        maxHealth: 10,
+        maxHealth: 30,
         def: 0,
         lifeDrain: 0,
         expBoost: 1,
@@ -289,7 +289,7 @@ export const heroCollection = [
     {
         name: 'Blightbringer',
         image: 'hero-2',
-        maxHealth: 15,
+        maxHealth: 45,
         def: 0,
         lifeDrain: 0,
         expBoost: 1,
@@ -299,7 +299,7 @@ export const heroCollection = [
     {
         name: 'Celestial',
         image: 'hero-3',
-        maxHealth: 12,
+        maxHealth: 35,
         def: 0,
         lifeDrain: 0,
         expBoost: 1,
@@ -309,7 +309,7 @@ export const heroCollection = [
     {
         name: 'Aqua Wizard',
         image: 'hero-4',
-        maxHealth: 12,
+        maxHealth: 40,
         def: 0,
         lifeDrain: 0,
         expBoost: 1,
@@ -326,7 +326,7 @@ export const defaultHeroCard: IHeroBattleCard = {
     type: 'hero',
     isVisible: true,
     active: true,
-    health: 10,
+    health: 30,
     exp: 0,
     level: 1,
     skillPoints: 0,
@@ -338,7 +338,7 @@ export const defaultHeroCard: IHeroBattleCard = {
         {
             name: 'maxHealth',
             title: 'Max. health',
-            value: 10,
+            value: 30,
         },
         {
             name: 'def',
@@ -547,7 +547,7 @@ export const artifactCards: any[] = [
             {
                 name: 'maxHealth',
                 title: 'Max. health',
-                value: 2,
+                value: 5,
             },
         ]
     },
@@ -560,7 +560,7 @@ export const artifactCards: any[] = [
             {
                 name: 'def',
                 title: 'Def',
-                value: 1,
+                value: 2,
             },
         ]
     }

@@ -98,10 +98,11 @@ const skillsHandler = async (
     await addClassWhenUseSkill(selectedCard, activeSkill);
 
     if (activeSkill.type === 'attack') {
-        await addClassWhenChangeHealth(selectedCard, activeSkill);
+        await addClassWhenChangeHealth(selectedCard, getItemStat(activeSkill, 'power').value, activeSkill.type);
+    } else {
+        await checkBattleCardsEffects(battleCards);
     }
 
-    await checkBattleCardsEffects(battleCards);
     checkBattleCardAfterSkill(battleCards, selectedCard);
 }
 
@@ -165,56 +166,67 @@ const addEffect = (activeSkill: Skill, selectedCard: BattleCardType) => {
 }
 
 export const checkBattleCardsEffects = async (battleCards: BattleCardType[]) => {
+    const promises = battleCards.map(battleCard => checkEveryBattleCardEffects(battleCards, battleCard));
+
+    await Promise.all(promises);
+}
+
+const checkEveryBattleCardEffects = async (battleCards: BattleCardType[], battleCard: BattleCardType) => {
+    if (battleCard.effects.length === 0) return;
+
     const effectsMap: any = {
         buff: buffSkillHandler,
         debuff: debuffSkillHandler,
     }
 
-    for (const battleCard of battleCards) {
-        for (const effect of battleCard.effects) {
-            await effectsMap[effect.type](effect, battleCard);
-            checkBattleCardAfterSkill(battleCards, battleCard);
-        }
-        battleCard.effects = battleCard.effects.filter((effect: Effect) => getItemStat(effect, 'duration').value > 0);
-    }
-}
+    let allBuffEffectsValue = 0;
+    let allDebuffEffectsValue = 0;
 
-const debuffSkillHandler = async (effect: Effect, selectedCard: BattleCardType) => {
-    const duration = getItemStat(effect, 'duration');
-    const period = getItemStat(effect, 'period');
-
-    if (duration.value % period.value === 0 || duration.value === 0) {
-        const power = getItemStat(effect, 'power');
-
-        // TODO: hero health to value
-        if (selectedCard.type === 'hero') {
-            selectedCard.health -= power.value;
+    for (const effect of battleCard.effects) {
+        if (effect.type === 'buff') {
+            allBuffEffectsValue += effectsMap[effect.type](effect, battleCard);
         } else {
-            selectedCard.value -= power.value;
+            allDebuffEffectsValue += effectsMap[effect.type](effect, battleCard);
         }
-
-        await addClassWhenChangeHealth(selectedCard, effect);
     }
 
-    duration.value--;
+    await Promise.all([
+        allBuffEffectsValue && addClassWhenChangeHealth(battleCard, allBuffEffectsValue, 'buff'),
+        allDebuffEffectsValue && addClassWhenChangeHealth(battleCard, allDebuffEffectsValue, 'debuff'),
+    ]);
+
+    checkBattleCardAfterSkill(battleCards, battleCard);
+    battleCard.effects = battleCard.effects.filter((effect: Effect) => getItemStat(effect, 'duration').value > 0);
 }
 
-const buffSkillHandler = async (effect: Effect, selectedCard: BattleCardType) => {
+const debuffSkillHandler = (effect: Effect, selectedCard: BattleCardType) => {
     const duration = getItemStat(effect, 'duration');
-    const period = getItemStat(effect, 'period');
+    const power = getItemStat(effect, 'power');
 
-    if (duration.value % period.value === 0 || duration.value === 0) {
-        const power = getItemStat(effect, 'power');
-
-        const heroHealth = selectedCard.health + power.value;
-        const heroStatMaxHealth = getItemStat(selectedCard, 'maxHealth');
-
-        selectedCard.health = heroStatMaxHealth.value < heroHealth ? heroStatMaxHealth.value : heroHealth;
-
-        await addClassWhenChangeHealth(selectedCard, effect);
+    // TODO: hero health to value
+    if (selectedCard.type === 'hero') {
+        selectedCard.health -= power.value;
+    } else {
+        selectedCard.value -= power.value;
     }
 
     duration.value--;
+
+    return power.value;
+}
+
+const buffSkillHandler = (effect: Effect, selectedCard: BattleCardType) => {
+    const duration = getItemStat(effect, 'duration');
+    const power = getItemStat(effect, 'power');
+    const heroStatMaxHealth = getItemStat(selectedCard, 'maxHealth');
+
+    const heroHealth = selectedCard.health + power.value;
+
+    selectedCard.health = heroStatMaxHealth.value < heroHealth ? heroStatMaxHealth.value : heroHealth;
+
+    duration.value--;
+
+    return power.value;
 }
 
 export const changeBattleCardAfterSkill = (battleCards: BattleCardType[], selectedCard: BattleCardType) => {

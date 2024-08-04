@@ -1,5 +1,4 @@
-import {BattleCardType, Effect, Skill} from "../types";
-import {getItemStat} from "./recalculateHeroStats";
+import {BattleCardType, Skill} from "../types";
 
 export const addClassWhenUseSkill = async (battleCard: BattleCardType, skill: Skill) => {
     const skillEffectEl = document.querySelector(`.battle-card-${battleCard.index} .skill-usage-image`);
@@ -19,20 +18,19 @@ export const addClassWhenUseSkill = async (battleCard: BattleCardType, skill: Sk
     return true;
 };
 
-export const addClassWhenChangeHealth = async (battleCard: BattleCardType, skill: Skill | Effect) => {
-    const healthValueEffectEl = document.querySelector(`.battle-card-${battleCard.index} .health-value-effect`);
+export const addClassWhenChangeHealth = async (battleCard: BattleCardType, value: any, type?: string) => {
+    const healthValueEffectEl = document.querySelector(`.battle-card-${battleCard.index} .${type}-effect`);// const healthValueDebuffEffectEl = document.querySelector(`.battle-card-${battleCard.index} .debuff-effect`);
 
     if (!healthValueEffectEl) return;
 
-    const skillPower = getItemStat(skill, 'power').value;
-    healthValueEffectEl.innerHTML = skill.type === 'buff' ? `+${skillPower}` : `-${skillPower}`;
+    healthValueEffectEl.innerHTML = `${type === 'buff' ? "+": "-"}${value}`;
 
-    healthValueEffectEl.classList.add('active', skill.type === 'buff' ? 'positiveEffect' : 'negativeEffect');
+    healthValueEffectEl.classList.add('active');
 
     await new Promise<void>((resolve) => setTimeout(() => {
         resolve();
-        healthValueEffectEl.classList.remove('active', skill.type === 'buff' ? 'positiveEffect' : 'negativeEffect');
-    }, 2000));
+        healthValueEffectEl.classList.remove('active');
+    }, 1500));
 
     return true;
 };

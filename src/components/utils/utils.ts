@@ -119,11 +119,11 @@ export const generateBossCards = (heroLevel: number) => {
 const getRandomValue = (battleCard: PrimaryBattleCardType, heroLevel: number) => {
     const battleFieldLength = getStateValue('battleFieldLength');
     const defaultValue = battleFieldLength;
-    const calculatedValue = defaultValue * (1 + ((heroLevel - 1) / 5));
+    const calculatedValue = defaultValue * (3 + ((heroLevel - 1) / 5));
 
     const healthMap: any = {
         enemy: getRandomCardValue(calculatedValue),
-        potion: getRandomCardValue(defaultValue * 2),
+        potion: getRandomCardValue(defaultValue * 5),
         coin: getRandomCardValue(calculatedValue),
         sphere: getRandomCardValue(calculatedValue),
         superPotion: 1000,
@@ -138,7 +138,7 @@ const getRandomValue = (battleCard: PrimaryBattleCardType, heroLevel: number) =>
 const getRandomCardValue = (value: number) => Math.floor(Math.random() * value) + 1;
 const getBossValue = (heroLevel: number) => {
     const battleFieldLength = getStateValue('battleFieldLength');
-    return (heroLevel + battleFieldLength - 2) * 2 ;
+    return (heroLevel + battleFieldLength - 1) * 4;
 };
 
 export const getCardSizeInPercent = (): string => {
