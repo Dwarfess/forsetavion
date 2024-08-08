@@ -4,13 +4,15 @@ import {CharacterPage} from "../character-page/CharacterPage";
 import {BattlePage} from "../BattlePage";
 import {useActivePage} from "../../store/storeHooks";
 import {GameSelectionPanel} from "../character-page/GameSelectionPanel";
+import {ShopPage} from "./shop-page/ShopPage";
 const HomeMap = () => {
     const { activePage } = useActivePage();
 
     return <HomeMapContainer>
-        { activePage === 'game-selection-page' && (<h2>Homeland</h2>)}
+        { activePage === 'game-selection-page' && (<h2 className="map-name">Homeland</h2>)}
 
         { activePage === 'character-page' && (<CharacterPage />)}
+        { activePage === 'shop-page' && (<ShopPage />)}
         { activePage === 'game-selection-page' && (<GameSelectionPanel />)}
         { activePage === 'battle-page' && (<BattlePage />)}
     </HomeMapContainer>
@@ -24,7 +26,7 @@ const HomeMapContainer = styled.div`
     background-size: 100% 100%;
     position: relative;
     
-    h2 {
+    .map-name {
         font-family: 'MagicalWorld';
         font-size: 70px;
         text-align: center;

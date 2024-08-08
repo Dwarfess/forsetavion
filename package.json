@@ -1,6 +1,7 @@
 {
   "name": "forsetavion",
   "version": "0.1.0",
+  "homepage": "https://yourusername.github.io/forsetavion",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.1",
@@ -31,7 +32,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [

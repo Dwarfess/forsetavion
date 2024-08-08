@@ -57,7 +57,7 @@ const MapPlaceContainer = styled.div`
     left: ${(props: any) => props['left-position']}px;
 
     transform-origin: 50% 50%;
-    animation: jump 2s linear alternate infinite;
+    animation: jump 5s linear alternate infinite;
 
     @keyframes jump {
         0%   {transform: translate3d(0,0,0) scale3d(1,1,1);}

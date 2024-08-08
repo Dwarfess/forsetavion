@@ -29,7 +29,7 @@ const CharacterPanel: React.FC<ICharacterPanel> = () => {
 }
 
 const CharacterPanelContainer = styled.div`
-    background-image: url('character-bg6.png');
+    background-image: url('left-parchment.png');
     margin: 20px 0 0 50px;
     height: 500px;
     display: flex;
@@ -69,7 +69,10 @@ const CharacterPanelContainer = styled.div`
             align-items: center;
             justify-content: center;
             
-            img { width: 80px }
+            img { 
+                width: 80px;
+                height: 80px 
+            }
         }
         
         .inventory { background-image: url('icon-character-info.png') }

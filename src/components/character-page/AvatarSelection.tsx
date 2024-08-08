@@ -4,13 +4,12 @@ import {useCharacter} from "../../store/storeHooks";
 
 const avatars = [
     'default-avatar',
-    'beast-5',
-    'beast-6',
-    'beast-7',
-    'beast-8',
-    'beast-9',
-    'beast-10',
-    'beast-11',
+    'avatar-1',
+    'avatar-2',
+    'avatar-3',
+    'avatar-4',
+    'avatar-5',
+    'avatar-6',
     'beast-12',
     'beast-13',
     'beast-14',
@@ -73,7 +72,10 @@ const AvatarSelectionContainer = styled.div`
             box-shadow: 0 0 10px 1px black;
             border-radius: 5px;
 
-            img { width: 80px }
+            img { 
+                width: 80px;
+                height: 80px;
+            }
         }
         
         .btn {
@@ -134,7 +136,10 @@ const AvatarSelectionContainer = styled.div`
 
             &:active { box-shadow: none }
 
-            img { width: 60px }
+            img { 
+                width: 60px;
+                height: 60px;
+            }
         }
     }
 `;

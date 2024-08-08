@@ -16,6 +16,10 @@ body {
   font-family: 'MagicalWorld';
 }
 
+h2 {
+  font-family: 'MagicalWorld' !important;
+}
+
 .modals {
   width: 860px !important;
 }
