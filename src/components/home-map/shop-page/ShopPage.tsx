@@ -7,6 +7,8 @@ import {CoinShop} from "./CoinShop";
 import {SphereShop} from "./SphereShop";
 import {BossShop} from "./BossShop";
 import {PvPShop} from "./PvPShop";
+import {PotionInventory} from "./PotionInventory";
+import {ArtifactInventory} from "./ArtifactInventory";
 
 interface IShopPage {}
 
@@ -14,6 +16,7 @@ const ShopPage: React.FC<IShopPage> = () => {
     const { character } = useCharacter();
     const { setActivePage } = useActivePage();
     const [ selectedShop, setSelectedShop ] = useState('coin-shop');
+    const [ selectedInventory, setSelectedInventory ] = useState('potion-inventory');
     return (
         <ShopPageContainer>
             <ShopPanel>
@@ -33,16 +36,12 @@ const ShopPage: React.FC<IShopPage> = () => {
             <div className="play-game-button" onClick={() => setActivePage('game-selection-page')}></div>
             <InventoryPanel>
                 <div className="purchases-container">
-                    { selectedShop === 'coin-shop' && <CoinShop /> }
-                    { selectedShop === 'pvp-shop' && <PvPShop /> }
-                    { selectedShop === 'boss-shop' && <BossShop /> }
-                    { selectedShop === 'sphere-shop' && <SphereShop /> }
+                    { selectedInventory === 'potion-inventory' && <PotionInventory /> }
+                    { selectedInventory === 'artifact-inventory' && <ArtifactInventory /> }
                 </div>
                 <div className="inventory-list">
-                    <button className="potion-inventory btn" onClick={() => setSelectedShop('coin-shop')}></button>
-                    <button className="pvp-shop btn" onClick={() => setSelectedShop('pvp-shop')}></button>
-                    <button className="boss-shop btn" onClick={() => setSelectedShop('boss-shop')}></button>
-                    <button className="sphere-shop btn" onClick={() => setSelectedShop('sphere-shop')}></button>
+                    <button className="potion-inventory btn" onClick={() => setSelectedInventory('potion-inventory')}></button>
+                    <button className="artifact-inventory btn" onClick={() => setSelectedInventory('artifact-inventory')}></button>
                 </div>
             </InventoryPanel>
         </ShopPageContainer>

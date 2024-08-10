@@ -1,30 +1,26 @@
-import styled from "styled-components";
-import React, {useState} from "react";
 import {shopPotions} from "../constants";
+import React, {useEffect, useState} from "react";
+import styled from "styled-components";
 import {useCharacter} from "../../../store/storeHooks";
 
-const CoinShop = () => {
-    const { character, setCharacter } = useCharacter();
-    const [ selectedPurchase, setSelectedPurchase ] = useState(shopPotions[0]);
+const PotionInventory = () => {
+    const { character } = useCharacter();
+    const [ selectedPurchase, setSelectedPurchase ] = useState(character.inventory.potions[0]);
     const [ purchaseCount, setPurchaseCount ] = useState(1);
 
     const decreasePurchaseCount = () => purchaseCount > 1 && setPurchaseCount(purchaseCount - 1);
     const increasePurchaseCount = () => purchaseCount < 10 && setPurchaseCount(purchaseCount + 1);
 
     const onBuyPurchaseClick = () => {
-        setCharacter({
-            ...character,
-            inventory: {
-                // TODO: move to utils
-                // potions: []
-                potions: [...character.inventory.potions, {...selectedPurchase, count: purchaseCount }]
-            }
-        });
+
     }
 
-    return <CoinShopContainer>
-        <div className="shop-header">
-            <h2>Coin Shop</h2>
+    useEffect(() => {
+        setSelectedPurchase(character.inventory.potions[0])
+    }, [character])
+    return <InventoryContainer>
+        <div className="inventory-header">
+            <h2>Potion Inventory</h2>
             <CoinsBar>
                 <img src="icon-coins.png" className="coins-icon"/>
                 <div className="coins-value">{character.coins}</div>
@@ -34,31 +30,23 @@ const CoinShop = () => {
                 <div className="spheres-value">{character.spheres}</div>
             </CoinsBar>
         </div>
-        <div className="selected-purchase-wrapper">
+        { selectedPurchase && (<div className="selected-purchase-wrapper">
             <div className="purchase selected-purchase">
-                {/*<div className="purchase-value">{ selectedPotion.value }</div>*/}
                 <img src={`${selectedPurchase.img}.png`} alt=""/>
-
-                <div className="purchase-count-wrapper">
-                    <div className="purchase-count-button" onClick={decreasePurchaseCount}>-</div>
-                    <div className="purchase-count">{ purchaseCount }</div>
-                    <div className="purchase-count-button" onClick={increasePurchaseCount}>+</div>
-                </div>
+                <div className="purchase-count">{ purchaseCount }</div>
             </div>
             <div className="purchase-info">
                 <p className="purchase-description">This potion increase your health by { selectedPurchase.value }. Can be use only once per battle.</p>
-                <button className="btn buy-purchase" onClick={onBuyPurchaseClick}>
-                    <div className="purchase-price">{ selectedPurchase.price * purchaseCount }</div>
-                    <img src="indicator-sphere.png" alt=""/>
+                <button className="btn select-btn" onClick={onBuyPurchaseClick}>
+                    Select
                 </button>
-
             </div>
-        </div>
+        </div>)}
         <div className="purchase-collection">
-            { shopPotions.map((purchase, index) => (
-                <div className="purchase btn" onClick={() => setSelectedPurchase(purchase)} key={index}>
-                    <img src={`${purchase.img}.png`} alt=""/>
-                    {/*<div className="purchase-value">{ potion.value }</div>*/}
+            { character.inventory.potions.map((item, index) => (
+                <div className="purchase btn" onClick={() => setSelectedPurchase(item)} key={index}>
+                    <img src={`${item.img}.png`} alt=""/>
+                    <div className="purchase-count">{ item.count }</div>
                 </div>
             ))}
         </div>
@@ -68,20 +56,12 @@ const CoinShop = () => {
         {/*    <div className="purchase btn">50</div>*/}
         {/*    <div className="purchase btn">100</div>*/}
         {/*</div>*/}
-    </CoinShopContainer>
+    </InventoryContainer>
 }
 
-const CoinShopContainer = styled.div`
+const InventoryContainer = styled.div`
     width: 100%;
     height: 100%;
-    
-    .shop-header {
-        display: flex;
-
-        h2 {
-            width: 400px;
-        }
-    }
     
     .selected-purchase-wrapper {
         display: flex;
@@ -106,16 +86,13 @@ const CoinShopContainer = styled.div`
                 0px 0px 3px #E6E6E6;
             }
 
-            .buy-purchase {
+            .select-btn {
                 width: max-content;
-                height: 40px;
+                height: max-content;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                font-size: 35px;
-
-                .purchase-price { padding: 5px; }
-                img { height: 100% }
+                font-size: 25px;
             }
 
             .btn {
@@ -164,55 +141,33 @@ const CoinShopContainer = styled.div`
             top: 60px;
         }
         
-        .purchase-count-wrapper {
+        .purchase-count {
             display: flex;
             align-items: center;
             justify-content: center;
-            
             position: absolute;
             bottom: 0;
-            //right: 0;
-            
-            .purchase-count-button {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-
-                width: 30px;
-                height: 30px;
-                font-size: 70px;
-                padding: 0 30px;
-                user-select: none;
-                cursor: pointer;
-                //background-color: rgba(0, 0, 0, 0.2);
-                color: #ffc000;
-                text-shadow: 0px 0px 3px #1A1A1A, 0px 0px 3px #E3E3E3, 0px 0px 3px #1A1A1A;
-            }
-            
-            .purchase-count {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                
-                width: 30px;
-                height: 30px;
-                font-size: 35px;
-                background-color: rgba(0, 0, 0, 0.2);
-                color: #ffc000;
-                text-shadow: 0px 0px 3px #1A1A1A, 0px 0px 3px #E3E3E3, 0px 0px 3px #1A1A1A;
-                box-shadow: 0 0 5px 1px #ffc000;
-                border-radius: 5px;
-            }
+            width: 30px;
+            height: 30px;
+            font-size: 35px;
+            background-color: rgba(0, 0, 0, 0.2);
+            color: #ffc000;
+            text-shadow: 0px 0px 3px #1A1A1A, 0px 0px 3px #E3E3E3, 0px 0px 3px #1A1A1A;
+            box-shadow: 0 0 5px 1px #ffc000;
+            border-radius: 5px;
         }
     }
     
     .purchase-collection {
         display: flex;
-
-        //.purchase {
-        //    zoom: 80%;
-        //    //margin: 12px;
-        //}
+    }
+    
+    .inventory-header {
+        display: flex;
+        
+        h2 {
+            width: 400px;
+        }
     }
 `;
 
@@ -245,4 +200,4 @@ const CoinsBar = styled.div`
     }
 `;
 
-export { CoinShop };
+export { PotionInventory };

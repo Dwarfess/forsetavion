@@ -8,5 +8,8 @@ export const defaultCharacter: ICharacter = {
     coins: 0,
     spheres: 0,
     score: 0,
-    artifacts: []
+    artifacts: [],
+    inventory: {
+        potions: []
+    }
 };

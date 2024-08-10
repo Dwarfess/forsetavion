@@ -25,7 +25,7 @@ const CharacterInfo: React.FC<ICharacterPanel> = () => {
 
     const clickCancelButton = () => {
         // @ts-ignore
-        editableRef.current.innerHTML = character.name;
+        editableRef.current.innerHTML = character.nickname;
         toggleNicknameEditMode(false);
     }
 

@@ -1,4 +1,4 @@
-import {IShopPotion} from "./types";
+import {IShopPotion} from "../character-page/types";
 
 export const shopPotions: IShopPotion[] = [
     {
