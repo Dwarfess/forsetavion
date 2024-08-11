@@ -1,7 +1,13 @@
+import {CommonShopBench} from "./CommonShopBench";
+import {shopPotions} from "../constants";
+
 const PvPShop = () => {
-    return <>
-        <h2>PvP Shop</h2>
-    </>
+    return <CommonShopBench
+        title="PvP Shop"
+        items={shopPotions}
+        type="pvp"
+        currencyIcon="icon-pvp-2"
+    />
 }
 
 export { PvPShop };

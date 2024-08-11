@@ -1,7 +1,13 @@
+import {CommonShopBench} from "./CommonShopBench";
+import {shopPotions} from "../constants";
+
 const SphereShop = () => {
-    return <>
-        <h2>Sphere Shop</h2>
-    </>
+    return <CommonShopBench
+        title="Sphere Shop"
+        items={shopPotions}
+        type="coin"
+        currencyIcon="indicator-sphere"
+    />
 }
 
 export { SphereShop };
