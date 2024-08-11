@@ -6,11 +6,12 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import styled from "styled-components";
-import BattleCardImage from "../BattleCardImage";
-import {TabInfo} from "../card-info/TabInfo";
-import {generateHeroCards} from "../utils/cardsBuilder";
-import {useCharacter} from "../../store/storeHooks";
-import {IHeroBattleCard} from "../types";
+import BattleCardImage from "../../BattleCardImage";
+import {TabInfo} from "../../card-info/TabInfo";
+import {generateHeroCards} from "../../utils/cardsBuilder";
+import {useCharacter} from "../../../store/storeHooks";
+import {IHeroBattleCard} from "../../types";
+import mixins from "../../../mixins";
 
 interface IHeroSelectionPanel {
     // children: ReactNode
@@ -119,29 +120,21 @@ const HeroSelectionPanelWrapper = styled.div`
 `;
 
 const HeroSelectionPanelContainer = styled.div`
-    //width: 700px;
-    //height: 900px;
-    //box-shadow: none;
-    //background-color: transparent;
+    ${mixins.stretchedBackground};
+    
+    background-image: url("select-hero-bg2.png");
     display: block !important;
     width: 500px !important;
     height: 500px;
-    background-image: url("select-hero-bg2.png");
-    background-size: 100% 100%; /* Stretch the image to fill the block */
-    background-repeat: no-repeat; /* Prevent the image from repeating */
-    background-position: center center; /* Center the image within the block */
-    //background-size: cover;
-    //padding: 100px;
-    //background-color: rgba(239, 233, 233, 0.47);
     padding: 40px;
     margin: 0 auto;
     border-radius: 50px;
     box-sizing: border-box;
 
     .header, .content, .actions {
-        color: #8b0000;
-        background: transparent;
-        font-family: 'MagicalWorld';
+        ${mixins.secondTextColor};
+        
+        //background: transparent;
         font-weight: bold;
         padding: 0px 20px;
     }
@@ -172,11 +165,10 @@ const HeroSelectionPanelContainer = styled.div`
             position: relative;
             
             .btn {
+                ${mixins.classicBtn};
+                
                 width: 100%;
-                margin: 5px 0 0 0;
-                padding: 5px;
-                font-size: 25px;
-                height: max-content;
+                margin-top: 5px;
             }
             
             .selected-hero-title {

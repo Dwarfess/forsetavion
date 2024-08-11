@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import {useActivePage, useBattleFieldLength} from "../../store/storeHooks";
-import {MapPlace} from "../home-map/MapPlace";
+import {MapPlace} from "./MapPlace";
 
 const GameSelectionPanel = () => {
     const { setActivePage } = useActivePage();

@@ -1,9 +1,9 @@
-import React, {useState} from "react";
+import React from "react";
 import styled from "styled-components";
-import {CharacterPage} from "../character-page/CharacterPage";
+import {CharacterPage} from "./character-page/CharacterPage";
 import {BattlePage} from "../BattlePage";
 import {useActivePage} from "../../store/storeHooks";
-import {GameSelectionPanel} from "../character-page/GameSelectionPanel";
+import {GameSelectionPanel} from "./GameSelectionPanel";
 import {ShopPage} from "./shop-page/ShopPage";
 const HomeMap = () => {
     const { activePage } = useActivePage();

@@ -1,20 +1,23 @@
-import React, {ReactNode, useEffect, useState} from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
-import {CharacterInfo} from "./CharacterInfo";
-import {AvatarSelection} from "./AvatarSelection";
-import {useCharacter} from "../../store/storeHooks";
 
-interface ICharacterPanel {}
+import { HeroSelectionPanel } from "./HeroSelectionPanel";
+import { CharacterInfo } from "./CharacterInfo";
+import { AvatarSelection } from "./AvatarSelection";
 
-const CharacterPanel: React.FC<ICharacterPanel> = () => {
+import { useCharacter } from "../../../store/storeHooks";
+
+import mixins from "../../../mixins";
+
+const CharacterPage = () => {
     const { character } = useCharacter();
     const [ characterSelectedPanel, setCharacterSelectedPanel ] = useState('character-info');
-    return (
-        <CharacterPanelContainer>
+
+    return <CharacterPageContainer>
+        <CharacterPanel>
             <div className="character-menu">
                 <button className="avatar btn" onClick={() => setCharacterSelectedPanel('avatar-selection')}>
                     <img src={`${character.avatar}.jpg`} alt=""/>
-                    {/*<div className="avatar-border"></div>*/}
                 </button>
                 <button className="inventory btn" onClick={() => setCharacterSelectedPanel('character-info')}></button>
                 <button className="shop btn"></button>
@@ -24,19 +27,24 @@ const CharacterPanel: React.FC<ICharacterPanel> = () => {
                 { characterSelectedPanel === 'character-info' && <CharacterInfo /> }
                 { characterSelectedPanel === 'avatar-selection' && <AvatarSelection /> }
             </div>
-        </CharacterPanelContainer>
-    )
+        </CharacterPanel>
+
+        <HeroSelectionPanel />
+    </CharacterPageContainer>
 }
 
-const CharacterPanelContainer = styled.div`
+const CharacterPageContainer = styled.div`
+    width: auto;
+    height: calc(100vh - 50px);
+`;
+
+const CharacterPanel = styled.div`
+    ${mixins.stretchedBackground};
+    
     background-image: url('left-parchment.png');
     margin: 20px 0 0 50px;
     height: 500px;
     display: flex;
-
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    background-position: center center;
     
     .character-menu {
         width: 150px;
@@ -44,30 +52,19 @@ const CharacterPanelContainer = styled.div`
         box-sizing: border-box;
 
         .btn {
-            display: block;
+            ${mixins.transparentBtn}
+            
             width: 70px;
             height: 70px;
             margin: 20px auto;
-
-            background-color: transparent;
-            background-size: cover;
-            box-shadow: 0 0 10px 1px black;
-            border-radius: 5px;
-            z-index: 1;
-            cursor: pointer;
-
-            &:hover { box-shadow: 0 0 10px 2px black; }
-
-            &:active { box-shadow: none }
         }
         
         .avatar {
+            ${mixins.flexCenter}
+            
             width: 100px;
             height: 100px;
             margin: 50px auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             
             img { 
                 width: 80px;
@@ -83,10 +80,9 @@ const CharacterPanelContainer = styled.div`
     }
 
     .character-selected-panel {
-        //border: 1px solid red;
         width: 500px;
         margin: 90px 10px;
     }
 `;
 
-export { CharacterPanel };
+export { CharacterPage }

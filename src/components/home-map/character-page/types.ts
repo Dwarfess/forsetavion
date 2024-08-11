@@ -1,4 +1,4 @@
-import { IArtifactCard, IHeroBattleCard } from "../types";
+import { IArtifactCard, IHeroBattleCard } from "../../types";
 
 
 export interface ICommonShopItem {

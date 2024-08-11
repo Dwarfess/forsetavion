@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { getCharacter } from "../components/character-page/utils";
-import { ICharacter } from "../components/character-page/types";
+import { getCharacter } from "../components/home-map/character-page/utils";
+import { ICharacter } from "../components/home-map/character-page/types";
 
 export interface ICharacterState {
     value: ICharacter;

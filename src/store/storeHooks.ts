@@ -15,7 +15,7 @@ import {
     changeActivePage,
 } from './index';
 import { getHeroCard } from "../components/utils";
-import {ICharacter} from "../components/character-page/types";
+import {ICharacter} from "../components/home-map/character-page/types";
 
 export const useActiveMap = () => {
     const dispatch = useDispatch();

@@ -1,4 +1,4 @@
-import { defaultHeroCard } from "../constants";
+import { defaultHeroCard } from "../../constants";
 import { ICharacter } from "./types";
 
 export const defaultCharacter: ICharacter = {
@@ -13,3 +13,16 @@ export const defaultCharacter: ICharacter = {
         potions: []
     }
 };
+
+export const avatars: string[] = [
+    'default-avatar',
+    'avatar-1',
+    'avatar-2',
+    'avatar-3',
+    'avatar-4',
+    'avatar-5',
+    'avatar-6',
+    'beast-12',
+    'beast-13',
+    'beast-14',
+];

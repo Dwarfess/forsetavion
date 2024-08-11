@@ -1,7 +1,7 @@
 import React, {FC, useEffect, useState} from "react";
 import styled from "styled-components";
 import {useCharacter} from "../../../store/storeHooks";
-import {IShopItem} from "../../character-page/types";
+import {IShopItem} from "../character-page/types";
 
 interface ICommonInventoryBench {
     title: string

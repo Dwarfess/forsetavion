@@ -2,7 +2,7 @@ import React, {FC, useEffect, useState} from "react";
 import {useCharacter} from "../../../store/storeHooks";
 import {shopPotions} from "../constants";
 import styled, { css } from "styled-components";
-import {IShopItem} from "../../character-page/types";
+import {IShopItem} from "../character-page/types";
 
 interface ICommonShopBench {
     title: string
