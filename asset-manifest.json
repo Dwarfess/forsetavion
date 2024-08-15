@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/forsetavion/static/css/main.2ae17af7.css",
-    "main.js": "/forsetavion/static/js/main.8e132286.js",
+    "main.js": "/forsetavion/static/js/main.96a209e7.js",
     "static/js/453.fb5e4bcc.chunk.js": "/forsetavion/static/js/453.fb5e4bcc.chunk.js",
     "static/media/cave2.jpg": "/forsetavion/static/media/cave2.d006b853c191a5fd8645.jpg",
     "static/media/brand-icons.svg": "/forsetavion/static/media/brand-icons.6729d29753e000c17489.svg",
@@ -31,11 +31,11 @@
     "static/media/slick.woff": "/forsetavion/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/forsetavion/index.html",
     "main.2ae17af7.css.map": "/forsetavion/static/css/main.2ae17af7.css.map",
-    "main.8e132286.js.map": "/forsetavion/static/js/main.8e132286.js.map",
+    "main.96a209e7.js.map": "/forsetavion/static/js/main.96a209e7.js.map",
     "453.fb5e4bcc.chunk.js.map": "/forsetavion/static/js/453.fb5e4bcc.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.2ae17af7.css",
-    "static/js/main.8e132286.js"
+    "static/js/main.96a209e7.js"
   ]
 }
