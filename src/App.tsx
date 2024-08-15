@@ -25,7 +25,7 @@ const AppContainer = styled.div`
     box-shadow: 0 0 30px 5px black;
     //width: auto;
     //height: calc(100vh - 50px);
-    height: 1100px;
+    height: 1315px;
     overflow: hidden;
     box-sizing: content-box;
 `;

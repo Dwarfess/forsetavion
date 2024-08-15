@@ -17,6 +17,11 @@ const secondTextColor = css`
     color: #8b0000;
 `;
 
+const thirdColor = css`
+    color: #ffc000;
+    text-shadow: 0px 0px 3px #1A1A1A, 0px 0px 3px #E3E3E3,  0px 0px 3px #1A1A1A;
+`;
+
 const flexStart = css`
     display: flex;
     align-items: center;
@@ -67,6 +72,7 @@ const transparentBtn = css`
 
 const classicBtn = css`
     ${secondFontFace};
+    ${flexCenter};
     
     //margin-left: 10px;
     width: max-content;
@@ -103,12 +109,13 @@ const classicBtn = css`
 export default {
     mainFontFace,
     secondFontFace,
-    transparentBtn,
-    stretchedBackground,
-    classicBtn,
     firstTextColor,
     secondTextColor,
+    thirdColor,
     flexStart,
     flexCenter,
-    standardH2
+    standardH2,
+    stretchedBackground,
+    transparentBtn,
+    classicBtn,
 };

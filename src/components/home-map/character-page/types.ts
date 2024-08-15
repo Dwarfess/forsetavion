@@ -3,14 +3,15 @@ import { IArtifactCard, IHeroBattleCard } from "../../types";
 
 export interface ICommonShopItem {
     id: string;
-    img: string;
+    type: string;
+    image: string;
     price: number;
     count?: number;
 }
 
 export interface IShopPotion extends ICommonShopItem {
     value: number;
-    selected: boolean
+    selected: boolean;
 }
 
 export interface IInventory {

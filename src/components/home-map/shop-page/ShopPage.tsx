@@ -1,8 +1,6 @@
-import React, {ReactNode, useEffect, useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-// import {CharacterInfo} from "./CharacterInfo";
-// import {AvatarSelection} from "./AvatarSelection";
-import {useActivePage, useCharacter} from "../../../store/storeHooks";
+
 import {CoinShop} from "./CoinShop";
 import {SphereShop} from "./SphereShop";
 import {BossShop} from "./BossShop";
@@ -10,12 +8,12 @@ import {PvPShop} from "./PvPShop";
 import {PotionInventory} from "./PotionInventory";
 import {ArtifactInventory} from "./ArtifactInventory";
 
+import {useActivePage} from "../../../store/storeHooks";
 import mixins from "../../../mixins";
 
 interface IShopPage {}
 
 const ShopPage: React.FC<IShopPage> = () => {
-    const { character } = useCharacter();
     const { setActivePage } = useActivePage();
     const [ selectedShop, setSelectedShop ] = useState('coin-shop');
     const [ selectedInventory, setSelectedInventory ] = useState('potion-inventory');
@@ -28,7 +26,7 @@ const ShopPage: React.FC<IShopPage> = () => {
                     <button className="boss-shop btn" onClick={() => setSelectedShop('boss-shop')}></button>
                     <button className="sphere-shop btn" onClick={() => setSelectedShop('sphere-shop')}></button>
                 </div>
-                <div className="purchases-container">
+                <div className="shop-items-container">
                     { selectedShop === 'coin-shop' && <CoinShop /> }
                     { selectedShop === 'pvp-shop' && <PvPShop /> }
                     { selectedShop === 'boss-shop' && <BossShop /> }
@@ -37,7 +35,7 @@ const ShopPage: React.FC<IShopPage> = () => {
             </ShopPanel>
             <div className="play-game-button" onClick={() => setActivePage('game-selection-page')}></div>
             <InventoryPanel>
-                <div className="purchases-container">
+                <div className="inventory-items-container">
                     { selectedInventory === 'potion-inventory' && <PotionInventory /> }
                     { selectedInventory === 'artifact-inventory' && <ArtifactInventory /> }
                 </div>
@@ -51,14 +49,12 @@ const ShopPage: React.FC<IShopPage> = () => {
 }
 
 const ShopPanel = styled.div`
+    ${mixins.stretchedBackground};
+    
     background-image: url('left-parchment.png');
     margin: 20px 0 0 50px;
     height: 500px;
     display: flex;
-
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    background-position: center center;
 
     .shop-list {
         .coin-shop {
@@ -97,19 +93,6 @@ const InventoryPanel = styled.div`
 `;
 
 const ShopPageContainer = styled.div`
-    h2 {
-        font-family: 'MagicalWorld';
-        margin: 0 0 5px 0;
-        font-size: 35px;
-        font-weight: bold;
-        color: #494117;
-        text-shadow: 0px 0px 3px #E6E6E6,
-        0px 0px 3px #1A1A1A,
-        0px 0px 3px #E6E6E6,
-        0px 0px 3px #E6E6E6,
-        0px 0px 3px #E6E6E6;
-    }
-
     .shop-list, .inventory-list {
         width: 150px;
         height: 100%;
@@ -117,8 +100,7 @@ const ShopPageContainer = styled.div`
         box-sizing: border-box;
     }
 
-    .purchases-container {
-        //border: 1px solid red;
+    .shop-items-container, .inventory-items-container {
         width: 520px;
         margin: 90px 10px;
     }
