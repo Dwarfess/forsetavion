@@ -5,12 +5,13 @@ import { HeroSelectionPanel } from "./HeroSelectionPanel";
 import { CharacterInfo } from "./CharacterInfo";
 import { AvatarSelection } from "./AvatarSelection";
 
-import { useCharacter } from "../../../store/storeHooks";
+import {useActivePage, useCharacter} from "../../../store/storeHooks";
 
 import mixins from "../../../mixins";
 
 const CharacterPage = () => {
     const { character } = useCharacter();
+    const { setActivePage } = useActivePage();
     const [ characterSelectedPanel, setCharacterSelectedPanel ] = useState('character-info');
 
     return <CharacterPageContainer>
@@ -29,21 +30,54 @@ const CharacterPage = () => {
             </div>
         </CharacterPanel>
 
-        <HeroSelectionPanel />
+        <div className="play-game-button" onClick={() => setActivePage('game-selection-page')}></div>
+
+        <div className="hero-selection-panel-wrapper">
+            <HeroSelectionPanel />
+        </div>
     </CharacterPageContainer>
 }
 
 const CharacterPageContainer = styled.div`
     width: auto;
-    height: calc(100vh - 50px);
+    height: 100%;
+    overflow: hidden;
+    //height: calc(100vh - 50px);
+    position: relative;
+
+    .play-game-button {
+        width: 130px;
+        height: 130px;
+        background-image: url("play-game-button.png");
+        background-size: cover;
+        opacity: .5;
+        position: absolute;
+        top: 48%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 200px;
+        box-shadow: 0 0 20px 5px black;
+        cursor: pointer;
+
+        &:hover { box-shadow: 0 0 10px 10px black }
+        &:active { box-shadow: 0 0 10px 1px black }
+    }
+
+    .hero-selection-panel-wrapper {
+        position: absolute;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        margin-bottom: 20px;
+    }
 `;
 
 const CharacterPanel = styled.div`
     ${mixins.stretchedBackground};
     
     background-image: url('left-parchment.png');
-    margin: 20px 0 0 50px;
-    height: 500px;
+    margin-left: 50px;
+    height: 650px;
     display: flex;
     
     .character-menu {
@@ -64,7 +98,7 @@ const CharacterPanel = styled.div`
             
             width: 100px;
             height: 100px;
-            margin: 50px auto 20px;
+            margin: 70px auto 20px;
             
             img { 
                 width: 80px;
@@ -81,7 +115,7 @@ const CharacterPanel = styled.div`
 
     .character-selected-panel {
         width: 500px;
-        margin: 90px 10px;
+        margin: 130px 10px;
     }
 `;
 

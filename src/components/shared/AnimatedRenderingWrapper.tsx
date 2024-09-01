@@ -24,7 +24,7 @@ const AnimatedRenderingContainer = styled.div`
     height: 100%;
 
     opacity: 0;
-    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+    transition: opacity .5s ease-in-out, transform 1s ease-in-out;
 
     &.is-visible {opacity: 1 }
 `;

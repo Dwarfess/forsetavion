@@ -1,16 +1,22 @@
-import React from "react";
+import React, {useEffect} from "react";
 import styled from "styled-components";
 import {CharacterPage} from "./character-page/CharacterPage";
 import {BattlePage} from "../BattlePage";
 import {useActivePage} from "../../store/storeHooks";
 import {GameSelectionPanel} from "./GameSelectionPanel";
 import {ShopPage} from "./shop-page/ShopPage";
+import {RegistrationPage} from "./registration-page/RegistrationPage";
 const HomeMap = () => {
-    const { activePage } = useActivePage();
+    const { activePage, setActivePage } = useActivePage();
+
+    useEffect(() => {
+        setActivePage('registration-page');
+    }, []);
 
     return <HomeMapContainer>
         { activePage === 'game-selection-page' && (<h2 className="map-name">Homeland</h2>)}
 
+        { activePage === 'registration-page' && (<RegistrationPage />)}
         { activePage === 'character-page' && (<CharacterPage />)}
         { activePage === 'shop-page' && (<ShopPage />)}
         { activePage === 'game-selection-page' && (<GameSelectionPanel />)}

@@ -9,12 +9,12 @@ const secondFontFace = css`
 `;
 
 const firstTextColor = css`
-    color: #494117;
+    color: #494117 !important;
     text-shadow: 0px 0px 3px #E6E6E6, 0px 0px 3px #1A1A1A, 0px 0px 3px #E6E6E6, 0px 0px 3px #E6E6E6, 0px 0px 3px #E6E6E6;
 `;
 
 const secondTextColor = css`
-    color: #8b0000;
+    color: #8b0000 !important;
 `;
 
 const thirdColor = css`
@@ -68,6 +68,11 @@ const transparentBtn = css`
     &:active {
         box-shadow: 0 0 3px 0 black;
     }
+    
+    &:disabled {
+        opacity: .5;
+        pointer-events: none;
+    }
 `;
 
 const classicBtn = css`
@@ -103,6 +108,11 @@ const classicBtn = css`
     &:active {
         background: radial-gradient(circle, #ec6a6a, #e52b2b);
         box-shadow: 0px 0 5px 5px rgba(255, 255, 255, 0.2)
+    }
+
+    &:disabled {
+        opacity: .5;
+        pointer-events: none;
     }
 `;
 

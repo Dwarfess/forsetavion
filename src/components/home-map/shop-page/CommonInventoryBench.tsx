@@ -61,7 +61,7 @@ const CommonInventoryBench: FC<ICommonInventoryBench> = ({
         </div>)}
         <div className="inventory-item-collection">
             { items.map((item, index) => (
-                <div className="inventory-item btn" onClick={() => setSelectedItem(item)} key={index}>
+                <div className="inventory-item" onClick={() => setSelectedItem(item)} key={index}>
                     <img src={`${item.image}.png`} alt=""/>
                     <div className="inventory-item-count">{ item.count }</div>
                     <div className="inventory-item-remove" onClick={(e) => onRemoveClick(e, item)}>×</div>
@@ -89,6 +89,10 @@ const InventoryContainer = styled.div`
         display: flex;
         
         .selected-inventory-item {
+            box-shadow: none;
+            cursor: inherit;
+            &:hover, &:active { box-shadow: none }
+            
             .selected-title {
                 position: absolute;
                 top: 40%;
@@ -120,7 +124,9 @@ const InventoryContainer = styled.div`
         }
     }
     
-    .inventory-item {        
+    .inventory-item {
+        ${mixins.transparentBtn};
+        
         min-width: 120px;
         max-width: 120px;
         height: 120px;

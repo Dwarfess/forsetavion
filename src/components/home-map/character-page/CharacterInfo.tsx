@@ -1,13 +1,12 @@
 import React, { useRef, useState} from 'react';
 import styled from 'styled-components';
 
-import { useActivePage, useCharacter } from '../../../store/storeHooks';
+import { useCharacter } from '../../../store/storeHooks';
 import mixins from '../../../mixins';
 
 interface ICharacterPanel {}
 
 const CharacterInfo: React.FC<ICharacterPanel> = () => {
-    const { setActivePage } = useActivePage();
     const { character, setCharacter } = useCharacter();
     const [ nicknameEditMode, setNicknameEditMode ] = useState(false);
 
@@ -75,8 +74,6 @@ const CharacterInfo: React.FC<ICharacterPanel> = () => {
                     <img src="icon-score6.png" className="item-icon"/>
                 </div>
             </div>
-
-            <div className="play-game-button" onClick={() => setActivePage('game-selection-page')}></div>
         </CharacterInfoContainer>
     )
 }
@@ -141,23 +138,6 @@ const CharacterInfoContainer = styled.div`
                 font-weight: bold;
             }
         }
-    }
-    
-    .play-game-button {
-        width: 150px;
-        height: 150px;
-        background-image: url("play-game-button.png");
-        background-size: cover;
-        opacity: .5;
-        position: absolute;
-        top: calc(50% - 50px);
-        right: 10px;
-        border-radius: 200px;
-        box-shadow: 0 0 20px 5px black;
-        cursor: pointer;
-        
-        &:hover { box-shadow: 0 0 10px 10px black }
-        &:active { box-shadow: 0 0 10px 1px black }
     }
 `;
 

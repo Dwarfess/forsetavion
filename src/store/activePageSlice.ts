@@ -6,7 +6,8 @@ export interface IActivePageState {
 }
 
 const initialState: IActivePageState = {
-    value: 'character-page',
+    // value: 'character-page',
+    value: '',
 }
 
 export const activePageSlice = createSlice({

@@ -70,12 +70,14 @@ const HeroSelectionPanel: React.FC<IHeroSelectionPanel> = () => {
 }
 
 const HeroSelectionPanelWrapper = styled.div`
-    width: 100%;
-    display: flex;
+    //width: 100%;
+    //display: flex;
     //border: 1px solid red;
-    box-sizing: border-box;
-    align-items: center;
-    justify-content: space-between;
+    //box-sizing: border-box;
+    //align-items: center;
+    //justify-content: space-between;
+    //position: relative;
+    //margin-bottom: 20px;
     
     .slick-slider {
         width: 90%;
@@ -83,38 +85,15 @@ const HeroSelectionPanelWrapper = styled.div`
     }
 
     .btn {
+        ${mixins.classicBtn};
+        
         margin: 20px;
         width: 70px;
         height: 70px;
-        letter-spacing: 2px;
-        border-radius: 8px;
-        font-family: 'Skranji', cursive;
-        color: #ffc000;
         font-size: 40px;
-        font-weight: 400;
-        text-shadow: 0 1px 3px #000;
-        text-align: center;
-        //padding: 10px 0;
-        background: radial-gradient(circle, #8b0000, #8b0000);
-        border-top: 4px ridge #ffb000;
-        border-left: 4px groove #ffb000;
-        border-right: 4px ridge #ffb000;
-        border-bottom: 4px groove #ffb000;
-        box-shadow: inset 0px 0px 5px 3px rgba(1, 1, 1, 0.3);
-        z-index: 1;
         
         &:before {
             display: none;
-        }
-        
-        &:hover {
-            background: radial-gradient(circle, #e52b2b, #8b0000);
-            box-shadow: 0px 0 5px 5px rgba(255, 255, 255, 0.2)
-        }
-        
-        &:active {
-            background: radial-gradient(circle, #ec6a6a, #e52b2b);
-            box-shadow: 0px 0 5px 5px rgba(255, 255, 255, 0.2)
         }
     }
 `;
@@ -124,8 +103,8 @@ const HeroSelectionPanelContainer = styled.div`
     
     background-image: url("select-hero-bg2.png");
     display: block !important;
-    width: 500px !important;
-    height: 500px;
+    width: 600px !important;
+    height: 600px;
     padding: 40px;
     margin: 0 auto;
     border-radius: 50px;

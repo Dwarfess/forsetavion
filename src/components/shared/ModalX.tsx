@@ -1,19 +1,48 @@
-import { Modal } from 'semantic-ui-react';
+import { useEffect } from "react";
+import ReactDOM from 'react-dom';
 import styled from "styled-components";
+import mixins from "../../mixins";
 
 const ModalX = ({children}: any) => {
-    return (
-        <ModalWrapper
-            dimmer={'blurring'}
-            closeOnEscape={false}
-            closeOnDimmerClick={false}
-            open={true}
-        > { children } </ModalWrapper>
-    )
-}
+    const modalContainer = document.getElementById('canvas');
 
-const ModalWrapper = styled(Modal)`
-    &&& {
+    useEffect(() => {
+        const canvasEl = document.querySelector('#canvas div:first-child') as HTMLElement;
+        if (canvasEl) {
+            canvasEl.style.filter = 'blur(5px) grayscale(0.7)';
+
+            return () => {
+                canvasEl.style.filter = 'none';
+            }
+        }
+    }, []);
+
+    return <>
+        {modalContainer ? (ReactDOM.createPortal(
+            <ModalWrapper
+                // dimmer={'blurring'}
+                // closeOnEscape={false}
+                // closeOnDimmerClick={false}
+                // open={true}
+            >
+                <div className="modal">
+                    { children }
+                </div>
+            </ModalWrapper>, modalContainer)) : <div>Oops</div>}
+    </>
+};
+
+const ModalWrapper = styled.div`
+    ${mixins.flexCenter};
+
+    background-color: rgba(0, 0, 0, .6);
+    width: 800px;
+    height: 1400px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    
+    .modal {
         width: 700px;
         height: 900px;
         box-shadow: none;
@@ -21,6 +50,7 @@ const ModalWrapper = styled(Modal)`
         background-image: url("battle-over-modal2.png");
         background-size: cover;
         padding: 100px;
+        position: relative;
 
         animation: slide-up 1s;
 
@@ -34,11 +64,12 @@ const ModalWrapper = styled(Modal)`
         }
 
         .header, .content, .actions {
-            color: #8b0000;
-            background: transparent;
-            font-family: 'MagicalWorld';
+            ${mixins.secondTextColor};
+            ${mixins.mainFontFace};
+            
             font-weight: bold;
-            padding: 0px 20px;
+            //padding: 0px 20px;
+            padding: 0px;
         }
 
         .content, .actions { 
@@ -54,27 +85,15 @@ const ModalWrapper = styled(Modal)`
         .actions {
             position: absolute;
             bottom: 50px;
-            right: 50px;
+            right: 100px;
         }
 
         .btn {
-            margin: 10px auto;
+            ${mixins.classicBtn};
+            
+            margin: 20px auto;
             width: 250px;
-            letter-spacing: 2px;
-            border-radius: 8px;
-            font-family: 'Skranji', cursive !important;
-            color: #ffc000;
-            font-size: 18px;
-            font-weight: 400;
-            text-shadow: 0 1px 3px #000;
-            text-align: center;
             padding: 10px 0;
-            background: radial-gradient(circle, #8b0000, #8b0000);
-            border-top: 4px ridge #ffb000;
-            border-left: 4px groove #ffb000;
-            border-right: 4px ridge #ffb000;
-            border-bottom: 4px groove #ffb000;
-            box-shadow: inset 0px 0px 5px 3px rgba(1, 1, 1, 0.3);
         }
 
         .btn:hover {

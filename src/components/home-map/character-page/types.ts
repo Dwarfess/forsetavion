@@ -1,6 +1,5 @@
 import { IArtifactCard, IHeroBattleCard } from "../../types";
 
-
 export interface ICommonShopItem {
     id: string;
     type: string;
@@ -27,6 +26,12 @@ export interface ICharacter {
     score: number;
     artifacts: IArtifactCard[],
     inventory: IInventory
+}
+
+export interface IUser {
+    email: string;
+    password: string;
+    character: ICharacter
 }
 
 export interface IShopItem extends IShopPotion {}

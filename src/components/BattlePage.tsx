@@ -26,6 +26,7 @@ import {
     useSelectedSecretCard,
     useIsMoving,
 } from "../store/storeHooks";
+import mixins from "../mixins";
 
 const BattlePage = () => {
     const { heroCard, battleCards, setBattleCards } = useBattleCards();
@@ -116,10 +117,13 @@ const BattlePage = () => {
 };
 
 const BattlePageContainer = styled.div`
+    ${mixins.stretchedBackground};
+
     width: 700px;
+    height: calc(100% - 40px);
     padding: 20px;
     background-image: url("main-bg.jpg");
-    background-size: cover;
+    //background-size: cover;
 `;
 
 const BattleField = styled.div`

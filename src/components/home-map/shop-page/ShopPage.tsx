@@ -48,12 +48,58 @@ const ShopPage: React.FC<IShopPage> = () => {
     )
 }
 
+const ShopPageContainer = styled.div`
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    
+    .shop-list, .inventory-list {
+        width: 150px;
+        height: 100%;
+        margin-top: 70px;
+        box-sizing: border-box;
+        
+        .btn {
+            ${mixins.transparentBtn};
+
+            width: 70px;
+            height: 70px;
+            margin: 20px auto;
+        }
+    }
+
+    .shop-items-container, 
+    .inventory-items-container {
+        width: 520px;
+        margin: 130px 10px;
+    }
+
+    .play-game-button {
+        width: 150px;
+        height: 150px;
+        background-image: url("play-game-button.png");
+        background-size: cover;
+        opacity: .5;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 200px;
+        box-shadow: 0 0 20px 5px black;
+        cursor: pointer;
+
+        &:hover { box-shadow: 0 0 10px 10px black }
+        &:active { box-shadow: 0 0 10px 1px black }
+    }
+`;
+
 const ShopPanel = styled.div`
     ${mixins.stretchedBackground};
     
     background-image: url('left-parchment.png');
-    margin: 20px 0 0 50px;
-    height: 500px;
+    margin-left: 50px;
+    height: 650px;
     display: flex;
 
     .shop-list {
@@ -76,59 +122,22 @@ const ShopPanel = styled.div`
 `;
 
 const InventoryPanel = styled.div`
+    ${mixins.stretchedBackground};
+    
     background-image: url('right-parchment.png');
-    margin: 20px 50px 0 0;
-    height: 500px;
+    margin-right: 50px;
+    height: 650px;
     display: flex;
 
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    background-position: center center;
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
     
     .inventory-list {
         .potion-inventory {
             background-image: url('icon-potion-2.png');
         }
-    }
-`;
-
-const ShopPageContainer = styled.div`
-    .shop-list, .inventory-list {
-        width: 150px;
-        height: 100%;
-        margin-top: 50px;
-        box-sizing: border-box;
-    }
-
-    .shop-items-container, .inventory-items-container {
-        width: 520px;
-        margin: 90px 10px;
-    }
-
-    .btn {
-        ${mixins.transparentBtn};
-        
-        width: 70px;
-        height: 70px;
-        margin: 20px auto;
-
-    }
-
-    .play-game-button {
-        width: 150px;
-        height: 150px;
-        background-image: url("play-game-button.png");
-        background-size: cover;
-        opacity: .5;
-        position: absolute;
-        top: calc(50% - 90px);
-        right: 40%;
-        border-radius: 200px;
-        box-shadow: 0 0 20px 5px black;
-        cursor: pointer;
-
-        &:hover { box-shadow: 0 0 10px 10px black }
-        &:active { box-shadow: 0 0 10px 1px black }
     }
 `;
 
