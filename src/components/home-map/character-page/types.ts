@@ -18,6 +18,7 @@ export interface IInventory {
 }
 
 export interface ICharacter {
+    userId: string;
     nickname: string;
     avatar: string;
     hero: IHeroBattleCard;
@@ -29,6 +30,7 @@ export interface ICharacter {
 }
 
 export interface IUser {
+    id: string;
     email: string;
     password: string;
     character: ICharacter

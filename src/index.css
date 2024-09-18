@@ -11,7 +11,7 @@ body {
   /*font-size: 8px !important;*/
 }
 
-* {
+*:not(input) {
   caret-color: transparent;
   font-family: 'MagicalWorld';
 }

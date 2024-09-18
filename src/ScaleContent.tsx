@@ -4,6 +4,7 @@ import styled from "styled-components";
 const ScaleContent = ({children}: any) => {
     useEffect(() => {
         const scaleContent = () => {
+            console.log('scaleContent')
             const canvas = document.getElementById('canvas');
             if (!canvas) return;
 
@@ -20,16 +21,22 @@ const ScaleContent = ({children}: any) => {
 
             // @ts-ignore
             canvas.style.zoom = scale;
+            console.log('scale', scale)
             // canvas.style.transform = `scale(${scale})`
 
             document.body.style.height = `${canvasHeight * scale}px`;
         };
 
-        window.addEventListener('resize', scaleContent);
+        // window.addEventListener('resize', scaleContent);
+        window.addEventListener('orientationchange', scaleContent);
+        window.addEventListener('load', scaleContent);
+
         scaleContent();
 
         return () => {
-            window.removeEventListener('resize', scaleContent);
+            // window.removeEventListener('resize', scaleContent);
+            window.removeEventListener('orientationchange', scaleContent);
+            window.removeEventListener('load', scaleContent);
         };
     }, []);
 
