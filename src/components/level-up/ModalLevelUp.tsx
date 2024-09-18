@@ -66,7 +66,7 @@ const ModalLevelUp = () => {
                                 <BattleCardImage battleCard={skill}/>
                                 {skill.level ?
                                     (<LevelIndicator battleCard={skill} size={5} position={{bottom: 5}}/>)
-                                    : <img src="lock.png" className='img-lock'/>
+                                    : <img src="img/lock.png" className='img-lock'/>
                                 }
                             </div>
                             <div className="temporary-points">+{skill.temporaryPoints}</div>

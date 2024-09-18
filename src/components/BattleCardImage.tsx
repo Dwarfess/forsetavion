@@ -8,10 +8,10 @@ const BattleCardImage = ({battleCard, radius = 5}: {battleCard: BattleCardType |
     return <>
         {battleCard.type === 'bossPart'
             ? <CardImageBackground />
-            : (<CardImage src={`${battleCard.image}.jpg`} data-type={battleCard.type} data-radius={radius}/>)
+            : (<CardImage src={`img/${battleCard.image}.jpg`} data-type={battleCard.type} data-radius={radius}/>)
         }
         {battleCard.subImage && (
-            <CardImage src={`${battleCard.subImage}.png`} className={battleCard.type} data-radius={radius}/>
+            <CardImage src={`img/${battleCard.subImage}.png`} className={battleCard.type} data-radius={radius}/>
         )}
         <CardImageErrorBackground className="card-image-error-background" />
     </>;

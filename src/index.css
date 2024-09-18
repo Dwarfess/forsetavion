@@ -6,7 +6,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url('../public/cave2.jpg') !important;
+  background-image: url('../public/img/cave2.jpg') !important;
   background-size: cover !important;
   /*font-size: 8px !important;*/
 }

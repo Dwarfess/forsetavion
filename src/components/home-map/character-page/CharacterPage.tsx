@@ -18,7 +18,7 @@ const CharacterPage = () => {
         <CharacterPanel>
             <div className="character-menu">
                 <button className="avatar btn" onClick={() => setCharacterSelectedPanel('avatar-selection')}>
-                    <img src={`${character.avatar}.jpg`} alt=""/>
+                    <img src={`img/${character.avatar}.jpg`} alt=""/>
                 </button>
                 <button className="inventory btn" onClick={() => setCharacterSelectedPanel('character-info')}></button>
                 <button className="shop btn"></button>
@@ -48,7 +48,7 @@ const CharacterPageContainer = styled.div`
     .play-game-button {
         width: 130px;
         height: 130px;
-        background-image: url("play-game-button.png");
+        background-image: url("img/play-game-button.png");
         background-size: cover;
         opacity: .5;
         position: absolute;
@@ -75,7 +75,7 @@ const CharacterPageContainer = styled.div`
 const CharacterPanel = styled.div`
     ${mixins.stretchedBackground};
     
-    background-image: url('left-parchment.png');
+    background-image: url('img/left-parchment.png');
     margin-left: 50px;
     height: 650px;
     display: flex;
@@ -106,11 +106,11 @@ const CharacterPanel = styled.div`
             }
         }
         
-        .inventory { background-image: url('icon-character-info.png') }
+        .inventory { background-image: url('img/icon-character-info.png') }
 
-        .shop { background-image: url('icon-shop.png') }
+        .shop { background-image: url('img/icon-shop.png') }
         
-        .forge { background-image: url('icon-forge3.png') }        
+        .forge { background-image: url('img/icon-forge3.png') }        
     }
 
     .character-selected-panel {

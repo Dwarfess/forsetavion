@@ -37,7 +37,7 @@ const ButtonGroupWrapper = styled.div`
 `;
 
 const ExitButton = styled.div`
-    background-image: url("exit-button.png");
+    background-image: url("img/exit-button.png");
     background-size: cover;
     width: 60px;
     height: 60px;

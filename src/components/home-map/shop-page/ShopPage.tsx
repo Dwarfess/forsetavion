@@ -78,7 +78,7 @@ const ShopPageContainer = styled.div`
     .play-game-button {
         width: 150px;
         height: 150px;
-        background-image: url("play-game-button.png");
+        background-image: url("img/play-game-button.png");
         background-size: cover;
         opacity: .5;
         position: absolute;
@@ -97,26 +97,26 @@ const ShopPageContainer = styled.div`
 const ShopPanel = styled.div`
     ${mixins.stretchedBackground};
     
-    background-image: url('left-parchment.png');
+    background-image: url('img/left-parchment.png');
     margin-left: 50px;
     height: 650px;
     display: flex;
 
     .shop-list {
         .coin-shop {
-            background-image: url('icon-coins.png');
+            background-image: url('img/icon-coins.png');
         }
 
         .pvp-shop {
-            background-image: url('icon-pvp-2.png')
+            background-image: url('img/icon-pvp-2.png')
         }
 
         .boss-shop {
-            background-image: url('icon-boss.png')
+            background-image: url('img/icon-boss.png')
         }
 
         .sphere-shop {
-            background-image: url('icon-sphere.png')
+            background-image: url('img/icon-sphere.png')
         }
     }
 `;
@@ -124,7 +124,7 @@ const ShopPanel = styled.div`
 const InventoryPanel = styled.div`
     ${mixins.stretchedBackground};
     
-    background-image: url('right-parchment.png');
+    background-image: url('img/right-parchment.png');
     margin-right: 50px;
     height: 650px;
     display: flex;
@@ -136,7 +136,7 @@ const InventoryPanel = styled.div`
     
     .inventory-list {
         .potion-inventory {
-            background-image: url('icon-potion-2.png');
+            background-image: url('img/icon-potion-2.png');
         }
     }
 `;

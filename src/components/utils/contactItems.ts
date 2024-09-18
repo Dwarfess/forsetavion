@@ -6,7 +6,7 @@ export const addClassWhenUseSkill = async (battleCard: BattleCardType, skill: Sk
 
     if (!imgElement || !skillEffectEl) return;
 
-    imgElement.src = `${skill.image}.jpg`
+    imgElement.src = `img/${skill.image}.jpg`
 
     skillEffectEl.classList.add('active');
 

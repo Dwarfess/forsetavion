@@ -76,7 +76,7 @@ const MapPlaceContainer = styled.div`
         flex-direction: column;
         justify-content: space-between;
         padding: 20px;
-        background-image: url("${(props: any) => props['img-name']}.png");
+        background-image: url("img/${(props: any) => props['img-name']}.png");
         background-size: cover;
         position: absolute;
     }

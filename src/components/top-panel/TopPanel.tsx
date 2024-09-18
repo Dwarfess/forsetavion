@@ -20,16 +20,16 @@ const TopPanel = () => {
         <TopPanelWrapper>
             <div className="top-side">
                 <LevelBar>
-                    <img src="icon-level.png" className="level-icon"/>
+                    <img src="img/icon-level.png" className="level-icon"/>
                     <div className="level-value">{heroCard.level}</div>
                     <Progress value={heroCard.exp} total={getMaxExpForCurrentLever(heroCard)} progress='ratio' indicating />
                 </LevelBar>
                 <CoinsBar>
-                    <img src="icon-coins.png" className="coins-icon"/>
+                    <img src="img/icon-coins.png" className="coins-icon"/>
                     <div className="coins-value">{heroCard.coins}</div>
                 </CoinsBar>
                 <CoinsBar>
-                    <img src="icon-sphere.png" className="coins-icon"/>
+                    <img src="img/icon-sphere.png" className="coins-icon"/>
                     <div className="spheres-value">{heroCard.spheres}</div>
                 </CoinsBar>
                 <ExitButton onClick={onExitButtonClick}>Exit</ExitButton>
@@ -38,7 +38,7 @@ const TopPanel = () => {
             <div className="bottom-side">
                 <BossBar>
                     {heroCard.bossParts === ordinaryBossPartsCount && (<div className="boss-icon-background"></div>)}
-                    <img src="icon-boss.png" className="boss-icon"/>
+                    <img src="img/icon-boss.png" className="boss-icon"/>
                     <div className="boss-parts">
                         <Progress percent={getBossPartProgress(heroCard, 1)} indicating />
                         <Progress percent={getBossPartProgress(heroCard, 2)} indicating />

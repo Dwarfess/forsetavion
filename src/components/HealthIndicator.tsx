@@ -17,31 +17,31 @@ const HealthIndicator = ({ battleCard }: { battleCard: BattleCardType | any}) =>
         {battleCard.type === 'hero' && (
             <>
                 <div className="indicatorBottle"/>
-                <img src="indicator-hp60.png" className="health"/>
+                <img src="img/indicator-hp60.png" className="health"/>
                 <span className="healthAmount">{battleCard.health}</span>
             </>
         )}
         {battleCard.type === 'potion' && (
             <>
-                <img src="indicator-hp60.png" className="health"/>
+                <img src="img/indicator-hp60.png" className="health"/>
                 <span className="healthAmount">{battleCard.value}</span>
             </>
         )}
         {(battleCard.type === 'coin' || battleCard.type === 'superCoin') && (
             <>
-                <img src="indicator-coins.png" className="coin"/>
+                <img src="img/indicator-coins.png" className="coin"/>
                 <span className="coinsAmount">{battleCard.value}</span>
             </>
         )}
         {(battleCard.type === 'enemy' || battleCard.type === 'boss') && (
             <>
-                <img src="indicator-might.png" className="might"/>
+                <img src="img/indicator-might.png" className="might"/>
                 <span className="mightAmount">{battleCard.value}</span>
             </>
         )}
         {battleCard.type === 'sphere' && (
             <>
-                <img src="indicator-sphere.png" className="sphere"/>
+                <img src="img/indicator-sphere.png" className="sphere"/>
                 <span className="sphereAmount">{battleCard.value}</span>
             </>
         )}

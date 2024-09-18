@@ -50,28 +50,28 @@ const CharacterInfo: React.FC<ICharacterPanel> = () => {
                 <p className="item-title">Hero: </p>
                 <div className="item-icon-wrapper">
                     <div className="item-value">{character.hero.name}</div>
-                    <img src={`${character.hero.image}.jpg`} className="item-icon"/>
+                    <img src={`img/${character.hero.image}.jpg`} className="item-icon"/>
                 </div>
             </div>
             <div className="item-info">
                 <p className="item-title">Coins: </p>
                 <div className="item-icon-wrapper">
                     <div className="item-value">{character.coins}</div>
-                    <img src="icon-coins.png" className="item-icon"/>
+                    <img src="img/icon-coins.png" className="item-icon"/>
                 </div>
             </div>
             <div className="item-info">
                 <p className="item-title">Spheres: </p>
                 <div className="item-icon-wrapper">
                     <div className="item-value">{character.spheres}</div>
-                    <img src="icon-sphere.png" className="item-icon"/>
+                    <img src="img/icon-sphere.png" className="item-icon"/>
                 </div>
             </div>
             <div className="item-info">
                 <p className="item-title">Score: </p>
                 <div className="item-icon-wrapper">
                     <div className="item-value">{character.score}</div>
-                    <img src="icon-score6.png" className="item-icon"/>
+                    <img src="img/icon-score6.png" className="item-icon"/>
                 </div>
             </div>
         </CharacterInfoContainer>

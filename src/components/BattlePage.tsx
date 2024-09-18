@@ -122,7 +122,7 @@ const BattlePageContainer = styled.div`
     width: 700px;
     height: calc(100% - 40px);
     padding: 20px;
-    background-image: url("main-bg.jpg");
+    background-image: url("img/main-bg.jpg");
     //background-size: cover;
 `;
 

@@ -43,7 +43,7 @@ const SkillPanel = () => {
                 >
                     <div className="skill-item">
                         <BattleCardImage battleCard={skill} radius={50}/>
-                        <img src="lock.png" className='img-lock'/>
+                        <img src="img/lock.png" className='img-lock'/>
                     </div>
                     {skill.coolDown ? <span className="count-value">{skill.coolDown}</span> : <></>}
                 </div>

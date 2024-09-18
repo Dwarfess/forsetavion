@@ -47,7 +47,7 @@ const ModalWrapper = styled.div`
         height: 900px;
         box-shadow: none;
         background-color: transparent;
-        background-image: url("battle-over-modal2.png");
+        background-image: url("img/battle-over-modal2.png");
         background-size: cover;
         padding: 100px;
         position: relative;

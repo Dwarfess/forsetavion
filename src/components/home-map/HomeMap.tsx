@@ -28,7 +28,7 @@ const HomeMapContainer = styled.div`
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background-image: url('main-bg-6.jpg');
+    background-image: url('img/main-bg-6.jpg');
     background-size: 100% 100%;
     position: relative;
     

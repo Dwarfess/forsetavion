@@ -40,17 +40,17 @@ const CommonInventoryBench: FC<ICommonInventoryBench> = ({
         <div className="inventory-header">
             <h2>{ title }</h2>
             <CoinsBar>
-                <img src="icon-coins.png" className="coins-icon"/>
+                <img src="img/icon-coins.png" className="coins-icon"/>
                 <div className="coins-value">{character.coins}</div>
             </CoinsBar>
             <CoinsBar>
-                <img src="icon-sphere.png" className="coins-icon"/>
+                <img src="img/icon-sphere.png" className="coins-icon"/>
                 <div className="spheres-value">{character.spheres}</div>
             </CoinsBar>
         </div>
         { selectedItem && (<div className="selected-inventory-item-wrapper">
             <div className="inventory-item selected-inventory-item">
-                <img src={`${selectedItem.image}.png`} alt=""/>
+                <img src={`img/${selectedItem.image}.png`} alt=""/>
                 { selectedItem.selected && <div className="selected-title">Selected</div>}
                 {/*<div className="inventory-item-count">{ selectedItemCount }</div>*/}
             </div>
@@ -62,7 +62,7 @@ const CommonInventoryBench: FC<ICommonInventoryBench> = ({
         <div className="inventory-item-collection">
             { items.map((item, index) => (
                 <div className="inventory-item" onClick={() => setSelectedItem(item)} key={index}>
-                    <img src={`${item.image}.png`} alt=""/>
+                    <img src={`img/${item.image}.png`} alt=""/>
                     <div className="inventory-item-count">{ item.count }</div>
                     <div className="inventory-item-remove" onClick={(e) => onRemoveClick(e, item)}>×</div>
                 </div>

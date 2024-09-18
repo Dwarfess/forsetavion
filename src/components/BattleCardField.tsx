@@ -120,12 +120,12 @@ const BattleCardFieldWrapperForAnimation = styled.div`
             z-index: 1;
         }
 
-        &.contactEnemy::after { background-image: url('bloodEffect2.png') }
+        &.contactEnemy::after { background-image: url('img/bloodEffect2.png') }
 
         &.contactPotion::after {
             width: 100%;
             height: 100%;
-            background-image: url('potionEffect.png');
+            background-image: url('img/potionEffect.png');
             animation: slide-up 1s ease-in-out infinite alternate;
         }
     }

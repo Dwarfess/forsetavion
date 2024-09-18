@@ -41,17 +41,17 @@ const CommonShopBench: FC<ICommonShopBench> = ({
             <div className="shop-bench-header">
                 <h2>{ title }</h2>
                 <CoinsBar>
-                    <img src="icon-coins.png" className="coins-icon"/>
+                    <img src="img/icon-coins.png" className="coins-icon"/>
                     <div className="coins-value">{character.coins}</div>
                 </CoinsBar>
                 <CoinsBar>
-                    <img src="icon-sphere.png" className="coins-icon"/>
+                    <img src="img/icon-sphere.png" className="coins-icon"/>
                     <div className="spheres-value">{character.spheres}</div>
                 </CoinsBar>
             </div>
             <div className="selected-shop-item-wrapper">
                 <div className="shop-item selected-shop-item">
-                    <img src={`${selectedItem.image}.png`} alt=""/>
+                    <img src={`img/${selectedItem.image}.png`} alt=""/>
 
                     <div className="shop-item-count-wrapper">
                         <div className="shop-item-count-button" onClick={decreaseItemCount}>-</div>
@@ -63,14 +63,14 @@ const CommonShopBench: FC<ICommonShopBench> = ({
                     <p className="shop-item-description">This potion increase your health by { selectedItem.value }. Can be use only once per battle.</p>
                     <button className="buy-shop-item" onClick={onBuyItemClick}>
                         <div className="shop-item-price">{ selectedItem.price * selectedItemCount }</div>
-                        <img src={`${currencyIcon}.png`} alt=""/>
+                        <img src={`img/${currencyIcon}.png`} alt=""/>
                     </button>
                 </div>
             </div>
             <div className="shop-item-collection">
                 { items.map((item, index) => (
                     <div className="shop-item" onClick={() => onSelectItemClick(item)} key={index}>
-                        <img src={`${item.image}.png`} alt=""/>
+                        <img src={`img/${item.image}.png`} alt=""/>
                     </div>
                 ))}
             </div>

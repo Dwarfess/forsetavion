@@ -101,7 +101,7 @@ const HeroSelectionPanelWrapper = styled.div`
 const HeroSelectionPanelContainer = styled.div`
     ${mixins.stretchedBackground};
     
-    background-image: url("select-hero-bg2.png");
+    background-image: url("img/select-hero-bg2.png");
     display: block !important;
     width: 600px !important;
     height: 600px;

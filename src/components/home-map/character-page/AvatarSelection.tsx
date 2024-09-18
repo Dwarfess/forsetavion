@@ -22,14 +22,14 @@ const AvatarSelection = () => {
         <h2>Select your avatar</h2>
 
         <div className="avatar-wrapper">
-            <div className="avatar"><img src={`${selectedAvatarName || character.avatar}.jpg`} alt=""/></div>
+            <div className="avatar"><img src={`img/${selectedAvatarName || character.avatar}.jpg`} alt=""/></div>
             {selectedAvatarName && <button className="btn" onClick={clickApplyButton}>✔</button>}
             {selectedAvatarName && <button className="btn" onClick={clickCancelButton}>✖</button>}
         </div>
         <div className="avatar-collection">
             { avatars.map((name: string, index) => (
                 <button className="btn" onClick={() => setSelectedAvatarName(name)} key={index}>
-                    <img src={`${name}.jpg`} alt=""/>
+                    <img src={`img/${name}.jpg`} alt=""/>
                 </button>
             ))}
             <button className="btn">+</button>
