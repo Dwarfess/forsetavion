@@ -20,18 +20,41 @@ export const signInUser = (data: any) => {
     return false;
 }
 
-const generateNewUser = (data: any): IUser => {
+export const signInAsGuest = () => {
+    const questsCollection = localStorage.getItem('guests');
+    const currentGuest = generateNewUser(
+        { nickname: `Guest_${Math.random().toString(16).slice(2, 7)}` },
+        'guests'
+    );
+
+    if (questsCollection) {
+        const guests: IUser[] = JSON.parse(questsCollection);
+
+        localStorage.setItem('guests', JSON.stringify([...guests, currentGuest]));
+    } else {
+        localStorage.setItem('guests', JSON.stringify([currentGuest]));
+    }
+
+    setStateValue('character', currentGuest.character);
+    setStateValue('activePage', 'game-selection-page');
+
+    return true;
+}
+
+const generateNewUser = (data: any, type: string = 'users'): IUser => {
     const newCharacter = structuredClone(defaultCharacter);
     const userId = Math.random().toString(16).slice(2);
 
     newCharacter.nickname = data.nickname;
     newCharacter.userId = userId;
+    newCharacter.userType = type;
 
     return {
         id: userId,
         email: data.email,
         password: data.password,
-        character: newCharacter
+        character: newCharacter,
+        type
     }
 }
 
@@ -59,13 +82,13 @@ export const signUpUser = (data: any) => {
 }
 
 export const updateCurrentCharacter = (character: ICharacter) => {
-    const users = JSON.parse(localStorage.getItem('users') || '');
+    const users = JSON.parse(localStorage.getItem(character.userType) || '');
 
     const currentUser = users.find((user: IUser) => user.id === character.userId);
 
     if (currentUser) {
         currentUser.character = character
-        localStorage.setItem('users', JSON.stringify(users));
+        localStorage.setItem(character.userType, JSON.stringify(users));
     }
 }
 

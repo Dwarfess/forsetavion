@@ -377,9 +377,10 @@ export const defaultHeroCard: IHeroBattleCard = {
 
 export const bossPartCards: PrimaryBattleCardType[] = [
     {
-        name: 'part7',
+        name: 'Boss Coin',
         image: 'boss-part-7',
         subImage: 'boss-part-7',
+        description: 'This is a rare currency used to unlock special items, upgrades, and exclusive features',
         type: 'bossPart',
     }
 ];

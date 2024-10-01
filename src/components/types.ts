@@ -2,6 +2,7 @@ export interface PrimaryBattleCardType {
     name: string;
     image: string;
     subImage?: string;
+    description?: string;
     type: string;
     subType?: string;
 }
@@ -11,7 +12,6 @@ export interface CommonBattleCardType extends PrimaryBattleCardType {
     index: number;
     level: number;
     isVisible: boolean;
-    description?: string;
     active?: boolean;
 }
 

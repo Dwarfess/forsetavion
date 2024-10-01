@@ -70,14 +70,14 @@ const HeroSelectionPanel: React.FC<IHeroSelectionPanel> = () => {
 }
 
 const HeroSelectionPanelWrapper = styled.div`
-    //width: 100%;
-    //display: flex;
-    //border: 1px solid red;
-    //box-sizing: border-box;
-    //align-items: center;
-    //justify-content: space-between;
-    //position: relative;
-    //margin-bottom: 20px;
+    width: 100%;
+    display: flex;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    margin-bottom: 20px;
     
     .slick-slider {
         width: 90%;
@@ -140,6 +140,7 @@ const HeroSelectionPanelContainer = styled.div`
 
         .battle-card-image {
             width: 30%;
+            height: max-content;
             margin-right: 10px;
             position: relative;
             

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from "styled-components";
+import mixins from "./mixins";
 
 const ScaleContent = ({children}: any) => {
     useEffect(() => {
@@ -24,17 +25,17 @@ const ScaleContent = ({children}: any) => {
             console.log('scale', scale)
             // canvas.style.transform = `scale(${scale})`
 
-            document.body.style.height = `${canvasHeight * scale}px`;
+            // document.body.style.height = `${canvasHeight * scale}px`;
         };
 
-        // window.addEventListener('resize', scaleContent);
+        window.addEventListener('resize', scaleContent);
         window.addEventListener('orientationchange', scaleContent);
         window.addEventListener('load', scaleContent);
 
         scaleContent();
 
         return () => {
-            // window.removeEventListener('resize', scaleContent);
+            window.removeEventListener('resize', scaleContent);
             window.removeEventListener('orientationchange', scaleContent);
             window.removeEventListener('load', scaleContent);
         };
@@ -49,12 +50,12 @@ const ScaleContent = ({children}: any) => {
     );
 };
 
-const ScaleContentContainer = styled.div`
+const ScaleContentContainer = styled.div`   
     width: 2540px;
     transform-origin: top left;
 
-    @media (max-width: 800px) {
-        width: 800px;
+    @media (max-width: 740px) {
+        width: 740px;
     }
 `;
 

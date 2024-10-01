@@ -36,11 +36,11 @@ const ModalWrapper = styled.div`
     ${mixins.flexCenter};
 
     background-color: rgba(0, 0, 0, .6);
-    width: 800px;
+    width: 740px;
     height: 1400px;
     position: fixed;
-    top: 0;
-    left: 0;
+    top: calc(50% - 700px);
+    //left: 0;
     
     .modal {
         width: 700px;

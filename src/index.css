@@ -6,8 +6,12 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url('../public/img/cave2.jpg') !important;
+  /*background-image: url('../public/img/cave2.jpg') !important;*/
+  background: #000 !important;
   background-size: cover !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   /*font-size: 8px !important;*/
 }
 

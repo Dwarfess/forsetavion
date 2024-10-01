@@ -6,16 +6,22 @@ import {useActivePage} from "../../store/storeHooks";
 import {GameSelectionPanel} from "./GameSelectionPanel";
 import {ShopPage} from "./shop-page/ShopPage";
 import {RegistrationPage} from "./registration-page/RegistrationPage";
+import {LoadingPage} from "./LoadingPage";
+import {GeneralHeader} from "../general-header/GeneralHeader";
 const HomeMap = () => {
     const { activePage, setActivePage } = useActivePage();
 
     useEffect(() => {
         setActivePage('registration-page');
+        setActivePage('loading-page');
     }, []);
 
     return <HomeMapContainer>
-        { activePage === 'game-selection-page' && (<h2 className="map-name">Homeland</h2>)}
+        { (activePage === 'loading-page' || activePage === 'registration-page') || <GeneralHeader /> }
 
+        {/*{ activePage === 'game-selection-page' && (<h2 className="map-name">Homeland</h2>)}*/}
+
+        { activePage === 'loading-page' && (<LoadingPage />)}
         { activePage === 'registration-page' && (<RegistrationPage />)}
         { activePage === 'character-page' && (<CharacterPage />)}
         { activePage === 'shop-page' && (<ShopPage />)}
@@ -25,13 +31,14 @@ const HomeMap = () => {
 };
 
 const HomeMapContainer = styled.div`
+    //display: flex;
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background-image: url('img/main-bg-6.jpg');
+    background-image: url('img/main-bg-7.jpg');
     background-size: 100% 100%;
     position: relative;
-    
+
     .map-name {
         font-family: 'MagicalWorld';
         font-size: 70px;

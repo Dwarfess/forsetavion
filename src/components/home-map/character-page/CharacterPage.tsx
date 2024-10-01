@@ -11,7 +11,7 @@ import mixins from "../../../mixins";
 
 const CharacterPage = () => {
     const { character } = useCharacter();
-    const { setActivePage } = useActivePage();
+    // const { setActivePage } = useActivePage();
     const [ characterSelectedPanel, setCharacterSelectedPanel ] = useState('character-info');
 
     return <CharacterPageContainer>
@@ -30,7 +30,7 @@ const CharacterPage = () => {
             </div>
         </CharacterPanel>
 
-        <div className="play-game-button" onClick={() => setActivePage('game-selection-page')}></div>
+        {/*<div className="play-game-button" onClick={() => setActivePage('game-selection-page')}></div>*/}
 
         <div className="hero-selection-panel-wrapper">
             <HeroSelectionPanel />
@@ -41,34 +41,34 @@ const CharacterPage = () => {
 const CharacterPageContainer = styled.div`
     width: auto;
     height: 100%;
-    overflow: hidden;
+    //overflow: hidden;
     //height: calc(100vh - 50px);
-    position: relative;
+    //position: relative;
 
-    .play-game-button {
-        width: 130px;
-        height: 130px;
-        background-image: url("img/play-game-button.png");
-        background-size: cover;
-        opacity: .5;
-        position: absolute;
-        top: 48%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        border-radius: 200px;
-        box-shadow: 0 0 20px 5px black;
-        cursor: pointer;
-
-        &:hover { box-shadow: 0 0 10px 10px black }
-        &:active { box-shadow: 0 0 10px 1px black }
-    }
+    //.play-game-button {
+    //    width: 130px;
+    //    height: 130px;
+    //    background-image: url("img/play-game-button.png");
+    //    background-size: cover;
+    //    opacity: .5;
+    //    position: absolute;
+    //    top: 48%;
+    //    left: 50%;
+    //    transform: translate(-50%, -50%);
+    //    border-radius: 200px;
+    //    box-shadow: 0 0 20px 5px black;
+    //    cursor: pointer;
+    //
+    //    &:hover { box-shadow: 0 0 10px 10px black }
+    //    &:active { box-shadow: 0 0 10px 1px black }
+    //}
 
     .hero-selection-panel-wrapper {
-        position: absolute;
+        //position: absolute;
         right: 0;
         left: 0;
         bottom: 0;
-        margin-bottom: 20px;
+        //margin-bottom: 20px;
     }
 `;
 
@@ -76,7 +76,7 @@ const CharacterPanel = styled.div`
     ${mixins.stretchedBackground};
     
     background-image: url('img/left-parchment.png');
-    margin-left: 50px;
+    margin: 50px 0 0 50px;
     height: 650px;
     display: flex;
     

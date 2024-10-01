@@ -40,6 +40,7 @@ const ModalXContainer = styled.div`
     .header {
         display: flex;
         font-size: 30px;
+        line-height: 30px;
         
         .battle-card-image {
             width: 30%;
@@ -54,7 +55,9 @@ const ModalXContainer = styled.div`
         
         .battle-card-name {
             font-size: 50px;
-            margin-bottom: 10px;
+            line-height: 50px;
+            text-transform: capitalize;
+            //margin-bottom: 10px;
         }
         
         .battle-card-description {

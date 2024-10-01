@@ -19,6 +19,7 @@ export interface IInventory {
 
 export interface ICharacter {
     userId: string;
+    userType: string;
     nickname: string;
     avatar: string;
     hero: IHeroBattleCard;
@@ -33,7 +34,8 @@ export interface IUser {
     id: string;
     email: string;
     password: string;
-    character: ICharacter
+    character: ICharacter;
+    type: string;
 }
 
 export interface IShopItem extends IShopPotion {}

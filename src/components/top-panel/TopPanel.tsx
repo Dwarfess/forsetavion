@@ -6,15 +6,15 @@ import {ordinaryBossPartsCount} from "../constants";
 import {useActivePage, useBattleCards, useBattleFieldLength} from "../../store/storeHooks";
 
 const TopPanel = () => {
-    const { setActivePage } = useActivePage();
-    const { heroCard, setBattleCards } = useBattleCards();
-    const { setBattleFieldLength } = useBattleFieldLength();
+    // const { setActivePage } = useActivePage();
+    const { heroCard } = useBattleCards();
+    // const { setBattleFieldLength } = useBattleFieldLength();
 
-    const onExitButtonClick = () => {
-        setBattleCards([]);
-        setBattleFieldLength(0);
-        setActivePage('game-selection-page');
-    }
+    // const onExitButtonClick = () => {
+    //     setBattleCards([]);
+    //     setBattleFieldLength(0);
+    //     setActivePage('game-selection-page');
+    // }
 
     return (
         <TopPanelWrapper>
@@ -32,7 +32,7 @@ const TopPanel = () => {
                     <img src="img/icon-sphere.png" className="coins-icon"/>
                     <div className="spheres-value">{heroCard.spheres}</div>
                 </CoinsBar>
-                <ExitButton onClick={onExitButtonClick}>Exit</ExitButton>
+                {/*<ExitButton onClick={onExitButtonClick}>Exit</ExitButton>*/}
             </div>
 
             <div className="bottom-side">
@@ -59,34 +59,35 @@ const TopPanelWrapper = styled.div`
     
     .top-side, .bottom-side {
         display: flex;
+        justify-content: space-between;
         width: 100%;
         height: max-content;
         position: relative;
     }
 `;
-
-const ExitButton = styled.div`
-    width: 120px;
-    background-color: rgba(0, 0, 0, .4);
-    position: absolute;
-    right: -20px;
-
-    line-height: 60px;
-    text-align: center;
-    font-size: 25px;
-    font-weight: bold;
-    color: #494117;
-    text-shadow: 0px 0px 3px #E6E6E6, 0px 0px 3px #1A1A1A, 0px 0px 3px #E6E6E6, 0px 0px 3px #E6E6E6, 0px 0px 3px #E6E6E6;
-    text-transform: uppercase;
-    cursor: pointer;
-    user-select: none;
-    
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    
-    //&:hover { box-shadow: 0px 0px 20px 0px black }
-    //&:active { box-shadow: none }
-`;
+//
+// const ExitButton = styled.div`
+//     width: 120px;
+//     background-color: rgba(0, 0, 0, .4);
+//     position: absolute;
+//     right: -20px;
+//
+//     line-height: 60px;
+//     text-align: center;
+//     font-size: 25px;
+//     font-weight: bold;
+//     color: #494117;
+//     text-shadow: 0px 0px 3px #E6E6E6, 0px 0px 3px #1A1A1A, 0px 0px 3px #E6E6E6, 0px 0px 3px #E6E6E6, 0px 0px 3px #E6E6E6;
+//     text-transform: uppercase;
+//     cursor: pointer;
+//     user-select: none;
+//
+//     border-top-left-radius: 5px;
+//     border-bottom-left-radius: 5px;
+//
+//     //&:hover { box-shadow: 0px 0px 20px 0px black }
+//     //&:active { box-shadow: none }
+// `;
 
 const BossBar = styled.div`
     position: relative;
@@ -194,7 +195,7 @@ const LevelBar = styled.div`
 const CoinsBar = styled.div`
     display: flex;
     position: relative;
-    width: 150px;
+    width: 60px;
     align-items: center;
     justify-content: center;
 

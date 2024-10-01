@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import {signInUser} from "./registerUtils";
+import {signInAsGuest, signInUser} from "./registerUtils";
 
 const schema = yup.object({
     email: yup.string().email('Please enter a valid email address').required('Email is required'),
@@ -23,6 +23,11 @@ const SignInForm = () => {
         setError('password', { type: 'manual', message: 'Incorrect email or password' });
     }
 
+    const onGuestButtonClick = () => {
+        const data = {}
+        signInAsGuest();
+    }
+
     return <form onSubmit={handleSubmit(onSubmit)}>
         <div className="field">
             <label htmlFor="">Email</label>
@@ -37,6 +42,7 @@ const SignInForm = () => {
         </div>
 
         <div className="actions">
+            <button className="btn" onClick={onGuestButtonClick}>Guest</button>
             <button type="submit" className="btn" disabled={!isValid}>Sign up</button>
         </div>
     </form>

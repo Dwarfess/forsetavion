@@ -19,8 +19,8 @@ function App() {
 }
 
 const AppContainer = styled.div`
-    margin: 20px;
-    border-radius: 20px;
+    //margin: 20px;
+    //border-radius: 20px;
     width: 740px;
     box-shadow: 0 0 30px 5px black;
     //width: auto;

@@ -8,13 +8,13 @@ import {PvPShop} from "./PvPShop";
 import {PotionInventory} from "./PotionInventory";
 import {ArtifactInventory} from "./ArtifactInventory";
 
-import {useActivePage} from "../../../store/storeHooks";
+// import {useActivePage} from "../../../store/storeHooks";
 import mixins from "../../../mixins";
 
 interface IShopPage {}
 
 const ShopPage: React.FC<IShopPage> = () => {
-    const { setActivePage } = useActivePage();
+    // const { setActivePage } = useActivePage();
     const [ selectedShop, setSelectedShop ] = useState('coin-shop');
     const [ selectedInventory, setSelectedInventory ] = useState('potion-inventory');
     return (
@@ -33,7 +33,7 @@ const ShopPage: React.FC<IShopPage> = () => {
                     { selectedShop === 'sphere-shop' && <SphereShop /> }
                 </div>
             </ShopPanel>
-            <div className="play-game-button" onClick={() => setActivePage('game-selection-page')}></div>
+            {/*<div className="play-game-button" onClick={() => setActivePage('game-selection-page')}></div>*/}
             <InventoryPanel>
                 <div className="inventory-items-container">
                     { selectedInventory === 'potion-inventory' && <PotionInventory /> }
@@ -52,7 +52,7 @@ const ShopPageContainer = styled.div`
     width: 100%;
     height: 100%;
     overflow: hidden;
-    position: relative;
+    //position: relative;
     
     .shop-list, .inventory-list {
         width: 150px;
@@ -75,30 +75,30 @@ const ShopPageContainer = styled.div`
         margin: 130px 10px;
     }
 
-    .play-game-button {
-        width: 150px;
-        height: 150px;
-        background-image: url("img/play-game-button.png");
-        background-size: cover;
-        opacity: .5;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        border-radius: 200px;
-        box-shadow: 0 0 20px 5px black;
-        cursor: pointer;
-
-        &:hover { box-shadow: 0 0 10px 10px black }
-        &:active { box-shadow: 0 0 10px 1px black }
-    }
+    //.play-game-button {
+    //    width: 150px;
+    //    height: 150px;
+    //    background-image: url("img/play-game-button.png");
+    //    background-size: cover;
+    //    opacity: .5;
+    //    position: absolute;
+    //    top: 50%;
+    //    left: 50%;
+    //    transform: translate(-50%, -50%);
+    //    border-radius: 200px;
+    //    box-shadow: 0 0 20px 5px black;
+    //    cursor: pointer;
+    //
+    //    &:hover { box-shadow: 0 0 10px 10px black }
+    //    &:active { box-shadow: 0 0 10px 1px black }
+    //}
 `;
 
 const ShopPanel = styled.div`
     ${mixins.stretchedBackground};
     
     background-image: url('img/left-parchment.png');
-    margin-left: 50px;
+    margin: 50px 0 0 50px;
     height: 650px;
     display: flex;
 

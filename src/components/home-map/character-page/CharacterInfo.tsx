@@ -1,8 +1,9 @@
-import React, { useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import styled from 'styled-components';
 
 import { useCharacter } from '../../../store/storeHooks';
 import mixins from '../../../mixins';
+import {editNicknameHandler} from "./utils";
 
 interface ICharacterPanel {}
 
@@ -10,7 +11,21 @@ const CharacterInfo: React.FC<ICharacterPanel> = () => {
     const { character, setCharacter } = useCharacter();
     const [ nicknameEditMode, setNicknameEditMode ] = useState(false);
 
-    const editableRef = useRef(null);
+    const editableRef = useRef<HTMLHeadingElement>(null);
+
+    useEffect(() => {
+        if (editableRef.current) {
+            const currentRef = editableRef.current;
+
+            // @ts-ignore
+            currentRef.addEventListener("input", editNicknameHandler);
+
+            return () => {
+                // @ts-ignore
+                currentRef.removeEventListener("input", editNicknameHandler);
+            };
+        }
+    }, []);
 
     const toggleNicknameEditMode = (state: boolean) => setNicknameEditMode(state);
 
@@ -19,9 +34,14 @@ const CharacterInfo: React.FC<ICharacterPanel> = () => {
     }
 
     const clickApplyButton = () => {
-        // @ts-ignore
-        setCharacter({ ...character, nickname: editableRef.current?.innerHTML });
-        toggleNicknameEditMode(false);
+        const newNickname = editableRef.current?.innerHTML;
+
+        if (newNickname) {
+            setCharacter({...character, nickname: newNickname});
+            toggleNicknameEditMode(false);
+        } else {
+            clickCancelButton();
+        }
     }
 
     const clickCancelButton = () => {

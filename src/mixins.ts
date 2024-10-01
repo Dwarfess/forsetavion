@@ -28,16 +28,43 @@ const flexStart = css`
     justify-content: flex-start;
 `;
 
+const flexBetween = css`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+`;
+
 const flexCenter = css`
     display: flex;
     align-items: center;
     justify-content: center;
 `;
 
+const modernH1 = css`
+    ${mainFontFace}
+    
+    background-image: url("gifs/giphy.webp");
+    background-size: cover;
+    color: transparent !important;
+    -webkit-background-clip: text;
+    
+    margin: 0;
+    font-size: 200px;
+    line-height: 200px;
+    text-align: center;
+`;
+
+const modernH2 = css`
+    ${modernH1}
+
+    font-size: 80px;
+    line-height: 80px;
+`;
+
 const standardH2 = css`
     ${firstTextColor};
-    
-    font-family: 'MagicalWorld';
+    ${mainFontFace};
+
     font-size: 35px;
 `;
 
@@ -123,7 +150,10 @@ export default {
     secondTextColor,
     thirdColor,
     flexStart,
+    flexBetween,
     flexCenter,
+    modernH1,
+    modernH2,
     standardH2,
     stretchedBackground,
     transparentBtn,

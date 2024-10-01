@@ -3,6 +3,7 @@ import { ICharacter } from "./types";
 
 export const defaultCharacter: ICharacter = {
     userId: '0',
+    userType: 'users',
     nickname: 'Sirocco',
     avatar: 'default-avatar',
     hero: defaultHeroCard,
