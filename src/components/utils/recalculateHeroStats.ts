@@ -1,6 +1,7 @@
 import { IArtifactCard, BattleCardType, IHeroBattleCard, SimpleBattleCardType, Stat } from "../types";
 import {getStateValue} from "../../store/storeUtils";
 import {getHeroCard} from "./utils";
+import {playSoundEffect} from "./skillUtils";
 
 export const recalculateHeroStatsAfterContact = (
     heroCard: IHeroBattleCard,
@@ -35,7 +36,8 @@ export const recalculateHeroStatsAfterContact = (
     recalculateHeroStatsHandler && recalculateHeroStatsHandler(heroCard, selectedCard);
 
     const audioName = audioMap[selectedCard.type];
-    audioName && new Audio(`sounds/${audioMap[selectedCard.type]}.mp3`).play();
+    // audioName && new Audio(`sounds/${audioMap[selectedCard.type]}.mp3`).play();
+    audioName && playSoundEffect(audioName);
 };
 
 const recalculateHeroHealthAfterEnemy = (heroCard: IHeroBattleCard, selectedCard: BattleCardType) => {

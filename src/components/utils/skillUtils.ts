@@ -8,6 +8,7 @@ import {
 } from "./contactItems";
 import {defineNewBattleCard} from "./moveItems";
 import {getStateValue, setStateValue} from "../../store/storeUtils";
+// import {playSoundEffect} from "./utils2";
 
 
 const getHeroCard = (battleCards: BattleCardType[]): any => {
@@ -93,7 +94,8 @@ const skillsHandler = async (
     }
 
     const audioName = audioMap[activeSkill.name];
-    audioName && new Audio(`sounds/${audioName}.mp3`).play();
+    // audioName && new Audio(`sounds/${audioName}.mp3`).play();
+    audioName && playSoundEffect(audioName);
 
     await addClassWhenUseSkill(selectedCard, activeSkill);
 
@@ -251,3 +253,12 @@ export const checkBossSkillsReadyToUse = (battleCards: BattleCardType[]) => {
             });
     })
 }
+
+// TODO: must be move to independent utils
+export const playSoundEffect = (audioName: string) => {
+    const options = getStateValue('options')
+    const audio = new Audio(`sounds/${audioName}.mp3`);
+    audio.volume = options.sounds / 100;
+    audio.play();
+};
+
