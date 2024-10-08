@@ -85,10 +85,6 @@ const RegistrationPageContainer = styled.div`
             color: #b0201e;
         }
     }
-
-    .actions {
-        //display: flex;
-    }
 `;
 
 export { RegistrationPage };

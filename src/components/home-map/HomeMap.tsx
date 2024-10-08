@@ -8,6 +8,7 @@ import {ShopPage} from "./shop-page/ShopPage";
 import {RegistrationPage} from "./registration-page/RegistrationPage";
 import {LoadingPage} from "./LoadingPage";
 import {GeneralHeader} from "../general-header/GeneralHeader";
+import { Music } from "../general-header/Music";
 const HomeMap = () => {
     const { activePage, setActivePage } = useActivePage();
 
@@ -17,6 +18,7 @@ const HomeMap = () => {
     }, []);
 
     return <HomeMapContainer>
+        <Music />
         { (activePage === 'loading-page' || activePage === 'registration-page') || <GeneralHeader /> }
 
         {/*{ activePage === 'game-selection-page' && (<h2 className="map-name">Homeland</h2>)}*/}

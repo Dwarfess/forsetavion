@@ -22,20 +22,24 @@ const GameSelectionPanel = () => {
 
     return <GameSelectionPanelContainer>
         <MapPlace
-            imgName="icon-place-character"
+            // imgName="icon-place-character"
+            imgName=""
+            hasHighlight={false}
             // title1="Battle"
             title2="Character"
-            topPosition="720"
-            leftPosition="40"
+            topPosition="400"
+            leftPosition="190"
             onClickHandler={onCharacterIconClick}
         />
 
         <MapPlace
-            imgName="icon-shop-3"
+            // imgName="icon-shop-3"
+            imgName=""
+            hasHighlight={false}
             // title1="Battle"
             title2="Shop"
-            topPosition="745"
-            leftPosition="266"
+            topPosition="450"
+            leftPosition="500"
             onClickHandler={onShopIconClick}
         />
 
@@ -43,8 +47,8 @@ const GameSelectionPanel = () => {
             imgName="icon-battle-3"
             title1="Battle"
             title2="3x3"
-            topPosition="390"
-            leftPosition="20"
+            topPosition="950"
+            leftPosition="320"
             onClickHandler={() => onBattleIconClick(3)}
         />
 
@@ -52,8 +56,8 @@ const GameSelectionPanel = () => {
             imgName="icon-battle-4"
             title1="Battle"
             title2="4x4"
-            topPosition="460"
-            leftPosition="340"
+            topPosition="870"
+            leftPosition="470"
             onClickHandler={() => onBattleIconClick(4)}
         />
 
@@ -61,8 +65,8 @@ const GameSelectionPanel = () => {
             imgName="icon-battle-5"
             title1="Battle"
             title2="5x5"
-            topPosition="250"
-            leftPosition="450"
+            topPosition="960"
+            leftPosition="590"
             onClickHandler={() => onBattleIconClick(5)}
         />
     </GameSelectionPanelContainer>

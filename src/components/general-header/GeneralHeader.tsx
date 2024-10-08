@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import {Music} from "./Music";
-import {Options} from "../Options";
+import {Options} from "./Options";
 import mixins from "../../mixins";
 import React from "react";
 import {useActivePage, useBattleCards, useBattleFieldLength} from "../../store/storeHooks";

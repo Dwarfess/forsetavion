@@ -28,6 +28,12 @@ const flexStart = css`
     justify-content: flex-start;
 `;
 
+const flexEnd = css`
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+`;
+
 const flexBetween = css`
     display: flex;
     align-items: center;
@@ -143,6 +149,15 @@ const classicBtn = css`
     }
 `;
 
+const linkBtn = css`
+    ${mainFontFace}
+    ${secondTextColor}
+    
+    cursor: pointer;
+    padding: 10px 30px;
+    text-decoration: underline;
+`;
+
 export default {
     mainFontFace,
     secondFontFace,
@@ -150,6 +165,7 @@ export default {
     secondTextColor,
     thirdColor,
     flexStart,
+    flexEnd,
     flexBetween,
     flexCenter,
     modernH1,
@@ -158,4 +174,5 @@ export default {
     stretchedBackground,
     transparentBtn,
     classicBtn,
+    linkBtn,
 };

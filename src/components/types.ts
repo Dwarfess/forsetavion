@@ -64,6 +64,17 @@ export interface Effect {
     stats: Stat[]
 }
 
+export interface IHeroCollectionItem {
+    name: string;
+    image: string;
+    maxHealth: number;
+    def: number;
+    lifeDrain: number;
+    expBoost: number;
+    coinBoost: number;
+    skills: string[];
+}
+
 export interface IHeroBattleCard extends CommonBattleCardType {
     health: number;
     // healthBoost: number;

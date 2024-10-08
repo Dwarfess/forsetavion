@@ -5,6 +5,7 @@ interface IMapPlace {
     imgName: string;
     title1?: string;
     title2?: string;
+    hasHighlight?: boolean;
     topPosition: string;
     leftPosition: string;
     onClickHandler: () => void;
@@ -14,6 +15,7 @@ const MapPlace: React.FC<IMapPlace> = ({
     imgName,
     title1,
     title2,
+    hasHighlight= true,
     topPosition,
     leftPosition,
     onClickHandler,
@@ -25,7 +27,7 @@ const MapPlace: React.FC<IMapPlace> = ({
             left-position={leftPosition}
             onClick={onClickHandler}
         >
-            <div className="map-pace-highlight"></div>
+            <div className={hasHighlight ? "map-pace-highlight" : ""}></div>
             <div className="map-place-icon">
                 <div className="map-place-title1">{ title1 }</div>
                 <div className="map-place-title2">{ title2 }</div>

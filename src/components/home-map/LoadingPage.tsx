@@ -29,17 +29,17 @@ const LoadingPage = () => {
         }
     }, [progress])
 
-    useEffect(() => {
-        if (progress === 1) {
-            const audio = new Audio('/sounds/track.mp3');
-            audio.loop = true;  // Додаємо безперервне відтворення
-
-            // Спроба автоматичного запуску
-            audio.play().catch((error) => {
-                console.log('Автоматичне відтворення заблоковане: ', error);
-            });
-        }
-    }, [progress]);
+    // useEffect(() => {
+    //     if (progress === 1) {
+    //         const audio = new Audio('/sounds/track.mp3');
+    //         audio.loop = true;  // Додаємо безперервне відтворення
+    //
+    //         // Спроба автоматичного запуску
+    //         audio.play().catch((error) => {
+    //             console.log('Автоматичне відтворення заблоковане: ', error);
+    //         });
+    //     }
+    // }, [progress]);
 
     return (
         <LoadingContainer>

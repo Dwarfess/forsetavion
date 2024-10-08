@@ -13,9 +13,11 @@ import {
     changeCharacter,
     changeActiveMap,
     changeActivePage,
+    changeOptions,
 } from './index';
 import { getHeroCard } from "../components/utils";
 import {ICharacter} from "../components/home-map/character-page/types";
+import {IOption} from "../components/general-header/types";
 
 export const useActiveMap = () => {
     const dispatch = useDispatch();
@@ -148,4 +150,15 @@ export const useCharacter = () => {
     }
 
     return { character, setCharacter };
+}
+
+export const useOptions = () => {
+    const dispatch = useDispatch();
+    const options = useSelector((state: RootState) => state.options.value);
+
+    const setOptions = (val: IOption) => {
+        dispatch(changeOptions(val));
+    }
+
+    return { options, setOptions };
 }

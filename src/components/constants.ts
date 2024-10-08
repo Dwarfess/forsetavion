@@ -1,4 +1,12 @@
-import {IArtifactCard, BattleCardType, IHeroBattleCard, PrimaryBattleCardType, Skill, Stat} from "./types";
+import {
+    IArtifactCard,
+    BattleCardType,
+    IHeroBattleCard,
+    PrimaryBattleCardType,
+    Skill,
+    Stat,
+    IHeroCollectionItem
+} from "./types";
 import {generateSkill} from "./utils/utils2";
 
 export const defaultFontSize = 20;
@@ -275,7 +283,7 @@ export const stats: Stat[] = [
     },
 ];
 
-export const heroCollection = [
+export const heroCollection: IHeroCollectionItem[] = [
     {
         name: 'Healer',
         image: 'hero-1',
@@ -432,16 +440,19 @@ export const newEnemyCards: PrimaryBattleCardType[] = [
     },
     {
         name: 'enemy8',
+        description: '',
         image: 'beast-8',
         type: 'enemy',
     },
     {
         name: 'enemy9',
+        description: '',
         image: 'beast-9',
         type: 'enemy',
     },
     {
-        name: 'enemy10',
+        name: 'Blazetalon',
+        description: 'A fiery beast with claws engulfed in flames',
         image: 'beast-10',
         type: 'enemy',
     },

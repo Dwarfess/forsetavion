@@ -24,7 +24,6 @@ const SignInForm = () => {
     }
 
     const onGuestButtonClick = () => {
-        const data = {}
         signInAsGuest();
     }
 
@@ -42,7 +41,7 @@ const SignInForm = () => {
         </div>
 
         <div className="actions">
-            <button className="btn" onClick={onGuestButtonClick}>Guest</button>
+            <div className="btn-link" onClick={onGuestButtonClick}>Try as a guest</div>
             <button type="submit" className="btn" disabled={!isValid}>Sign up</button>
         </div>
     </form>

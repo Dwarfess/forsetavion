@@ -83,6 +83,13 @@ const ModalWrapper = styled.div`
         }
 
         .actions {
+            ${mixins.flexEnd}
+
+            width: 500px;
+            //.btn { margin: 0 }
+            .btn-link {
+                ${mixins.linkBtn}
+            }
             position: absolute;
             bottom: 50px;
             right: 100px;
@@ -91,8 +98,8 @@ const ModalWrapper = styled.div`
         .btn {
             ${mixins.classicBtn};
             
-            margin: 20px auto;
-            width: 250px;
+            margin: 20px;
+            width: 220px;
             padding: 10px 0;
         }
 

@@ -12,6 +12,7 @@ import battleCardsReducer from './battleCardsSlice';
 import characterReducer from './characterSlice';
 import activeMapReducer from './activeMapSlice';
 import activePageReducer from './activePageSlice';
+import optionsReducer from './optionsSlice';
 
 export const store = configureStore({
     reducer: {
@@ -27,6 +28,7 @@ export const store = configureStore({
         character: characterReducer,
         activeMap: activeMapReducer,
         activePage: activePageReducer,
+        options: optionsReducer,
     },
 });
 

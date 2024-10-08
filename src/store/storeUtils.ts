@@ -10,7 +10,8 @@ import {
     changeBattleCards,
     changeCharacter,
     changeActiveMap,
-    changeActivePage
+    changeActivePage,
+    changeOptions,
 } from "./index";
 
 export const getStateValue = (name: string) => {
@@ -30,7 +31,8 @@ export const setStateValue = (name: string, data: any) => {
         isMoving: changeIsMoving,
         isProcessingAction: changeIsProcessingAction,
         battleCards: changeBattleCards,
-        character: changeCharacter
+        character: changeCharacter,
+        options: changeOptions,
     };
 
     store.dispatch(reducerMap[name](data));

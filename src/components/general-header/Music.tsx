@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from 'react';
+import {useOptions} from "../../store/storeHooks";
 
 const Music = () => {
+    const { options } = useOptions();
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
     useEffect(() => {
@@ -24,8 +26,14 @@ const Music = () => {
         };
     }, []);
 
+    useEffect(() => {
+        if (audioRef.current) {
+            audioRef.current.volume = options.music / 100;
+        }
+    }, [options.music]);
+
     return (
-        <audio ref={audioRef} loop hidden>
+        <audio ref={audioRef} src="/sounds/track.mp3" loop hidden>
             {/*<source src="/sounds/track.mp3" type="audio/mpeg" />*/}
         </audio>
     );
