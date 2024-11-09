@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import {signInAsGuest, signInUser} from "./registerUtils";
+import {useAuthUtils} from "./useAuthUtils";
 
 const schema = yup.object({
     email: yup.string().email('Please enter a valid email address').required('Email is required'),
@@ -11,12 +12,13 @@ const schema = yup.object({
 type FormData = yup.InferType<typeof schema>;
 
 const SignInForm = () => {
+    const { signInCurrentUser, signUpNewGuest } = useAuthUtils();
     const { register, handleSubmit, trigger, setError, formState: { isValid, errors } } = useForm<FormData>({
         resolver: yupResolver(schema)
     });
 
-    const onSubmit = (data: FormData) => {
-        const validUser = signInUser(data);
+    const onSubmit = async (data: FormData) => {
+        const validUser = await signInCurrentUser(data);
         if (validUser) return;
 
         setError('email', { type: 'manual', message: 'Incorrect email or password' });
@@ -25,6 +27,7 @@ const SignInForm = () => {
 
     const onGuestButtonClick = () => {
         signInAsGuest();
+        // signUpNewGuest();
     }
 
     return <form onSubmit={handleSubmit(onSubmit)}>
@@ -42,7 +45,7 @@ const SignInForm = () => {
 
         <div className="actions">
             <div className="btn-link" onClick={onGuestButtonClick}>Try as a guest</div>
-            <button type="submit" className="btn" disabled={!isValid}>Sign up</button>
+            <button type="submit" className="btn" disabled={!isValid}>Sign in</button>
         </div>
     </form>
 }

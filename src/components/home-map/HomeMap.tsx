@@ -5,7 +5,7 @@ import {BattlePage} from "../BattlePage";
 import {useActivePage} from "../../store/storeHooks";
 import {GameSelectionPanel} from "./GameSelectionPanel";
 import {ShopPage} from "./shop-page/ShopPage";
-import {RegistrationPage} from "./registration-page/RegistrationPage";
+import {RegisterPage} from "./register-page/RegisterPage";
 import {LoadingPage} from "./LoadingPage";
 import {GeneralHeader} from "../general-header/GeneralHeader";
 import { Music } from "../general-header/Music";
@@ -24,7 +24,7 @@ const HomeMap = () => {
         {/*{ activePage === 'game-selection-page' && (<h2 className="map-name">Homeland</h2>)}*/}
 
         { activePage === 'loading-page' && (<LoadingPage />)}
-        { activePage === 'registration-page' && (<RegistrationPage />)}
+        { activePage === 'registration-page' && (<RegisterPage />)}
         { activePage === 'character-page' && (<CharacterPage />)}
         { activePage === 'shop-page' && (<ShopPage />)}
         { activePage === 'game-selection-page' && (<GameSelectionPanel />)}

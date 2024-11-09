@@ -13,6 +13,7 @@ import {
     changeActivePage,
     changeOptions,
 } from "./index";
+import {apiSlice} from "./apiSlice";
 
 export const getStateValue = (name: string) => {
     const state = structuredClone(store.getState() as any);
@@ -36,4 +37,8 @@ export const setStateValue = (name: string, data: any) => {
     };
 
     store.dispatch(reducerMap[name](data));
+
+    if (name === 'character') {
+        store.dispatch(apiSlice.endpoints.updateCurrentCharacter.initiate(data) as any);
+    }
 }

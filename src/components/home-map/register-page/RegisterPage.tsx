@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import {Tab} from "semantic-ui-react";
 import {ModalX} from "../../shared";
@@ -7,11 +7,11 @@ import mixins from "../../../mixins";
 import {SignInForm} from "./SignInForm";
 import {SignUpForm} from "./SignUpForm";
 
-const RegistrationPage = () => {
+const RegisterPage = () => {
     const panes = [
         { menuItem: 'Sign in', render: () => <SignInForm /> },
         { menuItem: 'Sign up', render: () => <SignUpForm /> },
-    ]
+    ];
 
     return <ModalX>
         <RegistrationPageContainer>
@@ -87,4 +87,4 @@ const RegistrationPageContainer = styled.div`
     }
 `;
 
-export { RegistrationPage };
+export { RegisterPage };

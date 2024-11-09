@@ -4,7 +4,7 @@ import {generateHeroCard} from "../../utils/cardsBuilder";
 
 export const defaultCharacter: ICharacter = {
     userId: '0',
-    userType: 'users',
+    userRole: 'users',
     nickname: 'Sirocco',
     avatar: 'default-avatar',
     hero: generateHeroCard(),

@@ -18,6 +18,7 @@ import {
 import { getHeroCard } from "../components/utils";
 import {ICharacter} from "../components/home-map/character-page/types";
 import {IOption} from "../components/general-header/types";
+import {apiSlice} from "./apiSlice";
 
 export const useActiveMap = () => {
     const dispatch = useDispatch();
@@ -147,6 +148,7 @@ export const useCharacter = () => {
 
     const setCharacter = (val: ICharacter) => {
         dispatch(changeCharacter(val));
+        dispatch(apiSlice.endpoints.updateCurrentCharacter.initiate(val) as any);
     }
 
     return { character, setCharacter };

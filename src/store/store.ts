@@ -13,6 +13,7 @@ import characterReducer from './characterSlice';
 import activeMapReducer from './activeMapSlice';
 import activePageReducer from './activePageSlice';
 import optionsReducer from './optionsSlice';
+import { apiSlice } from './apiSlice';
 
 export const store = configureStore({
     reducer: {
@@ -29,7 +30,10 @@ export const store = configureStore({
         activeMap: activeMapReducer,
         activePage: activePageReducer,
         options: optionsReducer,
+        [apiSlice.reducerPath]: apiSlice.reducer,
     },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(apiSlice.middleware),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
