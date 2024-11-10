@@ -128,6 +128,7 @@ const ModalXContainer = styled.div`
 
             .btn.symbol-btn {
                 width: 25%;
+                margin: 10px;
             }
         }
     }
