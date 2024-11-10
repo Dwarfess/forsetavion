@@ -153,7 +153,7 @@ export const useAuthUtils = () => {
     const [getCharacterByUserId] = useGetCharacterByUserIdMutation();
 
     const signUpNewUser = ({ nickname, email, password }: any) => {
-        return signUpUser({ email, password, role: 'user' })
+        return signUpUser({ email: email.toLowerCase(), password, role: 'user' })
             .unwrap()
             .then((user: any) => {
                 const userId = user?._id
@@ -195,8 +195,8 @@ export const useAuthUtils = () => {
             });
     };
 
-    const signInCurrentUser = (userData: any) => {
-        return signInUser(userData)
+    const signInCurrentUser = ({email, password}: any) => {
+        return signInUser({ email: email.toLowerCase(), password })
             .unwrap()
             .then((user: any) => {
                 console.log("Sign in successful", user);

@@ -60,6 +60,8 @@ export const cardHandler = async (selectedCardIndex: number) => {
 
     if (allowedIndexes.includes(selectedCardIndex)) {
         resetBattleCards(selectedCardIndex);
+    } else {
+        setStateValue('isProcessingAction',false);
     }
 };
 

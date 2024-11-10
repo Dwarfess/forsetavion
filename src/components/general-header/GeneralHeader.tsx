@@ -4,16 +4,18 @@ import {Music} from "./Music";
 import {Options} from "./Options";
 import mixins from "../../mixins";
 import React from "react";
-import {useActivePage, useBattleCards, useBattleFieldLength} from "../../store/storeHooks";
+import {useActivePage, useBattleCards, useBattleFieldLength, useIsProcessingAction} from "../../store/storeHooks";
 
 const GeneralHeader = () => {
     const {setActivePage} = useActivePage();
     const {setBattleCards} = useBattleCards();
     const {setBattleFieldLength} = useBattleFieldLength();
+    const {setIsProcessingAction} = useIsProcessingAction();
 
     const onExitButtonClick = () => {
         setBattleCards([]);
         setBattleFieldLength(0);
+        setIsProcessingAction(false);
         setActivePage('game-selection-page');
     }
 
