@@ -3,7 +3,8 @@ import {ICharacter, IUser} from "../components/home-map/character-page/types";
 
 export const apiSlice = createApi({
     reducerPath: 'api',
-    // baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8888/' }),
+    // baseQuery: fetchBaseQuery({
+        // baseUrl: 'http://localhost:8888/',
     baseQuery: fetchBaseQuery({
         baseUrl: 'https://forsetavion-server-3.onrender.com/',
         prepareHeaders: (headers) => {
