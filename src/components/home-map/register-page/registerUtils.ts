@@ -53,7 +53,7 @@ export const signInAsGuest = async () => {
         const guests: IUser[] = JSON.parse(questsCollection);
 
         localStorage.setItem('guests', JSON.stringify([...guests, currentGuest]));
-        postUser(currentGuest);
+        // postUser(currentGuest);
     } else {
         localStorage.setItem('guests', JSON.stringify([currentGuest]));
     }
