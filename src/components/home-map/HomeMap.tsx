@@ -9,6 +9,7 @@ import {RegisterPage} from "./register-page/RegisterPage";
 import {LoadingPage} from "./LoadingPage";
 import {GeneralHeader} from "../general-header/GeneralHeader";
 import { Music } from "../general-header/Music";
+import {Leaderboards} from "./leaderboards/Leaderboards";
 const HomeMap = () => {
     const { activePage, setActivePage } = useActivePage();
 
@@ -29,6 +30,7 @@ const HomeMap = () => {
         { activePage === 'shop-page' && (<ShopPage />)}
         { activePage === 'game-selection-page' && (<GameSelectionPanel />)}
         { activePage === 'battle-page' && (<BattlePage />)}
+        { activePage === 'leaderboards-page' && (<Leaderboards />)}
     </HomeMapContainer>
 };
 

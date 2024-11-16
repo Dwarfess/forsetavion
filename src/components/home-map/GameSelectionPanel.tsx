@@ -20,6 +20,10 @@ const GameSelectionPanel = () => {
         setActivePage('shop-page');
     }
 
+    const onLeaderboardsIconClick = ()=> {
+        setActivePage('leaderboards-page');
+    }
+
     return <GameSelectionPanelContainer>
         <MapPlace
             // imgName="icon-place-character"
@@ -41,6 +45,17 @@ const GameSelectionPanel = () => {
             topPosition="450"
             leftPosition="500"
             onClickHandler={onShopIconClick}
+        />
+
+        <MapPlace
+            // imgName="icon-shop-3"
+            imgName=""
+            hasHighlight={false}
+            // title1="Battle"
+            title2="Leaderboards"
+            topPosition="700"
+            leftPosition="220"
+            onClickHandler={onLeaderboardsIconClick}
         />
 
         <MapPlace

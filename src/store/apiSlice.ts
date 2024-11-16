@@ -3,9 +3,8 @@ import {ICharacter, IUser} from "../components/home-map/character-page/types";
 
 export const apiSlice = createApi({
     reducerPath: 'api',
-    // baseQuery: fetchBaseQuery({
-        // baseUrl: 'http://localhost:8888/',
     baseQuery: fetchBaseQuery({
+        // baseUrl: 'http://localhost:8888/',
         baseUrl: 'https://forsetavion-server-3.onrender.com/',
         prepareHeaders: (headers) => {
             headers.set('X-App-Token', 'sertavion_unique_token');
@@ -47,6 +46,12 @@ export const apiSlice = createApi({
                 body: data,
             }),
         }),
+        getCharacters: builder.mutation<boolean, object>({
+            query: () => ({
+                url: `characters/`,
+                method: 'GET',
+            }),
+        }),
         getCharacterByUserId: builder.mutation<boolean, string>({
             query: (userId) => ({
                 url: `characters/${userId}`,
@@ -68,6 +73,7 @@ export const {
     useSignUpUserMutation,
     useDeleteUserMutation,
     useCreateCharacterMutation,
+    useGetCharactersMutation,
     useGetCharacterByUserIdMutation,
     useUpdateCurrentCharacterMutation,
 } = apiSlice;

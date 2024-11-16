@@ -6,7 +6,8 @@ import {
     useSignUpUserMutation,
     useCreateCharacterMutation,
     useDeleteUserMutation,
-    useGetCharacterByUserIdMutation
+    useGetCharacterByUserIdMutation,
+    useGetCharactersMutation
 } from "../../../store/apiSlice";
 
 // export const signInUser = (data: any) => {
@@ -150,6 +151,7 @@ export const useAuthUtils = () => {
     const [signInUser] = useSignInUserMutation();
     const [deleteUser] = useDeleteUserMutation();
     const [createCharacter] = useCreateCharacterMutation();
+    const [getCharacters] = useGetCharactersMutation();
     const [getCharacterByUserId] = useGetCharacterByUserIdMutation();
 
     const signUpNewUser = ({ nickname, email, password }: any) => {
@@ -231,6 +233,15 @@ export const useAuthUtils = () => {
             })
     };
 
+    const getAllCharacters = (setCharacterList: any) => {
+        return getCharacters({})
+            .unwrap()
+            .then((characters: any) => {
+                console.log("Character list", characters);
+                setCharacterList(characters);
+            })
+    };
+
     const getCurrentCharacter = (userId: string) => {
         return getCharacterByUserId(userId)
             .unwrap()
@@ -249,6 +260,12 @@ export const useAuthUtils = () => {
             })
     };
 
-    return { signUpNewUser, signInCurrentUser, updateCurrentCharacter, signUpNewGuest };
+    return {
+        signUpNewUser,
+        signInCurrentUser,
+        getAllCharacters,
+        updateCurrentCharacter,
+        signUpNewGuest
+    };
 };
 
