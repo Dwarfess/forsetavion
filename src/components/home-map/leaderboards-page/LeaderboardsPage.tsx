@@ -6,7 +6,7 @@ import {Leaderboard} from "./Leaderboard";
 import {ICharacter} from "../character-page/types";
 import {useAuthUtils} from "../register-page/useAuthUtils";
 
-const Leaderboards = () => {
+const LeaderboardsPage = () => {
     const { getAllCharacters } = useAuthUtils();
     const [characterList, setCharacterList] = useState<ICharacter[]>([]);
 
@@ -70,4 +70,4 @@ const LeaderboardsContainer = styled.div`
     }
 `;
 
-export { Leaderboards };
+export { LeaderboardsPage };

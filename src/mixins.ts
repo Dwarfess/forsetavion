@@ -147,6 +147,13 @@ const classicBtn = css`
         opacity: .5;
         pointer-events: none;
     }
+
+    &.selected {
+        background: radial-gradient(circle, #e52b2b, #8b0000);
+        box-shadow: 0px 0 5px 5px rgba(255, 255, 255, 0.2);
+        transform: scale(1.2);
+        margin: 0 5px;
+    }
 `;
 
 const linkBtn = css`
