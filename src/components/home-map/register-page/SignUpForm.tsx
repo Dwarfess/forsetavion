@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import {signUpUser} from "./registerUtils";
-import {useAuthUtils} from "./useAuthUtils";
+import {useAuthApiUtils} from "./useAuthApiUtils";
 
 const schema = yup.object().shape({
     nickname: yup.string()
@@ -16,7 +16,7 @@ const schema = yup.object().shape({
 type FormData = yup.InferType<typeof schema>;
 
 const SignUpForm = () => {
-    const { signUpNewUser } = useAuthUtils();
+    const { signUpNewUser } = useAuthApiUtils();
     const { register, handleSubmit, trigger,  setError, clearErrors, formState: { isValid, errors } } = useForm<FormData>({
         resolver: yupResolver(schema)
     });

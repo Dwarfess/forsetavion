@@ -2,10 +2,25 @@ import React, {useState} from "react";
 import styled from "styled-components";
 import mixins from "../../../mixins";
 import {MultiBattleOptionPanel} from "./MultiBattleOptionPanel";
+import {useBattleApiUtils} from "./useBattleApiUtils";
+import {useActivePage, useBattleCards, useBattleFieldLength, useCharacter} from "../../../store/storeHooks";
+import {IBattleOptions} from "./types";
+import {getBattleCardsWithHero} from "../../utils";
+import {prepareBattleData} from "./battleUtils";
 
 const MultiBattlePage = () => {
-    const onCreateBattleClick = () => {}
-    const onJoinBattleClick = () => {}
+    const { character } = useCharacter();
+    const { setBattleFieldLength } = useBattleFieldLength();
+    const { createNewBattle, getRandomBattleAndJoin } = useBattleApiUtils();
+
+    const onCreateBattleClick = async (battleOptions: IBattleOptions) => {
+        setBattleFieldLength(battleOptions.battleFieldLength);
+        await createNewBattle(prepareBattleData(battleOptions, character, getBattleCardsWithHero()));
+    };
+
+    const onJoinBattleClick = async () => {
+        await getRandomBattleAndJoin();
+    };
 
     return <MultiBattlePageContainer>
         <div className="create-battle-block">
@@ -17,7 +32,6 @@ const MultiBattlePage = () => {
         </div>
 
         <div className="info-battle-block">
-
         </div>
 
         <div className="join-battle-block">
@@ -39,11 +53,13 @@ const MultiBattlePageContainer = styled.div`
     .info-battle-block {
         ${mixins.flexCenter}
         ${mixins.stretchedBackground}
-  
+        
+        flex-direction: column;
         background-image: url("img/multi-center-bg.png"); 
         margin: 0 auto;
         width: 640px;
         height: 600px;
+        font-size: 30px;
     }
     
     .create-battle-block,

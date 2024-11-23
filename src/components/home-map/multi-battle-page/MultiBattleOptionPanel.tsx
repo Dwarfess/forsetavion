@@ -1,11 +1,13 @@
-import React, {useRef, useState} from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import mixins from "../../../mixins";
+import {useActivePage, useBattleFieldLength} from "../../../store/storeHooks";
+import {IBattleOptions} from "./types";
 
 interface IMultiBattleOptionPanel {
     title: string;
     type: string;
-    action: (data: any) => void;
+    action: (data: IBattleOptions) => void;
 }
 
 const MultiBattleOptionPanel: React.FC<IMultiBattleOptionPanel> = ({
@@ -13,17 +15,16 @@ const MultiBattleOptionPanel: React.FC<IMultiBattleOptionPanel> = ({
     type,
     action
 }) => {
-    const passwordRef = useRef<HTMLHeadingElement>(null);
-    const [ battleOptions, setBattleOptions ] = useState({
+    const [ battleOptions, setBattleOptions ] = useState<IBattleOptions>({
         password: '',
-        battleFieldLength: '3'
+        battleFieldLength: 3
     });
 
     const onApplyBattleClick = () => {
         action(battleOptions)
     }
 
-    const onBattleFieldLengthClick = (val: string)=> {
+    const onBattleFieldLengthClick = (val: number)=> {
         setBattleOptions({...battleOptions, battleFieldLength: val});
     }
 
@@ -37,20 +38,20 @@ const MultiBattleOptionPanel: React.FC<IMultiBattleOptionPanel> = ({
             <button className="btn apply-button" onClick={onApplyBattleClick}>{type === 'create' ? 'Create' : 'Join'}</button>
             <div className="battle-field-length">
                 <button
-                    className={`btn ${battleOptions.battleFieldLength === '3' ? 'selected' : ''}`}
-                    onClick={() => onBattleFieldLengthClick('3')}
+                    className={`btn ${battleOptions.battleFieldLength === 3 ? 'selected' : ''}`}
+                    onClick={() => onBattleFieldLengthClick(3)}
                 >
                     3x3
                 </button>
                 <button
-                    className={`btn ${battleOptions.battleFieldLength === '4' ? 'selected' : ''}`}
-                    onClick={() => onBattleFieldLengthClick('4')}
+                    className={`btn ${battleOptions.battleFieldLength === 4 ? 'selected' : ''}`}
+                    onClick={() => onBattleFieldLengthClick(4)}
                 >
                     4x4
                 </button>
                 <button
-                    className={`btn ${battleOptions.battleFieldLength === '5' ? 'selected' : ''}`}
-                    onClick={() => onBattleFieldLengthClick('5')}
+                    className={`btn ${battleOptions.battleFieldLength === 5 ? 'selected' : ''}`}
+                    onClick={() => onBattleFieldLengthClick(5)}
                 >
                     5x5
                 </button>

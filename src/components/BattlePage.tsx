@@ -47,11 +47,12 @@ const BattlePage = () => {
     }, [isMoving]);
 
     useEffect(() => {
-        if (battleFieldLength) {
+        if (battleFieldLength && battleCards.length === 0) {
             setBattleCards(getBattleCardsWithHero());
-        } else {
-            setBattleCards([]);
         }
+        // else {
+        //     setBattleCards([]);
+        // }
     }, [battleFieldLength]);
 
     useEffect(() => {
@@ -121,7 +122,7 @@ const BattlePageContainer = styled.div`
 
     width: 700px;
     height: calc(100% - 40px);
-    padding: 120px 20px 20px 20px;
+    padding: 100px 20px 20px 20px;
     background-image: url("img/main-bg.jpg");
     //background-size: cover;
 `;

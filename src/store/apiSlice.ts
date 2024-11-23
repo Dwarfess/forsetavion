@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {ICharacter, IUser} from "../components/home-map/character-page/types";
+import {IBattleData} from "../components/home-map/multi-battle-page/types";
 
 export const apiSlice = createApi({
     reducerPath: 'api',
@@ -12,6 +13,7 @@ export const apiSlice = createApi({
         },
     }),
     endpoints: (builder) => ({
+        // user api
         signInUser: builder.mutation<boolean, { email: string; password: string }>({
             query: (data) => ({
                 url: 'users/sign-in',
@@ -39,6 +41,7 @@ export const apiSlice = createApi({
                 method: 'DELETE',
             }),
         }),
+        // character api
         createCharacter: builder.mutation<boolean, ICharacter>({
             query: (data) => ({
                 url: 'characters/create',
@@ -65,6 +68,27 @@ export const apiSlice = createApi({
                 body: data,
             }),
         }),
+        // battle api
+        randomBattle: builder.mutation<boolean, void>({
+            query: () => ({
+                url: 'battles/randomBattle',
+                method: 'GET',
+            }),
+        }),
+        createBattle: builder.mutation<boolean, IBattleData>({
+            query: (data) => ({
+                url: 'battles/create',
+                method: 'POST',
+                body: data,
+            }),
+        }),
+        joinBattle: builder.mutation<boolean, any>({
+            query: (data) => ({
+                url: 'battles/join',
+                method: 'POST',
+                body: data,
+            }),
+        }),
     }),
 });
 
@@ -76,4 +100,7 @@ export const {
     useGetCharactersMutation,
     useGetCharacterByUserIdMutation,
     useUpdateCurrentCharacterMutation,
+    useRandomBattleMutation,
+    useCreateBattleMutation,
+    useJoinBattleMutation,
 } = apiSlice;

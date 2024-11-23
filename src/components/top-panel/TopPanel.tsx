@@ -4,6 +4,7 @@ import styled from "styled-components";
 import {getBossPartProgress, getMaxExpForCurrentLever} from "../utils/recalculateHeroStats";
 import {ordinaryBossPartsCount} from "../constants";
 import {useActivePage, useBattleCards, useBattleFieldLength} from "../../store/storeHooks";
+import {PlayersPanel} from "./PlayersPanel";
 
 const TopPanel = () => {
     // const { setActivePage } = useActivePage();
@@ -18,6 +19,7 @@ const TopPanel = () => {
 
     return (
         <TopPanelWrapper>
+            <PlayersPanel players={[{nickname: 'Sirocco', avatar: 'avatar-4'}]}/>
             <div className="top-side">
                 <LevelBar>
                     <img src="img/icon-level.png" className="level-icon"/>

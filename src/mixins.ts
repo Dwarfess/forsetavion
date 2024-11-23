@@ -46,6 +46,12 @@ const flexCenter = css`
     justify-content: center;
 `;
 
+const flexCenterEnd = css`
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+`;
+
 const modernH1 = css`
     ${mainFontFace}
     
@@ -165,6 +171,13 @@ const linkBtn = css`
     text-decoration: underline;
 `;
 
+const positionCenter = css`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+`;
+
 export default {
     mainFontFace,
     secondFontFace,
@@ -175,6 +188,7 @@ export default {
     flexEnd,
     flexBetween,
     flexCenter,
+    flexCenterEnd,
     modernH1,
     modernH2,
     standardH2,
@@ -182,4 +196,5 @@ export default {
     transparentBtn,
     classicBtn,
     linkBtn,
+    positionCenter,
 };

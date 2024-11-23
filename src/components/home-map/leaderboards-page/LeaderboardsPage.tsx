@@ -4,10 +4,10 @@ import {Tab} from "semantic-ui-react";
 import mixins from "../../../mixins";
 import {Leaderboard} from "./Leaderboard";
 import {ICharacter} from "../character-page/types";
-import {useAuthUtils} from "../register-page/useAuthUtils";
+import {useAuthApiUtils} from "../register-page/useAuthApiUtils";
 
 const LeaderboardsPage = () => {
-    const { getAllCharacters } = useAuthUtils();
+    const { getAllCharacters } = useAuthApiUtils();
     const [characterList, setCharacterList] = useState<ICharacter[]>([]);
 
     useEffect(() => {

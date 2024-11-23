@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import {signInAsGuest, signInUser} from "./registerUtils";
-import {useAuthUtils} from "./useAuthUtils";
+import {useAuthApiUtils} from "./useAuthApiUtils";
 
 const schema = yup.object({
     email: yup.string().email('Please enter a valid email address').required('Email is required'),
@@ -12,7 +12,7 @@ const schema = yup.object({
 type FormData = yup.InferType<typeof schema>;
 
 const SignInForm = () => {
-    const { signInCurrentUser, signUpNewGuest } = useAuthUtils();
+    const { signInCurrentUser, signUpNewGuest } = useAuthApiUtils();
     const { register, handleSubmit, trigger, setError, formState: { isValid, errors } } = useForm<FormData>({
         resolver: yupResolver(schema)
     });

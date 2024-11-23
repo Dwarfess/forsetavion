@@ -146,7 +146,7 @@ import {
 //
 // TODO: refactor this utils
 
-export const useAuthUtils = () => {
+export const useAuthApiUtils = () => {
     const [signUpUser] = useSignUpUserMutation();
     const [signInUser] = useSignInUserMutation();
     const [deleteUser] = useDeleteUserMutation();
