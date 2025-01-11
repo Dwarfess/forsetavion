@@ -1,6 +1,6 @@
 import {ICharacter, IUser} from "../character-page/types";
 import {setStateValue} from "../../../store/storeUtils";
-import {defaultCharacter} from "../character-page/constants";
+import {getDefaultCharacter} from "../character-page/constants";
 
 export const signInUser = (data: any) => {
     const userCollection = localStorage.getItem('users');
@@ -65,7 +65,7 @@ export const signInAsGuest = async () => {
 }
 
 const generateNewUser = (data: any, role: string = 'users'): IUser => {
-    const newCharacter = structuredClone(defaultCharacter);
+    const newCharacter = structuredClone(getDefaultCharacter());
     const userId = Math.random().toString(16).slice(2);
 
     newCharacter.nickname = data.nickname;

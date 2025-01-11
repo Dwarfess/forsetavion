@@ -6,6 +6,7 @@ import {playSoundEffect} from "./skillUtils";
 export const recalculateHeroStatsAfterContact = (
     heroCard: IHeroBattleCard,
     selectedCard: BattleCardType,
+    battleCards: BattleCardType[]
 ) => {
     const audioMap: any = {
         enemy: 'punch-2',
@@ -33,7 +34,7 @@ export const recalculateHeroStatsAfterContact = (
     };
 
     const recalculateHeroStatsHandler = recalculateHeroStatsMap[selectedCard.type];
-    recalculateHeroStatsHandler && recalculateHeroStatsHandler(heroCard, selectedCard);
+    recalculateHeroStatsHandler && recalculateHeroStatsHandler(heroCard, selectedCard, battleCards);
 
     const audioName = audioMap[selectedCard.type];
     // audioName && new Audio(`sounds/${audioMap[selectedCard.type]}.mp3`).play();
@@ -52,10 +53,19 @@ const recalculateHeroHealthAfterEnemy = (heroCard: IHeroBattleCard, selectedCard
     }
 };
 
-const recalculateHeroHealthAfterBoss = (heroCard: IHeroBattleCard, selectedCard: BattleCardType) => {
+const recalculateHeroHealthAfterBoss = (
+    heroCard: IHeroBattleCard,
+    selectedCard: BattleCardType,
+    battleCards: BattleCardType[]
+) => {
     recalculateHeroHealthAfterEnemy(heroCard, selectedCard);
 
-    heroCard.bossParts = 0;
+    battleCards.forEach((battleCard) => {
+        if (battleCard.type !== 'hero') return;
+
+        battleCard.bossParts = 0;
+    });
+    // heroCard.bossParts = 0;
 };
 
 const recalculateHeroHealthAfterPotion = (heroCard: IHeroBattleCard, selectedCard: BattleCardType) => {
@@ -127,8 +137,12 @@ export const recalculateHeroExp = (heroCard: IHeroBattleCard, selectedCard: Simp
     heroCard.exp = heroExp;
 };
 
-const recalculateHeroBossPart = (heroCard: IHeroBattleCard) => {
-    heroCard.bossParts++;
+const recalculateHeroBossPart = (_: any, __: any, battleCards: BattleCardType[]) => {
+    battleCards.forEach((battleCard) => {
+        if (battleCard.type !== 'hero') return;
+
+        battleCard.bossParts++;
+    });
 };
 
 export const getRecalculatedExpReward = (expReward: number, heroExpBoostValue: number) => {

@@ -9,10 +9,13 @@ import isOpenLevelUpModalReducer from './isOpenLevelUpModalSlice';
 import isMovingReducer from './isMovingSlice';
 import isProcessingActionReducer from './isProcessingActionSlice';
 import battleCardsReducer from './battleCardsSlice';
+import multiBattleReducer from './multiBattleSlice';
+import multiBattleSocketReducer from './multiBattleSocketSlice';
 import characterReducer from './characterSlice';
 import activeMapReducer from './activeMapSlice';
 import activePageReducer from './activePageSlice';
 import optionsReducer from './optionsSlice';
+import actionDataFromActivePlayerReducer from './actionDataFromActivePlayerSlice';
 import { apiSlice } from './apiSlice';
 
 export const store = configureStore({
@@ -26,14 +29,23 @@ export const store = configureStore({
         isMoving: isMovingReducer,
         isProcessingAction: isProcessingActionReducer,
         battleCards: battleCardsReducer,
+        multiBattle: multiBattleReducer,
+        multiBattleSocket: multiBattleSocketReducer,
         character: characterReducer,
         activeMap: activeMapReducer,
         activePage: activePageReducer,
         options: optionsReducer,
+        actionDataFromActivePlayer: actionDataFromActivePlayerReducer,
         [apiSlice.reducerPath]: apiSlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(apiSlice.middleware),
+        getDefaultMiddleware({
+            serializableCheck: {
+                // Ігноруємо перевірку на серіалізацію для певних шляхи
+                ignoredActions: ['multiBattleSocket/changeMultiBattleSocket'],
+                ignoredPaths: ['multiBattleSocket'],
+            },
+        }).concat(apiSlice.middleware),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

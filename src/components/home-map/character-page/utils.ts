@@ -1,9 +1,9 @@
-import { defaultCharacter } from "./constants";
+import { getDefaultCharacter } from "./constants";
 
 export const getCharacter = () => {
     const character = localStorage.getItem('character');
 
-    return character ? JSON.parse(character) : structuredClone(defaultCharacter);
+    return character ? JSON.parse(character) : structuredClone(getDefaultCharacter());
 }
 
 export const editNicknameHandler = (e: any) => {

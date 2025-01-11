@@ -3,23 +3,17 @@ import { Progress } from 'semantic-ui-react'
 import styled from "styled-components";
 import {getBossPartProgress, getMaxExpForCurrentLever} from "../utils/recalculateHeroStats";
 import {ordinaryBossPartsCount} from "../constants";
-import {useActivePage, useBattleCards, useBattleFieldLength} from "../../store/storeHooks";
+import { useActivePage, useBattleCards, useBattleFieldLength, useCharacter } from '../../store/storeHooks';
 import {PlayersPanel} from "./PlayersPanel";
 
 const TopPanel = () => {
-    // const { setActivePage } = useActivePage();
-    const { heroCard } = useBattleCards();
-    // const { setBattleFieldLength } = useBattleFieldLength();
-
-    // const onExitButtonClick = () => {
-    //     setBattleCards([]);
-    //     setBattleFieldLength(0);
-    //     setActivePage('game-selection-page');
-    // }
+    const { character } = useCharacter();
+    const { heroCard } = useBattleCards(character.nickname);
 
     return (
         <TopPanelWrapper>
-            <PlayersPanel players={[{nickname: 'Sirocco', avatar: 'avatar-4'}]}/>
+            {/*<PlayersPanel players={[{nickname: 'Sirocco', avatar: 'avatar-4'}]}/>*/}
+            <PlayersPanel />
             <div className="top-side">
                 <LevelBar>
                     <img src="img/icon-level.png" className="level-icon"/>
@@ -34,7 +28,6 @@ const TopPanel = () => {
                     <img src="img/icon-sphere.png" className="coins-icon"/>
                     <div className="spheres-value">{heroCard.spheres}</div>
                 </CoinsBar>
-                {/*<ExitButton onClick={onExitButtonClick}>Exit</ExitButton>*/}
             </div>
 
             <div className="bottom-side">

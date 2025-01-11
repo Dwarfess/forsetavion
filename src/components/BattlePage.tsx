@@ -25,11 +25,17 @@ import {
     useSelectedCardForInfo,
     useSelectedSecretCard,
     useIsMoving,
-} from "../store/storeHooks";
+    useCharacter
+} from '../store/storeHooks';
 import mixins from "../mixins";
+import { useBattleApiUtils } from './home-map/multi-battle-page/useBattleApiUtils';
+import { useMultiBattleApiUtils } from './home-map/multi-battle-page/useMultiBattleApiUtils';
 
 const BattlePage = () => {
-    const { heroCard, battleCards, setBattleCards } = useBattleCards();
+    // const { updateCurrentBattle } = useBattleApiUtils();
+    const { updateCurrentBattle } = useMultiBattleApiUtils();
+    const { character } = useCharacter();
+    const { heroCard, battleCards, setBattleCards } = useBattleCards(character.nickname);
     const { selectedCardForInfo } = useSelectedCardForInfo();
     const { selectedSecretCard } = useSelectedSecretCard();
     const { isOpenBattleOverModal } = useIsOpenBattleOverModal();
@@ -50,9 +56,6 @@ const BattlePage = () => {
         if (battleFieldLength && battleCards.length === 0) {
             setBattleCards(getBattleCardsWithHero());
         }
-        // else {
-        //     setBattleCards([]);
-        // }
     }, [battleFieldLength]);
 
     useEffect(() => {
@@ -77,7 +80,7 @@ const BattlePage = () => {
         if (isProcessingAction) return;
         setIsProcessingAction(true);
 
-        cardHandler(selectedCardIndex);
+        cardHandler(selectedCardIndex, updateCurrentBattle);
     };
 
     const onKeyDown = (e: any): void => {
@@ -87,7 +90,7 @@ const BattlePage = () => {
         setIsProcessingAction(true);
 
         const selectedCardIndex = keyDownHandler(e.key);
-        cardHandler(selectedCardIndex);
+        cardHandler(selectedCardIndex, updateCurrentBattle);
     };
 
     return <BattlePageContainer>

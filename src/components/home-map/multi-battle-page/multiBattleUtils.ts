@@ -1,6 +1,7 @@
 import {ICharacter} from "../character-page/types";
 import {IBattleData, IBattleOptions} from "./types";
-import {getStateValue} from "../../../store/storeUtils";
+import { getStateValue, setStateValue } from '../../../store/storeUtils';
+import { defaultMultiBattle } from '../../../store/constants';
 
 export const prepareBattleData = (
     {password, battleFieldLength}: IBattleOptions,
@@ -21,6 +22,7 @@ export const updateBattleData = ({ _id, password, battleFieldLength, battleCards
 
     const newBattleCards = structuredClone(battleCards);
     const heroCard = structuredClone(character.hero);
+    heroCard.nickname = character.nickname;
     heroCard.index = newBattleCards.length - 1;
 
     newBattleCards[newBattleCards.length - 1] = heroCard;

@@ -4,19 +4,29 @@ import {Music} from "./Music";
 import {Options} from "./Options";
 import mixins from "../../mixins";
 import React from "react";
-import {useActivePage, useBattleCards, useBattleFieldLength, useIsProcessingAction} from "../../store/storeHooks";
+import {
+    useActivePage,
+    useBattleCards,
+    useBattleFieldLength,
+    useIsProcessingAction,
+} from '../../store/storeHooks';
+import { defaultMultiBattle } from '../../store/constants';
+import { useMultiBattleUtils } from '../home-map/multi-battle-page/useMultiBattleUtils';
 
 const GeneralHeader = () => {
     const {setActivePage} = useActivePage();
     const {setBattleCards} = useBattleCards();
     const {setBattleFieldLength} = useBattleFieldLength();
     const {setIsProcessingAction} = useIsProcessingAction();
+    const { resetMultiBattle } = useMultiBattleUtils();
 
     const onExitButtonClick = () => {
         setBattleCards([]);
         setBattleFieldLength(0);
         setIsProcessingAction(false);
         setActivePage('game-selection-page');
+
+        resetMultiBattle();
     }
 
     return <GeneralHeaderContainer>

@@ -22,7 +22,11 @@ import {getHeroCard} from "./utils";
 
 import {getStateValue, setStateValue} from "../../store/storeUtils";
 
-export const cardHandler = async (selectedCardIndex: number) => {
+export const cardHandler = async (
+    selectedCardIndex: number,
+    updateCurrentBattle?: (selectedCardIndex: number, newBattleCard: any) => void,
+) => {
+    setStateValue('isProcessingAction', true);
     const battleFieldLength = getStateValue('battleFieldLength');
     const cardAmount = battleFieldLength * battleFieldLength;
 
@@ -59,14 +63,26 @@ export const cardHandler = async (selectedCardIndex: number) => {
     }
 
     if (allowedIndexes.includes(selectedCardIndex)) {
-        resetBattleCards(selectedCardIndex);
+        resetBattleCards(selectedCardIndex, updateCurrentBattle);
     } else {
         setStateValue('isProcessingAction',false);
     }
 };
 
+export const executeActionFromAnotherPlayer = (data: any) => {
+    // const character = getStateValue('character');
+    // if (character.nickname === data.nickname) return;
+
+    resetBattleCards(data.selectedCardIndex);
+};
+
 // TODO: should to refactor this large method
-const resetBattleCards = async (selectedCardIndex: number) => {
+const resetBattleCards = async (
+    selectedCardIndex: number,
+    updateCurrentBattle?: (selectedCardIndex: number, newBattleCard: any) => void
+) => {
+    // const { updateCurrentBattle, battleCardFromAnotherPlayer } = dataForMultiBattle;
+
     let battleCards = getStateValue('battleCards');
     const heroCard = getHeroCard(battleCards);
     const selectedCard = battleCards[selectedCardIndex];
@@ -82,7 +98,7 @@ const resetBattleCards = async (selectedCardIndex: number) => {
     // from the part of code starts moving card
     setStateValue('isMoving',true);
 
-    recalculateHeroStatsAfterContact(heroCard, selectedCard);
+    recalculateHeroStatsAfterContact(heroCard, selectedCard, battleCards);
     await addClassWhenContactCard(selectedCard);
     setStateValue('battleCards', battleCards);
 
@@ -94,12 +110,18 @@ const resetBattleCards = async (selectedCardIndex: number) => {
     }
 
     battleCards = structuredClone(battleCards);
+
+    let newBattleCard: any;
     if (selectedCard.type === 'boss') {
-        changeBattleCardAfterSkill(battleCards, selectedCard);
+        newBattleCard = changeBattleCardAfterSkill(battleCards, selectedCard);
     } else {
-        await moveBattleCards(selectedCardIndex, battleCards);
+        await moveBattleCards(selectedCardIndex, battleCards).then((result: BattleCardType) => {
+            newBattleCard = result
+        });
     }
 
+    updateCurrentBattle && updateCurrentBattle(selectedCardIndex, newBattleCard);
+    setStateValue('actionDataFromActivePlayer', {});
     // TODO: add animation for boss effects
     setStateValue('battleCards', battleCards);
     setStateValue('isProcessingAction',false);

@@ -10,10 +10,13 @@ import {
     changeIsMoving,
     changeIsProcessingAction,
     changeBattleCards,
+    changeMultiBattle,
+    changeMultiBattleSocket,
     changeCharacter,
     changeActiveMap,
     changeActivePage,
     changeOptions,
+    changeActionDataFromActivePlayer
 } from './index';
 import { getHeroCard } from "../components/utils";
 import {ICharacter} from "../components/home-map/character-page/types";
@@ -130,16 +133,38 @@ export const useIsProcessingAction = () => {
     return { isProcessingAction, setIsProcessingAction };
 }
 
-export const useBattleCards = () => {
+export const useBattleCards = (definedCharacterNickname?: string) => {
     const dispatch = useDispatch();
     const battleCards = useSelector((state: RootState) => state.battleCards.value);
-    const heroCard = getHeroCard(battleCards);
+    const heroCard = getHeroCard(battleCards, definedCharacterNickname);
 
     const setBattleCards = (val: any) => {
         dispatch(changeBattleCards(val));
     }
 
     return { heroCard, battleCards, setBattleCards };
+}
+
+export const useMultiBattle = () => {
+    const dispatch = useDispatch();
+    const multiBattle = useSelector((state: RootState) => state.multiBattle.value);
+
+    const setMultiBattle = (val: any) => {
+        dispatch(changeMultiBattle(val));
+    }
+
+    return { multiBattle, setMultiBattle };
+}
+
+export const useMultiBattleSocket = () => {
+    const dispatch = useDispatch();
+    const multiBattleSocket = useSelector((state: RootState) => state.multiBattleSocket.value);
+
+    const setMultiBattleSocket = (val: any) => {
+        dispatch(changeMultiBattleSocket(val));
+    }
+
+    return { multiBattleSocket, setMultiBattleSocket };
 }
 
 export const useCharacter = () => {
@@ -160,6 +185,17 @@ export const useOptions = () => {
 
     const setOptions = (val: IOption) => {
         dispatch(changeOptions(val));
+    }
+
+    return { options, setOptions };
+}
+
+export const useActionDataFromActivePlayer = () => {
+    const dispatch = useDispatch();
+    const options = useSelector((state: RootState) => state.options.value);
+
+    const setOptions = (val: IOption) => {
+        dispatch(changeActionDataFromActivePlayer(val));
     }
 
     return { options, setOptions };

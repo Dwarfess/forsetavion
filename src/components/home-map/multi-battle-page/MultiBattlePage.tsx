@@ -6,12 +6,14 @@ import {useBattleApiUtils} from "./useBattleApiUtils";
 import {useActivePage, useBattleCards, useBattleFieldLength, useCharacter} from "../../../store/storeHooks";
 import {IBattleOptions} from "./types";
 import {getBattleCardsWithHero} from "../../utils";
-import {prepareBattleData} from "./battleUtils";
+import {prepareBattleData} from "./multiBattleUtils";
+import { useMultiBattleApiUtils } from './useMultiBattleApiUtils';
 
 const MultiBattlePage = () => {
     const { character } = useCharacter();
     const { setBattleFieldLength } = useBattleFieldLength();
-    const { createNewBattle, getRandomBattleAndJoin } = useBattleApiUtils();
+    // const { createNewBattle, getRandomBattleAndJoin } = useBattleApiUtils();
+    const { createNewBattle, getRandomBattleAndJoin } = useMultiBattleApiUtils();
 
     const onCreateBattleClick = async (battleOptions: IBattleOptions) => {
         setBattleFieldLength(battleOptions.battleFieldLength);

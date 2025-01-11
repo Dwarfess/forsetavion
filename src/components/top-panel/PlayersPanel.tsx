@@ -1,16 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 import mixins from "../../mixins";
-import {IBattlePlayer} from "../home-map/multi-battle-page/types";
+import { useMultiBattle } from '../../store/storeHooks';
 
 interface IPlayersPanelPanel {
-    players: IBattlePlayer[]
+    // players: IBattlePlayer[]
 }
 
-const PlayersPanel: React.FC<IPlayersPanelPanel> = ({players}) => {
+const PlayersPanel: React.FC<IPlayersPanelPanel> = () => {
+    const { multiBattle } = useMultiBattle();
     return <PlayersPanelContainer>
         <div className="timer">40</div>
-        { players.map((player, index) => {
+        { multiBattle.players.map((player, index) => {
                 return <div className="player-info" key={index}>
                     <div className="avatar"><img src={`img/${player.avatar}.jpg`} alt=""/></div>
                     <div className="nickname">{ player.nickname }</div>
@@ -18,7 +19,7 @@ const PlayersPanel: React.FC<IPlayersPanelPanel> = ({players}) => {
             })
         }
 
-        { players.length === 1 ? <div className="loading">Loading ... </div> : <></> }
+        { multiBattle.players.length === 1 ? <div className="loading">Loading ... </div> : <></> }
     </PlayersPanelContainer>
 }
 
@@ -59,6 +60,12 @@ const PlayersPanelContainer = styled.div`
             
             font-size: 50px;
             margin: 10px;
+        }
+        
+        &:nth-of-type(3) {
+            .avatar {
+                order: 1;
+            }
         }
     }
     

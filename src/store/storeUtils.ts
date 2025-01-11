@@ -8,15 +8,21 @@ import {
     changeIsMoving,
     changeIsProcessingAction,
     changeBattleCards,
+    changeMultiBattle,
+    changeMultiBattleSocket,
     changeCharacter,
     changeActiveMap,
     changeActivePage,
     changeOptions,
-} from "./index";
+    changeActionDataFromActivePlayer
+} from './index';
 import {apiSlice} from "./apiSlice";
 
 export const getStateValue = (name: string) => {
-    const state = structuredClone(store.getState() as any);
+    const state = name === 'multiBattleSocket' ? store.getState() : structuredClone({
+        ...store.getState(),
+        multiBattleSocket: undefined // Виключаємо multiBattleSocket з копіювання
+    });
     return state[name].value;
 }
 
@@ -32,8 +38,11 @@ export const setStateValue = (name: string, data: any) => {
         isMoving: changeIsMoving,
         isProcessingAction: changeIsProcessingAction,
         battleCards: changeBattleCards,
+        multiBattle: changeMultiBattle,
+        multiBattleSocket: changeMultiBattleSocket,
         character: changeCharacter,
         options: changeOptions,
+        actionDataFromActivePlayer: changeActionDataFromActivePlayer,
     };
 
     store.dispatch(reducerMap[name](data));

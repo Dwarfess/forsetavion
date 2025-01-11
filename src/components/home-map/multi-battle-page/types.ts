@@ -13,6 +13,6 @@ export interface IBattleData {
     password: string;
     battleFieldLength: number;
     battleCards: any;
-    players: IBattlePlayer[]
+    players: IBattlePlayer[];
     isActive: boolean,
 }

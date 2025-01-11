@@ -75,9 +75,22 @@ export const apiSlice = createApi({
                 method: 'GET',
             }),
         }),
+        getBattle: builder.mutation<boolean, string>({
+            query: (battleId) => ({
+                url: `battles/get/${battleId}`,
+                method: 'GET',
+            }),
+        }),
         createBattle: builder.mutation<boolean, IBattleData>({
             query: (data) => ({
                 url: 'battles/create',
+                method: 'POST',
+                body: data,
+            }),
+        }),
+        updateBattle: builder.mutation<boolean, any>({
+            query: (data) => ({
+                url: `battles/update`,
                 method: 'POST',
                 body: data,
             }),
@@ -87,6 +100,12 @@ export const apiSlice = createApi({
                 url: 'battles/join',
                 method: 'POST',
                 body: data,
+            }),
+        }),
+        deleteBattle: builder.mutation<boolean, string>({
+            query: (battleId) => ({
+                url: `battles/${battleId}`,
+                method: 'DELETE',
             }),
         }),
     }),
@@ -99,8 +118,10 @@ export const {
     useCreateCharacterMutation,
     useGetCharactersMutation,
     useGetCharacterByUserIdMutation,
-    useUpdateCurrentCharacterMutation,
     useRandomBattleMutation,
+    useGetBattleMutation,
     useCreateBattleMutation,
+    useUpdateBattleMutation,
     useJoinBattleMutation,
+    useDeleteBattleMutation,
 } = apiSlice;

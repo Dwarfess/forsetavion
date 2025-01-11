@@ -2,7 +2,7 @@
 import { ICharacter } from "./types";
 import {generateHeroCard} from "../../utils/cardsBuilder";
 
-export const defaultCharacter: ICharacter = {
+export const getDefaultCharacter = (): ICharacter => ({
     userId: '0',
     userRole: 'users',
     nickname: 'Sirocco',
@@ -15,7 +15,7 @@ export const defaultCharacter: ICharacter = {
     inventory: {
         potions: []
     }
-};
+});
 
 export const avatars: string[] = [
     'default-avatar',

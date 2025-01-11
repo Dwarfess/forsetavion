@@ -20,6 +20,7 @@ export const getBattleCardsWithHero = (): (BattleCardType | IHeroBattleCard)[] =
     const heroCard = character.hero || defaultHeroCard;
     const battleCards: (BattleCardType | IHeroBattleCard)[] = generateBattleCards(heroCard.level);
 
+    // heroCard.nickname = character.nickname;
     battleCards[0] = heroCard;
 
     const battleFieldLength = getStateValue('battleFieldLength');
@@ -117,8 +118,7 @@ export const generateBossCards = (heroLevel: number) => {
 };
 
 const getRandomValue = (battleCard: PrimaryBattleCardType, heroLevel: number) => {
-    const battleFieldLength = getStateValue('battleFieldLength');
-    const defaultValue = battleFieldLength;
+    const defaultValue = getStateValue('battleFieldLength');
     const calculatedValue = defaultValue * (3 + ((heroLevel - 1) / 5));
 
     const healthMap: any = {
@@ -168,8 +168,12 @@ export const recalculateCharacterParamsAfterBattle = (heroCard: IHeroBattleCard)
     })
 }
 
-export const getHeroCard = (battleCards: BattleCardType[]): any => {
-    return battleCards.find((card: BattleCardType) => card.type === 'hero');
+export const getHeroCard = (battleCards: BattleCardType[], definedCharacterNickname?: string): any => {
+    const nickname = definedCharacterNickname || getStateValue('actionDataFromActivePlayer').nickname
+    || getStateValue('character').nickname;
+    return battleCards.find((card: BattleCardType) => card.nickname === nickname);
+    // return battleCards.find((card: BattleCardType) => card.nickname === nickname
+    //     || (card.type === 'hero' && !card.nickname));
 };
 
 // export const generateSkill = (skills: Skill[], name: string): Skill => {

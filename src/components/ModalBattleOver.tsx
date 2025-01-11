@@ -2,18 +2,22 @@ import styled from "styled-components";
 import {getHeroScore, recalculateCharacterParamsAfterBattle} from "./utils/utils";
 import {useActivePage, useBattleCards, useBattleFieldLength, useIsOpenBattleOverModal} from "../store/storeHooks";
 import {ModalX} from "./shared";
+import { useMultiBattleUtils } from './home-map/multi-battle-page/useMultiBattleUtils';
 
 const ModalBattleOver = () => {
     const { setActivePage } = useActivePage();
     const { setIsOpenBattleOverModal } = useIsOpenBattleOverModal();
     const { setBattleFieldLength } = useBattleFieldLength();
     const { heroCard, setBattleCards } = useBattleCards();
-    const onButtonClick = () => {
+    const { resetMultiBattle } = useMultiBattleUtils();
+
+    const onAgainButtonClick = () => {
         recalculateCharacterParamsAfterBattle(heroCard);
         setIsOpenBattleOverModal(false);
         setBattleCards([]);
         setBattleFieldLength(0);
         setActivePage('game-selection-page');
+        resetMultiBattle();
     }
 
     return (
@@ -27,7 +31,7 @@ const ModalBattleOver = () => {
                     <p className="score">Score - {getHeroScore(heroCard)} points</p>
                 </div>
                 <div className="actions">
-                    <button className="btn" onClick={onButtonClick}>Again</button>
+                    <button className="btn" onClick={onAgainButtonClick}>Again</button>
                 </div>
             </ModalXContainer>
         </ModalX>

@@ -1,6 +1,6 @@
 import {ICharacter, IUser} from "../character-page/types";
 import {setStateValue} from "../../../store/storeUtils";
-import {defaultCharacter} from "../character-page/constants";
+import {getDefaultCharacter} from "../character-page/constants";
 import {
     useSignInUserMutation,
     useSignUpUserMutation,
@@ -226,6 +226,7 @@ export const useAuthApiUtils = () => {
     };
 
     const createNewCharacter = (nickname: string, userId: string) => {
+        const defaultCharacter = getDefaultCharacter();
         return createCharacter({ ...defaultCharacter, nickname, userId })
             .unwrap()
             .then((result) => {

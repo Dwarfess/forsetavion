@@ -20,22 +20,24 @@ export const addClassForMovingCard = async (battleCard: BattleCardType, classNam
     return true;
 };
 
+// TODO: should combine similar part from this and changeBattleCardAfterSkill method
 export const moveBattleCards = async(
     selectedCardIndex: number,
     battleCards: BattleCardType[]
-):Promise<boolean> => {
+):Promise<BattleCardType> => {
+    const battleCardFromAnotherPlayer = getStateValue('actionDataFromActivePlayer').battleCardFromAnotherPlayer;
     const heroCard = getHeroCard(battleCards);
     hideSelectedCard(selectedCardIndex);
     const selectedCardType = battleCards[selectedCardIndex].type;
     const selectedCardLevel = battleCards[selectedCardIndex].level;
     const calcLastCardIndex = await moveBattleCard(heroCard.index, selectedCardIndex, battleCards);
-    const newBattleCard = defineNewBattleCard(selectedCardType, selectedCardLevel, battleCards);
+    const newBattleCard = battleCardFromAnotherPlayer || defineNewBattleCard(selectedCardType, selectedCardLevel, battleCards);
     newBattleCard.index = calcLastCardIndex;
     newBattleCard.isNew = true;
 
     battleCards[calcLastCardIndex] = newBattleCard;
 
-    return true;
+    return newBattleCard;
 };
 
 export const defineNewBattleCard = (
@@ -63,8 +65,9 @@ export const defineNewBattleCard = (
 
     const newBattleCard = newBattleCards[0];
 
-    if (newBattleCard.type === 'boss')
-    recalculateSkillsStatsAccordingLevel(newBattleCard.skills);
+    if (newBattleCard.type === 'boss') {
+        recalculateSkillsStatsAccordingLevel(newBattleCard.skills);
+    }
 
     return newBattleCards[0];
 }

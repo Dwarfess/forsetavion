@@ -8,12 +8,13 @@ import {
 } from "./contactItems";
 import {defineNewBattleCard} from "./moveItems";
 import {getStateValue, setStateValue} from "../../store/storeUtils";
+import { getHeroCard } from './utils';
 // import {playSoundEffect} from "./utils2";
 
 
-const getHeroCard = (battleCards: BattleCardType[]): any => {
-    return battleCards.find((card: BattleCardType) => card.type === 'hero');
-}
+// const getHeroCard = (battleCards: BattleCardType[]): any => {
+//     return battleCards.find((card: BattleCardType) => card.type === 'hero');
+// }
 
 export const getCardSkills = (battleCards: BattleCardType[], type: string): Skill[] => {
     return battleCards.find((battleCard:BattleCardType) => battleCard.type === type)?.skills || [];
@@ -117,7 +118,12 @@ const checkBattleCardAfterSkill = (
     const heroCard = getHeroCard(battleCards);
 
     if (selectedCard.type === 'boss') {
-        heroCard.bossParts = 0;
+        battleCards.forEach((battleCard) => {
+            if (battleCard.type !== 'hero') return;
+
+            battleCard.bossParts = 0;
+        });
+        // heroCard.bossParts = 0;
     }
 
     recalculateHeroExp(heroCard, selectedCard);
@@ -231,12 +237,19 @@ const buffSkillHandler = (effect: Effect, selectedCard: BattleCardType) => {
     return power.value;
 }
 
-export const changeBattleCardAfterSkill = (battleCards: BattleCardType[], selectedCard: BattleCardType) => {
-    const battleCard = defineNewBattleCard(selectedCard.type, selectedCard.level, battleCards);
+export const changeBattleCardAfterSkill = (
+    battleCards: BattleCardType[],
+    selectedCard: BattleCardType,
+): BattleCardType => {
+    const battleCardFromAnotherPlayer = getStateValue('actionDataFromActivePlayer').battleCardFromAnotherPlayer;
+    const newBattleCard = battleCardFromAnotherPlayer
+        || defineNewBattleCard(selectedCard.type, selectedCard.level, battleCards);
 
-    battleCard.index = selectedCard.index;
-    battleCard.isNew = true;
-    battleCards[selectedCard.index] = battleCard;
+    newBattleCard.index = selectedCard.index;
+    newBattleCard.isNew = true;
+    battleCards[selectedCard.index] = newBattleCard;
+
+    return newBattleCard;
 }
 
 export const updateSkillsCoolDown = (battleCards: BattleCardType[]) => {
@@ -249,7 +262,13 @@ export const checkBossSkillsReadyToUse = (battleCards: BattleCardType[]) => {
     battleCards.filter((battleCard: BattleCardType) => battleCard.type === 'boss')
         .forEach((bossCard: BattleCardType) => {
             bossCard.skills.forEach((skill: Skill) => {
-                !skill.coolDown && addEffect(skill, getHeroCard(battleCards));
+                if (skill.coolDown) return;
+
+                battleCards.forEach((battleCard) => {
+                    if (battleCard.type !== 'hero') return;
+
+                    addEffect(skill, battleCard);
+                });
             });
     })
 }
