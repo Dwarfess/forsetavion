@@ -21,10 +21,11 @@ import {
 import {getHeroCard} from "./utils";
 
 import {getStateValue, setStateValue} from "../../store/storeUtils";
+import { updateCurrentBattle } from '../home-map/multi-battle-page/multiBattleUtils';
 
 export const cardHandler = async (
     selectedCardIndex: number,
-    updateCurrentBattle?: (selectedCardIndex: number, newBattleCard: any) => void,
+    // updateCurrentBattle?: (selectedCardIndex: number, newBattleCard: any) => void,
 ) => {
     setStateValue('isProcessingAction', true);
     const battleFieldLength = getStateValue('battleFieldLength');
@@ -63,7 +64,7 @@ export const cardHandler = async (
     }
 
     if (allowedIndexes.includes(selectedCardIndex)) {
-        resetBattleCards(selectedCardIndex, updateCurrentBattle);
+        resetBattleCards(selectedCardIndex);
     } else {
         setStateValue('isProcessingAction',false);
     }
@@ -77,9 +78,9 @@ export const executeActionFromAnotherPlayer = (data: any) => {
 };
 
 // TODO: should to refactor this large method
-const resetBattleCards = async (
+export const resetBattleCards = async (
     selectedCardIndex: number,
-    updateCurrentBattle?: (selectedCardIndex: number, newBattleCard: any) => void
+    // updateCurrentBattle?: (selectedCardIndex: number, newBattleCard: any) => void
 ) => {
     // const { updateCurrentBattle, battleCardFromAnotherPlayer } = dataForMultiBattle;
 
@@ -120,7 +121,11 @@ const resetBattleCards = async (
         });
     }
 
-    updateCurrentBattle && updateCurrentBattle(selectedCardIndex, newBattleCard);
+    updateCurrentBattle({
+        action: 'move',
+        battleCardFromAnotherPlayer: newBattleCard,
+        selectedCardIndex
+    });
     setStateValue('actionDataFromActivePlayer', {});
     // TODO: add animation for boss effects
     setStateValue('battleCards', battleCards);

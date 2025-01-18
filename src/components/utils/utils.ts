@@ -18,6 +18,7 @@ import {getStateValue, setStateValue} from "../../store/storeUtils";
 export const getBattleCardsWithHero = (): (BattleCardType | IHeroBattleCard)[] => {
     const character = getStateValue('character');
     const heroCard = character.hero || defaultHeroCard;
+    heroCard.nickname = character.nickname;
     const battleCards: (BattleCardType | IHeroBattleCard)[] = generateBattleCards(heroCard.level);
 
     // heroCard.nickname = character.nickname;

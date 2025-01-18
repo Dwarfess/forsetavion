@@ -7,10 +7,11 @@ import {calculateAnswer, getDuration, getEquation, updateBattleCardsAfterSecret,
 import {symbols} from "./constants";
 import {ModalX} from "./shared";
 import {useBattleCards, useSelectedSecretCard} from "../store/storeHooks";
+import { updateCurrentBattle } from './home-map/multi-battle-page/multiBattleUtils';
 
 const ModalSecretCard = () => {
-    const { setSelectedSecretCard } = useSelectedSecretCard();
-    const [answer, setAnswer] = useState('');
+    const { selectedSecretCard, setSelectedSecretCard } = useSelectedSecretCard();
+    const [answer, setAnswer] = useState<string>('');
     const [isCorrectAnswer, setIsCorrectAnswer] = useState<any>(null);
     const [duration, setDuration] = useState<number>(getDuration());
 
@@ -19,17 +20,24 @@ const ModalSecretCard = () => {
         setSelectedSecretCard(false);
     }
 
-    const onButtonCheckClick = () => {
+    const onCheckButtonClick = () => {
         setIsCorrectAnswer(answer === String(calculateAnswer(equation)));
         setDuration(0);
+
+        updateCurrentBattle({ action: 'equationAnswer', answer });
     }
 
     useEffect(() => {
-        setAnswer('')
+        setAnswer('');
+        updateCurrentBattle({
+            action: 'selectedSecretCard',
+            battleCardFromAnotherPlayer: selectedSecretCard,
+            equation
+        });
     }, []);
 
     const onSymbolClick = (symbol: string) => {
-        setAnswer(updateAnswer(answer, symbol, isCorrectAnswer));
+        setAnswer((prevAnswer) => updateAnswer(prevAnswer, symbol, isCorrectAnswer));
     }
 
     const equation = useMemo(() => getEquation(), []);
@@ -89,8 +97,8 @@ const ModalSecretCard = () => {
                 </div>
                 <div className="actions">
                     {isCorrectAnswer === null
-                        ? (<button className="btn" onClick={onButtonCheckClick}>Check</button>)
-                        : (<button className="btn" onClick={onCloseClick}>Close</button>)}
+                        ? (<button className="btn check-btn" onClick={onCheckButtonClick}>Check</button>)
+                        : (<button className="btn close-btn" onClick={onCloseClick}>Close</button>)}
                 </div>
             </ModalXContainer>
         </ModalX>

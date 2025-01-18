@@ -13,7 +13,8 @@ import {BottomPanel} from "./bottom-panel/BottomPanel";
 import {
     cardHandler,
     keyDownHandler,
-    getBattleCardsWithHero, executeMethodsAfterMoving,
+    getBattleCardsWithHero,
+    executeMethodsAfterMoving,
 } from "./utils";
 
 import {
@@ -28,12 +29,8 @@ import {
     useCharacter
 } from '../store/storeHooks';
 import mixins from "../mixins";
-import { useBattleApiUtils } from './home-map/multi-battle-page/useBattleApiUtils';
-import { useMultiBattleApiUtils } from './home-map/multi-battle-page/useMultiBattleApiUtils';
 
 const BattlePage = () => {
-    // const { updateCurrentBattle } = useBattleApiUtils();
-    const { updateCurrentBattle } = useMultiBattleApiUtils();
     const { character } = useCharacter();
     const { heroCard, battleCards, setBattleCards } = useBattleCards(character.nickname);
     const { selectedCardForInfo } = useSelectedCardForInfo();
@@ -80,7 +77,7 @@ const BattlePage = () => {
         if (isProcessingAction) return;
         setIsProcessingAction(true);
 
-        cardHandler(selectedCardIndex, updateCurrentBattle);
+        cardHandler(selectedCardIndex);
     };
 
     const onKeyDown = (e: any): void => {
@@ -90,7 +87,7 @@ const BattlePage = () => {
         setIsProcessingAction(true);
 
         const selectedCardIndex = keyDownHandler(e.key);
-        cardHandler(selectedCardIndex, updateCurrentBattle);
+        cardHandler(selectedCardIndex);
     };
 
     return <BattlePageContainer>

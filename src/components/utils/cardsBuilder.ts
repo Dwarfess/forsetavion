@@ -7,6 +7,7 @@ export const bossCardBuilder = () => {
     return true;
 }
 
+// TODO: merge the method with getBattleCardsWithHero (utils)
 const heroConstructor = (heroItem: IHeroCollectionItem): IHeroBattleCard => {
     const character = getStateValue('character');
     const clonedDefaultHeroCard = structuredClone(defaultHeroCard);

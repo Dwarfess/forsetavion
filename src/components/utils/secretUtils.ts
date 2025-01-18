@@ -1,6 +1,7 @@
 import {BattleCardType} from "../types";
 import {generatePrizeCards, getHeroCard} from "./utils";
 import {getStateValue, setStateValue} from "../../store/storeUtils";
+import { updateCurrentBattle } from '../home-map/multi-battle-page/multiBattleUtils';
 
 export const updateAnswer = (answer: string, symbol: string, isCorrectAnswer: any): string => {
     if (isCorrectAnswer !== null) return answer;
@@ -24,6 +25,9 @@ export const getDuration = (): number => {
 }
 
 export const getEquation = (): string => {
+    const actionDataFromActivePlayer = getStateValue('actionDataFromActivePlayer');
+    if (actionDataFromActivePlayer.equation) return actionDataFromActivePlayer.equation;
+
     const selectedSecretCard = getStateValue('selectedSecretCard');
     if (!selectedSecretCard) return '';
 
@@ -74,8 +78,10 @@ export const updateBattleCardsAfterSecret = (isCorrectAnswer: boolean) => {
     const selectedSecretCard = getStateValue('selectedSecretCard');
     if (!selectedSecretCard) return '';
 
+    let secretPrizeCard;
     if (isCorrectAnswer) {
-        const secretPrizeCard = generatePrizeCards(selectedSecretCard.level)[0];
+        const battleCardFromAnotherPlayer = getStateValue('actionDataFromActivePlayer').battleCardFromAnotherPlayer;
+        secretPrizeCard = battleCardFromAnotherPlayer || generatePrizeCards(selectedSecretCard.level)[0];
 
         secretPrizeCard.index = selectedSecretCard.index;
         battleCards[selectedSecretCard.index] = secretPrizeCard;
@@ -87,6 +93,7 @@ export const updateBattleCardsAfterSecret = (isCorrectAnswer: boolean) => {
     }
 
     setStateValue('battleCards', battleCards);
+    updateCurrentBattle({ action: 'closeSecretCard', battleCardFromAnotherPlayer: secretPrizeCard });
 };
 
 const decreaseSelectedSecretCardLevel = (battleCards: BattleCardType[], selectedSecretCardIndex: number) => {

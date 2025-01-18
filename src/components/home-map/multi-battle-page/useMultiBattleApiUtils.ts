@@ -10,10 +10,10 @@ import {
     useDeleteBattleMutation,
 } from '../../../store/apiSlice';
 import {IBattleData} from "./types";
-import {updateBattleData} from "./multiBattleUtils";
+import { executeActionFromAnotherPlayer, updateBattleData } from './multiBattleUtils';
 import {setStateValue} from "../../../store/storeUtils";
 import { useCharacter, useMultiBattle, useMultiBattleSocket } from '../../../store/storeHooks';
-import { executeActionFromAnotherPlayer } from '../../utils';
+// import { executeActionFromAnotherPlayer } from '../../utils';
 
 export const useMultiBattleApiUtils = () => {
     const { character } = useCharacter();
@@ -51,7 +51,7 @@ export const useMultiBattleApiUtils = () => {
             console.log('Received battle update:', result);
 
             // Логіка обробки повідомлень
-            if (result.action === 'move' && character.nickname !== result.nickname) {
+            if (result.action && character.nickname !== result.nickname) {
                 setStateValue('actionDataFromActivePlayer', result);
                 executeActionFromAnotherPlayer(result);
                 return;
