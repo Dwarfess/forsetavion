@@ -13,6 +13,10 @@ import {
 } from "../utils";
 import {useBattleCards, useIsProcessingAction, useIsOpenLevelUpModal, useSelectedCardForInfo} from "../../store/storeHooks";
 import { ModalX } from "../shared";
+import {
+    updateCurrentBattleAndResetActivePlayer
+} from '../home-map/multi-battle-page/multiBattleUtils';
+import { setStateValue } from '../../store/storeUtils';
 
 const ModalLevelUp = () => {
     const { setIsOpenLevelUpModal } = useIsOpenLevelUpModal();
@@ -30,6 +34,10 @@ const ModalLevelUp = () => {
 
     const completePoints = () => {
         updateBattleCardsByNewSkillLevels(heroSkills);
+        
+        // TODO: merge updateCurrentBattle and setStateValue('actionDataFromActivePlayer', {}); to one general method
+        updateCurrentBattleAndResetActivePlayer({ action: 'updateHeroSkills', heroSkills });
+        // setStateValue('actionDataFromActivePlayer', {});
         setIsOpenLevelUpModal(false);
     }
 

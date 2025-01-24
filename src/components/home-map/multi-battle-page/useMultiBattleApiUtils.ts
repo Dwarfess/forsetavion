@@ -52,11 +52,11 @@ export const useMultiBattleApiUtils = () => {
 
             // Логіка обробки повідомлень
             if (result.action && character.nickname !== result.nickname) {
-                setStateValue('actionDataFromActivePlayer', result);
                 executeActionFromAnotherPlayer(result);
                 return;
             }
 
+            // TODO: move to executeActionFromAnotherPlayer method
             if (result.battleCards) {
                 setStateValue('multiBattle', {
                     _id: result._id,
@@ -96,24 +96,24 @@ export const useMultiBattleApiUtils = () => {
         newSocket.emit('joinBattle', battleId);
     }
 
-    const updateCurrentBattle = (selectedCardIndex: number, newBattleCard: any) => {
-        const data = {
-            battleId: multiBattle._id,
-            action: 'move',
-            battleCardFromAnotherPlayer: newBattleCard,
-            selectedCardIndex,
-            nickname: character.nickname
-        };
-
-        // Перевіряємо, чи є підключений сокет
-        if (multiBattleSocket) {
-            // Відправляємо дані через Socket.io
-            multiBattleSocket.emit('battleAction', data);
-            console.log('Battle action sent:', data);
-        } else {
-            console.error('Socket.io is not connected, cannot send data.');
-        }
-    };
+    // const updateCurrentBattle = (selectedCardIndex: number, newBattleCard: any) => {
+    //     const data = {
+    //         battleId: multiBattle._id,
+    //         action: 'move',
+    //         battleCardFromAnotherPlayer: newBattleCard,
+    //         selectedCardIndex,
+    //         nickname: character.nickname
+    //     };
+    //
+    //     // Перевіряємо, чи є підключений сокет
+    //     if (multiBattleSocket) {
+    //         // Відправляємо дані через Socket.io
+    //         multiBattleSocket.emit('battleAction', data);
+    //         console.log('Battle action sent:', data);
+    //     } else {
+    //         console.error('Socket.io is not connected, cannot send data.');
+    //     }
+    // };
 
     const createNewBattle = (data: IBattleData) => {
         return createBattle(data)
@@ -184,7 +184,7 @@ export const useMultiBattleApiUtils = () => {
 
     return {
         createNewBattle,
-        updateCurrentBattle,
+        // updateCurrentBattle,
         getRandomBattleAndJoin,
         deleteCurrentBattle
     }

@@ -7,7 +7,9 @@ import {calculateAnswer, getDuration, getEquation, updateBattleCardsAfterSecret,
 import {symbols} from "./constants";
 import {ModalX} from "./shared";
 import {useBattleCards, useSelectedSecretCard} from "../store/storeHooks";
-import { updateCurrentBattle } from './home-map/multi-battle-page/multiBattleUtils';
+import {
+    updateCurrentBattleAndResetActivePlayer
+} from './home-map/multi-battle-page/multiBattleUtils';
 
 const ModalSecretCard = () => {
     const { selectedSecretCard, setSelectedSecretCard } = useSelectedSecretCard();
@@ -17,6 +19,7 @@ const ModalSecretCard = () => {
 
     const onCloseClick = () => {
         updateBattleCardsAfterSecret(isCorrectAnswer);
+        // setStateValue('actionDataFromActivePlayer', {});
         setSelectedSecretCard(false);
     }
 
@@ -24,12 +27,13 @@ const ModalSecretCard = () => {
         setIsCorrectAnswer(answer === String(calculateAnswer(equation)));
         setDuration(0);
 
-        updateCurrentBattle({ action: 'equationAnswer', answer });
+        updateCurrentBattleAndResetActivePlayer({ action: 'equationAnswer', answer });
+        // setStateValue('actionDataFromActivePlayer', {});
     }
 
     useEffect(() => {
         setAnswer('');
-        updateCurrentBattle({
+        updateCurrentBattleAndResetActivePlayer({
             action: 'selectedSecretCard',
             battleCardFromAnotherPlayer: selectedSecretCard,
             equation

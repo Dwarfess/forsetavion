@@ -1,24 +1,25 @@
 import React, {MouseEventHandler, useEffect, useState} from 'react';
 import styled from "styled-components";
 import {
-    getHeroCard,
     getActiveSkill,
-    getCardSkills,
     getSkillClasses,
+    getCardSkills,
     updateBattleCardsWithSelectedSkill
-} from "../utils";
+} from '../utils';
 import {Skill} from "../types";
 import BattleCardImage from "../BattleCardImage";
-import {useBattleCards, useIsProcessingAction, useSelectedCardForInfo} from "../../store/storeHooks";
+import { useBattleCards, useCharacter, useIsProcessingAction, useSelectedCardForInfo } from '../../store/storeHooks';
 
 const SkillPanel = () => {
-    const { battleCards } = useBattleCards();
+    const { character } = useCharacter();
+    const { heroCard, battleCards } = useBattleCards(character.nickname);
     const { setSelectedCardForInfo } = useSelectedCardForInfo();
     const { isProcessingAction } = useIsProcessingAction();
+
     const [activeSkill, setActiveSkill] = useState<any>(null);
 
     useEffect(() => {
-        setActiveSkill(getActiveSkill(getHeroCard(battleCards)));
+        setActiveSkill(getActiveSkill(heroCard));
     }, [battleCards]);
 
     const onItemClick = (selectedSkill: Skill) => {
@@ -34,7 +35,7 @@ const SkillPanel = () => {
 
     return (
         <SkillPanelWrapper>
-            {getCardSkills(battleCards, 'hero').map((skill: Skill, index: number) => {
+            {getCardSkills(heroCard).map((skill: Skill, index: number) => {
                 return  <div
                     className={`skill-item-wrapper ${getSkillClasses(skill, activeSkill)}`}
                     onClick={() => onItemClick(skill)}

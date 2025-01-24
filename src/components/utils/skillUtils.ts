@@ -9,21 +9,18 @@ import {
 import {defineNewBattleCard} from "./moveItems";
 import {getStateValue, setStateValue} from "../../store/storeUtils";
 import { getHeroCard } from './utils';
-// import {playSoundEffect} from "./utils2";
+import {
+    updateCurrentBattleAndResetActivePlayer
+} from '../home-map/multi-battle-page/multiBattleUtils';
 
-
-// const getHeroCard = (battleCards: BattleCardType[]): any => {
-//     return battleCards.find((card: BattleCardType) => card.type === 'hero');
-// }
-
-export const getCardSkills = (battleCards: BattleCardType[], type: string): Skill[] => {
-    return battleCards.find((battleCard:BattleCardType) => battleCard.type === type)?.skills || [];
+export const getCardSkills = (battleCard: BattleCardType): Skill[] => {
+    return battleCard?.skills || [];
 }
 
 export const updateBattleCardsWithSelectedSkill = (skill: Skill) => {
     const battleCards = getStateValue('battleCards');
-
-    getHeroCard(battleCards).skills.forEach((heroSkill: Skill) => {
+    const heroCard = getHeroCard(battleCards);
+    heroCard.skills.forEach((heroSkill: Skill) => {
         if (heroSkill.name === skill.name) {
             heroSkill.active = !heroSkill.active;
         } else {
@@ -106,7 +103,13 @@ const skillsHandler = async (
         await checkBattleCardsEffects(battleCards);
     }
 
-    checkBattleCardAfterSkill(battleCards, selectedCard);
+    const newBattleCard = checkBattleCardAfterSkill(battleCards, selectedCard);
+    updateCurrentBattleAndResetActivePlayer({
+        action: 'useActiveSkill',
+        selectedCardIndex: selectedCard.index,
+        battleCardFromAnotherPlayer: newBattleCard,
+        activeSkill
+    });
 }
 
 const checkBattleCardAfterSkill = (
@@ -127,7 +130,7 @@ const checkBattleCardAfterSkill = (
     }
 
     recalculateHeroExp(heroCard, selectedCard);
-    changeBattleCardAfterSkill(battleCards, selectedCard);
+    return changeBattleCardAfterSkill(battleCards, selectedCard);
 }
 
 const allowedCardTypesForNegativeSkill = ['enemy', 'beast', 'boss'];

@@ -1,7 +1,9 @@
 import {BattleCardType} from "../types";
 import {generatePrizeCards, getHeroCard} from "./utils";
 import {getStateValue, setStateValue} from "../../store/storeUtils";
-import { updateCurrentBattle } from '../home-map/multi-battle-page/multiBattleUtils';
+import {
+    updateCurrentBattleAndResetActivePlayer
+} from '../home-map/multi-battle-page/multiBattleUtils';
 
 export const updateAnswer = (answer: string, symbol: string, isCorrectAnswer: any): string => {
     if (isCorrectAnswer !== null) return answer;
@@ -93,7 +95,8 @@ export const updateBattleCardsAfterSecret = (isCorrectAnswer: boolean) => {
     }
 
     setStateValue('battleCards', battleCards);
-    updateCurrentBattle({ action: 'closeSecretCard', battleCardFromAnotherPlayer: secretPrizeCard });
+    updateCurrentBattleAndResetActivePlayer({ action: 'closeSecretCard', battleCardFromAnotherPlayer: secretPrizeCard });
+    // setStateValue('actionDataFromActivePlayer', {});
 };
 
 const decreaseSelectedSecretCardLevel = (battleCards: BattleCardType[], selectedSecretCardIndex: number) => {

@@ -21,7 +21,9 @@ import {
 import {getHeroCard} from "./utils";
 
 import {getStateValue, setStateValue} from "../../store/storeUtils";
-import { updateCurrentBattle } from '../home-map/multi-battle-page/multiBattleUtils';
+import {
+    updateCurrentBattleAndResetActivePlayer
+} from '../home-map/multi-battle-page/multiBattleUtils';
 
 export const cardHandler = async (
     selectedCardIndex: number,
@@ -121,12 +123,12 @@ export const resetBattleCards = async (
         });
     }
 
-    updateCurrentBattle({
+    updateCurrentBattleAndResetActivePlayer({
         action: 'move',
         battleCardFromAnotherPlayer: newBattleCard,
         selectedCardIndex
     });
-    setStateValue('actionDataFromActivePlayer', {});
+    // setStateValue('actionDataFromActivePlayer', {});
     // TODO: add animation for boss effects
     setStateValue('battleCards', battleCards);
     setStateValue('isProcessingAction',false);

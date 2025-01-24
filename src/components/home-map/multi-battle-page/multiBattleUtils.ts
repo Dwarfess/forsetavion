@@ -1,7 +1,12 @@
 import {ICharacter} from "../character-page/types";
 import {IBattleData, IBattleOptions} from "./types";
 import { getStateValue, setStateValue } from '../../../store/storeUtils';
-import { resetBattleCards } from '../../utils';
+import {
+    cardHandler,
+    resetBattleCards,
+    updateBattleCardsByNewSkillLevels,
+    updateBattleCardsWithSelectedSkill
+} from '../../utils';
 
 export const prepareBattleData = (
     {password, battleFieldLength}: IBattleOptions,
@@ -44,6 +49,11 @@ export const updateBattleData = ({ _id, password, battleFieldLength, battleCards
     }
 }
 
+export const updateCurrentBattleAndResetActivePlayer = (actionDataFromCurrentPlayer: any) => {
+    updateCurrentBattle(actionDataFromCurrentPlayer);
+    setStateValue('actionDataFromActivePlayer', {});
+}
+
 export const updateCurrentBattle = (actionDataFromCurrentPlayer: any) => {
     const multiBattle = getStateValue('multiBattle');
     const actionDataFromActivePlayer = getStateValue('actionDataFromActivePlayer');
@@ -71,11 +81,17 @@ export const updateCurrentBattle = (actionDataFromCurrentPlayer: any) => {
 
 
 export const executeActionFromAnotherPlayer = (data: any) => {
+    setStateValue('actionDataFromActivePlayer', data);
+
+    // TODO: simplify all calls without internal methods
+    // example - move: () => executeMove,
     const actionsMap: any = {
         move: () => resetBattleCards(data.selectedCardIndex),
         selectedSecretCard: () => executeSelectedSecretCardFromAnotherPlayer(data.battleCardFromAnotherPlayer),
         closeSecretCard: () => executeCloseSecretCardFromAnotherPlayer(),
-        equationAnswer: () => executeEquationAnswer(data.answer)
+        equationAnswer: () => executeEquationAnswer(data.answer),
+        useActiveSkill: () => executeUseActiveSkill(data),
+        updateHeroSkills: () => executeUpdateHeroSkills(data.heroSkills),
     }
 
     actionsMap[data.action]();
@@ -99,4 +115,16 @@ const executeEquationAnswer = (answer: string) => {
     setTimeout(() => {
         document.querySelector<HTMLButtonElement>('.check-btn')?.click();
     }, 500);
+}
+
+const executeUseActiveSkill = (data: any) => {
+    updateBattleCardsWithSelectedSkill(data.activeSkill);
+
+    setTimeout(() => {
+        cardHandler(data.selectedCardIndex);
+    }, 500);
+}
+
+const executeUpdateHeroSkills = (heroSkills: any) => {
+    updateBattleCardsByNewSkillLevels(structuredClone(heroSkills));
 }
