@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import styled from "styled-components";
 import mixins from "../../../mixins";
 import {MultiBattleOptionPanel} from "./MultiBattleOptionPanel";
-import {useBattleApiUtils} from "./useBattleApiUtils";
 import {useActivePage, useBattleCards, useBattleFieldLength, useCharacter} from "../../../store/storeHooks";
 import {IBattleOptions} from "./types";
 import {getBattleCardsWithHero} from "../../utils";

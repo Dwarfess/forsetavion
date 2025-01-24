@@ -1,4 +1,3 @@
-import { useBattleApiUtils } from './useBattleApiUtils';
 import { useMultiBattle } from '../../../store/storeHooks';
 import { defaultMultiBattle } from '../../../store/constants';
 import { useMultiBattleApiUtils } from './useMultiBattleApiUtils';
