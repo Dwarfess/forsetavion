@@ -10,6 +10,7 @@ export const recalculateHeroStatsAfterContact = (
 ) => {
     const audioMap: any = {
         enemy: 'punch-2',
+        hero: 'punch-2',
         boss: 'punch-2',
         potion: 'blob',
         superPotion: 'blob',
@@ -31,6 +32,7 @@ export const recalculateHeroStatsAfterContact = (
         sphere: recalculateHeroSpheres,
         artifact: recalculateHeroArtifact,
         bossPart: recalculateHeroBossPart,
+        hero: recalculateHeroHealthsAfterFight
     };
 
     const recalculateHeroStatsHandler = recalculateHeroStatsMap[selectedCard.type];
@@ -66,6 +68,30 @@ const recalculateHeroHealthAfterBoss = (
         battleCard.bossParts = 0;
     });
     // heroCard.bossParts = 0;
+};
+
+const recalculateHeroHealthsAfterFight = (
+    heroCard: IHeroBattleCard,
+    selectedCard: BattleCardType,
+    battleCards: BattleCardType[]
+) => {
+    recalculateHeroHealthByPercent(heroCard, selectedCard, 3);
+};
+
+// TODO: change health to value for all of cards
+const recalculateHeroHealthByPercent = (heroCard: IHeroBattleCard, selectedCard: BattleCardType, percent: number) => {
+    const partOfHeroHealth = Math.ceil(heroCard.health / percent);
+    const partOfHeroHealthWithStats = partOfHeroHealth + (getItemStat(heroCard, 'atk').value || 0)
+        - getItemStat(selectedCard, 'def').value;
+    const selectedCardHealth = selectedCard.health - partOfHeroHealthWithStats;
+
+    if (selectedCardHealth >= 0) {
+        selectedCard.health = selectedCard.health > selectedCardHealth ? selectedCardHealth : selectedCard.health;
+        heroCard.health = heroCard.health - partOfHeroHealth;
+    } else {
+        selectedCard.health = 0;
+        heroCard.health = heroCard.health - (partOfHeroHealth + selectedCard.health - selectedCardHealth);
+    }
 };
 
 const recalculateHeroHealthAfterPotion = (heroCard: IHeroBattleCard, selectedCard: BattleCardType) => {

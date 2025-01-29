@@ -25,10 +25,7 @@ import {
     updateCurrentBattleAndResetActivePlayer
 } from '../home-map/multi-battle-page/multiBattleUtils';
 
-export const cardHandler = async (
-    selectedCardIndex: number,
-    // updateCurrentBattle?: (selectedCardIndex: number, newBattleCard: any) => void,
-) => {
+export const cardHandler = async (selectedCardIndex: number) => {
     setStateValue('isProcessingAction', true);
     const battleFieldLength = getStateValue('battleFieldLength');
     const cardAmount = battleFieldLength * battleFieldLength;
@@ -72,20 +69,15 @@ export const cardHandler = async (
     }
 };
 
-export const executeActionFromAnotherPlayer = (data: any) => {
-    // const character = getStateValue('character');
-    // if (character.nickname === data.nickname) return;
-
-    resetBattleCards(data.selectedCardIndex);
-};
+// export const executeActionFromAnotherPlayer = (data: any) => {
+//     // const character = getStateValue('character');
+//     // if (character.nickname === data.nickname) return;
+//
+//     resetBattleCards(data.selectedCardIndex);
+// };
 
 // TODO: should to refactor this large method
-export const resetBattleCards = async (
-    selectedCardIndex: number,
-    // updateCurrentBattle?: (selectedCardIndex: number, newBattleCard: any) => void
-) => {
-    // const { updateCurrentBattle, battleCardFromAnotherPlayer } = dataForMultiBattle;
-
+export const resetBattleCards = async (selectedCardIndex: number) => {
     let battleCards = getStateValue('battleCards');
     const heroCard = getHeroCard(battleCards);
     const selectedCard = battleCards[selectedCardIndex];
@@ -98,16 +90,35 @@ export const resetBattleCards = async (
         return;
     }
 
+    recalculateHeroStatsAfterContact(heroCard, selectedCard, battleCards);
+
+    if (selectedCard.type === 'hero') {
+
+        await addClassWhenContactCard(selectedCard);
+        setStateValue('isProcessingAction',false);
+        setStateValue('battleCards', battleCards);
+
+        updateCurrentBattleAndResetActivePlayer({
+            action: 'move',
+            selectedCardIndex
+        });
+
+        return;
+    }
+
     // from the part of code starts moving card
     setStateValue('isMoving',true);
-
-    recalculateHeroStatsAfterContact(heroCard, selectedCard, battleCards);
     await addClassWhenContactCard(selectedCard);
     setStateValue('battleCards', battleCards);
 
     if (heroCard.health <= 0) {
         setStateValue('isProcessingAction',false);
         setStateValue('isOpenBattleOverModal', true);
+
+        updateCurrentBattleAndResetActivePlayer({
+            action: 'move',
+            selectedCardIndex
+        });
 
         return;
     }

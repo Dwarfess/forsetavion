@@ -69,6 +69,7 @@ export interface IHeroCollectionItem {
     image: string;
     maxHealth: number;
     def: number;
+    atk: number;
     lifeDrain: number;
     expBoost: number;
     coinBoost: number;
