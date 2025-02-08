@@ -18,6 +18,7 @@ export const addClassWhenUseSkill = async (battleCard: BattleCardType, skill: Sk
     return true;
 };
 
+// TODO: change effects names from "buf" "debuf" to "positive" "negative"
 export const addClassWhenChangeHealth = async (battleCard: BattleCardType, value: any, type?: string) => {
     const healthValueEffectEl = document.querySelector(`.battle-card-${battleCard.index} .${type}-effect`);// const healthValueDebuffEffectEl = document.querySelector(`.battle-card-${battleCard.index} .debuff-effect`);
 

@@ -15,3 +15,4 @@ export * from './isProcessingActionSlice';
 export * from './battleCardsSlice';
 export * from './optionsSlice';
 export * from './actionDataFromActivePlayerSlice';
+export * from './isAnotherPlayerActiveSlice';

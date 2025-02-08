@@ -26,7 +26,8 @@ import {
     useSelectedCardForInfo,
     useSelectedSecretCard,
     useIsMoving,
-    useCharacter
+    useCharacter,
+    useIsAnotherPlayerActive,
 } from '../store/storeHooks';
 import mixins from "../mixins";
 
@@ -39,6 +40,8 @@ const BattlePage = () => {
     const { isOpenLevelUpModal, setIsOpenLevelUpModal } = useIsOpenLevelUpModal();
 
     const { isProcessingAction, setIsProcessingAction } = useIsProcessingAction(); // block/unblock extra click action
+    const { isAnotherPlayerActive } = useIsAnotherPlayerActive();
+
     const { isMoving } = useIsMoving();
 
     const { battleFieldLength } = useBattleFieldLength();
@@ -68,13 +71,14 @@ const BattlePage = () => {
     }, [battleCards, isProcessingAction]);
 
     useEffect(() => {
+        // TODO: move this logic to executeMethodsAfterMoving
         if (heroCard?.skillPoints) {
             setIsOpenLevelUpModal(true);
         }
     }, [heroCard]);
 
     const onCardClick = (selectedCardIndex: number) => {
-        if (isProcessingAction) return;
+        if (isProcessingAction || isAnotherPlayerActive) return;
         setIsProcessingAction(true);
 
         cardHandler(selectedCardIndex);
@@ -83,7 +87,7 @@ const BattlePage = () => {
     const onKeyDown = (e: any): void => {
         e.stopPropagation();
 
-        if (isProcessingAction) return;
+        if (isProcessingAction || isAnotherPlayerActive) return;
         setIsProcessingAction(true);
 
         const selectedCardIndex = keyDownHandler(e.key);
@@ -95,7 +99,7 @@ const BattlePage = () => {
         {battleCards.length && (<>
             <TopPanel />
 
-            <BattleField>
+            <BattleField className={isAnotherPlayerActive ? "test-isAnotherPlayerActive" : ""}>
                 {
                     battleCards.map((battleCard: any, index: number) => {
                         return <BattleCardField
@@ -136,6 +140,10 @@ const BattleField = styled.div`
     align-items: flex-start;
     box-sizing: border-box;
     position: relative;
+
+    &.test-isAnotherPlayerActive {
+        box-shadow: 0 0 5px 5px #61dafb;
+    }
 `;
 
 export { BattlePage };

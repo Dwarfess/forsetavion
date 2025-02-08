@@ -16,6 +16,7 @@ import activeMapReducer from './activeMapSlice';
 import activePageReducer from './activePageSlice';
 import optionsReducer from './optionsSlice';
 import actionDataFromActivePlayerReducer from './actionDataFromActivePlayerSlice';
+import isAnotherPlayerActiveReducer from './isAnotherPlayerActiveSlice';
 import { apiSlice } from './apiSlice';
 
 export const store = configureStore({
@@ -36,6 +37,7 @@ export const store = configureStore({
         activePage: activePageReducer,
         options: optionsReducer,
         actionDataFromActivePlayer: actionDataFromActivePlayerReducer,
+        isAnotherPlayerActive: isAnotherPlayerActiveReducer,
         [apiSlice.reducerPath]: apiSlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>

@@ -15,10 +15,6 @@ export const updateAnswer = (answer: string, symbol: string, isCorrectAnswer: an
     return answer + symbol;
 };
 
-// export const getActiveSecretCard = (battleCards: BattleCardType[]) => {
-//     return battleCards.find((battleCard: BattleCardType) => battleCard.type === 'secret' && battleCard.active);
-// };
-
 export const getDuration = (): number => {
     const selectedSecretCard = getStateValue('selectedSecretCard');
     if (!selectedSecretCard) return 0;
@@ -96,7 +92,6 @@ export const updateBattleCardsAfterSecret = (isCorrectAnswer: boolean) => {
 
     setStateValue('battleCards', battleCards);
     updateCurrentBattleAndResetActivePlayer({ action: 'closeSecretCard', battleCardFromAnotherPlayer: secretPrizeCard });
-    // setStateValue('actionDataFromActivePlayer', {});
 };
 
 const decreaseSelectedSecretCardLevel = (battleCards: BattleCardType[], selectedSecretCardIndex: number) => {

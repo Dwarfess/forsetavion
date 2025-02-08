@@ -6,10 +6,8 @@ import {CountdownCircleTimer} from 'react-countdown-circle-timer';
 import {calculateAnswer, getDuration, getEquation, updateBattleCardsAfterSecret, updateAnswer} from "./utils";
 import {symbols} from "./constants";
 import {ModalX} from "./shared";
-import {useBattleCards, useSelectedSecretCard} from "../store/storeHooks";
-import {
-    updateCurrentBattleAndResetActivePlayer
-} from './home-map/multi-battle-page/multiBattleUtils';
+import { useSelectedSecretCard} from "../store/storeHooks";
+import { updateCurrentBattleAndResetActivePlayer } from './home-map/multi-battle-page/multiBattleUtils';
 
 const ModalSecretCard = () => {
     const { selectedSecretCard, setSelectedSecretCard } = useSelectedSecretCard();
@@ -19,7 +17,6 @@ const ModalSecretCard = () => {
 
     const onCloseClick = () => {
         updateBattleCardsAfterSecret(isCorrectAnswer);
-        // setStateValue('actionDataFromActivePlayer', {});
         setSelectedSecretCard(false);
     }
 
@@ -28,7 +25,6 @@ const ModalSecretCard = () => {
         setDuration(0);
 
         updateCurrentBattleAndResetActivePlayer({ action: 'equationAnswer', answer });
-        // setStateValue('actionDataFromActivePlayer', {});
     }
 
     useEffect(() => {

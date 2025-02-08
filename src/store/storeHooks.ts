@@ -16,7 +16,8 @@ import {
     changeActiveMap,
     changeActivePage,
     changeOptions,
-    changeActionDataFromActivePlayer
+    changeActionDataFromActivePlayer,
+    changeIsAnotherPlayerActive,
 } from './index';
 import { getHeroCard } from "../components/utils";
 import {ICharacter} from "../components/home-map/character-page/types";
@@ -192,11 +193,22 @@ export const useOptions = () => {
 
 export const useActionDataFromActivePlayer = () => {
     const dispatch = useDispatch();
-    const options = useSelector((state: RootState) => state.options.value);
+    const actionDataFromActivePlayer = useSelector((state: RootState) => state.actionDataFromActivePlayer.value);
 
-    const setOptions = (val: IOption) => {
+    const setActionDataFromActivePlayer = (val: any) => {
         dispatch(changeActionDataFromActivePlayer(val));
     }
 
-    return { options, setOptions };
+    return { actionDataFromActivePlayer, setActionDataFromActivePlayer };
+}
+
+export const useIsAnotherPlayerActive = () => {
+    const dispatch = useDispatch();
+    const isAnotherPlayerActive = useSelector((state: RootState) => state.isAnotherPlayerActive.value);
+
+    const setIsAnotherPlayerActive = (val: boolean) => {
+        dispatch(changeIsAnotherPlayerActive(val));
+    }
+
+    return { isAnotherPlayerActive, setIsAnotherPlayerActive };
 }

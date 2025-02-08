@@ -14,7 +14,8 @@ import {
     changeActiveMap,
     changeActivePage,
     changeOptions,
-    changeActionDataFromActivePlayer
+    changeActionDataFromActivePlayer,
+    changeIsAnotherPlayerActive,
 } from './index';
 import {apiSlice} from "./apiSlice";
 
@@ -43,6 +44,7 @@ export const setStateValue = (name: string, data: any) => {
         character: changeCharacter,
         options: changeOptions,
         actionDataFromActivePlayer: changeActionDataFromActivePlayer,
+        isAnotherPlayerActive: changeIsAnotherPlayerActive,
     };
 
     store.dispatch(reducerMap[name](data));

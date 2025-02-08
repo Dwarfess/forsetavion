@@ -139,7 +139,6 @@ export const resetBattleCards = async (selectedCardIndex: number) => {
         battleCardFromAnotherPlayer: newBattleCard,
         selectedCardIndex
     });
-    // setStateValue('actionDataFromActivePlayer', {});
     // TODO: add animation for boss effects
     setStateValue('battleCards', battleCards);
     setStateValue('isProcessingAction',false);

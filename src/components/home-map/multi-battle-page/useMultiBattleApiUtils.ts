@@ -10,7 +10,10 @@ import {
     useDeleteBattleMutation,
 } from '../../../store/apiSlice';
 import {IBattleData} from "./types";
-import { executeActionFromAnotherPlayer, updateBattleData } from './multiBattleUtils';
+import {
+    executeActionFromAnotherPlayer,
+    prepareUpdateBattleDataWithActionName,
+} from './multiBattleUtils';
 import {setStateValue} from "../../../store/storeUtils";
 import { useCharacter, useMultiBattle, useMultiBattleSocket } from '../../../store/storeHooks';
 // import { executeActionFromAnotherPlayer } from '../../utils';
@@ -26,10 +29,6 @@ export const useMultiBattleApiUtils = () => {
     // const [updateBattle] = useUpdateBattleMutation();
     const [joinBattle] = useJoinBattleMutation();
     const [deleteBattle] = useDeleteBattleMutation();
-
-    useEffect(() => {
-        console.log('multiBattleSocket ************************', multiBattleSocket)
-    }, [multiBattleSocket]);
 
     const connectToBattle = (battleId: string) => {
         const token = 'sertavion_unique_token';
@@ -57,16 +56,17 @@ export const useMultiBattleApiUtils = () => {
             }
 
             // TODO: move to executeActionFromAnotherPlayer method
-            if (result.battleCards) {
-                setStateValue('multiBattle', {
-                    _id: result._id,
-                    players: result.players,
-                    battleCards: result.battleCards,
-                    mode: 'online',
-                    isActive: true,
-                });
-                setStateValue('battleCards', result.battleCards);
-            }
+            // if (result.battleCards) {
+            //     setStateValue('multiBattle', {
+            //         _id: result._id,
+            //         players: result.players,
+            //         battleCards: result.battleCards,
+            //         mode: 'online',
+            //         isActive: true,
+            //     });
+            //     setStateValue('battleCards', result.battleCards);
+            //     setStateValue('isAnotherPlayerActive', false);
+            // }
         });
 
         // Обробка помилок
@@ -88,6 +88,7 @@ export const useMultiBattleApiUtils = () => {
         newSocket.on('disconnect', () => {
             console.log('Socket.io connection closed');
             setMultiBattleSocket(null);
+            setStateValue('actionDataFromActivePlayer', {});
             // deleteCurrentBattle(multiBattle._id as string);
             // setMultiBattleSocket(null);  // Очищаємо WebSocket, коли він закривається
         });
@@ -144,12 +145,12 @@ export const useMultiBattleApiUtils = () => {
             .unwrap()
             .then((result: any) => {
                 console.log('Get random battle:', result);
-                joinToBattle(updateBattleData(result));
+                joinToBattle(prepareUpdateBattleDataWithActionName(result));
             })
             .catch((error) => console.error('Error joining battle:', error));
     }
 
-    const joinToBattle = (updatedBattleData: IBattleData) => {
+    const joinToBattle = (updatedBattleData: any) => {
         return joinBattle(updatedBattleData)
             .unwrap()
             .then((result: any) => {

@@ -6,6 +6,7 @@ export interface IBattleOptions {
 export interface IBattlePlayer {
     nickname: string;
     avatar: string;
+    isActive?: boolean;
 }
 
 export interface IBattleData {

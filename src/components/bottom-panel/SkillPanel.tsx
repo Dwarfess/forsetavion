@@ -8,13 +8,20 @@ import {
 } from '../utils';
 import {Skill} from "../types";
 import BattleCardImage from "../BattleCardImage";
-import { useBattleCards, useCharacter, useIsProcessingAction, useSelectedCardForInfo } from '../../store/storeHooks';
+import {
+    useBattleCards,
+    useCharacter,
+    useIsAnotherPlayerActive,
+    useIsProcessingAction,
+    useSelectedCardForInfo
+} from '../../store/storeHooks';
 
 const SkillPanel = () => {
     const { character } = useCharacter();
     const { heroCard, battleCards } = useBattleCards(character.nickname);
     const { setSelectedCardForInfo } = useSelectedCardForInfo();
     const { isProcessingAction } = useIsProcessingAction();
+    const { isAnotherPlayerActive } = useIsAnotherPlayerActive();
 
     const [activeSkill, setActiveSkill] = useState<any>(null);
 
@@ -23,6 +30,7 @@ const SkillPanel = () => {
     }, [battleCards]);
 
     const onItemClick = (selectedSkill: Skill) => {
+        if (isProcessingAction || isAnotherPlayerActive) return;
         updateBattleCardsWithSelectedSkill(selectedSkill);
     }
 
