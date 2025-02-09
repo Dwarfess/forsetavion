@@ -32,7 +32,7 @@ export const useMultiBattleApiUtils = () => {
 
     const connectToBattle = (battleId: string) => {
         const token = 'sertavion_unique_token';
-        const newSocket: Socket = io('ws://localhost:8888', {
+        const newSocket: Socket = io('https://forsetavion-server-3.onrender.com', {
             query: { token, battleId }, // Передаємо токен і battleId в параметрах запиту
             transports: ['websocket'],  // Використовуємо тільки вебсокет як транспорт
         });
