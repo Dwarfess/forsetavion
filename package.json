@@ -1,7 +1,7 @@
 {
   "name": "forsetavion",
   "version": "0.1.0",
-  "homepage": ".",
+  "homepage": "https://yourusername.github.io/forsetavion",
   "private": true,
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
