@@ -34,7 +34,11 @@ const ModalLevelUp = () => {
     const completePoints = () => {
         updateBattleCardsByNewSkillLevels(heroSkills);
         
-        updateCurrentBattleAndResetActivePlayer({ action: 'updateHeroSkills', heroSkills });
+        updateCurrentBattleAndResetActivePlayer({
+            action: 'updateHeroSkills',
+            switchActivePlayer: true,
+            heroSkills
+        });
         setIsOpenLevelUpModal(false);
     }
 

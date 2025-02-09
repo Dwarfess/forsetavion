@@ -100,6 +100,7 @@ export const resetBattleCards = async (selectedCardIndex: number) => {
 
         updateCurrentBattleAndResetActivePlayer({
             action: 'move',
+            switchActivePlayer: true,
             selectedCardIndex
         });
 
@@ -117,6 +118,7 @@ export const resetBattleCards = async (selectedCardIndex: number) => {
 
         updateCurrentBattleAndResetActivePlayer({
             action: 'move',
+            switchActivePlayer: true,
             selectedCardIndex
         });
 
@@ -134,8 +136,10 @@ export const resetBattleCards = async (selectedCardIndex: number) => {
         });
     }
 
+    const heroSkillPoints = getHeroCard(battleCards).skillPoints;
     updateCurrentBattleAndResetActivePlayer({
         action: 'move',
+        switchActivePlayer: !heroSkillPoints,
         battleCardFromAnotherPlayer: newBattleCard,
         selectedCardIndex
     });

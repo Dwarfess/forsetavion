@@ -91,7 +91,11 @@ export const updateBattleCardsAfterSecret = (isCorrectAnswer: boolean) => {
     }
 
     setStateValue('battleCards', battleCards);
-    updateCurrentBattleAndResetActivePlayer({ action: 'closeSecretCard', battleCardFromAnotherPlayer: secretPrizeCard });
+    updateCurrentBattleAndResetActivePlayer({
+        action: 'closeSecretCard',
+        switchActivePlayer: true,
+        battleCardFromAnotherPlayer: secretPrizeCard
+    });
 };
 
 const decreaseSelectedSecretCardLevel = (battleCards: BattleCardType[], selectedSecretCardIndex: number) => {

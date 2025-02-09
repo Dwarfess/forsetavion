@@ -11,7 +11,10 @@ export const changeTurnAfterTimer = async () => {
     console.log('turn end for', heroCard.nickname)
     await decreaseHeroHealth();
 
-    updateCurrentBattleAndResetActivePlayer({ action: 'decreaseHeroHealth'});
+    updateCurrentBattleAndResetActivePlayer({
+        action: 'decreaseHeroHealth',
+        switchActivePlayer: true
+    });
 }
 
 export const decreaseHeroHealth = async () => {

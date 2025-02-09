@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import mixins from '../../mixins';
 import { IBattlePlayer } from '../home-map/multi-battle-page/types';
 import { changeTurnAfterTimer } from './playersUtils';
+import { useIsOpenBattleOverModal } from '../../store/storeHooks';
 
 interface IPlayersTimer {
     players: IBattlePlayer[]
@@ -11,11 +12,13 @@ interface IPlayersTimer {
 
 const PlayersTimer: React.FC<IPlayersTimer> = ({players}) => {
     const [ count, setCount ] = useState<number>(60);
+    const { isOpenBattleOverModal } = useIsOpenBattleOverModal();
 
     useEffect(() => {
         if (players.length < 2) return;
 
         const timerId = setInterval(() => {
+            if (isOpenBattleOverModal) return;
             if (count === 0) {
                 clearInterval(timerId);
                 changeTurnAfterTimer();
@@ -26,7 +29,7 @@ const PlayersTimer: React.FC<IPlayersTimer> = ({players}) => {
         }, 1000);
 
         return () => clearInterval(timerId);
-    }, [players, count]);
+    }, [players, isOpenBattleOverModal, count]);
 
     useEffect(() => {
         setCount(60);

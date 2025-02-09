@@ -6,7 +6,7 @@ import {CountdownCircleTimer} from 'react-countdown-circle-timer';
 import {calculateAnswer, getDuration, getEquation, updateBattleCardsAfterSecret, updateAnswer} from "./utils";
 import {symbols} from "./constants";
 import {ModalX} from "./shared";
-import { useSelectedSecretCard} from "../store/storeHooks";
+import { useIsAnotherPlayerActive, useSelectedSecretCard } from '../store/storeHooks';
 import { updateCurrentBattleAndResetActivePlayer } from './home-map/multi-battle-page/multiBattleUtils';
 
 const ModalSecretCard = () => {
@@ -14,6 +14,7 @@ const ModalSecretCard = () => {
     const [answer, setAnswer] = useState<string>('');
     const [isCorrectAnswer, setIsCorrectAnswer] = useState<any>(null);
     const [duration, setDuration] = useState<number>(getDuration());
+    const { isAnotherPlayerActive } = useIsAnotherPlayerActive();
 
     const onCloseClick = () => {
         updateBattleCardsAfterSecret(isCorrectAnswer);
@@ -24,13 +25,18 @@ const ModalSecretCard = () => {
         setIsCorrectAnswer(answer === String(calculateAnswer(equation)));
         setDuration(0);
 
-        updateCurrentBattleAndResetActivePlayer({ action: 'equationAnswer', answer });
+        updateCurrentBattleAndResetActivePlayer({
+            action: 'equationAnswer',
+            switchActivePlayer: false,
+            answer
+        });
     }
 
     useEffect(() => {
         setAnswer('');
         updateCurrentBattleAndResetActivePlayer({
             action: 'selectedSecretCard',
+            switchActivePlayer: false,
             battleCardFromAnotherPlayer: selectedSecretCard,
             equation
         });
@@ -58,7 +64,7 @@ const ModalSecretCard = () => {
 
     return (
         <ModalX>
-            <ModalXContainer>
+            <ModalXContainer className={isAnotherPlayerActive ? 'disabled' : ''}>
                 <div className="header">
                     <p className="equation">
                         {equation} = <span className={isCorrectAnswer === false ? 'incorrect' : ''}>
@@ -106,6 +112,12 @@ const ModalSecretCard = () => {
 };
 
 const ModalXContainer = styled.div`
+    &.disabled {
+        .symbols-container, .actions {
+            visibility: hidden;
+        }
+    }
+    
     .header {
         font-size: 50px;
         text-align: center;

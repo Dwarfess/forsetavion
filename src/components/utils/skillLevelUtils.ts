@@ -61,6 +61,7 @@ export const updateBattleCardsByNewSkillLevels = (heroSkills: Skill[]) => {
     heroCard.skills = heroSkills;
     heroCard.skillPoints = 0;
 
+    setStateValue('actionDataFromActivePlayer', {});
     setStateValue('battleCards', battleCards);
 }
 

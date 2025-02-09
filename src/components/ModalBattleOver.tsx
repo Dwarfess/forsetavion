@@ -3,6 +3,7 @@ import {getHeroScore, recalculateCharacterParamsAfterBattle} from "./utils/utils
 import {useActivePage, useBattleCards, useBattleFieldLength, useIsOpenBattleOverModal} from "../store/storeHooks";
 import {ModalX} from "./shared";
 import { useMultiBattleUtils } from './home-map/multi-battle-page/useMultiBattleUtils';
+import mixins from '../mixins';
 
 const ModalBattleOver = () => {
     const { setActivePage } = useActivePage();
@@ -20,10 +21,13 @@ const ModalBattleOver = () => {
         resetMultiBattle();
     }
 
+    const heroResultText = heroCard.health > 0 ? 'You win' : 'You lost';
+
     return (
         <ModalX>
             <ModalXContainer>
                 <div className="header">The battle is over</div>
+                <div className="hero-result-text">{heroResultText}</div>
                 <div className="content">
                     <p className="level">Level - {heroCard.level} (100 points)</p>
                     <p className="coins">Coins - {heroCard.coins} (5 points)</p>
@@ -41,6 +45,14 @@ const ModalBattleOver = () => {
 const ModalXContainer = styled.div`
     .header {
         font-size: 50px;
+        text-align: center;
+    }
+    
+    .hero-result-text {
+        ${mixins.secondTextColor}
+        
+        margin: 70px 0;
+        font-size: 70px;
         text-align: center;
     }
         

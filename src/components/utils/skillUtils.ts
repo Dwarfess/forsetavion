@@ -85,7 +85,8 @@ const skillsHandler = async (
         'ice-balls': callAttackSkillHandler,
     };
 
-    const activeSkillHandler = skillHandlerMap[activeSkill.name](activeSkill, selectedCard);
+    const selectedCardIsHeroCard = getHeroCard(battleCards).nickname === selectedCard.nickname;
+    const activeSkillHandler = skillHandlerMap[activeSkill.name](activeSkill, selectedCard, selectedCardIsHeroCard);
     if (!activeSkillHandler) {
         await unsuitedCardHandler(selectedCard);
         return;
@@ -106,6 +107,7 @@ const skillsHandler = async (
     const newBattleCard = checkBattleCardAfterSkill(battleCards, selectedCard);
     updateCurrentBattleAndResetActivePlayer({
         action: 'useActiveSkill',
+        switchActivePlayer: true,
         selectedCardIndex: selectedCard.index,
         battleCardFromAnotherPlayer: newBattleCard,
         activeSkill
@@ -133,13 +135,23 @@ const checkBattleCardAfterSkill = (
     return changeBattleCardAfterSkill(battleCards, selectedCard);
 }
 
-const allowedCardTypesForNegativeSkill = ['enemy', 'beast', 'boss'];
+const allowedCardTypesForNegativeSkill = ['enemy', 'beast', 'boss', 'hero'];
 const allowedCardTypesForPositiveSkill = ['hero'];
-const callAttackSkillHandler = (activeSkill: Skill, selectedCard: BattleCardType) => {
-    if (!allowedCardTypesForNegativeSkill.includes(selectedCard.type)) return;
+const callAttackSkillHandler = (
+    activeSkill: Skill,
+    selectedCard: BattleCardType,
+    selectedCardIsHeroCard: boolean
+) => {
+    if (!allowedCardTypesForNegativeSkill.includes(selectedCard.type) || selectedCardIsHeroCard ) return;
 
     const powerValue = getItemStat(activeSkill, 'power').value;
     const maxCoolDownValue = getItemStat(activeSkill, 'maxCoolDown').value;
+
+    if (selectedCard.type === 'hero') {
+        selectedCard.health -= powerValue;
+    } else {
+        selectedCard.value -= powerValue;
+    }
 
     selectedCard.value -= powerValue;
     activeSkill.active = false;
@@ -148,12 +160,20 @@ const callAttackSkillHandler = (activeSkill: Skill, selectedCard: BattleCardType
     return true;
 }
 
-const callDebuffSkill = (activeSkill: Skill, selectedCard: BattleCardType) => {
-    if (!allowedCardTypesForNegativeSkill.includes(selectedCard.type)) return;
+const callDebuffSkill = (
+    activeSkill: Skill,
+    selectedCard: BattleCardType,
+    selectedCardIsHeroCard: boolean
+) => {
+    if (!allowedCardTypesForNegativeSkill.includes(selectedCard.type) || selectedCardIsHeroCard) return;
     return addEffect(activeSkill, selectedCard);
 }
 
-const callBuffSkill = (activeSkill: Skill, selectedCard: BattleCardType) => {
+const callBuffSkill = (
+    activeSkill: Skill,
+    selectedCard: BattleCardType,
+    selectedCardIsHeroCard: boolean
+) => {
     if (!allowedCardTypesForPositiveSkill.includes(selectedCard.type)) return;
     return addEffect(activeSkill, selectedCard);
 }

@@ -55,12 +55,14 @@ export const prepareUpdateBattleDataWithActionName = (data: IBattleData) => {
     return {
         battle: updateBattleData(data),
         nickname: character.nickname,
-        action: 'updateBattleByNewPlayer'
+        action: 'updateBattleByNewPlayer',
+        switchActivePlayer: true,
     }
 }
 
 export const updateCurrentBattleAndResetActivePlayer = (actionDataFromCurrentPlayer: any) => {
     updateCurrentBattle(actionDataFromCurrentPlayer);
+    console.log("setStateValue('actionDataFromActivePlayer', {});*************************")
     setStateValue('actionDataFromActivePlayer', {});
 }
 
@@ -88,12 +90,15 @@ export const updateCurrentBattle = (actionDataFromCurrentPlayer: any) => {
         console.error('Socket.io is not connected, cannot send data.');
     }
 
-    multiBattle.players.forEach((player: IBattlePlayer) => {
-        player.isActive = player.nickname !== character.nickname;
-    })
+    if (actionDataFromCurrentPlayer.switchActivePlayer) {
+        setStateValue('isAnotherPlayerActive', true);
+
+        multiBattle.players.forEach((player: IBattlePlayer) => {
+            player.isActive = player.nickname !== character.nickname;
+        });
+    }
 
     setStateValue('multiBattle', multiBattle);
-    setStateValue('isAnotherPlayerActive', true);
 };
 
 
@@ -117,16 +122,19 @@ export const executeActionFromAnotherPlayer = (data: any) => {
     }
 
     actionsMap[data.action]();
-    setStateValue('isAnotherPlayerActive', false);
+
+    if (data.switchActivePlayer) {
+        setStateValue('isAnotherPlayerActive', false);
+
+        multiBattle.players.forEach((player: IBattlePlayer) => {
+            player.isActive = player.nickname === character.nickname;
+        });
+    }
 
     if (data.action === 'updateBattleByNewPlayer') {
         setStateValue('actionDataFromActivePlayer', {});
         return;
     }
-
-    multiBattle.players.forEach((player: IBattlePlayer) => {
-        player.isActive = player.nickname === character.nickname;
-    })
 
     setStateValue('multiBattle', multiBattle);
 };
