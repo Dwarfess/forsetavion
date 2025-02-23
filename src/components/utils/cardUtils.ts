@@ -98,6 +98,11 @@ export const resetBattleCards = async (selectedCardIndex: number) => {
         setStateValue('isProcessingAction',false);
         setStateValue('battleCards', battleCards);
 
+        // if (heroCard.health <= 0) {
+        //     setStateValue('isProcessingAction', false);
+        //     setStateValue('isOpenBattleOverModal', true);
+        // }
+
         updateCurrentBattleAndResetActivePlayer({
             action: 'move',
             switchActivePlayer: true,
@@ -157,16 +162,26 @@ export const executeMethodsAfterMoving = async () => {
     checkBossSkillsReadyToUse(battleCards);
     await checkBattleCardsEffects(battleCards);
     updateSkillsCoolDown(battleCards);
+    setStateValue('battleCards', battleCards);
 
     // TODO: MOVE THIS LOGIC TO BATTLE PAGE (AFTER DEBUFF HERO DOESN'T DIE)
-    if (getHeroCard(battleCards).health <= 0) {
-        setStateValue('isProcessingAction',false);
-        setStateValue('isOpenBattleOverModal', true);
-
-        return;
-    }
-
-    setStateValue('battleCards', battleCards);
+    // if (getHeroWithoutHealth(battleCards)) {
+    //     setStateValue('isProcessingAction',false);
+    //     setStateValue('isOpenBattleOverModal', true);
+    //
+    //     return;
+    // }
+    //
+    // setStateValue('battleCards', battleCards);
     setStateValue('isProcessingAction',false);
+    getHeroWithoutHealth(battleCards) && setStateValue('isOpenBattleOverModal', true);
+}
+
+const getHeroWithoutHealth = (battleCards: BattleCardType[]) => {
+    const isHeroWithoutHealth = battleCards.find((battleCard) => {
+        return battleCard.type === 'hero' && battleCard.health <= 0;
+    });
+
+    return !!isHeroWithoutHealth;
 }
 

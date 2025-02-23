@@ -61,17 +61,18 @@ export const prepareUpdateBattleDataWithActionName = (data: IBattleData) => {
 }
 
 export const updateCurrentBattleAndResetActivePlayer = (actionDataFromCurrentPlayer: any) => {
+    if (!getStateValue('multiBattle').isActive) return;
     updateCurrentBattle(actionDataFromCurrentPlayer);
     console.log("setStateValue('actionDataFromActivePlayer', {});*************************")
     setStateValue('actionDataFromActivePlayer', {});
 }
 
 export const updateCurrentBattle = (actionDataFromCurrentPlayer: any) => {
-    const multiBattle = getStateValue('multiBattle');
     const actionDataFromActivePlayer = getStateValue('actionDataFromActivePlayer');
 
-    if (!multiBattle.isActive || Object.keys(actionDataFromActivePlayer).length) return;
+    if (Object.keys(actionDataFromActivePlayer).length) return;
 
+    const multiBattle = getStateValue('multiBattle');
     const multiBattleSocket = getStateValue('multiBattleSocket');
     const character = getStateValue('character');
 
@@ -138,6 +139,10 @@ export const executeActionFromAnotherPlayer = (data: any) => {
 
     setStateValue('multiBattle', multiBattle);
 };
+
+export const getAnotherPlayerActiveState = () => {
+    
+}
 
 const executeUpdateBattleByNewPlayer = (data: any) => {
     const players = structuredClone(data.players);

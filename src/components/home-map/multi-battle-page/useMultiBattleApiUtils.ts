@@ -1,13 +1,9 @@
-import { useCallback, useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
-// import { EventSourcePolyfill } from 'event-source-polyfill';
 import {
     useJoinBattleMutation,
     useCreateBattleMutation,
-    // useUpdateBattleMutation,
     useRandomBattleMutation,
     useGetBattleMutation,
-    useDeleteBattleMutation,
 } from '../../../store/apiSlice';
 import {IBattleData} from "./types";
 import {
@@ -15,29 +11,23 @@ import {
     prepareUpdateBattleDataWithActionName,
 } from './multiBattleUtils';
 import {setStateValue} from "../../../store/storeUtils";
-import { useCharacter, useMultiBattle, useMultiBattleSocket } from '../../../store/storeHooks';
-// import { executeActionFromAnotherPlayer } from '../../utils';
+import { useCharacter, useMultiBattleSocket } from '../../../store/storeHooks';
 
 export const useMultiBattleApiUtils = () => {
     const { character } = useCharacter();
-    const { multiBattle } = useMultiBattle();
     const { multiBattleSocket, setMultiBattleSocket } = useMultiBattleSocket();
 
     const [randomBattle] = useRandomBattleMutation();
     const [getBattle] = useGetBattleMutation();
     const [createBattle] = useCreateBattleMutation();
-    // const [updateBattle] = useUpdateBattleMutation();
     const [joinBattle] = useJoinBattleMutation();
-    const [deleteBattle] = useDeleteBattleMutation();
 
     const connectToBattle = (battleId: string) => {
         const token = 'sertavion_unique_token';
         const newSocket: Socket = io('https://forsetavion-server-3.onrender.com', {
-            query: { token, battleId }, // Передаємо токен і battleId в параметрах запиту
-            transports: ['websocket'],  // Використовуємо тільки вебсокет як транспорт
+            query: { token, battleId },
+            transports: ['websocket'],
         });
-
-        // createMultiBattleSocket(battleId);
 
         newSocket.on('connect', () => {
             console.log('Socket.io connection opened');
@@ -45,31 +35,15 @@ export const useMultiBattleApiUtils = () => {
             setMultiBattleSocket(newSocket);
         });
 
-        // Обробка повідомлень від сервера
         newSocket.on('battleUpdate', (result: any) => {
             console.log('Received battle update:', result);
 
-            // Логіка обробки повідомлень
             if (result.action && character.nickname !== result.nickname) {
                 executeActionFromAnotherPlayer(result);
                 return;
             }
-
-            // TODO: move to executeActionFromAnotherPlayer method
-            // if (result.battleCards) {
-            //     setStateValue('multiBattle', {
-            //         _id: result._id,
-            //         players: result.players,
-            //         battleCards: result.battleCards,
-            //         mode: 'online',
-            //         isActive: true,
-            //     });
-            //     setStateValue('battleCards', result.battleCards);
-            //     setStateValue('isAnotherPlayerActive', false);
-            // }
         });
 
-        // Обробка помилок
         newSocket.on('error', (error: any) => {
             console.warn('Error with Socket.io:', error);
 
@@ -84,37 +58,15 @@ export const useMultiBattleApiUtils = () => {
                 });
         });
 
-        // Закриття WebSocket-з'єднання
         newSocket.on('disconnect', () => {
             console.log('Socket.io connection closed');
             setMultiBattleSocket(null);
             setStateValue('actionDataFromActivePlayer', {});
-            // deleteCurrentBattle(multiBattle._id as string);
-            // setMultiBattleSocket(null);  // Очищаємо WebSocket, коли він закривається
+            setStateValue('isAnotherPlayerActive', false);
         });
 
-        // Відправка події при підключенні до батлу
         newSocket.emit('joinBattle', battleId);
     }
-
-    // const updateCurrentBattle = (selectedCardIndex: number, newBattleCard: any) => {
-    //     const data = {
-    //         battleId: multiBattle._id,
-    //         action: 'move',
-    //         battleCardFromAnotherPlayer: newBattleCard,
-    //         selectedCardIndex,
-    //         nickname: character.nickname
-    //     };
-    //
-    //     // Перевіряємо, чи є підключений сокет
-    //     if (multiBattleSocket) {
-    //         // Відправляємо дані через Socket.io
-    //         multiBattleSocket.emit('battleAction', data);
-    //         console.log('Battle action sent:', data);
-    //     } else {
-    //         console.error('Socket.io is not connected, cannot send data.');
-    //     }
-    // };
 
     const createNewBattle = (data: IBattleData) => {
         return createBattle(data)
@@ -129,6 +81,7 @@ export const useMultiBattleApiUtils = () => {
                     isActive: false,
                 });
 
+                setStateValue('isAnotherPlayerActive', true);
                 setStateValue('battleCards', result.battleCards);
                 setStateValue('activePage', 'battle-page');
 
@@ -163,6 +116,8 @@ export const useMultiBattleApiUtils = () => {
                     mode: 'online',
                     isActive: true,
                 });
+
+                setStateValue('isAnotherPlayerActive', true);
                 setStateValue('battleCards', result.battleCards);
                 setStateValue('activePage', 'battle-page');
 
@@ -173,14 +128,6 @@ export const useMultiBattleApiUtils = () => {
 
     const deleteCurrentBattle = (battleId: string) => {
         multiBattleSocket?.close();
-        // return deleteBattle(battleId)
-        // .unwrap()
-        // .then((result: any) => {
-        //     console.log('Deleting current battle:', result);
-        // })
-        // .catch((error) => {
-        //     console.error('Error deleting current battle:', error);
-        // })
     }
 
     return {

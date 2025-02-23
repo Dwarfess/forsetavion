@@ -6,7 +6,7 @@ export interface IIsAnotherPlayerActiveState {
 }
 
 const initialState: IIsAnotherPlayerActiveState = {
-    value: true,
+    value: false,
 }
 
 export const isAnotherPlayerActiveSlice = createSlice({
