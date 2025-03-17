@@ -2,13 +2,19 @@ import React, {useMemo} from 'react';
 import styled from "styled-components";
 import {BattleCardType, Skill} from "./types";
 
-const BattleCardImage = ({battleCard, radius = 5}: {battleCard: BattleCardType | any, radius?: number}) => {
+interface IBattleCardImage {
+    battleCard: BattleCardType | any,
+    radius?: number,
+    format?: string
+}
+
+const BattleCardImage: React.FC<IBattleCardImage> = ({battleCard, radius = 5, format = 'jpg'}) => {
     // const resolution = useMemo(() => battleCard.type === 'boss-part' ? 'png' : 'jpg', [battleCard]);
 
     return <>
         {battleCard.type === 'bossPart'
             ? <CardImageBackground />
-            : (<CardImage src={`img/${battleCard.image}.jpg`} data-type={battleCard.type} data-radius={radius}/>)
+            : (<CardImage src={`img/${battleCard.image}.${format}`} data-type={battleCard.type} data-radius={radius}/>)
         }
         {battleCard.subImage && (
             <CardImage src={`img/${battleCard.subImage}.png`} className={battleCard.type} data-radius={radius}/>

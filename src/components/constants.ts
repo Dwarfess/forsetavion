@@ -385,6 +385,7 @@ export const defaultHeroCard: IHeroBattleCard = {
     topBottomIndex: null,
     topRightIndex: null,
     topLeftIndex: null,
+    selectedPotions: [],
 };
 
 export const bossPartCards: PrimaryBattleCardType[] = [

@@ -297,10 +297,15 @@ export const checkBossSkillsReadyToUse = (battleCards: BattleCardType[]) => {
 }
 
 // TODO: must be move to independent utils
-export const playSoundEffect = (audioName: string) => {
+export const playSoundEffect = (soundEffect: SoundEffects) => {
     const options = getStateValue('options')
-    const audio = new Audio(`sounds/${audioName}.mp3`);
+    const audio = new Audio(`sounds/${soundEffect}.mp3`);
     audio.volume = options.sounds / 100;
     audio.play();
 };
 
+export enum SoundEffects {
+    Punch = 'punch-2',
+    Blob = 'blob',
+    Coins = 'coins'
+}

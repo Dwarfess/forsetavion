@@ -84,16 +84,17 @@ const SkillPanelWrapper = styled.div`
         border-radius: 50px;
         padding: 2px;
         cursor: pointer;
+        box-shadow: 0 0 3px 0 black;
 
-        &:not(.disabled):active {
-            transform: scale(0.95)
-        }
+        //&:not(.disabled):active {
+        //    transform: scale(0.95)
+        //}
 
         &.disabled, &.block {
             pointer-events: none;
             cursor: inherit;
             
-            .skill-item {opacity: 0.4}
+            .skill-item img {opacity: 0.4}
         }
         
         &.block {

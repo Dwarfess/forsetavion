@@ -13,8 +13,10 @@ export const getDefaultCharacter = (): ICharacter => ({
     score: 0,
     artifacts: [],
     inventory: {
-        potions: []
-    }
+        potions: [],
+        potionLimit: 2
+    },
+
 });
 
 export const avatars: string[] = [

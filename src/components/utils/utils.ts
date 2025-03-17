@@ -14,6 +14,7 @@ import {
 import {BattleCardType, IHeroBattleCard, PrimaryBattleCardType, Skill, Stat} from "../types";
 import {recalculateSkillsStatsAccordingLevel} from "./skillLevelUtils";
 import {getStateValue, setStateValue} from "../../store/storeUtils";
+import { ICharacter, IPotion } from '../home-map/character-page/types';
 
 export const getBattleCardsWithHero = (): (BattleCardType | IHeroBattleCard)[] => {
     const character = getStateValue('character');
@@ -164,26 +165,35 @@ export const recalculateCharacterParamsAfterBattle = (heroCard: IHeroBattleCard)
     const score = character.score > battleScore ? character.score : battleScore;
 
     setStateValue('character', {
-        ...getStateValue('character'),
+        ...character,
+        inventory: {
+            ...character.inventory,
+            potions: getRecalculatedPotions(character.inventory.potions, heroCard),
+        },
         coins, spheres, score
     })
+}
+
+const getRecalculatedPotions = (potions: IPotion[], heroCard: IHeroBattleCard) => {
+    const selectedPotions: IPotion[] = potions.filter((potion) => potion.selected);
+
+    selectedPotions.forEach((selectedPotion) => {
+        const heroPotion = heroCard.selectedPotions
+            .find(heroPotion => selectedPotion.id === heroPotion?.id);
+
+        if (heroPotion) return;
+
+        if (selectedPotion.count) {
+            selectedPotion.count--;
+        }
+    });
+
+    const newPotion = potions.filter((potion) => potion.count);
+    return newPotion;
 }
 
 export const getHeroCard = (battleCards: BattleCardType[], definedCharacterNickname?: string): any => {
     const nickname = definedCharacterNickname || getStateValue('actionDataFromActivePlayer').nickname
     || getStateValue('character').nickname;
     return battleCards.find((card: BattleCardType) => card.nickname === nickname);
-    // return battleCards.find((card: BattleCardType) => card.nickname === nickname
-    //     || (card.type === 'hero' && !card.nickname));
 };
-
-// export const generateSkill = (skills: Skill[], name: string): Skill => {
-//     return structuredClone(skills).find((skill: Skill) => skill.name === name);
-// }
-//
-// export const generateStat = (stats: Stat[], name: string, value: number) => {
-//     return structuredClone(stats).find((stat: Stat) => {
-//         stat.value = value;
-//         return stat.name === name;
-//     });
-// }

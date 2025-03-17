@@ -74,24 +74,6 @@ const ShopPageContainer = styled.div`
         width: 520px;
         margin: 130px 10px;
     }
-
-    //.play-game-button {
-    //    width: 150px;
-    //    height: 150px;
-    //    background-image: url("img/play-game-button.png");
-    //    background-size: cover;
-    //    opacity: .5;
-    //    position: absolute;
-    //    top: 50%;
-    //    left: 50%;
-    //    transform: translate(-50%, -50%);
-    //    border-radius: 200px;
-    //    box-shadow: 0 0 20px 5px black;
-    //    cursor: pointer;
-    //
-    //    &:hover { box-shadow: 0 0 10px 10px black }
-    //    &:active { box-shadow: 0 0 10px 1px black }
-    //}
 `;
 
 const ShopPanel = styled.div`

@@ -6,7 +6,7 @@ import {IShopItem} from "../character-page/types";
 import {AnimatedRenderingWrapper} from "../../shared/AnimatedRenderingWrapper";
 
 import {useCharacter} from "../../../store/storeHooks";
-import {addCharacterInventoryItem} from "./utils";
+import {addItemToInventory} from "./utils";
 import mixins from "../../../mixins";
 
 interface ICommonShopBench {
@@ -29,7 +29,7 @@ const CommonShopBench: FC<ICommonShopBench> = ({
     const decreaseItemCount = () => selectedItemCount > 1 && setSelectedItemCount(selectedItemCount - 1);
     const increaseItemCount = () => selectedItemCount < 10 && setSelectedItemCount(selectedItemCount + 1);
 
-    const onBuyItemClick = () => addCharacterInventoryItem(selectedItem, selectedItemCount);
+    const onBuyItemClick = () => addItemToInventory(selectedItem, selectedItemCount);
 
     const onSelectItemClick = (item: IShopItem) => {
         setSelectedItemCount(1);
@@ -156,7 +156,6 @@ const ShopBenchContainer = styled.div`
                 padding: 0 30px;
                 user-select: none;
                 cursor: pointer;
-                //background-color: rgba(0, 0, 0, 0.2);
             }
             
             .shop-item-count {

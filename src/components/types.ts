@@ -1,3 +1,5 @@
+import { IPotion } from './home-map/character-page/types';
+
 export interface PrimaryBattleCardType {
     name: string;
     image: string;
@@ -24,7 +26,7 @@ export interface SimpleBattleCardType extends CommonBattleCardType {
     isNew?: boolean;
 }
 
-export interface BattleCardType extends SimpleBattleCardType, IArtifactCard, IHeroBattleCard {};
+export interface BattleCardType extends SimpleBattleCardType, IArtifactCard, IHeroBattleCard {}
 
 export interface IArtifactCard extends CommonBattleCardType {
     count: number;
@@ -94,7 +96,8 @@ export interface IHeroBattleCard extends CommonBattleCardType {
     stats: Stat[];
     skills: Skill[];
     effects: any[];
-    artifacts: IArtifactCard[]
+    artifacts: IArtifactCard[];
+    selectedPotions: IPotion[]
 }
 
 export interface Direction {

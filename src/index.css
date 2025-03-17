@@ -20,6 +20,13 @@ body {
   font-family: 'MagicalWorld';
 }
 
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
 h2 {
   font-family: 'MagicalWorld' !important;
 }

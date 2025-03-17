@@ -1,25 +1,26 @@
 import { IArtifactCard, BattleCardType, IHeroBattleCard, SimpleBattleCardType, Stat } from "../types";
 import {getStateValue} from "../../store/storeUtils";
 import {getHeroCard} from "./utils";
-import {playSoundEffect} from "./skillUtils";
+import { playSoundEffect, SoundEffects } from './skillUtils';
+import { IPotion } from '../home-map/character-page/types';
 
 export const recalculateHeroStatsAfterContact = (
     heroCard: IHeroBattleCard,
     selectedCard: BattleCardType,
     battleCards: BattleCardType[]
 ) => {
-    const audioMap: any = {
-        enemy: 'punch-2',
-        hero: 'punch-2',
-        boss: 'punch-2',
-        potion: 'blob',
-        superPotion: 'blob',
-        coin: 'coins',
-        superCoin: 'coins',
-        equipment: 'punch-2',
-        sphere: 'punch-2',
-        artifact: 'punch-2',
-        bossPart: 'punch-2',
+    const soundEffectMap: Record<string, SoundEffects> = {
+        enemy: SoundEffects.Punch,
+        hero: SoundEffects.Punch,
+        boss: SoundEffects.Punch,
+        potion: SoundEffects.Blob,
+        superPotion: SoundEffects.Blob,
+        coin: SoundEffects.Coins,
+        superCoin: SoundEffects.Coins,
+        equipment: SoundEffects.Punch,
+        sphere: SoundEffects.Punch,
+        artifact: SoundEffects.Punch,
+        bossPart: SoundEffects.Punch,
     };
 
     const recalculateHeroStatsMap: any = {
@@ -38,7 +39,7 @@ export const recalculateHeroStatsAfterContact = (
     const recalculateHeroStatsHandler = recalculateHeroStatsMap[selectedCard.type];
     recalculateHeroStatsHandler && recalculateHeroStatsHandler(heroCard, selectedCard, battleCards);
 
-    const audioName = audioMap[selectedCard.type];
+    const audioName = soundEffectMap[selectedCard.type];
     // audioName && new Audio(`sounds/${audioMap[selectedCard.type]}.mp3`).play();
     audioName && playSoundEffect(audioName);
 };
@@ -94,7 +95,7 @@ const recalculateHeroHealthByPercent = (heroCard: IHeroBattleCard, selectedCard:
     }
 };
 
-const recalculateHeroHealthAfterPotion = (heroCard: IHeroBattleCard, selectedCard: BattleCardType) => {
+export const recalculateHeroHealthAfterPotion = (heroCard: IHeroBattleCard, selectedCard: BattleCardType | IPotion) => {
     const heroHealth = heroCard.health + selectedCard.value;
     const heroStatMaxHealth = getItemStat(heroCard, 'maxHealth');
 

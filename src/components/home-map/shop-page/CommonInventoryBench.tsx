@@ -2,7 +2,12 @@ import React, {FC, useEffect, useState} from "react";
 import styled from "styled-components";
 import {useCharacter} from "../../../store/storeHooks";
 import {IShopItem} from "../character-page/types";
-import {removeCharacterInventoryItem, updateCharacterInventoryItem} from "./utils";
+import {
+    getSelectedItemLength,
+    getUnselectedItemLength,
+    removeCharacterInventoryItem,
+    updateInventoryItem
+} from './utils';
 import mixins from "../../../mixins";
 
 interface ICommonInventoryBench {
@@ -17,24 +22,32 @@ const CommonInventoryBench: FC<ICommonInventoryBench> = ({
     type
 }) => {
     const { character } = useCharacter();
-    const [ selectedItem, setSelectedItem ] = useState(items[0]);
-    const [ selectedItemCount, setSelectedItemCount ] = useState(1);
+    const [ selectedItem, setSelectedItem ] = useState<IShopItem>(items[0]);
+    // const [ selectedItemCount, setSelectedItemCount ] = useState(1);
 
-    const decreasePurchaseCount = () => selectedItemCount > 1 && setSelectedItemCount(selectedItemCount - 1);
-    const increasePurchaseCount = () => selectedItemCount < 10 && setSelectedItemCount(selectedItemCount + 1);
+    // const decreasePurchaseCount = () => selectedItemCount > 1 && setSelectedItemCount(selectedItemCount - 1);
+    // const increasePurchaseCount = () => selectedItemCount < 10 && setSelectedItemCount(selectedItemCount + 1);
 
-    const onSelectClick = () => updateCharacterInventoryItem(selectedItem);
+    const onSelectClick = () => updateInventoryItem(selectedItem, setSelectedItem);
 
     const onRemoveClick = (e: any, selectedItem: IShopItem) => {
         e.stopPropagation();
 
         removeCharacterInventoryItem(selectedItem);
+        setSelectedItem(items[0]);
     }
 
+    // useEffect(() => {
+    //     const definedSelectedItem = items.find(item => item.selected)
+    //     setSelectedItem(definedSelectedItem || items[0]);
+    // }, [character]);
+
     useEffect(() => {
-        const definedSelectedItem = items.find(item => item.selected)
-        setSelectedItem(definedSelectedItem || items[0]);
-    }, [character]);
+        (!selectedItem || items.length === 0) && setSelectedItem(items[0]);
+    }, [items]);
+
+    const isDisabledSelectBtn = () => selectedItem.selected || getUnselectedItemLength(selectedItem.type) === 0;
+    const isDisabledUnselectBtn = () => !selectedItem.selected;
 
     return <InventoryContainer>
         <div className="inventory-header">
@@ -48,7 +61,7 @@ const CommonInventoryBench: FC<ICommonInventoryBench> = ({
                 <div className="spheres-value">{character.spheres}</div>
             </CoinsBar>
         </div>
-        { selectedItem && (<div className="selected-inventory-item-wrapper">
+        { selectedItem ? (<div className="selected-inventory-item-wrapper">
             <div className="inventory-item selected-inventory-item">
                 <img src={`img/${selectedItem.image}.png`} alt=""/>
                 { selectedItem.selected && <div className="selected-title">Selected</div>}
@@ -56,15 +69,25 @@ const CommonInventoryBench: FC<ICommonInventoryBench> = ({
             </div>
             <div className="inventory-item-info">
                 <p className="inventory-item-description">This potion increase your health by { selectedItem.value }. Can be use only once per battle.</p>
-                { !selectedItem.selected && <button className="btn select-btn" onClick={onSelectClick}>Select</button>}
+                <div className="inventory-buttons">
+                    <button className="btn select-btn" disabled={isDisabledSelectBtn()} onClick={onSelectClick}>
+                        Select
+                        <div className="inventory-item-limit">{getSelectedItemLength(selectedItem.type)}</div>
+                    </button>
+                    <button className="btn select-btn" disabled={isDisabledUnselectBtn()} onClick={onSelectClick}>
+                        Unselect
+                        <div className="inventory-item-limit">{getUnselectedItemLength(selectedItem.type)}</div>
+                    </button>
+                </div>
             </div>
-        </div>)}
+        </div>) : <div className="empty-inventory-wrapper">No items</div>}
         <div className="inventory-item-collection">
-            { items.map((item, index) => (
+            {items.map((item, index) => (
                 <div className="inventory-item" onClick={() => setSelectedItem(item)} key={index}>
-                    <img src={`img/${item.image}.png`} alt=""/>
+                    <img src={`img/${item.image}.png`} alt="" />
                     <div className="inventory-item-count">{ item.count }</div>
                     <div className="inventory-item-remove" onClick={(e) => onRemoveClick(e, item)}>×</div>
+                    { item.selected && <div className="selected-title">Selected</div>}
                 </div>
             ))}
         </div>
@@ -86,21 +109,13 @@ const InventoryContainer = styled.div`
     }
     
     .selected-inventory-item-wrapper {
+        height: 140px;
         display: flex;
         
         .selected-inventory-item {
             box-shadow: none;
             cursor: inherit;
             &:hover, &:active { box-shadow: none }
-            
-            .selected-title {
-                position: absolute;
-                top: 40%;
-                transform: rotate(-45deg);
-                font-size: 40px;
-                opacity: 0.6;
-                text-shadow: 0px 0px 5px #fff;
-            }
         }
         
         .inventory-item-info {
@@ -120,13 +135,33 @@ const InventoryContainer = styled.div`
                 width: max-content;
                 height: max-content;
                 font-size: 25px;
-            }            
+            }
+                
+            .inventory-buttons {
+                ${mixins.flexStart};
+                gap: 10px;
+                
+                .inventory-item-limit {
+                    border-left: 1px solid #ffc000;
+                    font-size: 30px;
+                    margin-left: 10px;
+                    padding: 0 10px;
+                }
+            }
         }
     }
     
+    .empty-inventory-wrapper {
+        ${mixins.firstTextColor};
+        ${mixins.flexCenter};
+        
+        font-size: 50px;
+        height: 140px;
+    }
+
     .inventory-item {
         ${mixins.transparentBtn};
-        
+
         min-width: 120px;
         max-width: 120px;
         height: 120px;
@@ -146,9 +181,9 @@ const InventoryContainer = styled.div`
             position: absolute;
             bottom: 0;
             right: 0;
-            width: 30px;
-            height: 30px;
-            font-size: 35px;
+            width: 40px;
+            height: 40px;
+            font-size: 40px;
             background-color: rgba(0, 0, 0, 0.2);
             box-shadow: 0 0 5px 1px #ffc000;
             border-radius: 5px;
@@ -157,6 +192,7 @@ const InventoryContainer = styled.div`
         .inventory-item-remove {
             display: none;
             top: 0;
+            font-size: 50px;
             cursor: pointer;
         }
         
@@ -171,6 +207,16 @@ const InventoryContainer = styled.div`
         display: flex;
         
         .inventory-item { zoom: 70% }
+    }
+
+
+    .selected-title {
+        position: absolute;
+        top: 40%;
+        transform: rotate(-45deg);
+        font-size: 40px;
+        opacity: 0.6;
+        text-shadow: 0px 0px 5px #fff;
     }
 `;
 

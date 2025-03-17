@@ -3,18 +3,21 @@ import { IArtifactCard, IHeroBattleCard } from "../../types";
 export interface ICommonShopItem {
     id: string;
     type: string;
+    name: string;
     image: string;
     price: number;
     count?: number;
 }
 
-export interface IShopPotion extends ICommonShopItem {
+export interface IPotion extends ICommonShopItem {
     value: number;
     selected: boolean;
+    index?: number;
 }
 
 export interface IInventory {
-    potions: IShopPotion[]
+    potions: IPotion[];
+    potionLimit: number;
 }
 
 export interface ICharacter {
@@ -27,8 +30,8 @@ export interface ICharacter {
     coins: number;
     spheres: number;
     score: number;
-    artifacts: IArtifactCard[],
-    inventory: IInventory
+    artifacts: IArtifactCard[];
+    inventory: IInventory;
 }
 
 export interface IUser {
@@ -39,4 +42,4 @@ export interface IUser {
     role: string;
 }
 
-export interface IShopItem extends IShopPotion {}
+export interface IShopItem extends IPotion {}
