@@ -47,7 +47,7 @@ const HeroSelectionPanel: React.FC<IHeroSelectionPanel> = () => {
                         <div className="header">
                             <div className="battle-card-image">
                                 <BattleCardImage battleCard={heroCard}/>
-                                {!selectedHero && <button className="btn" onClick={() => clickSelectButton(heroCard)}>Select</button>}
+                                <button className="btn" disabled={selectedHero} onClick={() => clickSelectButton(heroCard)}>Select</button>
                                 {selectedHero && <div className="selected-hero-title">Selected</div>}
                             </div>
                             <div className="battle-card-content">

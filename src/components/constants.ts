@@ -18,6 +18,45 @@ export const symbols = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '
 export const ordinaryBossPartsCount = 5;
 
 export const skills: Skill[] = [
+    // **************************** NEW SKILLS *******************************
+    {
+        name: 'Mighty endurance',
+        description: '',
+        image: 'mighty_endurance',
+        type: 'debuff',
+        level: 0,
+        temporaryPoints: 0,
+        coolDown: 0,
+        nearbyCardsOnly: true,
+        active: false,
+        stats: [
+            {
+                name: 'power',
+                title: 'Power',
+                defaultValue: 1,
+                value: 0,
+            },
+            {
+                name: 'duration',
+                title: 'Duration',
+                defaultValue: 6,
+                value: 0,
+            },
+            // {
+            //     name: 'period',
+            //     title: 'Period',
+            //     defaultValue: 3,
+            //     value: 0,
+            // },
+            {
+                name: 'maxCoolDown',
+                title: 'CoolDown',
+                defaultValue: 2,
+                value: 0,
+            },
+        ]
+    },
+    // **************************** OLD SKILLS *******************************
     {
         name: 'light-ray',
         description: '',
@@ -285,6 +324,17 @@ export const stats: Stat[] = [
 
 export const heroCollection: IHeroCollectionItem[] = [
     {
+        name: 'Fighter',
+        image: 'hero-0',
+        maxHealth: 40,
+        def: 0,
+        atk: 0,
+        lifeDrain: 0,
+        expBoost: 1,
+        coinBoost: 1,
+        skills: ['mighty_endurance', 'sword_hit', 'defence', 'sword_range_hit']
+    },
+    {
         name: 'Healer',
         image: 'hero-1',
         maxHealth: 30,
@@ -293,7 +343,40 @@ export const heroCollection: IHeroCollectionItem[] = [
         lifeDrain: 0,
         expBoost: 1,
         coinBoost: 1,
-        skills: ['light-ray', 'poison', 'regeneration', 'ice-balls']
+        skills: ['healing_grace', 'heal', 'mass_heal', 'resurrection']
+    },
+    {
+        name: 'Charmer',
+        image: 'hero-5',
+        maxHealth: 30,
+        def: 0,
+        atk: 0,
+        lifeDrain: 0,
+        expBoost: 1,
+        coinBoost: 1,
+        skills: ['healing_grace', 'regeneration', 'potion_rebirth', 'potion_conversion']
+    },
+    {
+        name: 'Krymar',
+        image: 'hero-7',
+        maxHealth: 30,
+        def: 0,
+        atk: 0,
+        lifeDrain: 0,
+        expBoost: 1,
+        coinBoost: 1,
+        skills: ['full_resist', 'drain', 'skill_master', 'resist_master']
+    },
+    {
+        name: 'Argonaut',
+        image: 'hero-6',
+        maxHealth: 50,
+        def: 0,
+        atk: 0,
+        lifeDrain: 0,
+        expBoost: 1,
+        coinBoost: 1,
+        skills: ['fortune', 'stone_skin', 'enrichment', 'coin_conversion']
     },
     {
         name: 'Blightbringer',
@@ -304,7 +387,7 @@ export const heroCollection: IHeroCollectionItem[] = [
         lifeDrain: 0,
         expBoost: 1,
         coinBoost: 1,
-        skills: ['light-ray', 'poison', 'regeneration', 'ice-balls']
+        skills: ['poison_resist', 'drain', 'poison', 'anti_grace']
     },
     {
         name: 'Celestial',
@@ -315,18 +398,18 @@ export const heroCollection: IHeroCollectionItem[] = [
         lifeDrain: 0,
         expBoost: 1,
         coinBoost: 1,
-        skills: ['light-ray', 'poison', 'regeneration', 'ice-balls']
+        skills: ['fire_resist', 'fire_icicle', 'fire_flame', 'wildfire']
     },
     {
         name: 'Aqua Wizard',
         image: 'hero-4',
-        maxHealth: 40,
+        maxHealth: 35,
         def: 0,
         atk: 0,
         lifeDrain: 0,
         expBoost: 1,
         coinBoost: 1,
-        skills: ['light-ray', 'poison', 'regeneration', 'ice-balls']
+        skills: ['ice_resist', 'ice_tear', 'frostbite', 'ice-squall']
     }
 ];
 

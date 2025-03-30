@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from "styled-components";
 import {Stat} from "../types";
+import mixins from '../../mixins';
 
 const TabInfoCardStats = ({
     selectedItem
@@ -32,8 +33,7 @@ const TabInfoDescriptionWrapper = styled.div`
             margin: 0;
 
             .item-stat-value {
-                color: #ffc000 !important;
-                text-shadow: 0px 0px 3px #1A1A1A, 0px 0px 3px #E3E3E3,  0px 0px 3px #1A1A1A;
+                ${mixins.thirdColor}
             }
         }
     }

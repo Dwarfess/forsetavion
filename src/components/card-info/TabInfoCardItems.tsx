@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import styled from "styled-components";
 import BattleCardImage from "../BattleCardImage";
 import {TabInfoCardStats} from "./TabInfoCardStats";
+import mixins from '../../mixins';
 
 const TabInfoCardItem = ({
     cardItems
@@ -26,6 +27,7 @@ const TabInfoCardItem = ({
             })}
         </div>
         {selectedItem && (<>
+            <h2>{selectedItem.name} Lv. <span>{selectedItem.level}</span></h2>
             <p className="card-description">
                 {selectedItem.description || 'An ordinary monster'}
             </p>
@@ -38,6 +40,15 @@ const TabWrapper = styled.div`
     font-size: 20px;
     color: #8b0000; !important;
 
+    h2 {
+        font-size: 30px;
+        text-transform: capitalize;
+        
+        span {
+            ${mixins.thirdColor}
+        }
+    }
+    
     .card-items {
         display: flex;
         flex-wrap: wrap;
