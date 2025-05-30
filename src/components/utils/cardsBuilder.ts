@@ -24,12 +24,13 @@ const heroConstructor = (heroItem: IHeroCollectionItem): IHeroBattleCard => {
         generateStat(stats, 'coinBoost', heroItem.coinBoost)
     ];
 
-    clonedDefaultHeroCard.skills = [
-        generateSkill(skills, 'light-ray'),
-        generateSkill(skills, 'poison'),
-        generateSkill(skills, 'regeneration'),
-        generateSkill(skills, 'ice-balls'),
-    ];
+    // clonedDefaultHeroCard.skills = [
+    //     generateSkill(skills, 'light-ray'),
+    //     generateSkill(skills, 'poison'),
+    //     generateSkill(skills, 'regeneration'),
+    //     generateSkill(skills, 'ice-balls'),
+    // ];
+    heroItem.skills.forEach(skill => clonedDefaultHeroCard.skills.push(generateSkill(skills, skill)));
 
     return clonedDefaultHeroCard;
 }

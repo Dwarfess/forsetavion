@@ -44,16 +44,18 @@ export interface Stat {
 
 export interface Skill {
     name: string;
+    label: string;
     description: string;
     image: string;
     type: string;
+    useType: string;
     level: number;
     temporaryPoints: number;
     // value: number;
     // maxCoolDown: number;
-    coolDown: number;
-    nearbyCardsOnly: boolean;
-    active: boolean;
+    coolDown?: number;
+    nearbyCardsOnly?: boolean;
+    active?: boolean;
     // duration: number;
     // period: number;
     stats: Stat[];

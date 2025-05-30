@@ -18,7 +18,7 @@ const secondTextColor = css`
 `;
 
 const thirdColor = css`
-    color: #ffc000;
+    color: #ffc000 !important;
     text-shadow: 0px 0px 3px #1A1A1A, 0px 0px 3px #E3E3E3,  0px 0px 3px #1A1A1A;
 `;
 
