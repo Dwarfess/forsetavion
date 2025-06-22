@@ -45,7 +45,7 @@ export const recalculateHeroStatsAfterContact = (
 };
 
 const recalculateHeroHealthAfterEnemy = (heroCard: IHeroBattleCard, selectedCard: BattleCardType) => {
-    const beastHealth = selectedCard.value - getItemStat(heroCard, 'def').value;
+    const beastHealth = selectedCard.value - getItemStat(heroCard, 'pDef').value;
     const heroHealth = beastHealth > 0 ? heroCard.health - beastHealth : heroCard.health;
 
     if (heroHealth <= 0) {
@@ -82,8 +82,8 @@ const recalculateHeroHealthsAfterFight = (
 // TODO: change health to value for all of cards
 const recalculateHeroHealthByPercent = (heroCard: IHeroBattleCard, selectedCard: BattleCardType, percent: number) => {
     const partOfHeroHealth = Math.ceil(heroCard.health / percent);
-    const partOfHeroHealthWithStats = partOfHeroHealth + (getItemStat(heroCard, 'atk').value || 0)
-        - getItemStat(selectedCard, 'def').value;
+    const partOfHeroHealthWithStats = partOfHeroHealth + (getItemStat(heroCard, 'pAtk').value || 0)
+        - getItemStat(selectedCard, 'pDef').value;
     const selectedCardHealth = selectedCard.health - partOfHeroHealthWithStats;
 
     if (selectedCardHealth >= 0) {
@@ -138,7 +138,7 @@ const recalculateHeroArtifact = (heroCard: IHeroBattleCard, selectedCard: Battle
     }
 
     recalculateHeroStatAfterAddArtifact(heroCard, selectedCard, 'maxHealth');
-    recalculateHeroStatAfterAddArtifact(heroCard, selectedCard, 'def');
+    recalculateHeroStatAfterAddArtifact(heroCard, selectedCard, 'pDef');
     recalculateHeroStatAfterAddArtifact(heroCard, selectedCard, 'lifeDrain');
     recalculateHeroStatAfterAddArtifact(heroCard, selectedCard, 'expBoost');
     recalculateHeroStatAfterAddArtifact(heroCard, selectedCard, 'coinBoost');

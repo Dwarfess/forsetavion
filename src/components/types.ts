@@ -38,8 +38,8 @@ export interface IArtifactCard extends CommonBattleCardType {
 export interface Stat {
     name: string;
     title: string;
-    defaultValue?: number;
     value: number;
+    defaultValue?: number;
 }
 
 export interface Skill {
@@ -72,11 +72,17 @@ export interface IHeroCollectionItem {
     name: string;
     image: string;
     maxHealth: number;
-    def: number;
-    atk: number;
-    lifeDrain: number;
-    expBoost: number;
-    coinBoost: number;
+    pDef?: number;
+    pAtk?: number;
+    mDef?: number;
+    mAtk?: number;
+    fireResist?: number;
+    iceResist?: number;
+    poisonResist?: number;
+    lifeDrain?: number;
+    healBoost?: number;
+    expBoost?: number;
+    coinBoost?: number;
     skills: string[];
 }
 

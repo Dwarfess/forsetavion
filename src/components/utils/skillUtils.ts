@@ -296,6 +296,15 @@ export const checkBossSkillsReadyToUse = (battleCards: BattleCardType[]) => {
     })
 }
 
+export const applyPassiveSkills = () => {
+    const battleCards = getStateValue('battleCards');
+    battleCards.forEach((battleCard: BattleCardType) => {
+       if (battleCard.type !== 'hero') return;
+
+
+    });
+}
+
 // TODO: must be move to independent utils
 export const playSoundEffect = (soundEffect: SoundEffects) => {
     const options = getStateValue('options')

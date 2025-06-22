@@ -28,6 +28,7 @@ const TabInfoDescriptionWrapper = styled.div`
     .item-stats {
         width: 100%;
         font-size: 20px;
+        column-count: 2;
 
         .item-stat {
             margin: 0;
