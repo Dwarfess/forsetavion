@@ -40,6 +40,9 @@ export interface Stat {
     title: string;
     value: number;
     defaultValue?: number;
+    positiveValue?: number;
+    negativeValue?: number;
+    artifactValue?: number;
 }
 
 export interface Skill {

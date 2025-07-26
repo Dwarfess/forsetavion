@@ -15,7 +15,8 @@ import {
     keyDownHandler,
     getBattleCardsWithHero,
     executeMethodsAfterMoving,
-} from "./utils";
+    recalculatePassiveSkills
+} from './utils';
 
 import {
     useBattleCards,
@@ -30,6 +31,7 @@ import {
     useIsAnotherPlayerActive,
 } from '../store/storeHooks';
 import mixins from "../mixins";
+import { recalculateHeroStats } from './utils/statUtils';
 
 const BattlePage = () => {
     const { character } = useCharacter();
@@ -51,6 +53,13 @@ const BattlePage = () => {
             executeMethodsAfterMoving();
         }
     }, [isMoving]);
+
+    useEffect(() => {
+        if (battleCards.length && !isMoving) {
+            recalculatePassiveSkills();
+            recalculateHeroStats();
+        }
+    }, [isMoving, isOpenLevelUpModal]);
 
     useEffect(() => {
         if (battleFieldLength && battleCards.length === 0) {

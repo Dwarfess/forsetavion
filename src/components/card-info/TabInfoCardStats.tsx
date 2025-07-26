@@ -9,8 +9,19 @@ const TabInfoCardStats = ({
     return <TabInfoDescriptionWrapper>
         <div className="item-stats">
             {selectedItem.stats?.map((stat: Stat, index: number) => {
+                const positiveValue = stat.positiveValue || 0;
+                const artifactValue = stat.artifactValue || 0;
+                const negativeValue = stat.negativeValue || 0;
+
+                const additionalValue = positiveValue + artifactValue - negativeValue;
+                const additionalValueString = additionalValue > 0 ? `+${additionalValue}` : additionalValue;
+
                 return <p className="item-stat" key={index}>{stat.title}:
-                    <span className="item-stat-value"> {stat.value}</span>
+                    <span className="item-stat-value"> {stat.value} </span>
+
+                    { additionalValue !== 0 &&
+                        <span className="item-stat-value">({additionalValueString})</span>
+                    }
                 </p>
             })}
         </div>
@@ -19,7 +30,7 @@ const TabInfoCardStats = ({
 
 const TabInfoDescriptionWrapper = styled.div`
     font-size: 25px;
-    color: #8b0000; !important;
+    color: #8b0000 !important;
 
     .card-description {
         width: 100%;
@@ -35,6 +46,15 @@ const TabInfoDescriptionWrapper = styled.div`
 
             .item-stat-value {
                 ${mixins.thirdColor}
+            }
+            
+            .all-values-block {
+                //color: rgba(34, 36, 38, 0.4);
+                font-family: sans-serif;
+                
+                //.default-value { color: rgba(34, 36, 38, 0.4) !important }
+                //.positive-value { color: green !important }
+                //.negative-value { color: red !important }
             }
         }
     }

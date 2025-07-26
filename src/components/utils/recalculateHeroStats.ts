@@ -45,7 +45,8 @@ export const recalculateHeroStatsAfterContact = (
 };
 
 const recalculateHeroHealthAfterEnemy = (heroCard: IHeroBattleCard, selectedCard: BattleCardType) => {
-    const beastHealth = selectedCard.value - getItemStat(heroCard, 'pDef').value;
+    const beastHealth = selectedCard.value
+        - getItemStat(heroCard, 'pDef').value - getItemStat(heroCard, 'pAtk').value;
     const heroHealth = beastHealth > 0 ? heroCard.health - beastHealth : heroCard.health;
 
     if (heroHealth <= 0) {
@@ -122,7 +123,8 @@ const recalculateHeroStatAfterAddArtifact = (
     const selectedCardStat = getItemStat(selectedCard, name);
     if (selectedCardStat.value) {
         const heroStat = getItemStat(heroCard, name);
-        heroStat.value += selectedCardStat.value;
+        // heroStat.value += selectedCardStat.value;
+        heroStat.artifactValue += selectedCardStat.value;
 
         if (name === 'maxHealth') heroCard.health += selectedCardStat.value;
     }

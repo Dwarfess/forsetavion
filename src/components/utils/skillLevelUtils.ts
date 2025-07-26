@@ -2,6 +2,8 @@ import {BattleCardType, Skill} from "../types";
 import {getItemStat} from "./recalculateHeroStats";
 import {getStateValue, setStateValue} from "../../store/storeUtils";
 import {getHeroCard} from "./utils";
+import { recalculatePassiveSkills } from './skillUtils';
+import { recalculateHeroStats } from './statUtils';
 
 export const availableSkill = (selectedSkill: Skill, skills: Skill[]) => {
     const selectedSkillIndex = skills.findIndex((skill: Skill) => skill.name === selectedSkill.name);
@@ -81,6 +83,7 @@ export const recalculateSkillsStatsAccordingLevel = (skills: Skill[]) => {
             updateSkillCoolDown(skill);
             updateSkillDuration(skill);
             updateSkillPeriod(skill);
+            updateSkillHealthMark(skill);
         }
     });
 }
@@ -112,5 +115,13 @@ const updateSkillPeriod = (skill: Skill) => {
     const period = getItemStat(skill, 'period');
     const level = Math.floor(skill.level / 10);
     period.value = period.defaultValue - level || 1;
+}
+
+const updateSkillHealthMark = (skill: Skill) => {
+    if (skill.type === 'attack') return;
+
+    const healthMark = getItemStat(skill, 'healthMark');
+    // const level = Math.floor(skill.level / 10);
+    healthMark.value = healthMark.defaultValue + skill.level;
 }
 

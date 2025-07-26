@@ -14,7 +14,7 @@ const LoadingPage = () => {
             setProgress((prevProgress) =>
                 prevProgress >= 100 ? 100 : prevProgress + 1
             );
-        }, 100);
+        }, 10);
 
         return () => {
             clearInterval(timer);

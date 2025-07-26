@@ -9,6 +9,7 @@ export const bossCardBuilder = () => {
 
 const generateStat = (stats: Stat[], name: string, value: number = 0) => {
     return structuredClone(stats).find((stat: Stat) => {
+        stat.defaultValue = value;
         stat.value = value;
         return stat.name === name;
     });

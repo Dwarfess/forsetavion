@@ -79,14 +79,36 @@ const skillsHandler = async (
     };
 
     const skillHandlerMap: any = {
-        'light-ray': callAttackSkillHandler,
+        // 'ice-balls': callAttackSkillHandler,
+        'sword_hit': callAttackSkillHandler,
+        'sword_range_hit': callAttackSkillHandler,
+        'fire_icicle': callAttackSkillHandler,
+        'wildfire': callAttackSkillHandler,
+        'ice_tear': callAttackSkillHandler,
+        'ice_squall': callAttackSkillHandler,
+        'drain': callAttackSkillHandler,//todo
+        // 'light-ray': callAttackSkillHandler,
         'poison': callDebuffSkill,
+        'fire_flame': callDebuffSkill,
+        'frostbite': callDebuffSkill,
+        'anti_grace': callDebuffSkill,
         'regeneration': callBuffSkill,
-        'ice-balls': callAttackSkillHandler,
+        'physical_shield': callBuffSkill,
+        'skill_master': callBuffSkill,//todo
+        'resist_master': callBuffSkill,//todo
+        'stone_skin': callBuffSkill,//todo
+        'enrichment': callBuffSkill,//todo
+        'heal': callHelpSkill,
+        'mass_heal': callHelpSkill, //todo
+        'resurrection': callHelpSkill, //todo
+        'potion_rebirth': callHelpSkill, //todo
+        'potion_conversion': callHelpSkill, //todo
+        'coin_conversion': callHelpSkill, //todo
     };
 
     const selectedCardIsHeroCard = getHeroCard(battleCards).nickname === selectedCard.nickname;
     const activeSkillHandler = skillHandlerMap[activeSkill.name](activeSkill, selectedCard, selectedCardIsHeroCard);
+    // const activeSkillHandler = skillHandlerMap['light-ray'](activeSkill, selectedCard, selectedCardIsHeroCard);
     if (!activeSkillHandler) {
         await unsuitedCardHandler(selectedCard);
         return;
@@ -135,6 +157,7 @@ const checkBattleCardAfterSkill = (
     return changeBattleCardAfterSkill(battleCards, selectedCard);
 }
 
+const allowedCardTypesForHelpSkill = ['enemy', 'beast', 'boss', 'hero'];
 const allowedCardTypesForNegativeSkill = ['enemy', 'beast', 'boss', 'hero'];
 const allowedCardTypesForPositiveSkill = ['hero'];
 const callAttackSkillHandler = (
@@ -145,6 +168,7 @@ const callAttackSkillHandler = (
     if (!allowedCardTypesForNegativeSkill.includes(selectedCard.type) || selectedCardIsHeroCard ) return;
 
     const powerValue = getItemStat(activeSkill, 'power').value;
+    const mAtkValue = getItemStat(activeSkill, 'mAtk').value;
     const maxCoolDownValue = getItemStat(activeSkill, 'maxCoolDown').value;
 
     if (selectedCard.type === 'hero') {
@@ -153,7 +177,28 @@ const callAttackSkillHandler = (
         selectedCard.value -= powerValue;
     }
 
-    selectedCard.value -= powerValue;
+    // selectedCard.value -= powerValue;
+    activeSkill.active = false;
+    activeSkill.coolDown = maxCoolDownValue;
+
+    return true;
+}
+
+const callHelpSkill = (
+    activeSkill: Skill,
+    selectedCard: BattleCardType,
+) => {
+    if (!allowedCardTypesForHelpSkill.includes(selectedCard.type)) return;
+
+    const powerValue = getItemStat(activeSkill, 'power').value;
+    const maxCoolDownValue = getItemStat(activeSkill, 'maxCoolDown').value;
+
+    if (selectedCard.type === 'hero') {
+        selectedCard.health += powerValue;
+    } else {
+        selectedCard.value += powerValue;
+    }
+
     activeSkill.active = false;
     activeSkill.coolDown = maxCoolDownValue;
 
@@ -296,13 +341,96 @@ export const checkBossSkillsReadyToUse = (battleCards: BattleCardType[]) => {
     })
 }
 
-export const applyPassiveSkills = () => {
+export const recalculatePassiveSkills = () => {
     const battleCards = getStateValue('battleCards');
     battleCards.forEach((battleCard: BattleCardType) => {
-       if (battleCard.type !== 'hero') return;
+        if (battleCard.type !== 'hero') return;
 
-
+        battleCard.skills
+            .filter((skill) => skill.useType === 'passive' )
+            .forEach((skill) => {
+                passiveSkillsHandler(battleCard, skill);
+            })
     });
+
+    setStateValue('battleCards', battleCards);
+}
+
+const passiveSkillsHandler = (heroCard: BattleCardType, skill: Skill) => {
+    const berserkHandler = () => {
+        const healthMarkValue = getItemStat(skill, 'healthMark').value;
+        const pAtk = getItemStat(heroCard, 'pAtk');
+        if (heroCard.health <= healthMarkValue) {
+            pAtk.positiveValue = getItemStat(skill, 'power').value;
+        } else {
+            pAtk.positiveValue = 0;
+        }
+
+        // pAtk.value = pAtk.positiveValue;
+    }
+
+    const healingGraceHandler = () => {
+        const healingGraceValue = getItemStat(skill, 'power').value;
+        const healBoost = getItemStat(heroCard, 'healBoost');
+
+        healBoost.positiveValue = healingGraceValue;
+    }
+
+    const fullResistHandler = () => {
+        const fullResistValue = getItemStat(skill, 'power').value;
+
+        const pDef = getItemStat(heroCard, 'pDef');
+        const mDef = getItemStat(heroCard, 'mDef');
+        const fireResist = getItemStat(heroCard, 'fireResist');
+        const iceResist = getItemStat(heroCard, 'iceResist');
+        const poisonResist = getItemStat(heroCard, 'poisonResist');
+
+        pDef.positiveValue = fullResistValue;
+        mDef.positiveValue = fullResistValue;
+        fireResist.positiveValue = fullResistValue;
+        iceResist.positiveValue = fullResistValue;
+        poisonResist.positiveValue = fullResistValue;
+    }
+
+    const fortuneHandler = () => {
+        const fortuneValue = getItemStat(skill, 'power').value;
+        const coinBoost = getItemStat(heroCard, 'coinBoost');
+
+        coinBoost.positiveValue = fortuneValue;
+    }
+
+    const poisonResistHandler = () => {
+        const poisonResistValue = getItemStat(skill, 'power').value;
+        const poisonResist = getItemStat(heroCard, 'poisonResist');
+
+        poisonResist.positiveValue = poisonResistValue;
+    }
+
+    const fireResistHandler = () => {
+        const fireResistValue = getItemStat(skill, 'power').value;
+        const fireResist = getItemStat(heroCard, 'fireResist');
+
+        fireResist.positiveValue = fireResistValue;
+    }
+
+    const iceResistHandler = () => {
+        const iceResistValue = getItemStat(skill, 'power').value;
+        const iceResist = getItemStat(heroCard, 'iceResist');
+
+        iceResist.positiveValue = iceResistValue;
+    }
+
+    const passiveSkillsHandlerMap: any = {
+        berserk: berserkHandler,
+        healing_grace: healingGraceHandler,
+        full_resist: fullResistHandler,
+        fortune: fortuneHandler,
+        poison_resist: poisonResistHandler,
+        fire_resist: fireResistHandler,
+        ice_resist: iceResistHandler,
+    }
+
+    passiveSkillsHandlerMap[skill.name]?.();
 }
 
 // TODO: must be move to independent utils
