@@ -52,6 +52,7 @@ export interface Skill {
     image: string;
     type: string;
     useType: string;
+    elementType? : string;
     level: number;
     temporaryPoints: number;
     // value: number;

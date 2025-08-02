@@ -11,16 +11,22 @@ import {
     getHeroSkillsWithTemporaryPoints,
     updateBattleCardsByNewSkillLevels
 } from "../utils";
-import {useBattleCards, useIsProcessingAction, useIsOpenLevelUpModal, useSelectedCardForInfo} from "../../store/storeHooks";
-import { ModalX } from "../shared";
 import {
-    updateCurrentBattleAndResetActivePlayer
-} from '../home-map/multi-battle-page/multiBattleUtils';
+    useBattleCards,
+    useIsProcessingAction,
+    useIsOpenLevelUpModal,
+    useSelectedCardForInfo,
+    useIsMoving
+} from "../../store/storeHooks";
+import { ModalX } from '../shared';
+import { updateCurrentBattleAndResetActivePlayer } from '../home-map/multi-battle-page/multiBattleUtils';
+import { setStateValue } from '../../store/storeUtils';
 
 const ModalLevelUp = () => {
     const { setIsOpenLevelUpModal } = useIsOpenLevelUpModal();
     const { setSelectedCardForInfo } = useSelectedCardForInfo();
     const { isProcessingAction } = useIsProcessingAction();
+    const { setIsMoving } = useIsMoving();
     const { heroCard } = useBattleCards();
 
     const [heroSkills, setHeroSkills] = useState<Skill[]>([]);
@@ -40,6 +46,7 @@ const ModalLevelUp = () => {
             heroSkills
         });
         setIsOpenLevelUpModal(false);
+        setIsMoving(false);
     }
 
     const increaseSkillLevel = (skill: Skill) => {

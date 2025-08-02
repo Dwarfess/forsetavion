@@ -54,12 +54,14 @@ const BattlePage = () => {
         }
     }, [isMoving]);
 
-    useEffect(() => {
-        if (battleCards.length && !isMoving) {
-            recalculatePassiveSkills();
-            recalculateHeroStats();
-        }
-    }, [isMoving, isOpenLevelUpModal]);
+    // TODO: bug when reset hero stats and after finish executeMethodsOnly
+    // need to combine this two useEffect and resolve heroCard?.skillPoints above
+    // useEffect(() => {
+    //     if (battleCards.length && !isMoving) {
+    //         recalculatePassiveSkills();
+    //         recalculateHeroStats();
+    //     }
+    // }, [isMoving, isOpenLevelUpModal]);
 
     useEffect(() => {
         if (battleFieldLength && battleCards.length === 0) {
@@ -79,12 +81,12 @@ const BattlePage = () => {
         }
     }, [battleCards, isProcessingAction]);
 
-    useEffect(() => {
-        // TODO: move this logic to executeMethodsAfterMoving
-        if (heroCard?.skillPoints) {
-            setIsOpenLevelUpModal(true);
-        }
-    }, [heroCard]);
+    // useEffect(() => {
+    //     // TODO: move this logic to executeMethodsAfterMoving
+    //     if (heroCard?.skillPoints) {
+    //         setIsOpenLevelUpModal(true);
+    //     }
+    // }, [heroCard]);
 
     const onCardClick = (selectedCardIndex: number) => {
         if (isProcessingAction || isAnotherPlayerActive) return;

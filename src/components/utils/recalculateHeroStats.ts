@@ -112,7 +112,7 @@ const recalculateHeroSpheres = (heroCard: IHeroBattleCard, selectedCard: BattleC
 };
 
 export const getItemStat = (item: any, name: string) => {
-    return item.stats.find((stat: Stat) => stat.name === name) || {};
+    return item.stats?.find((stat: Stat) => stat.name === name) || {};
 };
 
 const recalculateHeroStatAfterAddArtifact = (
@@ -159,6 +159,7 @@ export const recalculateHeroExp = (heroCard: IHeroBattleCard, selectedCard: Simp
         heroCard.skillPoints += 4;
 
         const heroStatMaxHealth = getItemStat(heroCard, 'maxHealth');
+        heroStatMaxHealth.defaultValue += 3;
         heroStatMaxHealth.value += 3;
         heroCard.health = heroStatMaxHealth.value;
     }

@@ -1,8 +1,8 @@
 import { getStateValue, setStateValue } from '../../store/storeUtils';
 import { BattleCardType } from '../types';
 
-export const recalculateHeroStats = () => {
-    const battleCards = getStateValue('battleCards');
+export const recalculateHeroStats = (battleCards: BattleCardType[]) => {
+    // const battleCards = getStateValue('battleCards');
     battleCards.forEach((battleCard: BattleCardType) => {
         if (battleCard.type !== 'hero') return;
 
@@ -18,5 +18,5 @@ export const recalculateHeroStats = () => {
             })
     });
 
-    setStateValue('battleCards', battleCards);
+    // setStateValue('battleCards', battleCards);
 }

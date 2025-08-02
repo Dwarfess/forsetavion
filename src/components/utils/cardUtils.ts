@@ -14,9 +14,9 @@ import {
     checkAndUseActiveSkill,
     checkBattleCardsEffects,
     checkBossSkillsReadyToUse,
-    getActiveSkill,
+    getActiveSkill, recalculatePassiveSkills,
     updateSkillsCoolDown
-} from "./skillUtils";
+} from './skillUtils';
 
 import {getHeroCard} from "./utils";
 
@@ -24,6 +24,7 @@ import {getStateValue, setStateValue} from "../../store/storeUtils";
 import {
     updateCurrentBattleAndResetActivePlayer
 } from '../home-map/multi-battle-page/multiBattleUtils';
+import { recalculateHeroStats } from './statUtils';
 
 export const cardHandler = async (selectedCardIndex: number) => {
     setStateValue('isProcessingAction', true);
@@ -151,7 +152,12 @@ export const resetBattleCards = async (selectedCardIndex: number) => {
     // TODO: add animation for boss effects
     setStateValue('battleCards', battleCards);
     setStateValue('isProcessingAction',false);
-    setStateValue('isMoving',false);
+
+    if (heroSkillPoints) {
+        setStateValue('isOpenLevelUpModal', true);
+    } else {
+        setStateValue('isMoving',false);
+    }
 };
 
 export const executeMethodsAfterMoving = async () => {
@@ -161,6 +167,8 @@ export const executeMethodsAfterMoving = async () => {
     // TODO: add animation for boss effects
     checkBossSkillsReadyToUse(battleCards);
     await checkBattleCardsEffects(battleCards);
+    recalculatePassiveSkills(battleCards);
+    recalculateHeroStats(battleCards);
     updateSkillsCoolDown(battleCards);
     setStateValue('battleCards', battleCards);
 
