@@ -44,3 +44,19 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+
+
+
+
+## TODO List:
+
+- Fix skills
+- Add dependencies for coin sphere heal boost
+- Check and fix skill usage for multi battle
+- Add pvp/pve battle
+- Add artifact shop
+- Add premium account
+- Add premium shop
+- Add dayle visit
+- ### **Complete all todos**

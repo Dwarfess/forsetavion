@@ -15,9 +15,9 @@ export const applySelectedPotion = async (selectedPotion: IPotion) => {
     addClassWhenUsePotion(selectedPotion.index);
     await addClassWhenChangeHealth(heroCard, selectedPotion.value, 'buff');
 
-    // heroCard.selectedPotions = heroCard.selectedPotions
-    //     .filter((potion: IPotion) => potion.index !== selectedPotion.index);
-    heroCard.selectedPotions[selectedPotion.index || 0] = null;
+    heroCard.selectedPotions = heroCard.selectedPotions
+        .filter((potion: IPotion) => potion.index !== selectedPotion.index);
+    // heroCard.selectedPotions[selectedPotion.index || 0] = null;
 
     recalculateHeroHealthAfterPotion(heroCard, selectedPotion);
     setStateValue('battleCards', battleCards);

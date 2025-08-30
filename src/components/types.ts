@@ -40,8 +40,9 @@ export interface Stat {
     title: string;
     value: number;
     defaultValue?: number;
-    positiveValue?: number;
-    negativeValue?: number;
+    passiveSkillEffectValue?: number;
+    buffEffectValue?: number;
+    debuffEffectValue?: number;
     artifactValue?: number;
 }
 

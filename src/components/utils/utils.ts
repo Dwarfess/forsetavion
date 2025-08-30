@@ -81,7 +81,19 @@ export const generatePrizeCards = (selectedCardLevel: number) => {
 
     battleCards.sort(() => .5 - Math.random());
 
-    // battleCards.forEach((card: BattleCardType, index: number) => card.index = index);
+    return battleCards;
+};
+
+export const generateTransformCards = (newBattleCardInitialData: any) => {
+    const initialCards = newBattleCardInitialData.type === 'potion' ? newPotionCards : coinsCards;
+    const battleCards: any[] = [...getMultiCards(initialCards, 1)].map((battleCard: PrimaryBattleCardType) => ({
+        ...battleCard,
+        id: Math.random().toString(16).slice(2),
+        value: newBattleCardInitialData.value,
+        level: 1,
+        effects: [],
+        isVisible: true,
+    }));
 
     return battleCards;
 };

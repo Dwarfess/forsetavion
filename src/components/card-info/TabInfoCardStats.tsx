@@ -9,11 +9,12 @@ const TabInfoCardStats = ({
     return <TabInfoDescriptionWrapper>
         <div className="item-stats">
             {selectedItem.stats?.map((stat: Stat, index: number) => {
-                const positiveValue = stat.positiveValue || 0;
                 const artifactValue = stat.artifactValue || 0;
-                const negativeValue = stat.negativeValue || 0;
+                const passiveSkillEffectValue = stat.passiveSkillEffectValue || 0;
+                const buffEffectValue = stat.buffEffectValue || 0;
+                const debuffEffectValue = stat.debuffEffectValue || 0;
 
-                const additionalValue = positiveValue + artifactValue - negativeValue;
+                const additionalValue = artifactValue + passiveSkillEffectValue + buffEffectValue - debuffEffectValue;
                 const additionalValueString = additionalValue > 0 ? `+${additionalValue}` : additionalValue;
 
                 return <p className="item-stat" key={index}>{stat.title}:

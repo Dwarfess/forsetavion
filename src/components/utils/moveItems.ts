@@ -1,5 +1,11 @@
 import {BattleCardType, Direction, IHeroBattleCard} from "../types";
-import {generateBattleCards, generateBossCards, generatePrizeCards, getHeroCard} from "./utils";
+import {
+    generateBattleCards,
+    generateBossCards,
+    generatePrizeCards,
+    generateTransformCards,
+    getHeroCard
+} from './utils';
 import {ordinaryBossPartsCount} from "../constants";
 import {recalculateSkillsStatsAccordingLevel} from "./skillLevelUtils";
 import {getStateValue} from "../../store/storeUtils";
@@ -43,12 +49,15 @@ export const moveBattleCards = async(
 export const defineNewBattleCard = (
     selectedCardType: string,
     selectedCardLevel: number,
-    battleCards: BattleCardType[]
+    battleCards: BattleCardType[],
+    newBattleCardInitialData?: any,
 ) => {
     const heroCard = getHeroCard(battleCards);
     let newBattleCards;
     if (['boss', 'secret'].includes(selectedCardType)) {
         newBattleCards = generatePrizeCards(selectedCardLevel);
+    } else if (newBattleCardInitialData) {
+        newBattleCards = generateTransformCards(newBattleCardInitialData);
     } else if (heroCard.bossParts === ordinaryBossPartsCount && selectedCardType === 'bossPart') {
         newBattleCards = generateBossCards(heroCard.level);
     } else {

@@ -114,7 +114,7 @@ export const resetBattleCards = async (selectedCardIndex: number) => {
     }
 
     // from the part of code starts moving card
-    setStateValue('isMoving',true);
+    setStateValue('isMoving', true);
     await addClassWhenContactCard(selectedCard);
     setStateValue('battleCards', battleCards);
 
