@@ -636,6 +636,12 @@ export const skills: Skill[] = [
         active: false,
         stats: [
             {
+                name: 'power',
+                title: 'Power',
+                defaultValue: 10,
+                value: 0,
+            },
+            {
                 name: 'maxCoolDown',
                 title: 'CoolDown',
                 defaultValue: 20,
@@ -1326,7 +1332,7 @@ export const heroCollection: IHeroCollectionItem[] = [
         pDef: 0,
         pAtk: 0,
         mDef: 0,
-        mAtk: 0,
+        mAtk: 3,
         fireResist: 0,
         iceResist: 0,
         poisonResist: 0,

@@ -1,4 +1,4 @@
-import {BattleCardType, Effect, IHeroBattleCard, Skill} from "../types";
+import { BattleCardType, Effect, IHeroBattleCard, Skill, Stat } from '../types';
 import {getItemStat, recalculateHeroExp} from "./recalculateHeroStats";
 import {
     addClassErrorWhenContactCard,
@@ -266,8 +266,10 @@ const callHelpSkillHandler = (
     battleCards: BattleCardType[],
 ) => {
     if (!allowedCardTypesForHelpSkill.includes(selectedCard.type)) return;
+    const heroCard = getHeroCard(battleCards);
 
-    let powerValue = getItemStat(activeSkill, 'power').value;
+    const mAtkValue = getItemStat(heroCard, 'mAtk').value;
+    let powerValue = getItemStat(activeSkill, 'power').value + mAtkValue;
 
     const healHandler = (heroCard: BattleCardType = selectedCard) => {
         const heroStatMaxHealth = getItemStat(heroCard, 'maxHealth');
@@ -367,24 +369,50 @@ const callDebuffSkillHandler = (
     const selectedCardIsHeroCard = heroCard.nickname === selectedCard.nickname;
     if (!allowedCardTypesForNegativeSkill.includes(selectedCard.type) || selectedCardIsHeroCard) return;
 
-    return addEffect(activeSkill, selectedCard);
+    const power = structuredClone(getItemStat(activeSkill, 'power'));
+    const mAtkValue = getItemStat(heroCard, 'mAtk').value;
+
+    const mDefValue = getItemStat(selectedCard, 'mDef')?.value || 0;
+    const resistValue = getItemStat(selectedCard, `${activeSkill.elementType}Resist`)?.value || 0;
+
+    const selectedCardLostValue = power.value + mAtkValue - mDefValue - resistValue;
+
+    power.value = selectedCardLostValue > 0 ? selectedCardLostValue : 0;
+
+    return addEffect(activeSkill, selectedCard, power);
 }
 
 const callBuffSkillHandler = (
     activeSkill: Skill,
     selectedCard: BattleCardType,
+    battleCards: BattleCardType[],
 ) => {
+    const heroCard = getHeroCard(battleCards);
     if (!allowedCardTypesForPositiveSkill.includes(selectedCard.type)) return;
-    return addEffect(activeSkill, selectedCard);
+
+    const power = structuredClone(getItemStat(activeSkill, 'power'));
+    const mAtkValue = getItemStat(heroCard, 'mAtk').value;
+
+    power.value = power.value + mAtkValue;
+
+    return addEffect(activeSkill, selectedCard, power);
 }
 
-const addEffect = (activeSkill: Skill, selectedCard: BattleCardType) => {
+const addEffect = (activeSkill: Skill, selectedCard: BattleCardType, power: Stat) => {
     const { name, image, type } = activeSkill;
 
     const maxCoolDown = getItemStat(activeSkill, 'maxCoolDown');
-    const power = structuredClone(getItemStat(activeSkill, 'power'));
+    // const power = structuredClone(getItemStat(activeSkill, 'power'));
     const duration = structuredClone(getItemStat(activeSkill, 'duration'));
     const period = structuredClone(getItemStat(activeSkill, 'period'));
+    //
+    // const powerValue = getItemStat(activeSkill, 'power').value;
+    // const mAtkValue = getItemStat(heroCard, 'mAtk').value;
+    //
+    // const mDefValue = getItemStat(selectedCard, 'mDef')?.value || 0;
+    // const resistValue = getItemStat(selectedCard, `${activeSkill.elementType}Resist`)?.value || 0;
+    //
+    // const selectedCardLostValue = powerValue + mAtkValue - mDefValue - resistValue;
 
     const effect: Effect = { name, image, type, stats: [power, duration, period] };
 
@@ -559,6 +587,8 @@ export const updateSkillsCoolDown = (battleCards: BattleCardType[]) => {
 }
 
 export const checkBossSkillsReadyToUse = (battleCards: BattleCardType[]) => {
+    const heroCard = getHeroCard(battleCards);
+
     battleCards.filter((battleCard: BattleCardType) => battleCard.type === 'boss')
         .forEach((bossCard: BattleCardType) => {
             bossCard.skills.forEach((skill: Skill) => {
@@ -567,7 +597,17 @@ export const checkBossSkillsReadyToUse = (battleCards: BattleCardType[]) => {
                 battleCards.forEach((battleCard) => {
                     if (battleCard.type !== 'hero') return;
 
-                    addEffect(skill, battleCard);
+                    const power = structuredClone(getItemStat(skill, 'power'));
+                    // TODO: before bosses have no stats it is not necessary
+                    // const mAtkValue = getItemStat(heroCard, 'mAtk').value;
+
+                    const mDefValue = getItemStat(heroCard, 'mDef')?.value || 0;
+                    const resistValue = getItemStat(heroCard, `${skill.elementType}Resist`)?.value || 0;
+
+                    const selectedCardLostValue = power.value - mDefValue - resistValue;
+                    power.value = selectedCardLostValue > 0 ? selectedCardLostValue : 0;
+
+                    addEffect(skill, battleCard, power);
                 });
             });
     })
