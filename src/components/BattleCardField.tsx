@@ -40,8 +40,10 @@ const BattleCardField = memo(({onCardClick, battleCard}: any) => {
                         && (<LevelIndicator battleCard={battleCard} size={battleFieldLength}/>
                     )}
                     <div className="skill-usage-image"><img/></div>
-                    <div className="health-value-effect buff-effect"></div>
-                    <div className="health-value-effect attack-effect debuff-effect"></div>
+                    <div className="health-value-effect positive-value"></div>
+                    <div className="health-value-effect negative-value"></div>
+                    <div className="health-value-effect coin-value"></div>
+                    <div className="health-value-effect sphere-value"></div>
                 </BattleCard>
             </BattleCardFieldContainer>
         </BattleCardFieldWrapperForAnimation>
@@ -310,13 +312,23 @@ const BattleCard = styled.div`
         animation: move-up 1.5s;
 
         &.active { display: block }
-        &.buff-effect { 
+        &.positive-value { 
             color: green; 
             margin: 0 0 -50px 50px;
             animation: move-up 2s;
+
+            &::before { content: "+"; margin-right: 2px; }
         }
-        &.debuff-effect, 
-        &.attack-effect { color: red }
+        &.negative-value { 
+            color: red;
+
+            &::before { content: "-"; margin-right: 2px; }
+        }
+        &.sphere-value { 
+            color: dodgerblue;
+
+            &::before { content: "+"; margin-right: 2px; }
+        }
     }
 
     @keyframes slide-out {

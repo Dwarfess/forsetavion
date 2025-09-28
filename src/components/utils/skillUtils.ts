@@ -148,7 +148,7 @@ const skillsHandler = async (
 
     const callSkillHandlerResulHelp = async () => {
         valueFromActiveSkillHandler.heroCardGetValue
-        && await addClassWhenChangeHealth(heroCard, valueFromActiveSkillHandler.heroCardGetValue, 'buff');
+        && await addClassWhenChangeHealth(heroCard, valueFromActiveSkillHandler.heroCardGetValue, 'help');
     }
 
     const callSkillHandlerResulBuffDebuff = async () => {
@@ -439,10 +439,13 @@ const checkEveryBattleCardEffects = async (battleCards: BattleCardType[], battle
     }
 
     let allBuffEffectsValue = 0;
+    let sphereEffectsValue = 0;
     let allDebuffEffectsValue = 0;
 
     for (const effect of battleCard.effects) {
-        if (effect.type === 'buff') {
+        if (effect.name === 'enrichment') {
+            sphereEffectsValue += effectsMap[effect.type](effect, battleCard);
+        } else if (effect.type === 'buff') {
             allBuffEffectsValue += effectsMap[effect.type](effect, battleCard);
         } else {
             allDebuffEffectsValue += effectsMap[effect.type](effect, battleCard);
@@ -450,6 +453,7 @@ const checkEveryBattleCardEffects = async (battleCards: BattleCardType[], battle
     }
 
     await Promise.all([
+        sphereEffectsValue && addClassWhenChangeHealth(battleCard, sphereEffectsValue, 'sphere'),
         allBuffEffectsValue && addClassWhenChangeHealth(battleCard, allBuffEffectsValue, 'buff'),
         allDebuffEffectsValue && addClassWhenChangeHealth(battleCard, allDebuffEffectsValue, 'debuff'),
     ]);
@@ -460,18 +464,43 @@ const checkEveryBattleCardEffects = async (battleCards: BattleCardType[], battle
 
 const debuffSkillHandler = (effect: Effect, selectedCard: BattleCardType) => {
     const duration = getItemStat(effect, 'duration');
-    const power = getItemStat(effect, 'power');
+    let powerValue = getItemStat(effect, 'power').value;
 
-    // TODO: hero health to value
-    if (selectedCard.type === 'hero') {
-        selectedCard.health -= power.value;
-    } else {
-        selectedCard.value -= power.value;
+    const commonDebuffHandler = () => {
+        // TODO: hero health to value
+        if (selectedCard.type === 'hero') {
+            selectedCard.health -= powerValue;
+        } else {
+            selectedCard.value -= powerValue;
+        }
     }
+
+    const antiGraceHandler = () => {
+        const healBoost = getItemStat(selectedCard, 'healBoost');
+        healBoost.debuffEffectValue = 0;
+
+        if (duration.value > 1) {
+            healBoost.debuffEffectValue = powerValue;
+        }
+
+        powerValue = 0;
+    }
+
+    const debuffSkillHandlerMap: any = {
+        poison: commonDebuffHandler,
+        fire_flame: commonDebuffHandler,
+        frostbite: commonDebuffHandler,
+        burning: commonDebuffHandler,
+        freezing: commonDebuffHandler,
+        poisoned_claws: commonDebuffHandler,
+        anti_grace: antiGraceHandler,
+    }
+
+    debuffSkillHandlerMap[effect.name]?.();
 
     duration.value--;
 
-    return power.value;
+    return powerValue;
 }
 
 const buffSkillHandler = (effect: Effect, selectedCard: BattleCardType) => {
@@ -546,7 +575,7 @@ const buffSkillHandler = (effect: Effect, selectedCard: BattleCardType) => {
     const enrichmentHandler = () => {
         selectedCard.spheres += powerValue;
 
-        powerValue = 0;
+        // powerValue = 0;
     }
 
     const buffSkillHandlerMap: any = {

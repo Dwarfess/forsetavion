@@ -711,7 +711,7 @@ export const skills: Skill[] = [
         level: 0,
         temporaryPoints: 0,
         coolDown: 0,
-        nearbyCardsOnly: true,
+        nearbyCardsOnly: false,
         active: false,
         stats: [
             {
@@ -1091,7 +1091,7 @@ export const skills: Skill[] = [
     },
     {
         name: 'burning',
-        label: 'Sword range hit',
+        label: 'Burning',
         description: '',
         image: 'skill-burning',
         type: 'debuff',
@@ -1130,7 +1130,7 @@ export const skills: Skill[] = [
     },
     {
         name: 'freezing',
-        label: 'Sword range hit',
+        label: 'Freezing',
         description: '',
         image: 'skill-freezing',
         type: 'debuff',
@@ -1168,8 +1168,8 @@ export const skills: Skill[] = [
         ]
     },
     {
-        name: 'poisoned-claws',
-        label: 'Sword range hit',
+        name: 'poisoned_claws',
+        label: 'Poisoned claws',
         description: '',
         image: 'skill-poisoned-claws',
         type: 'debuff',
@@ -1215,6 +1215,7 @@ export const stats: Stat[] = [
         value: 0,
         defaultValue: 30,
         passiveSkillEffectValue: 0,
+        buffEffectValue: 0,
         debuffEffectValue: 0,
     },
     {
@@ -1223,6 +1224,7 @@ export const stats: Stat[] = [
         value: 0,
         defaultValue: 0,
         passiveSkillEffectValue: 0,
+        buffEffectValue: 0,
         debuffEffectValue: 0,
     },
     {
@@ -1231,6 +1233,7 @@ export const stats: Stat[] = [
         value: 0,
         defaultValue: 0,
         passiveSkillEffectValue: 0,
+        buffEffectValue: 0,
         debuffEffectValue: 0,
     },
     {
@@ -1239,6 +1242,7 @@ export const stats: Stat[] = [
         value: 0,
         defaultValue: 0,
         passiveSkillEffectValue: 0,
+        buffEffectValue: 0,
         debuffEffectValue: 0,
     },
     {
@@ -1247,6 +1251,7 @@ export const stats: Stat[] = [
         value: 0,
         defaultValue: 0,
         passiveSkillEffectValue: 0,
+        buffEffectValue: 0,
         debuffEffectValue: 0,
     },
     {
@@ -1255,6 +1260,7 @@ export const stats: Stat[] = [
         value: 0,
         defaultValue: 0,
         passiveSkillEffectValue: 0,
+        buffEffectValue: 0,
         debuffEffectValue: 0,
     },
     {
@@ -1263,6 +1269,7 @@ export const stats: Stat[] = [
         value: 0,
         defaultValue: 0,
         passiveSkillEffectValue: 0,
+        buffEffectValue: 0,
         debuffEffectValue: 0,
     },
     {
@@ -1271,6 +1278,7 @@ export const stats: Stat[] = [
         value: 0,
         defaultValue: 0,
         passiveSkillEffectValue: 0,
+        buffEffectValue: 0,
         debuffEffectValue: 0,
     },
     {
@@ -1279,6 +1287,7 @@ export const stats: Stat[] = [
         value: 0,
         defaultValue: 0,
         passiveSkillEffectValue: 0,
+        buffEffectValue: 0,
         debuffEffectValue: 0,
     },
     {
@@ -1287,6 +1296,7 @@ export const stats: Stat[] = [
         value: 0,
         defaultValue: 1,
         passiveSkillEffectValue: 0,
+        buffEffectValue: 0,
         debuffEffectValue: 0,
     },
     {
@@ -1295,6 +1305,7 @@ export const stats: Stat[] = [
         value: 0,
         defaultValue: 1,
         passiveSkillEffectValue: 0,
+        buffEffectValue: 0,
         debuffEffectValue: 0,
     },
     {
@@ -1303,6 +1314,7 @@ export const stats: Stat[] = [
         value: 0,
         defaultValue: 1,
         passiveSkillEffectValue: 0,
+        buffEffectValue: 0,
         debuffEffectValue: 0,
     },
 ];
@@ -1533,7 +1545,7 @@ export const bossCards: any = [
         name: 'Poisonfang overlord',
         image: 'boss-3',
         type: 'boss',
-        skills: [generateSkill(skills, 'poisoned-claws')],
+        skills: [generateSkill(skills, 'poisoned_claws')],
         effects: []
     },
 ];

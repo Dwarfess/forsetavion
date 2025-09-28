@@ -6,8 +6,8 @@ export const apiSlice = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({
         // baseUrl: 'http://localhost:8888/',
-        // baseUrl: 'https://forsetavion-server-3.onrender.com/',
-        baseUrl: 'https://forsetavion-server-919845618131.europe-west1.run.app/',
+        baseUrl: 'https://forsetavion-server-3.onrender.com/',
+        // baseUrl: 'https://forsetavion-server-919845618131.europe-west1.run.app/',
         prepareHeaders: (headers) => {
             headers.set('X-App-Token', 'sertavion_unique_token');
             return headers;
