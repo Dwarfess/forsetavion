@@ -27,7 +27,7 @@ export const recalculateHeroStatsAfterContact = (
         enemy: recalculateHeroHealthAfterEnemy,
         boss: recalculateHeroHealthAfterBoss,
         potion: recalculateHeroHealthAfterPotion,
-        superPotion: recalculateHeroHealthAfterPotion,
+        superPotion: recalculateHeroHealthAfterSuperPotion,
         coin: recalculateHeroCoins,
         superCoin: recalculateHeroCoins,
         sphere: recalculateHeroSpheres,
@@ -97,14 +97,28 @@ const recalculateHeroHealthByPercent = (heroCard: IHeroBattleCard, selectedCard:
 };
 
 export const recalculateHeroHealthAfterPotion = (heroCard: IHeroBattleCard, selectedCard: BattleCardType | IPotion) => {
-    const heroHealth = heroCard.health + selectedCard.value;
+    recalculateHeroHealthAfterHeal(heroCard, selectedCard.value, 'healBoost');
+};
+
+export const recalculateHeroHealthAfterSuperPotion = (heroCard: IHeroBattleCard, selectedCard: BattleCardType | IPotion) => {
+    recalculateHeroHealthAfterHeal(heroCard, selectedCard.value, 'healBoost');
+};
+
+export const recalculateHeroHealthAfterHeal = (heroCard: IHeroBattleCard, powerValue: number, boostName: string) => {
     const heroStatMaxHealth = getItemStat(heroCard, 'maxHealth');
+    const boostValue = getItemStat(heroCard, boostName).value;
+    const resultValue = Math.round(powerValue * boostValue);
+    const heroHealth = heroCard.health + resultValue;
 
     heroCard.health = heroStatMaxHealth.value < heroHealth ? heroStatMaxHealth.value : heroHealth;
+
+    return resultValue;
 };
 
 const recalculateHeroCoins = (heroCard: IHeroBattleCard, selectedCard: BattleCardType) => {
-    heroCard.coins += selectedCard.value;
+    const boostValue = getItemStat(heroCard, 'coinBoost').value;
+    const resultValue = Math.round(selectedCard.value * boostValue);
+    heroCard.coins += resultValue;
 };
 
 const recalculateHeroSpheres = (heroCard: IHeroBattleCard, selectedCard: BattleCardType) => {
@@ -123,7 +137,6 @@ const recalculateHeroStatAfterAddArtifact = (
     const selectedCardStat = getItemStat(selectedCard, name);
     if (selectedCardStat.value) {
         const heroStat = getItemStat(heroCard, name);
-        // heroStat.value += selectedCardStat.value;
         heroStat.artifactValue += selectedCardStat.value;
 
         if (name === 'maxHealth') heroCard.health += selectedCardStat.value;
@@ -176,7 +189,7 @@ const recalculateHeroBossPart = (_: any, __: any, battleCards: BattleCardType[])
 };
 
 export const getRecalculatedExpReward = (expReward: number, heroExpBoostValue: number) => {
-    return expReward * heroExpBoostValue;
+    return Math.round(expReward * heroExpBoostValue);
 };
 
 export const getRecalculatedExpRewardString = (selectedCard: SimpleBattleCardType) => {

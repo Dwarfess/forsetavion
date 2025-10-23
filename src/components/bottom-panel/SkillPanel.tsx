@@ -30,7 +30,7 @@ const SkillPanel = () => {
     }, [battleCards]);
 
     const onItemClick = (selectedSkill: Skill) => {
-        if (isProcessingAction || isAnotherPlayerActive) return;
+        if (isProcessingAction || isAnotherPlayerActive || selectedSkill.useType === 'passive') return;
         updateBattleCardsWithSelectedSkill(selectedSkill);
     }
 
@@ -52,6 +52,7 @@ const SkillPanel = () => {
                 >
                     <div className="skill-item">
                         <BattleCardImage battleCard={skill} radius={50}/>
+                        {skill.useType === 'passive' && <div className="passive"></div>}
                         <img src="img/lock.png" className='img-lock'/>
                     </div>
                     {skill.coolDown ? <span className="count-value">{skill.coolDown}</span> : <></>}
@@ -96,13 +97,42 @@ const SkillPanelWrapper = styled.div`
             
             .skill-item img {opacity: 0.4}
         }
-        
+
+        .passive {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 2;
+
+            background: linear-gradient(
+                    180deg,
+                    transparent 0%,
+                    rgba(255, 255, 255, 0.3) 50%,
+                    transparent 100%
+            );
+            background-size: 100% 200%;
+            animation: shimmer-vertical 3s linear infinite;
+        }
+
+        @keyframes shimmer-vertical {
+            0% { background-position: 0 -200%; }
+            100% { background-position: 0 200%; }
+        }
+
         &.block {
             .img-lock {
                 display: block !important;
             }
-        } 
-
+            
+            .passive {
+                display: none;
+            }
+        }
+        
         &.active {
             animation: pulseSkill 2s ease infinite;
 

@@ -1,5 +1,5 @@
 import { BattleCardType, Effect, IHeroBattleCard, Skill, Stat } from '../types';
-import {getItemStat, recalculateHeroExp} from "./recalculateHeroStats";
+import { getItemStat, recalculateHeroExp, recalculateHeroHealthAfterHeal } from './recalculateHeroStats';
 import {
     addClassErrorWhenContactCard,
     addClassWhenChangeHealth,
@@ -240,9 +240,7 @@ const callAttackSkillHandler = (
     const drainHandler = () => {
         heroCardGetValue = selectedCardLostValue;
 
-        const heroStatMaxHealth = getItemStat(selectedCard, 'maxHealth');
-        const heroHealth = heroCard.health + heroCardGetValue;
-        heroCard.health = heroStatMaxHealth.value < heroHealth ? heroStatMaxHealth.value : heroHealth;
+        recalculateHeroHealthAfterHeal(heroCard, heroCardGetValue, 'lifeDrainBoost');
     }
 
     const attackSkillHandlerMap: any = {
@@ -272,9 +270,7 @@ const callHelpSkillHandler = (
     let powerValue = getItemStat(activeSkill, 'power').value + mAtkValue;
 
     const healHandler = (heroCard: BattleCardType = selectedCard) => {
-        const heroStatMaxHealth = getItemStat(heroCard, 'maxHealth');
-        const heroHealth = heroCard.health + powerValue;
-        heroCard.health = heroStatMaxHealth.value < heroHealth ? heroStatMaxHealth.value : heroHealth;
+        powerValue = recalculateHeroHealthAfterHeal(heroCard, powerValue, 'healBoost');
     }
 
     const massHealHandler = () => {
@@ -509,6 +505,9 @@ const buffSkillHandler = (effect: Effect, selectedCard: BattleCardType) => {
 
     const regenerationHandler = () => {
         const heroStatMaxHealth = getItemStat(selectedCard, 'maxHealth');
+        const healBoost = getItemStat(selectedCard, 'healBoost');
+        powerValue = Math.round(powerValue * healBoost.value);
+        // const heroHealth = selectedCard.health + Math.round(powerValue * healBoost.value);
         const heroHealth = selectedCard.health + powerValue;
         selectedCard.health = heroStatMaxHealth.value < heroHealth ? heroStatMaxHealth.value : heroHealth;
     }

@@ -14,7 +14,8 @@ import {
     checkAndUseActiveSkill,
     checkBattleCardsEffects,
     checkBossSkillsReadyToUse,
-    getActiveSkill, recalculatePassiveSkills,
+    getActiveSkill,
+    recalculatePassiveSkills,
     updateSkillsCoolDown
 } from './skillUtils';
 

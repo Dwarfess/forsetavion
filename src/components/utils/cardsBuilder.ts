@@ -33,7 +33,7 @@ const heroConstructor = (heroItem: IHeroCollectionItem): IHeroBattleCard => {
         generateStat(stats, 'fireResist', heroItem.fireResist),
         generateStat(stats, 'iceResist', heroItem.iceResist),
         generateStat(stats, 'poisonResist', heroItem.poisonResist),
-        generateStat(stats, 'lifeDrain', heroItem.lifeDrain),
+        generateStat(stats, 'lifeDrainBoost', heroItem.lifeDrainBoost),
         generateStat(stats, 'healBoost', heroItem.healBoost),
         generateStat(stats, 'expBoost', heroItem.expBoost),
         generateStat(stats, 'coinBoost', heroItem.coinBoost)

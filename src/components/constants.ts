@@ -188,7 +188,8 @@ export const skills: Skill[] = [
             {
                 name: 'power',
                 title: 'Power',
-                defaultValue: 1.5,
+                updateStep: 0.5,
+                defaultValue: 0,
                 value: 0,
             },
         ]
@@ -539,7 +540,8 @@ export const skills: Skill[] = [
             {
                 name: 'power',
                 title: 'Power',
-                defaultValue: 1.5,
+                updateStep: 0.5,
+                defaultValue: 0,
                 value: 0,
             },
         ]
@@ -1217,6 +1219,7 @@ export const stats: Stat[] = [
         passiveSkillEffectValue: 0,
         buffEffectValue: 0,
         debuffEffectValue: 0,
+        artifactValue: 0,
     },
     {
         name: 'pDef',
@@ -1226,6 +1229,7 @@ export const stats: Stat[] = [
         passiveSkillEffectValue: 0,
         buffEffectValue: 0,
         debuffEffectValue: 0,
+        artifactValue: 0,
     },
     {
         name: 'pAtk',
@@ -1235,6 +1239,7 @@ export const stats: Stat[] = [
         passiveSkillEffectValue: 0,
         buffEffectValue: 0,
         debuffEffectValue: 0,
+        artifactValue: 0,
     },
     {
         name: 'mDef',
@@ -1244,6 +1249,7 @@ export const stats: Stat[] = [
         passiveSkillEffectValue: 0,
         buffEffectValue: 0,
         debuffEffectValue: 0,
+        artifactValue: 0,
     },
     {
         name: 'mAtk',
@@ -1253,6 +1259,7 @@ export const stats: Stat[] = [
         passiveSkillEffectValue: 0,
         buffEffectValue: 0,
         debuffEffectValue: 0,
+        artifactValue: 0,
     },
     {
         name: 'fireResist',
@@ -1262,6 +1269,7 @@ export const stats: Stat[] = [
         passiveSkillEffectValue: 0,
         buffEffectValue: 0,
         debuffEffectValue: 0,
+        artifactValue: 0,
     },
     {
         name: 'iceResist',
@@ -1271,6 +1279,7 @@ export const stats: Stat[] = [
         passiveSkillEffectValue: 0,
         buffEffectValue: 0,
         debuffEffectValue: 0,
+        artifactValue: 0,
     },
     {
         name: 'poisonResist',
@@ -1280,15 +1289,17 @@ export const stats: Stat[] = [
         passiveSkillEffectValue: 0,
         buffEffectValue: 0,
         debuffEffectValue: 0,
+        artifactValue: 0,
     },
     {
-        name: 'lifeDrain',
+        name: 'lifeDrainBoost',
         title: 'Life Drain',
         value: 0,
         defaultValue: 0,
         passiveSkillEffectValue: 0,
         buffEffectValue: 0,
         debuffEffectValue: 0,
+        artifactValue: 0,
     },
     {
         name: 'healBoost',
@@ -1298,6 +1309,7 @@ export const stats: Stat[] = [
         passiveSkillEffectValue: 0,
         buffEffectValue: 0,
         debuffEffectValue: 0,
+        artifactValue: 0,
     },
     {
         name: 'expBoost',
@@ -1307,6 +1319,7 @@ export const stats: Stat[] = [
         passiveSkillEffectValue: 0,
         buffEffectValue: 0,
         debuffEffectValue: 0,
+        artifactValue: 0,
     },
     {
         name: 'coinBoost',
@@ -1316,6 +1329,7 @@ export const stats: Stat[] = [
         passiveSkillEffectValue: 0,
         buffEffectValue: 0,
         debuffEffectValue: 0,
+        artifactValue: 0,
     },
 ];
 
@@ -1331,7 +1345,7 @@ export const heroCollection: IHeroCollectionItem[] = [
         fireResist: 0,
         iceResist: 0,
         poisonResist: 0,
-        lifeDrain: 0,
+        lifeDrainBoost: 1,
         healBoost: 1,
         expBoost: 1,
         coinBoost: 1,
@@ -1344,11 +1358,11 @@ export const heroCollection: IHeroCollectionItem[] = [
         pDef: 0,
         pAtk: 0,
         mDef: 0,
-        mAtk: 3,
+        mAtk: 0,
         fireResist: 0,
         iceResist: 0,
         poisonResist: 0,
-        lifeDrain: 0,
+        lifeDrainBoost: 1,
         healBoost: 1,
         expBoost: 1,
         coinBoost: 1,
@@ -1365,7 +1379,7 @@ export const heroCollection: IHeroCollectionItem[] = [
         fireResist: 0,
         iceResist: 0,
         poisonResist: 0,
-        lifeDrain: 0,
+        lifeDrainBoost: 1,
         healBoost: 1,
         expBoost: 1,
         coinBoost: 1,
@@ -1382,7 +1396,7 @@ export const heroCollection: IHeroCollectionItem[] = [
         fireResist: 0,
         iceResist: 0,
         poisonResist: 0,
-        lifeDrain: 0,
+        lifeDrainBoost: 1,
         healBoost: 1,
         expBoost: 1,
         coinBoost: 1,
@@ -1399,7 +1413,7 @@ export const heroCollection: IHeroCollectionItem[] = [
         fireResist: 0,
         iceResist: 0,
         poisonResist: 0,
-        lifeDrain: 0,
+        lifeDrainBoost: 1,
         healBoost: 1,
         expBoost: 1,
         coinBoost: 1,
@@ -1416,7 +1430,7 @@ export const heroCollection: IHeroCollectionItem[] = [
         fireResist: 0,
         iceResist: 0,
         poisonResist: 0,
-        lifeDrain: 0,
+        lifeDrainBoost: 1,
         healBoost: 1,
         expBoost: 1,
         coinBoost: 1,
@@ -1433,7 +1447,7 @@ export const heroCollection: IHeroCollectionItem[] = [
         fireResist: 0,
         iceResist: 0,
         poisonResist: 0,
-        lifeDrain: 0,
+        lifeDrainBoost: 1,
         healBoost: 1,
         expBoost: 1,
         coinBoost: 1,
@@ -1450,7 +1464,7 @@ export const heroCollection: IHeroCollectionItem[] = [
         fireResist: 0,
         iceResist: 0,
         poisonResist: 0,
-        lifeDrain: 0,
+        lifeDrainBoost: 1,
         healBoost: 1,
         expBoost: 1,
         coinBoost: 1,
@@ -1703,8 +1717,8 @@ export const artifactCards: any[] = [
         count: 1,
         stats: [
             {
-                name: 'def',
-                title: 'Def',
+                name: 'pDef',
+                title: 'P. Def',
                 value: 2,
             },
         ]

@@ -326,7 +326,7 @@ const BattleCard = styled.div`
         }
         &.sphere-value { 
             color: dodgerblue;
-
+            margin: 0 0 -50px 100px;
             &::before { content: "+"; margin-right: 2px; }
         }
     }

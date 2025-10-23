@@ -4,7 +4,7 @@ import {
     addClassWhenChangeHealth,
     getHeroCard,
     playSoundEffect,
-    recalculateHeroHealthAfterPotion,
+    recalculateHeroHealthAfterHeal,
     SoundEffects
 } from '../utils';
 
@@ -19,7 +19,7 @@ export const applySelectedPotion = async (selectedPotion: IPotion) => {
         .filter((potion: IPotion) => potion.index !== selectedPotion.index);
     // heroCard.selectedPotions[selectedPotion.index || 0] = null;
 
-    recalculateHeroHealthAfterPotion(heroCard, selectedPotion);
+    recalculateHeroHealthAfterHeal(heroCard, selectedPotion.value, 'healBoost');
     setStateValue('battleCards', battleCards);
 }
 

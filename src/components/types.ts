@@ -39,6 +39,7 @@ export interface Stat {
     name: string;
     title: string;
     value: number;
+    updateStep?: number
     defaultValue?: number;
     passiveSkillEffectValue?: number;
     buffEffectValue?: number;
@@ -84,7 +85,7 @@ export interface IHeroCollectionItem {
     fireResist?: number;
     iceResist?: number;
     poisonResist?: number;
-    lifeDrain?: number;
+    lifeDrainBoost?: number;
     healBoost?: number;
     expBoost?: number;
     coinBoost?: number;
