@@ -1,8 +1,7 @@
-import { getStateValue, setStateValue } from '../../store/storeUtils';
 import { BattleCardType } from '../types';
+import { recalculatePassiveSkills } from './skillUtils';
 
 export const recalculateHeroStats = (battleCards: BattleCardType[]) => {
-    // const battleCards = getStateValue('battleCards');
     battleCards.forEach((battleCard: BattleCardType) => {
         if (battleCard.type !== 'hero') return;
 
@@ -18,6 +17,9 @@ export const recalculateHeroStats = (battleCards: BattleCardType[]) => {
                 stat.value = defaultValue + artifactValue + passiveSkillEffectValue + buffEffectValue - debuffEffectValue;
             })
     });
+}
 
-    // setStateValue('battleCards', battleCards);
+export const recalculateHeroStatsWithPassiveSkills = (battleCards: BattleCardType[]) => {
+    recalculatePassiveSkills(battleCards);
+    recalculateHeroStats(battleCards);
 }

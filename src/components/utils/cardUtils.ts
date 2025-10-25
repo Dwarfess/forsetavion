@@ -15,17 +15,14 @@ import {
     checkBattleCardsEffects,
     checkBossSkillsReadyToUse,
     getActiveSkill,
-    recalculatePassiveSkills,
     updateSkillsCoolDown
 } from './skillUtils';
 
-import {getHeroCard} from "./utils";
+import { getHeroCard } from './utils';
 
-import {getStateValue, setStateValue} from "../../store/storeUtils";
-import {
-    updateCurrentBattleAndResetActivePlayer
-} from '../home-map/multi-battle-page/multiBattleUtils';
-import { recalculateHeroStats } from './statUtils';
+import { getStateValue, setStateValue } from '../../store/storeUtils';
+import { updateCurrentBattleAndResetActivePlayer } from '../home-map/multi-battle-page/multiBattleUtils';
+import { recalculateHeroStatsWithPassiveSkills } from './statUtils';
 
 export const cardHandler = async (selectedCardIndex: number) => {
     setStateValue('isProcessingAction', true);
@@ -71,13 +68,6 @@ export const cardHandler = async (selectedCardIndex: number) => {
     }
 };
 
-// export const executeActionFromAnotherPlayer = (data: any) => {
-//     // const character = getStateValue('character');
-//     // if (character.nickname === data.nickname) return;
-//
-//     resetBattleCards(data.selectedCardIndex);
-// };
-
 // TODO: should to refactor this large method
 export const resetBattleCards = async (selectedCardIndex: number) => {
     let battleCards = getStateValue('battleCards');
@@ -99,11 +89,6 @@ export const resetBattleCards = async (selectedCardIndex: number) => {
         await addClassWhenContactCard(selectedCard);
         setStateValue('isProcessingAction',false);
         setStateValue('battleCards', battleCards);
-
-        // if (heroCard.health <= 0) {
-        //     setStateValue('isProcessingAction', false);
-        //     setStateValue('isOpenBattleOverModal', true);
-        // }
 
         updateCurrentBattleAndResetActivePlayer({
             action: 'move',
@@ -168,8 +153,7 @@ export const executeMethodsAfterMoving = async () => {
     // TODO: add animation for boss effects
     checkBossSkillsReadyToUse(battleCards);
     await checkBattleCardsEffects(battleCards);
-    recalculatePassiveSkills(battleCards);
-    recalculateHeroStats(battleCards);
+    recalculateHeroStatsWithPassiveSkills(battleCards);
     updateSkillsCoolDown(battleCards);
     setStateValue('battleCards', battleCards);
 
@@ -193,4 +177,3 @@ const getHeroWithoutHealth = (battleCards: BattleCardType[]) => {
 
     return !!isHeroWithoutHealth;
 }
-

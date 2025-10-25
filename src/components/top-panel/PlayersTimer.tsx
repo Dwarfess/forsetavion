@@ -18,6 +18,7 @@ const PlayersTimer: React.FC<IPlayersTimer> = ({players}) => {
         if (players.length < 2) return;
 
         const timerId = setInterval(() => {
+            // TODO: change logic to check that current hero health is 0
             if (isOpenBattleOverModal) return;
             if (count === 0) {
                 clearInterval(timerId);

@@ -4,6 +4,7 @@ import {getStateValue, setStateValue} from "../../store/storeUtils";
 import {
     updateCurrentBattleAndResetActivePlayer
 } from '../home-map/multi-battle-page/multiBattleUtils';
+import { recalculateHeroStatsWithPassiveSkills } from './statUtils';
 
 export const updateAnswer = (answer: string, symbol: string, isCorrectAnswer: any): string => {
     if (isCorrectAnswer !== null) return answer;
@@ -88,6 +89,8 @@ export const updateBattleCardsAfterSecret = (isCorrectAnswer: boolean) => {
 
         heroCard.health > 1 && heroCard.health--;
         selectedSecretCard.level > 1 && decreaseSelectedSecretCardLevel(battleCards, selectedSecretCard.index);
+
+        recalculateHeroStatsWithPassiveSkills(battleCards);
     }
 
     setStateValue('battleCards', battleCards);

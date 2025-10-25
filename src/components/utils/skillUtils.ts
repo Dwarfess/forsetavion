@@ -12,7 +12,7 @@ import { getHeroCard } from './utils';
 import {
     updateCurrentBattleAndResetActivePlayer
 } from '../home-map/multi-battle-page/multiBattleUtils';
-import { recalculateHeroStats } from './statUtils';
+import { recalculateHeroStats, recalculateHeroStatsWithPassiveSkills } from './statUtils';
 
 export const getCardSkills = (battleCard: BattleCardType): Skill[] => {
     return battleCard?.skills || [];
@@ -168,6 +168,8 @@ const skillsHandler = async (
     }
 
     await skillHandlerResultMap[activeSkill.type]();
+
+    recalculateHeroStatsWithPassiveSkills(battleCards);
 
     const newBattleCard = checkBattleCardAfterSkill(
         battleCards,
@@ -642,7 +644,6 @@ export const checkBossSkillsReadyToUse = (battleCards: BattleCardType[]) => {
 }
 
 export const recalculatePassiveSkills = (battleCards: BattleCardType[]) => {
-    // const battleCards = getStateValue('battleCards');
     battleCards.forEach((battleCard: BattleCardType) => {
         if (battleCard.type !== 'hero') return;
 
@@ -652,8 +653,6 @@ export const recalculatePassiveSkills = (battleCards: BattleCardType[]) => {
                 passiveSkillsHandler(battleCard, skill);
             })
     });
-
-    // setStateValue('battleCards', battleCards);
 }
 
 const passiveSkillsHandler = (heroCard: BattleCardType, skill: Skill) => {
