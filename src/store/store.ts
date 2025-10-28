@@ -17,6 +17,7 @@ import activePageReducer from './activePageSlice';
 import optionsReducer from './optionsSlice';
 import actionDataFromActivePlayerReducer from './actionDataFromActivePlayerSlice';
 import isAnotherPlayerActiveReducer from './isAnotherPlayerActiveSlice';
+import actionCountReducer from './actionCountSlice';
 import { apiSlice } from './apiSlice';
 
 export const store = configureStore({
@@ -38,6 +39,7 @@ export const store = configureStore({
         options: optionsReducer,
         actionDataFromActivePlayer: actionDataFromActivePlayerReducer,
         isAnotherPlayerActive: isAnotherPlayerActiveReducer,
+        actionCount: actionCountReducer,
         [apiSlice.reducerPath]: apiSlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>

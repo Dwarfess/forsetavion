@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { BattleCardField } from "./BattleCardField";
 import { BattleFieldLengthSwitcher } from './index';
-import {TopPanel} from "./top-panel/TopPanel";
+import { TopPanel } from './top-panel/TopPanel';
 import {ModalBattleOver} from "./ModalBattleOver";
 import {ModalSecretCard} from "./ModalSecretCard";
 import {ModalBattleCardInfo} from "./card-info/ModalBattleCardInfo";
@@ -29,6 +29,7 @@ import {
     useIsMoving,
     useCharacter,
     useIsAnotherPlayerActive,
+    useActionCount
 } from '../store/storeHooks';
 import mixins from "../mixins";
 import { recalculateHeroStats } from './utils/statUtils';
@@ -45,23 +46,22 @@ const BattlePage = () => {
     const { isAnotherPlayerActive } = useIsAnotherPlayerActive();
 
     const { isMoving } = useIsMoving();
+    const { actionCount } = useActionCount();
 
     const { battleFieldLength } = useBattleFieldLength();
 
-    useEffect(() => {
-        if (battleCards.length && !isMoving) {
-            executeMethodsAfterMoving();
-        }
-    }, [isMoving]);
-
-    // TODO: bug when reset hero stats and after finish executeMethodsOnly
-    // need to combine this two useEffect and resolve heroCard?.skillPoints above
     // useEffect(() => {
     //     if (battleCards.length && !isMoving) {
-    //         recalculatePassiveSkills();
-    //         recalculateHeroStats();
+    //         executeMethodsAfterMoving(battleCards);
     //     }
-    // }, [isMoving, isOpenLevelUpModal]);
+    // }, [isMoving]);
+
+    useEffect(() => {
+        if (battleCards.length && actionCount) {
+            console.log('action count:', actionCount);
+            executeMethodsAfterMoving(battleCards);
+        }
+    }, [actionCount]);
 
     useEffect(() => {
         if (battleFieldLength && battleCards.length === 0) {
@@ -80,13 +80,6 @@ const BattlePage = () => {
             }
         }
     }, [battleCards, isProcessingAction]);
-
-    // useEffect(() => {
-    //     // TODO: move this logic to executeMethodsAfterMoving
-    //     if (heroCard?.skillPoints) {
-    //         setIsOpenLevelUpModal(true);
-    //     }
-    // }, [heroCard]);
 
     const onCardClick = (selectedCardIndex: number) => {
         if (isProcessingAction || isAnotherPlayerActive) return;
@@ -139,7 +132,6 @@ const BattlePageContainer = styled.div`
     height: calc(100% - 40px);
     padding: 100px 20px 20px 20px;
     background-image: url("img/main-bg.jpg");
-    //background-size: cover;
 `;
 
 const BattleField = styled.div`

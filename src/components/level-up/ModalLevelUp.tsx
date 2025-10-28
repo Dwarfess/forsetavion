@@ -16,11 +16,10 @@ import {
     useIsProcessingAction,
     useIsOpenLevelUpModal,
     useSelectedCardForInfo,
-    useIsMoving
+    useIsMoving,
 } from "../../store/storeHooks";
 import { ModalX } from '../shared';
 import { updateCurrentBattleAndResetActivePlayer } from '../home-map/multi-battle-page/multiBattleUtils';
-import { setStateValue } from '../../store/storeUtils';
 
 const ModalLevelUp = () => {
     const { setIsOpenLevelUpModal } = useIsOpenLevelUpModal();

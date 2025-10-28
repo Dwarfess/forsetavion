@@ -1,5 +1,5 @@
 import { IArtifactCard, BattleCardType, IHeroBattleCard, SimpleBattleCardType, Stat } from "../types";
-import {getStateValue} from "../../store/storeUtils";
+import { getStateValue } from '../../store/storeUtils';
 import {getHeroCard} from "./utils";
 import { playSoundEffect, SoundEffects } from './skillUtils';
 import { IPotion } from '../home-map/character-page/types';
@@ -81,18 +81,19 @@ const recalculateHeroHealthsAfterFight = (
 };
 
 // TODO: change health to value for all of cards
-const recalculateHeroHealthByPercent = (heroCard: IHeroBattleCard, selectedCard: BattleCardType, percent: number) => {
-    const partOfHeroHealth = Math.ceil(heroCard.health / percent);
-    const partOfHeroHealthWithStats = partOfHeroHealth + (getItemStat(heroCard, 'pAtk').value || 0)
-        - getItemStat(selectedCard, 'pDef').value;
-    const selectedCardHealth = selectedCard.health - partOfHeroHealthWithStats;
+const recalculateHeroHealthByPercent = (firsHeroCard: IHeroBattleCard, secondHeroCard: BattleCardType, percent: number) => {
+    const partOfHeroHealth = Math.ceil(firsHeroCard.health / percent);
+    const partOfHeroHealthWithStats = partOfHeroHealth + (getItemStat(firsHeroCard, 'pAtk').value || 0)
+        - getItemStat(secondHeroCard, 'pDef').value;
+    const selectedCardHealth = secondHeroCard.health - partOfHeroHealthWithStats;
 
     if (selectedCardHealth >= 0) {
-        selectedCard.health = selectedCard.health > selectedCardHealth ? selectedCardHealth : selectedCard.health;
-        heroCard.health = heroCard.health - partOfHeroHealth;
+        secondHeroCard.health = secondHeroCard.health > selectedCardHealth ? selectedCardHealth : secondHeroCard.health;
+        firsHeroCard.health = firsHeroCard.health - partOfHeroHealth;
     } else {
-        selectedCard.health = 0;
-        heroCard.health = heroCard.health - (partOfHeroHealth + selectedCard.health - selectedCardHealth);
+        secondHeroCard.health = 0;
+        firsHeroCard.health = firsHeroCard.health - (partOfHeroHealth + secondHeroCard.health - selectedCardHealth);
+        // setStateValue('isOpenBattleOverModal', true);
     }
 };
 

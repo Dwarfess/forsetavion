@@ -16,3 +16,4 @@ export * from './battleCardsSlice';
 export * from './optionsSlice';
 export * from './actionDataFromActivePlayerSlice';
 export * from './isAnotherPlayerActiveSlice';
+export * from './actionCountSlice';

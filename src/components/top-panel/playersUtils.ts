@@ -1,5 +1,5 @@
 import { getStateValue, setStateValue } from '../../store/storeUtils';
-import { addClassWhenChangeHealth, getHeroCard } from '../utils';
+import { addClassWhenChangeHealth, executeMethodsAfterMoving, getHeroCard } from '../utils';
 import { updateCurrentBattleAndResetActivePlayer } from '../home-map/multi-battle-page/multiBattleUtils';
 
 export const changeTurnAfterTimer = async () => {
@@ -26,4 +26,5 @@ export const decreaseHeroHealth = async () => {
 
     setStateValue('actionDataFromActivePlayer', {});
     setStateValue('battleCards', battleCards);
+    setStateValue('actionCount', getStateValue('actionCount')+1);
 }

@@ -24,7 +24,8 @@ export const useMultiBattleApiUtils = () => {
 
     const connectToBattle = (battleId: string) => {
         const token = 'sertavion_unique_token';
-        const newSocket: Socket = io('https://forsetavion-server-3.onrender.com', {
+        // const newSocket: Socket = io('https://forsetavion-server-3.onrender.com', {
+        const newSocket: Socket = io('https://forsetavion-server-919845618131.europe-west1.run.app/', {
             query: { token, battleId },
             transports: ['websocket'],
         });
@@ -111,7 +112,10 @@ export const useMultiBattleApiUtils = () => {
                 setStateValue('battleFieldLength', result.battleFieldLength);
                 setStateValue('multiBattle', {
                     _id: result._id,
-                    players: result.players,
+                    players: [
+                        {...result.players[0], isActive: true},
+                        result.players[1],
+                    ],
                     battleCards: result.battleCards,
                     mode: 'online',
                     isActive: true,

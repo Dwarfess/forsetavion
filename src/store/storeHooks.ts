@@ -18,6 +18,7 @@ import {
     changeOptions,
     changeActionDataFromActivePlayer,
     changeIsAnotherPlayerActive,
+    changeActionCount,
 } from './index';
 import { getHeroCard } from "../components/utils";
 import {ICharacter} from "../components/home-map/character-page/types";
@@ -211,4 +212,15 @@ export const useIsAnotherPlayerActive = () => {
     }
 
     return { isAnotherPlayerActive, setIsAnotherPlayerActive };
+}
+
+export const useActionCount = () => {
+    const dispatch = useDispatch();
+    const actionCount = useSelector((state: RootState) => state.actionCount.value);
+
+    const setActionCount = (val: number) => {
+        dispatch(changeActionCount(val));
+    }
+
+    return { actionCount, setActionCount };
 }

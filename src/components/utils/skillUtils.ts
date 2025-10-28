@@ -55,8 +55,7 @@ export const checkAndUseActiveSkill = async (
     if (!activeSkill) return;
 
     if (!activeSkill.nearbyCardsOnly || activeSkill.nearbyCardsOnly === nearbyCardsOnly) {
-        await skillsHandler(activeSkill, selectedCard, battleCards);
-        return true;
+        return await skillsHandler(activeSkill, selectedCard, battleCards);
     } else {
         await unsuitedCardHandler(selectedCard);
     }
@@ -184,6 +183,8 @@ const skillsHandler = async (
         battleCardFromAnotherPlayer: newBattleCard,
         activeSkill
     });
+
+    return true;
 }
 
 const checkBattleCardAfterSkill = (

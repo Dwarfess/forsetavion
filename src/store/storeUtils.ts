@@ -16,8 +16,9 @@ import {
     changeOptions,
     changeActionDataFromActivePlayer,
     changeIsAnotherPlayerActive,
+    changeActionCount,
 } from './index';
-import {apiSlice} from "./apiSlice";
+import {apiSlice} from './apiSlice';
 
 export const getStateValue = (name: string) => {
     const state = name === 'multiBattleSocket' ? store.getState() : structuredClone({
@@ -45,6 +46,7 @@ export const setStateValue = (name: string, data: any) => {
         options: changeOptions,
         actionDataFromActivePlayer: changeActionDataFromActivePlayer,
         isAnotherPlayerActive: changeIsAnotherPlayerActive,
+        actionCount: changeActionCount,
     };
 
     store.dispatch(reducerMap[name](data));

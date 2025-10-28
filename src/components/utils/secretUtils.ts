@@ -1,10 +1,10 @@
-import {BattleCardType} from "../types";
-import {generatePrizeCards, getHeroCard} from "./utils";
-import {getStateValue, setStateValue} from "../../store/storeUtils";
+import { BattleCardType } from '../types';
+import { generatePrizeCards, getHeroCard } from './utils';
+import { getStateValue, setStateValue } from '../../store/storeUtils';
 import {
     updateCurrentBattleAndResetActivePlayer
 } from '../home-map/multi-battle-page/multiBattleUtils';
-import { recalculateHeroStatsWithPassiveSkills } from './statUtils';
+import { addClassWhenChangeHealth } from './contactItems';
 
 export const updateAnswer = (answer: string, symbol: string, isCorrectAnswer: any): string => {
     if (isCorrectAnswer !== null) return answer;
@@ -72,7 +72,7 @@ const treeNode = (left: number, right: number, operator: string) => `${left} ${o
 
 export const calculateAnswer = (mathProblem: string): number => eval(mathProblem);
 
-export const updateBattleCardsAfterSecret = (isCorrectAnswer: boolean) => {
+export const updateBattleCardsAfterSecret = async (isCorrectAnswer: boolean) => {
     const battleCards = getStateValue('battleCards');
     const selectedSecretCard = getStateValue('selectedSecretCard');
     if (!selectedSecretCard) return '';
@@ -87,13 +87,14 @@ export const updateBattleCardsAfterSecret = (isCorrectAnswer: boolean) => {
     } else {
         const heroCard = getHeroCard(battleCards);
 
-        heroCard.health > 1 && heroCard.health--;
+        heroCard.health > 0 && heroCard.health--;
         selectedSecretCard.level > 1 && decreaseSelectedSecretCardLevel(battleCards, selectedSecretCard.index);
-
-        recalculateHeroStatsWithPassiveSkills(battleCards);
+        await addClassWhenChangeHealth(heroCard, 1, 'debuff');
     }
 
     setStateValue('battleCards', battleCards);
+    setStateValue('actionCount', getStateValue('actionCount')+1);
+
     updateCurrentBattleAndResetActivePlayer({
         action: 'closeSecretCard',
         switchActivePlayer: true,

@@ -18,7 +18,6 @@ const PlayersTimer: React.FC<IPlayersTimer> = ({players}) => {
         if (players.length < 2) return;
 
         const timerId = setInterval(() => {
-            // TODO: change logic to check that current hero health is 0
             if (isOpenBattleOverModal) return;
             if (count === 0) {
                 clearInterval(timerId);
@@ -37,7 +36,7 @@ const PlayersTimer: React.FC<IPlayersTimer> = ({players}) => {
     }, [players]);
 
     return (
-        <TimerContainer>
+        <TimerContainer className={isOpenBattleOverModal ? 'hidden' : ''}>
             {players.length === 2 && count}
         </TimerContainer>
     );
@@ -48,20 +47,10 @@ const TimerContainer = styled.div`
     
     margin-top: -70px;
     font-size: 80px;
-
-    //animation: pulse 1s infinite;
-    //
-    //@keyframes pulse {
-    //    0% {
-    //        transform: scale(1);
-    //    }
-    //    50% {
-    //        transform: scale(1.1);
-    //    }
-    //    100% {
-    //        transform: scale(1);
-    //    }
-    //}
+    
+    &.hidden {
+        display: none;
+    }
 `;
 
 export { PlayersTimer };
