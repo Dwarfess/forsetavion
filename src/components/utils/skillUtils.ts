@@ -3,15 +3,12 @@ import { getItemStat, recalculateHeroExp, recalculateHeroHealthAfterHeal } from 
 import {
     addClassErrorWhenContactCard,
     addClassWhenChangeHealth,
-    addClassWhenContactCard,
     addClassWhenUseSkill
 } from "./contactItems";
 import {defineNewBattleCard} from "./moveItems";
 import {getStateValue, setStateValue} from "../../store/storeUtils";
-import { getHeroCard } from './utils';
-import {
-    updateCurrentBattleAndResetActivePlayer
-} from '../home-map/multi-battle-page/multiBattleUtils';
+import { getHeroCard, playSoundEffect } from './utils';
+import { updateCurrentBattleAndResetActivePlayer } from '../home-map/multi-battle-page/multiBattleUtils';
 import { recalculateHeroStats, recalculateHeroStatsWithPassiveSkills } from './statUtils';
 
 export const getCardSkills = (battleCard: BattleCardType): Skill[] => {
@@ -731,18 +728,4 @@ const passiveSkillsHandler = (heroCard: BattleCardType, skill: Skill) => {
     }
 
     passiveSkillsHandlerMap[skill.name]?.();
-}
-
-// TODO: must be move to independent utils
-export const playSoundEffect = (soundEffect: SoundEffects) => {
-    const options = getStateValue('options')
-    const audio = new Audio(`sounds/${soundEffect}.mp3`);
-    audio.volume = options.sounds / 100;
-    audio.play();
-};
-
-export enum SoundEffects {
-    Punch = 'punch-2',
-    Blob = 'blob',
-    Coins = 'coins'
 }

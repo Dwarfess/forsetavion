@@ -1,7 +1,7 @@
-import {IHeroBattleCard, IHeroCollectionItem, Skill, Stat} from "../types";
+import {IHeroBattleCard, IHeroCollectionItem, Stat} from "../types";
 import {defaultHeroCard, heroCollection, skills, stats} from "../constants";
-import { generateSkill } from "./utils2";
 import { getStateValue } from '../../store/storeUtils';
+import { generateSkill } from './utils';
 
 export const bossCardBuilder = () => {
     return true;
@@ -39,12 +39,6 @@ const heroConstructor = (heroItem: IHeroCollectionItem): IHeroBattleCard => {
         generateStat(stats, 'coinBoost', heroItem.coinBoost)
     ];
 
-    // clonedDefaultHeroCard.skills = [
-    //     generateSkill(skills, 'light-ray'),
-    //     generateSkill(skills, 'poison'),
-    //     generateSkill(skills, 'regeneration'),
-    //     generateSkill(skills, 'ice-balls'),
-    // ];
     heroItem.skills.forEach(skill => clonedDefaultHeroCard.skills.push(generateSkill(skills, skill)));
 
     return clonedDefaultHeroCard;

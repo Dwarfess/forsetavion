@@ -1,7 +1,6 @@
 import { IArtifactCard, BattleCardType, IHeroBattleCard, SimpleBattleCardType, Stat } from "../types";
 import { getStateValue } from '../../store/storeUtils';
-import {getHeroCard} from "./utils";
-import { playSoundEffect, SoundEffects } from './skillUtils';
+import { getHeroCard, playSoundEffect, SoundEffects } from './utils';
 import { IPotion } from '../home-map/character-page/types';
 
 export const recalculateHeroStatsAfterContact = (
@@ -40,7 +39,6 @@ export const recalculateHeroStatsAfterContact = (
     recalculateHeroStatsHandler && recalculateHeroStatsHandler(heroCard, selectedCard, battleCards);
 
     const audioName = soundEffectMap[selectedCard.type];
-    // audioName && new Audio(`sounds/${audioMap[selectedCard.type]}.mp3`).play();
     audioName && playSoundEffect(audioName);
 };
 
@@ -69,13 +67,11 @@ const recalculateHeroHealthAfterBoss = (
 
         battleCard.bossParts = 0;
     });
-    // heroCard.bossParts = 0;
 };
 
 const recalculateHeroHealthsAfterFight = (
     heroCard: IHeroBattleCard,
     selectedCard: BattleCardType,
-    battleCards: BattleCardType[]
 ) => {
     recalculateHeroHealthByPercent(heroCard, selectedCard, 3);
 };
@@ -93,7 +89,6 @@ const recalculateHeroHealthByPercent = (firsHeroCard: IHeroBattleCard, secondHer
     } else {
         secondHeroCard.health = 0;
         firsHeroCard.health = firsHeroCard.health - (partOfHeroHealth + secondHeroCard.health - selectedCardHealth);
-        // setStateValue('isOpenBattleOverModal', true);
     }
 };
 

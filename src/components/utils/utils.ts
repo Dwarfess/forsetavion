@@ -209,3 +209,20 @@ export const getHeroCard = (battleCards: BattleCardType[], definedCharacterNickn
     || getStateValue('character').nickname;
     return battleCards.find((card: BattleCardType) => card.nickname === nickname);
 };
+
+export const generateSkill = (skills: Skill[], name: string): Skill => {
+    return structuredClone(skills).find((skill: Skill) => skill.name === name);
+}
+
+export const playSoundEffect = (soundEffect: SoundEffects) => {
+    const options = getStateValue('options')
+    const audio = new Audio(`sounds/${soundEffect}.mp3`);
+    audio.volume = options.sounds / 100;
+    audio.play();
+};
+
+export enum SoundEffects {
+    Punch = 'punch-2',
+    Blob = 'blob',
+    Coins = 'coins'
+}

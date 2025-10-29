@@ -1,13 +1,11 @@
 import {
-    IArtifactCard,
-    BattleCardType,
     IHeroBattleCard,
     PrimaryBattleCardType,
     Skill,
     Stat,
     IHeroCollectionItem
 } from "./types";
-import {generateSkill} from "./utils/utils2";
+import { generateSkill } from './utils';
 
 export const defaultFontSize = 20;
 export const defaultWidth = 450;
@@ -28,9 +26,6 @@ export const skills: Skill[] = [
         useType: 'passive',
         level: 0,
         temporaryPoints: 0,
-        // coolDown: 0,
-        // nearbyCardsOnly: true,
-        // active: false,
         stats: [
             {
                 name: 'power',
@@ -44,18 +39,6 @@ export const skills: Skill[] = [
                 defaultValue: 8,
                 value: 0,
             },
-            // {
-            //     name: 'period',
-            //     title: 'Period',
-            //     defaultValue: 3,
-            //     value: 0,
-            // },
-            // {
-            //     name: 'maxCoolDown',
-            //     title: 'CoolDown',
-            //     defaultValue: 2,
-            //     value: 0,
-            // },
         ]
     },
     {
@@ -77,18 +60,6 @@ export const skills: Skill[] = [
                 defaultValue: 6,
                 value: 0,
             },
-            // {
-            //     name: 'healthMark',
-            //     title: 'Health mark',
-            //     defaultValue: 20,
-            //     value: 0,
-            // },
-            // {
-            //     name: 'period',
-            //     title: 'Period',
-            //     defaultValue: 3,
-            //     value: 0,
-            // },
             {
                 name: 'maxCoolDown',
                 title: 'CoolDown',
@@ -122,12 +93,6 @@ export const skills: Skill[] = [
                 defaultValue: 4,
                 value: 0,
             },
-            // {
-            //     name: 'period',
-            //     title: 'Period',
-            //     defaultValue: 3,
-            //     value: 0,
-            // },
             {
                 name: 'maxCoolDown',
                 title: 'CoolDown',
@@ -155,18 +120,6 @@ export const skills: Skill[] = [
                 defaultValue: 10,
                 value: 0,
             },
-            // {
-            //     name: 'healthMark',
-            //     title: 'Health mark',
-            //     defaultValue: 20,
-            //     value: 0,
-            // },
-            // {
-            //     name: 'period',
-            //     title: 'Period',
-            //     defaultValue: 3,
-            //     value: 0,
-            // },
             {
                 name: 'maxCoolDown',
                 title: 'CoolDown',
@@ -300,12 +253,6 @@ export const skills: Skill[] = [
                 defaultValue: 6,
                 value: 0,
             },
-            // {
-            //     name: 'period',
-            //     title: 'Period',
-            //     defaultValue: 3,
-            //     value: 0,
-            // },
             {
                 name: 'maxCoolDown',
                 title: 'CoolDown',
@@ -333,18 +280,6 @@ export const skills: Skill[] = [
                 defaultValue: 1,
                 value: 0,
             },
-            // {
-            //     name: 'duration',
-            //     title: 'Duration',
-            //     defaultValue: 6,
-            //     value: 0,
-            // },
-            // {
-            //     name: 'period',
-            //     title: 'Period',
-            //     defaultValue: 3,
-            //     value: 0,
-            // },
             {
                 name: 'maxCoolDown',
                 title: 'CoolDown',
@@ -372,18 +307,6 @@ export const skills: Skill[] = [
                 defaultValue: 10,
                 value: 0,
             },
-            // {
-            //     name: 'duration',
-            //     title: 'Duration',
-            //     defaultValue: 6,
-            //     value: 0,
-            // },
-            // {
-            //     name: 'period',
-            //     title: 'Period',
-            //     defaultValue: 3,
-            //     value: 0,
-            // },
             {
                 name: 'maxCoolDown',
                 title: 'CoolDown',
@@ -429,18 +352,6 @@ export const skills: Skill[] = [
                 defaultValue: 6,
                 value: 0,
             },
-            // {
-            //     name: 'duration',
-            //     title: 'Duration',
-            //     defaultValue: 6,
-            //     value: 0,
-            // },
-            // {
-            //     name: 'period',
-            //     title: 'Period',
-            //     defaultValue: 3,
-            //     value: 0,
-            // },
             {
                 name: 'maxCoolDown',
                 title: 'CoolDown',
@@ -474,12 +385,6 @@ export const skills: Skill[] = [
                 defaultValue: 6,
                 value: 0,
             },
-            // {
-            //     name: 'period',
-            //     title: 'Period',
-            //     defaultValue: 3,
-            //     value: 0,
-            // },
             {
                 name: 'maxCoolDown',
                 title: 'CoolDown',
@@ -513,12 +418,6 @@ export const skills: Skill[] = [
                 defaultValue: 6,
                 value: 0,
             },
-            // {
-            //     name: 'period',
-            //     title: 'Period',
-            //     defaultValue: 3,
-            //     value: 0,
-            // },
             {
                 name: 'maxCoolDown',
                 title: 'CoolDown',
@@ -571,12 +470,6 @@ export const skills: Skill[] = [
                 defaultValue: 6,
                 value: 0,
             },
-            // {
-            //     name: 'period',
-            //     title: 'Period',
-            //     defaultValue: 3,
-            //     value: 0,
-            // },
             {
                 name: 'maxCoolDown',
                 title: 'CoolDown',
@@ -610,12 +503,6 @@ export const skills: Skill[] = [
                 defaultValue: 4,
                 value: 0,
             },
-            // {
-            //     name: 'period',
-            //     title: 'Period',
-            //     defaultValue: 3,
-            //     value: 0,
-            // },
             {
                 name: 'maxCoolDown',
                 title: 'CoolDown',
@@ -728,12 +615,6 @@ export const skills: Skill[] = [
                 defaultValue: 6,
                 value: 0,
             },
-            // {
-            //     name: 'period',
-            //     title: 'Period',
-            //     defaultValue: 3,
-            //     value: 0,
-            // },
             {
                 name: 'maxCoolDown',
                 title: 'CoolDown',
@@ -1011,12 +892,6 @@ export const skills: Skill[] = [
                 defaultValue: 6,
                 value: 0,
             },
-            // {
-            //     name: 'period',
-            //     title: 'Period',
-            //     defaultValue: 3,
-            //     value: 0,
-            // },
             {
                 name: 'maxCoolDown',
                 title: 'CoolDown',
@@ -1050,12 +925,6 @@ export const skills: Skill[] = [
                 defaultValue: 6,
                 value: 0,
             },
-            // {
-            //     name: 'period',
-            //     title: 'Period',
-            //     defaultValue: 3,
-            //     value: 0,
-            // },
             {
                 name: 'maxCoolDown',
                 title: 'CoolDown',
@@ -1116,12 +985,6 @@ export const skills: Skill[] = [
                 defaultValue: 6,
                 value: 0,
             },
-            // {
-            //     name: 'period',
-            //     title: 'Period',
-            //     defaultValue: 3,
-            //     value: 0,
-            // },
             {
                 name: 'maxCoolDown',
                 title: 'CoolDown',
@@ -1155,12 +1018,6 @@ export const skills: Skill[] = [
                 defaultValue: 6,
                 value: 0,
             },
-            // {
-            //     name: 'period',
-            //     title: 'Period',
-            //     defaultValue: 3,
-            //     value: 0,
-            // },
             {
                 name: 'maxCoolDown',
                 title: 'CoolDown',
@@ -1194,12 +1051,6 @@ export const skills: Skill[] = [
                 defaultValue: 6,
                 value: 0,
             },
-            // {
-            //     name: 'period',
-            //     title: 'Period',
-            //     defaultValue: 3,
-            //     value: 0,
-            // },
             {
                 name: 'maxCoolDown',
                 title: 'CoolDown',
@@ -1515,12 +1366,7 @@ export const defaultHeroCard: IHeroBattleCard = {
             value: 1,
         },
     ],
-    skills: [
-        // generateSkill(skills, 'light-ray'),
-        // generateSkill(skills, 'poison'),
-        // generateSkill(skills, 'regeneration'),
-        // generateSkill(skills, 'ice-balls'),
-    ],
+    skills: [],
     effects: [],
     artifacts: [],
     topCardIndex: null,
