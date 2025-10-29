@@ -1,14 +1,14 @@
-import {BattleCardType, IHeroBattleCard, PrimaryBattleCardType, Skill} from "../types";
+import { BattleCardType } from '../types';
 import {
     getBottomCardIndex,
     getLeftCardIndex,
     getRightCardIndex,
     getTopCardIndex,
     moveBattleCards,
-} from "./moveItems";
+} from './moveItems';
 
-import {addClassWhenContactCard} from "./contactItems";
-import {recalculateHeroStatsAfterContact} from "./recalculateHeroStats";
+import { addClassWhenContactCard } from './contactItems';
+import { recalculateHeroStatsAfterContact } from './recalculateHeroStats';
 import {
     changeBattleCardAfterSkill,
     checkAndUseActiveSkill,
@@ -70,7 +70,7 @@ export const cardHandler = async (selectedCardIndex: number) => {
     }
 };
 
-// TODO: should to refactor this large method
+// TODO: (checked) should refactor this large method
 export const resetBattleCards = async (selectedCardIndex: number) => {
     let battleCards = getStateValue('battleCards');
     const heroCard = getHeroCard(battleCards);

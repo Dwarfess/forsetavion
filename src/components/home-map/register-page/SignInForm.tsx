@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import {signInAsGuest, signInUser} from "./registerUtils";
+import {signInAsGuest} from "./registerUtils";
 import {useAuthApiUtils} from "./useAuthApiUtils";
 
 const schema = yup.object({

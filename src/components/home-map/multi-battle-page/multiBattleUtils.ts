@@ -109,8 +109,6 @@ export const executeActionFromAnotherPlayer = (data: any) => {
 
     setStateValue('actionDataFromActivePlayer', data);
 
-    // TODO: simplify all calls without internal methods
-    // example - move: () => executeMove,
     const actionsMap: any = {
         updateBattleByNewPlayer: () => executeUpdateBattleByNewPlayer(data.battle),
         move: () => resetBattleCards(data.selectedCardIndex),

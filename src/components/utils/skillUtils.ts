@@ -118,23 +118,8 @@ const skillsHandler = async (
     await addClassWhenUseSkill(selectedCard, activeSkill);
 
     const heroCard = getHeroCard(battleCards);
-    // if (activeSkill.type === 'attack') {
-    //     // TODO: create separated method with promises
-    //     await Promise.all([
-    //         valueFromActiveSkillHandler.heroCardGetValue
-    //             && addClassWhenChangeHealth(heroCard, valueFromActiveSkillHandler.heroCardGetValue, 'buff'),
-    //         addClassWhenChangeHealth(selectedCard, valueFromActiveSkillHandler.selectedCardLostValue, activeSkill.type)
-    //     ])
-    // } else if (activeSkill.type === 'help') {
-    //     valueFromActiveSkillHandler.heroCardGetValue
-    //     && await addClassWhenChangeHealth(heroCard, valueFromActiveSkillHandler.heroCardGetValue, 'buff');
-    // } else {
-    //     await checkBattleCardsEffects(battleCards);
-    //     recalculateHeroStats(battleCards);
-    // }
 
     const callSkillHandlerResulAttack = async () => {
-        // TODO: create separated method with promises
         await Promise.all([
             valueFromActiveSkillHandler.heroCardGetValue
             && addClassWhenChangeHealth(heroCard, valueFromActiveSkillHandler.heroCardGetValue, 'buff'),
@@ -625,9 +610,8 @@ export const checkBossSkillsReadyToUse = (battleCards: BattleCardType[]) => {
                 battleCards.forEach((battleCard) => {
                     if (battleCard.type !== 'hero') return;
 
+                    // TODO: (checked) add boss stats
                     const power = structuredClone(getItemStat(skill, 'power'));
-                    // TODO: before bosses have no stats it is not necessary
-                    // const mAtkValue = getItemStat(heroCard, 'mAtk').value;
 
                     const mDefValue = getItemStat(heroCard, 'mDef')?.value || 0;
                     const resistValue = getItemStat(heroCard, `${skill.elementType}Resist`)?.value || 0;
