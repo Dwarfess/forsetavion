@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React from "react";
 // @ts-ignore
 import Slider from "react-slick";
 // Import css files
@@ -8,16 +8,12 @@ import "slick-carousel/slick/slick-theme.css";
 import styled from "styled-components";
 import BattleCardImage from "../../BattleCardImage";
 import {TabInfo} from "../../card-info/TabInfo";
-import {generateHeroCards} from "../../utils/cardsBuilder";
+import { generateHeroes } from '../../utils/heroBuilder';
 import {useCharacter} from "../../../store/storeHooks";
 import {IHeroBattleCard} from "../../types";
 import mixins from "../../../mixins";
 
-interface IHeroSelectionPanel {
-    // children: ReactNode
-}
-
-const HeroSelectionPanel: React.FC<IHeroSelectionPanel> = () => {
+const HeroSelectionPanel = () => {
     const { character, setCharacter } = useCharacter();
 
     const NavigateButton = ({className, symbol, onClick}: any) => <button className={`${className} btn`} onClick={onClick}>{symbol}</button>;
@@ -31,7 +27,7 @@ const HeroSelectionPanel: React.FC<IHeroSelectionPanel> = () => {
         nextArrow: <NavigateButton symbol={">"} />,
         prevArrow: <NavigateButton symbol={"<"} />
     };
-    const heroCards = generateHeroCards();
+    const heroCards = generateHeroes();
 
     const clickSelectButton  = (heroCard: IHeroBattleCard) => {
         setCharacter({ ...character, hero: heroCard });
@@ -101,7 +97,7 @@ const HeroSelectionPanelWrapper = styled.div`
 const HeroSelectionPanelContainer = styled.div`
     ${mixins.stretchedBackground};
     
-    background-image: url("img/select-hero-bg2.png");
+    background-image: url("/img/select-hero-bg2.png");
     display: block !important;
     width: 600px !important;
     height: 600px;
@@ -113,9 +109,8 @@ const HeroSelectionPanelContainer = styled.div`
     .header, .content, .actions {
         ${mixins.secondTextColor};
         
-        //background: transparent;
         font-weight: bold;
-        padding: 0px 20px;
+        padding: 0 20px;
     }
 
     .content, .actions {
@@ -157,7 +152,7 @@ const HeroSelectionPanelContainer = styled.div`
                 transform: rotate(-45deg);
                 font-size: 40px;
                 opacity: 0.6;
-                text-shadow: 0px 0px 5px #fff;
+                text-shadow: 0 0 5px #fff;
             }
         }
     }

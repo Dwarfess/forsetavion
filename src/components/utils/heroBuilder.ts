@@ -3,10 +3,6 @@ import {defaultHeroCard, heroCollection, skills, stats} from "../constants";
 import { getStateValue } from '../../store/storeUtils';
 import { generateSkill } from './utils';
 
-export const bossCardBuilder = () => {
-    return true;
-}
-
 const generateStat = (stats: Stat[], name: string, value: number = 0) => {
     return structuredClone(stats).find((stat: Stat) => {
         stat.defaultValue = value;
@@ -15,7 +11,6 @@ const generateStat = (stats: Stat[], name: string, value: number = 0) => {
     });
 }
 
-// TODO: merge the method with getBattleCardsWithHero (utils)
 const heroConstructor = (heroItem: IHeroCollectionItem): IHeroBattleCard => {
     const character = getStateValue('character');
     const clonedDefaultHeroCard = structuredClone(defaultHeroCard);
@@ -44,7 +39,7 @@ const heroConstructor = (heroItem: IHeroCollectionItem): IHeroBattleCard => {
     return clonedDefaultHeroCard;
 }
 
-export const generateHeroCard = (): IHeroBattleCard => heroConstructor(heroCollection[0])
+export const generateHero = (): IHeroBattleCard => heroConstructor(heroCollection[0])
 
-export const generateHeroCards = (): IHeroBattleCard[] =>
+export const generateHeroes = (): IHeroBattleCard[] =>
     heroCollection.map(heroItem => heroConstructor(heroItem));

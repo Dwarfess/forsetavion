@@ -1,13 +1,12 @@
-// import { defaultHeroCard } from "../../constants";
-import { ICharacter } from "./types";
-import {generateHeroCard} from "../../utils/cardsBuilder";
+import { ICharacter } from './types';
+import { generateHero } from '../../utils/heroBuilder';
 
 export const getDefaultCharacter = (): ICharacter => ({
     userId: '0',
     userRole: 'users',
     nickname: 'Sirocco',
     avatar: 'default-avatar',
-    hero: generateHeroCard(),
+    hero: generateHero(),
     coins: 0,
     spheres: 0,
     score: 0,
