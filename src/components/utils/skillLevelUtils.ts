@@ -1,9 +1,7 @@
-import {BattleCardType, Skill} from "../types";
-import {getItemStat} from "./recalculateHeroStats";
-import {getStateValue, setStateValue} from "../../store/storeUtils";
-import {getHeroCard} from "./utils";
-import { recalculatePassiveSkills } from './skillUtils';
-import { recalculateHeroStats } from './statUtils';
+import { Skill } from '../types';
+import { getItemStat } from './recalculateHeroStats';
+import { getStateValue, setStateValue } from '../../store/storeUtils';
+import { getHeroCard } from './utils';
 
 export const availableSkill = (selectedSkill: Skill, skills: Skill[]) => {
     const selectedSkillIndex = skills.findIndex((skill: Skill) => skill.name === selectedSkill.name);
@@ -90,7 +88,7 @@ export const recalculateSkillsStatsAccordingLevel = (skills: Skill[]) => {
 
 const updateSkillPower = (skill: Skill) => {
     const power = getItemStat(skill, 'power');
-    // TODO: needs to resolve valid formula for skill power
+    // TODO: (checked) needs to resolve valid formula for skill power
     const powerStepAccordingLevel = power.updateStep && power.updateStep * skill.level;
     const updatedPower = powerStepAccordingLevel ||
         (skill.type === 'attack' ? (skill.level - 1) : Math.floor(skill.level / 2));

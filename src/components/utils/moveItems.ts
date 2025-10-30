@@ -1,4 +1,4 @@
-import {BattleCardType, Direction, IHeroBattleCard} from "../types";
+import { BattleCardType, Direction } from '../types';
 import {
     generateBattleCards,
     generateBossCards,
@@ -26,7 +26,7 @@ export const addClassForMovingCard = async (battleCard: BattleCardType, classNam
     return true;
 };
 
-// TODO: should combine similar part from this and changeBattleCardAfterSkill method
+// TODO: (checked) should combine similar part from this and changeBattleCardAfterSkill method
 export const moveBattleCards = async(
     selectedCardIndex: number,
     battleCards: BattleCardType[]

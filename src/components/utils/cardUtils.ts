@@ -138,7 +138,7 @@ export const resetBattleCards = async (selectedCardIndex: number) => {
         battleCardFromAnotherPlayer: newBattleCard,
         selectedCardIndex
     });
-    // TODO: add animation for boss effects
+
     setStateValue('battleCards', battleCards);
     setStateValue('isProcessingAction',false);
     setStateValue('actionCount', getStateValue('actionCount')+1);
@@ -154,8 +154,7 @@ export const executeMethodsAfterMoving = async (currentBattleCards: BattleCardTy
     setStateValue('isProcessingAction',true);
 
     const battleCards = structuredClone(currentBattleCards);
-    // TODO: add animation for boss effects
-    checkBossSkillsReadyToUse(battleCards);
+    await checkBossSkillsReadyToUse(battleCards);
     await checkBattleCardsEffects(battleCards);
     recalculateHeroStatsWithPassiveSkills(battleCards);
     updateSkillsCoolDown(battleCards);

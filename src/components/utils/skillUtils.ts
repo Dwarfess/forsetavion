@@ -599,8 +599,9 @@ export const updateSkillsCoolDown = (battleCards: BattleCardType[]) => {
     });
 }
 
-export const checkBossSkillsReadyToUse = (battleCards: BattleCardType[]) => {
+export const checkBossSkillsReadyToUse = async (battleCards: BattleCardType[]) => {
     const heroCard = getHeroCard(battleCards);
+    const promises: Promise<void>[] = [];
 
     battleCards.filter((battleCard: BattleCardType) => battleCard.type === 'boss')
         .forEach((bossCard: BattleCardType) => {
@@ -620,9 +621,16 @@ export const checkBossSkillsReadyToUse = (battleCards: BattleCardType[]) => {
                     power.value = selectedCardLostValue > 0 ? selectedCardLostValue : 0;
 
                     addEffect(skill, battleCard, power);
+                    promises.push(
+                        (async () => {
+                            await addClassWhenUseSkill(battleCard, skill);
+                        })()
+                    );
                 });
             });
-    })
+    });
+
+    await Promise.all(promises);
 }
 
 export const recalculatePassiveSkills = (battleCards: BattleCardType[]) => {
