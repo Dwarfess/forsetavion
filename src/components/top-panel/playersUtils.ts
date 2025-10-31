@@ -20,7 +20,7 @@ export const changeTurnAfterTimer = async () => {
 export const decreaseHeroHealth = async () => {
     const battleCards = getStateValue('battleCards');
     const heroCard = getHeroCard(battleCards);
-    heroCard.health--;
+    heroCard.value--;
 
     await addClassWhenChangeHealth(heroCard, 1, 'debuff');
 

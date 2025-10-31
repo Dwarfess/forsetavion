@@ -45,12 +45,12 @@ export const recalculateHeroStatsAfterContact = (
 const recalculateHeroHealthAfterEnemy = (heroCard: IHeroBattleCard, selectedCard: BattleCardType) => {
     const beastHealth = selectedCard.value
         - getItemStat(heroCard, 'pDef').value - getItemStat(heroCard, 'pAtk').value;
-    const heroHealth = beastHealth > 0 ? heroCard.health - beastHealth : heroCard.health;
+    const heroHealth = beastHealth > 0 ? heroCard.value - beastHealth : heroCard.value;
 
     if (heroHealth <= 0) {
-        heroCard.health = 0;
+        heroCard.value = 0;
     } else {
-        heroCard.health = heroHealth;
+        heroCard.value = heroHealth;
         recalculateHeroExp(heroCard, selectedCard)
     }
 };
@@ -78,17 +78,17 @@ const recalculateHeroHealthsAfterFight = (
 
 // TODO: change health to value for all of cards
 const recalculateHeroHealthByPercent = (firsHeroCard: IHeroBattleCard, secondHeroCard: BattleCardType, percent: number) => {
-    const partOfHeroHealth = Math.ceil(firsHeroCard.health / percent);
+    const partOfHeroHealth = Math.ceil(firsHeroCard.value / percent);
     const partOfHeroHealthWithStats = partOfHeroHealth + (getItemStat(firsHeroCard, 'pAtk').value || 0)
         - getItemStat(secondHeroCard, 'pDef').value;
-    const selectedCardHealth = secondHeroCard.health - partOfHeroHealthWithStats;
+    const selectedCardHealth = secondHeroCard.value - partOfHeroHealthWithStats;
 
     if (selectedCardHealth >= 0) {
-        secondHeroCard.health = secondHeroCard.health > selectedCardHealth ? selectedCardHealth : secondHeroCard.health;
-        firsHeroCard.health = firsHeroCard.health - partOfHeroHealth;
+        secondHeroCard.value = secondHeroCard.value > selectedCardHealth ? selectedCardHealth : secondHeroCard.value;
+        firsHeroCard.value = firsHeroCard.value - partOfHeroHealth;
     } else {
-        secondHeroCard.health = 0;
-        firsHeroCard.health = firsHeroCard.health - (partOfHeroHealth + secondHeroCard.health - selectedCardHealth);
+        secondHeroCard.value = 0;
+        firsHeroCard.value = firsHeroCard.value - (partOfHeroHealth + secondHeroCard.value - selectedCardHealth);
     }
 };
 
@@ -104,9 +104,9 @@ export const recalculateHeroHealthAfterHeal = (heroCard: IHeroBattleCard, powerV
     const heroStatMaxHealth = getItemStat(heroCard, 'maxHealth');
     const boostValue = getItemStat(heroCard, boostName).value;
     const resultValue = Math.round(powerValue * boostValue);
-    const heroHealth = heroCard.health + resultValue;
+    const heroHealth = heroCard.value + resultValue;
 
-    heroCard.health = heroStatMaxHealth.value < heroHealth ? heroStatMaxHealth.value : heroHealth;
+    heroCard.value = heroStatMaxHealth.value < heroHealth ? heroStatMaxHealth.value : heroHealth;
 
     return resultValue;
 };
@@ -135,7 +135,7 @@ const recalculateHeroStatAfterAddArtifact = (
         const heroStat = getItemStat(heroCard, name);
         heroStat.artifactValue += selectedCardStat.value;
 
-        if (name === 'maxHealth') heroCard.health += selectedCardStat.value;
+        if (name === 'maxHealth') heroCard.value += selectedCardStat.value;
     }
 };
 
@@ -156,7 +156,7 @@ const recalculateHeroArtifact = (heroCard: IHeroBattleCard, selectedCard: Battle
 };
 
 export const recalculateHeroExp = (heroCard: IHeroBattleCard, selectedCard: SimpleBattleCardType) => {
-    if (heroCard.health <= 0) return;
+    if (heroCard.value <= 0) return;
 
     const maxLevelExp = getMaxExpForCurrentLever(heroCard);
     const heroExpBoostValue = getItemStat(heroCard, 'expBoost').value;
@@ -170,7 +170,7 @@ export const recalculateHeroExp = (heroCard: IHeroBattleCard, selectedCard: Simp
         const heroStatMaxHealth = getItemStat(heroCard, 'maxHealth');
         heroStatMaxHealth.defaultValue += 3;
         heroStatMaxHealth.value += 3;
-        heroCard.health = heroStatMaxHealth.value;
+        heroCard.value = heroStatMaxHealth.value;
     }
 
     heroCard.exp = heroExp;

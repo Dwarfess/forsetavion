@@ -18,7 +18,7 @@ const heroConstructor = (heroItem: IHeroCollectionItem): IHeroBattleCard => {
     clonedDefaultHeroCard.nickname = character.nickname;
     clonedDefaultHeroCard.name = heroItem.name;
     clonedDefaultHeroCard.image = heroItem.image;
-    clonedDefaultHeroCard.health = heroItem.maxHealth;
+    clonedDefaultHeroCard.value = heroItem.maxHealth;
     clonedDefaultHeroCard.stats = [
         generateStat(stats, 'maxHealth', heroItem.maxHealth),
         generateStat(stats, 'pDef', heroItem.pDef),

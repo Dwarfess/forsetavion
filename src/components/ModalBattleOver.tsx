@@ -21,7 +21,7 @@ const ModalBattleOver = () => {
         resetMultiBattle();
     }
 
-    const heroResultText = heroCard.health > 0 ? 'You win' : 'You lost';
+    const heroResultText = heroCard.value > 0 ? 'You win' : 'You lost';
 
     return (
         <ModalX>

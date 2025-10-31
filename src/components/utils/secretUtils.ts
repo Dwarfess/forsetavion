@@ -87,7 +87,7 @@ export const updateBattleCardsAfterSecret = async (isCorrectAnswer: boolean) => 
     } else {
         const heroCard = getHeroCard(battleCards);
 
-        heroCard.health > 0 && heroCard.health--;
+        heroCard.value > 0 && heroCard.value--;
         selectedSecretCard.level > 1 && decreaseSelectedSecretCardLevel(battleCards, selectedSecretCard.index);
         await addClassWhenChangeHealth(heroCard, 1, 'debuff');
     }

@@ -107,7 +107,7 @@ export const resetBattleCards = async (selectedCardIndex: number) => {
     await addClassWhenContactCard(selectedCard);
     setStateValue('battleCards', battleCards);
 
-    if (heroCard.health <= 0) {
+    if (heroCard.value <= 0) {
         setStateValue('isProcessingAction',false);
         setStateValue('isOpenBattleOverModal', true);
 
@@ -166,7 +166,7 @@ export const executeMethodsAfterMoving = async (currentBattleCards: BattleCardTy
 
 const getHeroWithoutHealth = (battleCards: BattleCardType[]) => {
     const isHeroWithoutHealth = battleCards.find((battleCard) => {
-        return battleCard.type === 'hero' && battleCard.health <= 0;
+        return battleCard.type === 'hero' && battleCard.value <= 0;
     });
 
     return !!isHeroWithoutHealth;

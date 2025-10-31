@@ -10,7 +10,7 @@ const HealthIndicator = ({ battleCard }: { battleCard: BattleCardType | any}) =>
     const { battleFieldLength } = useBattleFieldLength();
 
     return <HealthIndicatorWrapper
-        data-health={battleCard.health}
+        data-health={battleCard.value}
         data-max-health={battleCard.type === "hero" && getItemStat(battleCard, 'maxHealth').value}
         data-length={battleFieldLength}
     >
@@ -18,7 +18,7 @@ const HealthIndicator = ({ battleCard }: { battleCard: BattleCardType | any}) =>
             <>
                 <div className="indicatorBottle"/>
                 <img src="img/indicator-hp60.png" className="health"/>
-                <span className="healthAmount">{battleCard.health}</span>
+                <span className="healthAmount">{battleCard.value}</span>
             </>
         )}
         {battleCard.type === 'potion' && (

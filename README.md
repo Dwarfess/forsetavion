@@ -51,9 +51,9 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 ## TODO List:
 
-- Fix skills
-- Add dependencies for coin sphere heal boost
-- Check and fix skill usage for multi battle
+- Fix skills + 
+- Add dependencies for coin sphere heal boost +
+- Check and fix skill usage for multi battle +
 - Add pvp/pve battle
 - Add artifact shop
 - Add premium account

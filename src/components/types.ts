@@ -94,7 +94,7 @@ export interface IHeroCollectionItem {
 
 export interface IHeroBattleCard extends CommonBattleCardType {
     nickname?: string;
-    health: number;
+    value: number;
     // healthBoost: number;
     topCardIndex: number | null;
     topBottomIndex: number | null;

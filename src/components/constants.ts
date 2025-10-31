@@ -1331,7 +1331,7 @@ export const defaultHeroCard: IHeroBattleCard = {
     type: 'hero',
     isVisible: true,
     active: true,
-    health: 30,
+    value: 30,
     exp: 40,
     level: 1,
     skillPoints: 0,

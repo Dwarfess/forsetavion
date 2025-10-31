@@ -215,11 +215,7 @@ const callAttackSkillHandler = (
 
     const maxCoolDownValue = getItemStat(activeSkill, 'maxCoolDown').value;
 
-    if (selectedCard.type === 'hero') {
-        selectedCard.health -= selectedCardLostValue;
-    } else {
-        selectedCard.value -= selectedCardLostValue;
-    }
+    selectedCard.value -= selectedCardLostValue;
 
     let heroCardGetValue = 0;
     const drainHandler = () => {
@@ -268,7 +264,7 @@ const callHelpSkillHandler = (
 
     const resurrectionHandler = (heroCard: BattleCardType = selectedCard) => {
         const maxHealthValue = getItemStat(heroCard, 'maxHealth').value;
-        heroCard.health = maxHealthValue;
+        heroCard.value = maxHealthValue;
         powerValue = maxHealthValue;
     }
 
@@ -448,12 +444,7 @@ const debuffSkillHandler = (effect: Effect, selectedCard: BattleCardType) => {
     let powerValue = getItemStat(effect, 'power').value;
 
     const commonDebuffHandler = () => {
-        // TODO: hero health to value
-        if (selectedCard.type === 'hero') {
-            selectedCard.health -= powerValue;
-        } else {
-            selectedCard.value -= powerValue;
-        }
+        selectedCard.value -= powerValue;
     }
 
     const antiGraceHandler = () => {
@@ -493,8 +484,8 @@ const buffSkillHandler = (effect: Effect, selectedCard: BattleCardType) => {
         const healBoost = getItemStat(selectedCard, 'healBoost');
         powerValue = Math.round(powerValue * healBoost.value);
         // const heroHealth = selectedCard.health + Math.round(powerValue * healBoost.value);
-        const heroHealth = selectedCard.health + powerValue;
-        selectedCard.health = heroStatMaxHealth.value < heroHealth ? heroStatMaxHealth.value : heroHealth;
+        const heroHealth = selectedCard.value + powerValue;
+        selectedCard.value = heroStatMaxHealth.value < heroHealth ? heroStatMaxHealth.value : heroHealth;
     }
 
     const skillMasterHandler = () => {
@@ -649,7 +640,7 @@ const passiveSkillsHandler = (heroCard: BattleCardType, skill: Skill) => {
     const berserkHandler = () => {
         const healthMarkValue = getItemStat(skill, 'healthMark').value;
         const pAtk = getItemStat(heroCard, 'pAtk');
-        if (heroCard.health <= healthMarkValue) {
+        if (heroCard.value <= healthMarkValue) {
             pAtk.passiveSkillEffectValue = getItemStat(skill, 'power').value;
         } else {
             pAtk.passiveSkillEffectValue = 0;
